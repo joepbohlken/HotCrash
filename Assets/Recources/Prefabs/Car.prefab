@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 5430485851209145734}
   - component: {fileID: 5430485851209145730}
   - component: {fileID: 5430485851209145731}
+  - component: {fileID: 1633960068}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -262,7 +263,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5430485851209145735}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 80.982704, y: 6.63, z: -54.121}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -354,6 +355,19 @@ MonoBehaviour:
   wheelR: {fileID: 7126742032928510597}
   wheelL: {fileID: 7126742032967242681}
   AntiRoll: 5000
+--- !u!114 &1633960068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5430485851209145735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ability: {fileID: 0}
 --- !u!1 &5714070632876819646
 GameObject:
   m_ObjectHideFlags: 0
