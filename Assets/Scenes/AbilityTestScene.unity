@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 247770650}
   - component: {fileID: 247770649}
   - component: {fileID: 247770648}
+  - component: {fileID: 247770652}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -325,7 +326,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 64
   m_CollisionDetection: 0
 --- !u!4 &247770651
 Transform:
@@ -344,6 +345,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &247770652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247770647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ability: {fileID: 0}
 --- !u!1 &277275533
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc0a3385fc77e04c921d86a0975efee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: baadc9d3d4a8c79498ee2e65382e08e6, type: 2}
 --- !u!65 &520156135
 BoxCollider:
   m_ObjectHideFlags: 0
