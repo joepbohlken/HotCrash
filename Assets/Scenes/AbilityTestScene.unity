@@ -664,7 +664,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilities:
   - {fileID: 11400000, guid: baadc9d3d4a8c79498ee2e65382e08e6, type: 2}
-  - {fileID: 11400000, guid: 2c34d9180be509e4da88e8686f090681, type: 2}
 --- !u!65 &520156135
 BoxCollider:
   m_ObjectHideFlags: 0

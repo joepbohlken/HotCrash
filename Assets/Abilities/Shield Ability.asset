@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1566b597106e43bbbe78fb61d9915, type: 3}
   m_Name: Shield Ability
   m_EditorClassIdentifier: 
-  Duration: 0
+  Duration: 5
   Cooldown: 10
-  ShieldObject: {fileID: 0}
+  ShieldObject: {fileID: 884083105436673215, guid: d0bbfdf7db8438245968f9058ad0fefc, type: 3}

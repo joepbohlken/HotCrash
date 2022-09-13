@@ -7,9 +7,9 @@ public class Ability : ScriptableObject
     protected GameObject Car;
 
     [SerializeField]
-    private float Duration;
+    protected float Duration;
     [SerializeField]
-    private float Cooldown;
+    protected float Cooldown;
     public virtual void Use()
     {
         Debug.Log(this.name + ": Ability not implemented");

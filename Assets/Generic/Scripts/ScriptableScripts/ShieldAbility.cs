@@ -10,8 +10,8 @@ public class ShieldAbility : Ability
 
     public override void Use()
     {
-        
-        //Instantiate(ShieldObject, )
+        GameObject go = Instantiate(ShieldObject, Car.transform.position, Car.transform.rotation, Car.transform);
+        Destroy(go, Duration);
         Debug.Log("Shield Ability " + Car.name);
     }
 }
