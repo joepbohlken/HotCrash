@@ -11,7 +11,7 @@ public class CarController : MonoBehaviour
     private float verticalInput;
     private float currentSteerAngle;
     private float currentbreakForce;
-    private bool isBreaking;
+    [SerializeField] private bool isBreaking;
 
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
@@ -51,6 +51,10 @@ public class CarController : MonoBehaviour
         {
             ApplyBreaking();
         }
+        if (!isBreaking)
+        {
+            RemoveBreaking();
+        }
     }
 
     private void ApplyBreaking()
@@ -59,6 +63,14 @@ public class CarController : MonoBehaviour
         frontRightWheelCollider.brakeTorque = currentbreakForce;
         rearLeftWheelCollider.brakeTorque = currentbreakForce;
         rearRightWheelCollider.brakeTorque = currentbreakForce;
+    }
+
+    private void RemoveBreaking()
+    {
+        frontLeftWheelCollider.brakeTorque = 0;
+        frontRightWheelCollider.brakeTorque = 0;
+        rearLeftWheelCollider.brakeTorque = 0;
+        rearRightWheelCollider.brakeTorque = 0;
     }
 
     private void HandleSteering()
