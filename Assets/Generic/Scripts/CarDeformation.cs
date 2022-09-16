@@ -17,66 +17,55 @@ public class CarDeformation : MonoBehaviour
 
     [Tooltip("Minimum velocity required on impact to deform car meshes.")]
     [SerializeField] private float minVelocity = 3f;
+    [Tooltip("Max distance of a mesh vertice from the impact point to become deformed.")]
+    [SerializeField] private float deformRadius = 0.5f;
     [Tooltip("Strength of the mesh deformation.")]
-    [SerializeField][Range(1, 1000)] private int deformStrength = 10;
+    [SerializeField] private float deformStrength = 1f;
     [SerializeField] private List<DeformableMesh> carMeshes = new List<DeformableMesh>();
-
-    private Rigidbody myRigidbody;
-    private float currentVelocity = 0f;
 
     private void Start()
     {
-        myRigidbody = GetComponent<Rigidbody>();
-
         foreach (DeformableMesh deformableMesh in carMeshes)
         {
             deformableMesh.meshFilter.mesh = Instantiate(deformableMesh.originalMesh);
+            deformableMesh.meshFilter.mesh.MarkDynamic();
             deformableMesh.meshCollider = deformableMesh.meshFilter.GetComponent<MeshCollider>();
         }
     }
 
-    private void Update()
-    {
-        currentVelocity = myRigidbody.velocity.magnitude;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (currentVelocity >= minVelocity)
+        if (collision.relativeVelocity.magnitude >= minVelocity)
         {
             DeformableMesh hitMesh = carMeshes.FirstOrDefault(m => m.meshCollider == collision.GetContact(0).thisCollider);
             if (hitMesh == null) { return; }
 
-            Vector3 otherPos = collision.GetContact(0).otherCollider.transform.position;
-            otherPos.y = 0;
-            Vector3 meshPos = hitMesh.meshCollider.transform.position;
-            meshPos.y = 0;
-            Vector3 hitDirection = (otherPos - meshPos).normalized;
+            Vector3 hitDirection = hitMesh.meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
 
-            hitMesh.maxAllowedDamage -= (currentVelocity - minVelocity);
+            hitMesh.maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
             if (hitMesh.maxAllowedDamage <= 0f)
             {
                 hitMesh.meshCollider.transform.SetParent(null, true);
-                Rigidbody meshRigidbody = hitMesh.meshCollider.gameObject.AddComponent<Rigidbody>();
-                meshRigidbody.AddForce(hitDirection * 10, ForceMode.Impulse);
+                hitMesh.meshCollider.gameObject.AddComponent<Rigidbody>().AddForce(hitDirection.normalized * 10, ForceMode.Impulse);
                 carMeshes.Remove(hitMesh);
                 return;
             }
 
             Vector3 impactPoint = hitMesh.meshCollider.transform.InverseTransformPoint(collision.GetContact(0).point);
-            float strength = (currentVelocity - minVelocity) / 1000f * (float)deformStrength;
-
             Vector3[] vertices = hitMesh.meshFilter.mesh.vertices;
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                if (Vector3.Distance(impactPoint, vertices[i]) <= 0.2f)
+                float distance = (impactPoint - vertices[i]).magnitude;
+                if (distance <= deformRadius)
                 {
-                    vertices[i] -= hitDirection * strength;
+                    vertices[i] += hitDirection * (deformRadius - distance) * deformStrength;
                 }
             }
 
-            hitMesh.meshFilter.mesh.SetVertices(vertices);
+            hitMesh.meshFilter.mesh.vertices = vertices;
+            hitMesh.meshFilter.mesh.RecalculateNormals();
+            hitMesh.meshFilter.mesh.RecalculateBounds();
             hitMesh.meshCollider.sharedMesh = hitMesh.meshFilter.mesh;
         }
     }
