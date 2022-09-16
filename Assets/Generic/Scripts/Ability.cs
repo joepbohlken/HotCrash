@@ -12,7 +12,7 @@ public class Ability : ScriptableObject
     protected float Cooldown;
     public virtual void Use()
     {
-        Debug.Log(this.name + ": Ability not implemented");
+        Debug.Log("Ability not implemented OR No ability active");
     }
     public void SetCar(GameObject player)
     {

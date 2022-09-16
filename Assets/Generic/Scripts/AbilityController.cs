@@ -8,6 +8,8 @@ public class AbilityController : MonoBehaviour
 
     [SerializeField]
     private Ability Ability;
+    [SerializeField]
+    private bool consumableAbilities;
 
 
     private void Start()
@@ -20,7 +22,14 @@ public class AbilityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && cd <= 0)
         {
             Ability.Use();
-            cd = Ability.AbilityCooldown;
+            if (consumableAbilities)
+            {
+                Ability = ScriptableObject.CreateInstance<Ability>();
+            }
+            else
+            {
+                cd = Ability.AbilityCooldown;
+            }
         }
 
         cd -= Time.deltaTime;
