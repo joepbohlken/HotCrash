@@ -37,36 +37,39 @@ public class CarDeformation : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude >= minVelocity)
         {
-            DeformableMesh hitMesh = carMeshes.FirstOrDefault(m => m.meshCollider == collision.GetContact(0).thisCollider);
-            if (hitMesh == null) { return; }
-
-            Vector3 hitDirection = hitMesh.meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
-
-            hitMesh.maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
-            if (hitMesh.maxAllowedDamage <= 0f)
+            for (int i = 0; i < collision.contactCount; i++)
             {
-                hitMesh.meshCollider.transform.SetParent(null, true);
-                hitMesh.meshCollider.gameObject.AddComponent<Rigidbody>().AddForce(hitDirection.normalized * 10, ForceMode.Impulse);
-                carMeshes.Remove(hitMesh);
-                return;
-            }
+                DeformableMesh hitMesh = carMeshes.FirstOrDefault(m => m.meshCollider == collision.GetContact(i).thisCollider);
+                if (hitMesh == null) { return; }
 
-            Vector3 impactPoint = hitMesh.meshCollider.transform.InverseTransformPoint(collision.GetContact(0).point);
-            Vector3[] vertices = hitMesh.meshFilter.mesh.vertices;
+                Vector3 hitDirection = hitMesh.meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
 
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                float distance = (impactPoint - vertices[i]).magnitude;
-                if (distance <= deformRadius)
+                hitMesh.maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
+                if (hitMesh.maxAllowedDamage <= 0f)
                 {
-                    vertices[i] += hitDirection * (deformRadius - distance) * deformStrength;
+                    hitMesh.meshCollider.transform.SetParent(null, true);
+                    hitMesh.meshCollider.gameObject.AddComponent<Rigidbody>().AddForce(hitDirection.normalized * 10, ForceMode.Impulse);
+                    carMeshes.Remove(hitMesh);
+                    return;
                 }
-            }
 
-            hitMesh.meshFilter.mesh.vertices = vertices;
-            hitMesh.meshFilter.mesh.RecalculateNormals();
-            hitMesh.meshFilter.mesh.RecalculateBounds();
-            hitMesh.meshCollider.sharedMesh = hitMesh.meshFilter.mesh;
+                Vector3 impactPoint = hitMesh.meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
+                Vector3[] vertices = hitMesh.meshFilter.mesh.vertices;
+
+                for (int j = 0; j < vertices.Length; j++)
+                {
+                    float distance = (impactPoint - vertices[j]).magnitude;
+                    if (distance <= deformRadius)
+                    {
+                        vertices[j] += hitDirection * (deformRadius - distance) * deformStrength;
+                    }
+                }
+
+                hitMesh.meshFilter.mesh.vertices = vertices;
+                hitMesh.meshFilter.mesh.RecalculateNormals();
+                hitMesh.meshFilter.mesh.RecalculateBounds();
+                hitMesh.meshCollider.sharedMesh = hitMesh.meshFilter.mesh;
+            }
         }
     }
 }
