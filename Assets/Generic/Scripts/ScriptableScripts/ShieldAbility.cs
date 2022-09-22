@@ -12,6 +12,5 @@ public class ShieldAbility : Ability
     {
         GameObject go = Instantiate(ShieldObject, Car.transform.position, Car.transform.rotation, Car.transform);
         Destroy(go, Duration);
-        Debug.Log("Shield Ability " + Car.name);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +13,19 @@ public class TransparentAbility : Ability
 
     public override void OnPickup()
     {
+        Car.GetComponentsInChildren(CarRenderers);
     }
 
     public override void Use()
     {
-        Car.GetComponentsInChildren(CarRenderers);
+        Dictionary<Renderer, List<Material>> originalValues = new();
+
         foreach (Renderer rend in CarRenderers)
         {
             foreach(Material mat in rend.materials)
             {
+                originalValues[rend].Add(mat);
+
                 rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 Color tempColor = rend.material.color;
                 tempColor.a = opacity;
