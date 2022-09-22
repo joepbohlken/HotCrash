@@ -23,17 +23,17 @@ public class AntiRoll : MonoBehaviour
 			var wsDown = transform.TransformDirection(Vector3.down);
 			wsDown.Normalize();
 
-			float travelL = Mathf.Clamp01(axle.left.compressionRatio);
-			float travelR = Mathf.Clamp01(axle.right.compressionRatio);
+			float travelL = Mathf.Clamp01(axle.left.CompressionRatio);
+			float travelR = Mathf.Clamp01(axle.right.CompressionRatio);
 			float antiRollForce = (travelL - travelR) * axle.force;
 
 			WheelHit hit;
-			if (axle.left.isGrounded)
-				rigidbody.AddForceAtPosition(wsDown * -antiRollForce, axle.left.hit.point);
+			if (axle.left.sharedData.isGrounded)
+				rigidbody.AddForceAtPosition(wsDown * -antiRollForce, axle.left.active_hit_data.point);
 
 
-			if (axle.right.isGrounded)
-				rigidbody.AddForceAtPosition(wsDown * antiRollForce, axle.right.hit.point);
+			if (axle.right.sharedData.isGrounded)
+				rigidbody.AddForceAtPosition(wsDown * antiRollForce, axle.right.active_hit_data.point);
 		}
 	}
 }
