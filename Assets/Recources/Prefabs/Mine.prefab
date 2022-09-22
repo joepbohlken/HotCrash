@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9066453101273776435}
   - component: {fileID: 6673849721696579478}
   - component: {fileID: 3689386118985644652}
-  - component: {fileID: 7737815007619417061}
+  - component: {fileID: 2361822520737410408}
+  - component: {fileID: 2597928670106028257}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -84,17 +85,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7737815007619417061
-CapsuleCollider:
+--- !u!135 &2361822520737410408
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728907566336860761}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &2597928670106028257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728907566336860761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4cb1701e4c85c47a9f8c0f7ef84a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mineStrength: 8000
+  explosion: {fileID: 7358857875241618812, guid: e81c1577bcc405547afd22f545bce7e3, type: 3}
