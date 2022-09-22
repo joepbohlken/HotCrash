@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Duration: 15
   Cooldown: 0
-  visableDistance: 5
+  opacity: 0.3

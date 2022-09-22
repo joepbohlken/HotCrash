@@ -337,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247770647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277275533}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.76038, y: -25.48955, z: -37.940838}
+  m_LocalPosition: {x: -84.95, y: -25.48955, z: -30.17}
   m_LocalScale: {x: 3.652307, y: 3.652307, z: 3.652307}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1454,7 +1454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181497836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2357,6 +2357,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 147701867}
     m_Modifications:
+    - target: {fileID: 2931154192456074864, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
+      propertyPath: abilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931154192456074864, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
     - target: {fileID: 2931154192456074866, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
       propertyPath: m_Name
       value: AbilityBlock
