@@ -16,8 +16,17 @@ public class AntiRoll : MonoBehaviour
 	public new Rigidbody rigidbody;
 	public List<Axle> axles;
 
-	void FixedUpdate()
+	private bool activated = false;
+
+    private void Start()
+    {
+		StartCoroutine(StartActivation());
+    }
+
+    void FixedUpdate()
 	{
+		if (!activated) return;
+
 		foreach (var axle in axles)
 		{
 			var wsDown = transform.TransformDirection(Vector3.down);
@@ -36,4 +45,10 @@ public class AntiRoll : MonoBehaviour
 				rigidbody.AddForceAtPosition(wsDown * antiRollForce, axle.right.active_hit_data.point);
 		}
 	}
+
+	IEnumerator StartActivation()
+    {
+		yield return new WaitForSeconds(2f);
+		activated = true;
+    }
 }

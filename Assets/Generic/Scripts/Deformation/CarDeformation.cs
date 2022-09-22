@@ -32,16 +32,24 @@ public class CarDeformation : MonoBehaviour
 
     public void OnCollision(Collision collision)
     {
-        if (currentDebounce <= 0f && collision.relativeVelocity.magnitude >= minVelocity)
+        if (collision.relativeVelocity.magnitude >= minVelocity)
         {
-            currentDebounce = collisionDebounce;
+            bool canDeform = currentDebounce <= 0f;
+            if (canDeform) currentDebounce = collisionDebounce;
 
             for (int i = 0; i < collision.contactCount; i++)
             {
                 if (i == maxCollisionPoints) break;
 
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
-                if (hitPart != null) hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
+                if (hitPart != null)
+                {
+                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength);
+                    if (!partDestroyed && canDeform)
+                    {
+                        hitPart.DeformPart(i, collision, deformRadius, deformStrength, myRigidbody);
+                    }
+                }
             }
         }
     }

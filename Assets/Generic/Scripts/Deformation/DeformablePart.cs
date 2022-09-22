@@ -42,9 +42,9 @@ public class DeformablePart : MonoBehaviour
         }
     }
 
-    public void ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength, Rigidbody body)
+    public bool ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength)
     {
-        if (isDestroyed) return;
+        if (isDestroyed) return true;
 
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
 
@@ -52,25 +52,17 @@ public class DeformablePart : MonoBehaviour
         if (maxAllowedDamage <= 0f)
         {
             DetachPart(hitDirection, -collision.relativeVelocity.magnitude);
-        } else
+            return true;
+        }
+        else
         {
-            DeformMesh(i, collision, deformRadius, deformStrength, hitDirection);
-            if (isHinge && !hingeCreated) CreateHinge(body);
+            return false;
         }
     }
 
-    private void DetachPart(Vector3 hitDirection, float force)
+    public void DeformPart(int i, Collision collision, float deformRadius, float deformStrength, Rigidbody body)
     {
-        isDestroyed = true;
-        if (isHinge) Destroy(hinge);
-        transform.SetParent(null, true);
-        Rigidbody myRigidbody = GetComponent<Rigidbody>();
-        if (myRigidbody == null) myRigidbody = gameObject.AddComponent<Rigidbody>();
-        myRigidbody.AddForce(hitDirection.normalized * force, ForceMode.Impulse);
-    }
-
-    private void DeformMesh(int i, Collision collision, float deformRadius, float deformStrength, Vector3 hitDirection)
-    {
+        Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
         Vector3 impactPoint = meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
         Vector3[] vertices = meshFilter.mesh.vertices;
 
@@ -88,6 +80,18 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.RecalculateBounds();
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = meshFilter.mesh;
+
+        if (isHinge && !hingeCreated) CreateHinge(body);
+    }
+
+    private void DetachPart(Vector3 hitDirection, float force)
+    {
+        isDestroyed = true;
+        if (isHinge) Destroy(hinge);
+        transform.SetParent(null, true);
+        Rigidbody myRigidbody = GetComponent<Rigidbody>();
+        if (myRigidbody == null) myRigidbody = gameObject.AddComponent<Rigidbody>();
+        myRigidbody.AddForce(hitDirection.normalized * force, ForceMode.Impulse);
     }
 
     private void CreateHinge(Rigidbody body)
