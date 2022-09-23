@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : ScriptableObject
+public abstract class Ability : ScriptableObject
 {
     protected GameObject Car;
 
@@ -14,7 +14,19 @@ public class Ability : ScriptableObject
     {
         Debug.Log("Ability not implemented OR No ability active");
     }
-    public void SetCar(GameObject player)
+
+    public virtual void OnPickup()
+    {
+        Debug.Log("Picked Up ability");
+    }
+
+    public void PickedUp(GameObject player)
+    {
+        SetCar(player);
+        OnPickup();
+    }
+
+    private void SetCar(GameObject player)
     {
         Car = player;
     }
