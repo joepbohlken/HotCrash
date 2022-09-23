@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3914c1993cec84fba57edef4d6e5a9, type: 3}
   m_Name: Transparent Ability
   m_EditorClassIdentifier: 
-  Duration: 15
-  Cooldown: 0
-  opacity: 0.3
+  Duration: 5
+  Cooldown: 15
+  opacity: 0.2

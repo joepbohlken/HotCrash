@@ -22,8 +22,8 @@ public abstract class Ability : ScriptableObject
 
     public void PickedUp(GameObject player)
     {
-        OnPickup();
         SetCar(player);
+        OnPickup();
     }
 
     private void SetCar(GameObject player)
