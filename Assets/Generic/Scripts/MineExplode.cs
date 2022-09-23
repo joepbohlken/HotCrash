@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MineExplode : MonoBehaviour
 {
+    [SerializeField]
     private float armingTime = 3;
+    [SerializeField]
     private float mineRadius = 10;
     [SerializeField]
     private float mineStrength = 10000;
@@ -21,11 +23,13 @@ public class MineExplode : MonoBehaviour
                 Rigidbody rb = colliders[i].GetComponent<Rigidbody>();
                 if (rb != null)
                 {
+                    Debug.Log(i);
                     rb.AddExplosionForce(mineStrength, transform.position, mineRadius, 1f, ForceMode.Impulse);
-                    Instantiate(explosion, transform.position, transform.rotation);
-                    Destroy(gameObject);
                 }
             }
+            Debug.Log("kaboom");
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
         }
     }
 
