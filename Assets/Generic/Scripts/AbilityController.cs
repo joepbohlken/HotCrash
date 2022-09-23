@@ -14,7 +14,7 @@ public class AbilityController : MonoBehaviour
 
     private void Start()
     {
-        Ability = ScriptableObject.CreateInstance<Ability>();
+        //Ability = ScriptableObject.CreateInstance<Ability>();
     }
 
     void Update()
@@ -41,7 +41,7 @@ public class AbilityController : MonoBehaviour
             AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
             Ability = block.GetRandomAbility();
 
-            Ability.SetCar(gameObject);
+            Ability.PickedUp(gameObject);
         }
     }
 }
