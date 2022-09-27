@@ -12,7 +12,7 @@ public class CarDeformation : MonoBehaviour
     [SerializeField] private float deformStrength = 1f;
 
     [Header("Performance Properties")]
-    [Tooltip("Minimum time in seconds between collisions.")]
+    [Tooltip("Minimum time in seconds between deformations.")]
     [SerializeField] private float collisionDebounce = 0.1f;
     [Tooltip("Maximum collision points to use when deforming.")]
     [SerializeField] private int maxCollisionPoints = 2;
@@ -32,18 +32,24 @@ public class CarDeformation : MonoBehaviour
 
     public void OnCollision(Collision collision)
     {
+        // Check if the velocity on impact is high enough to deform the meshes
         if (collision.relativeVelocity.magnitude >= minVelocity)
         {
+            // Debounce between deformations to improve performance
             bool canDeform = currentDebounce <= 0f;
             if (canDeform) currentDebounce = collisionDebounce;
 
+            // Go through each contact point of the collision
             for (int i = 0; i < collision.contactCount; i++)
             {
+                // Limit the contact points to improve performance
                 if (i == maxCollisionPoints) break;
 
+                // Check if the hit object can be deformed (does it contain the DeformablePart script)
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
                 if (hitPart != null)
                 {
+                    // Apply damage and only deform if the part has not been destroyed
                     bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength);
                     if (!partDestroyed && canDeform)
                     {
