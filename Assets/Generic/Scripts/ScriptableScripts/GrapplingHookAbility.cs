@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [CreateAssetMenu(menuName = "Abilities/GrapplingHook")]
 public class GrapplingHookAbility : Ability
 {
-    private Transform grapplePoint;
+    private Transform grappleGun;
     private LineRenderer lr;
     private bool isShooting, isGrappling;
     private Vector3 hookPoint;
+    [Range(0f, 1f)] public float positionStrength = 1f;
+    [Range(0f, 1f)] public float rotationStrength = 1f;
 
     [SerializeField]
     private GameObject grapplingHook;
@@ -19,6 +22,9 @@ public class GrapplingHookAbility : Ability
     private LayerMask grappleLayer;
     [SerializeField]
     private float maxGrappleDistance;
+
+    [SerializeField]
+    private float grappleSpeed = 10;
 
     public override void Use()
     {
@@ -33,23 +39,26 @@ public class GrapplingHookAbility : Ability
         //    return;
         //}
 
-        grapplePoint = Car.transform.Find("Visuals/Body/GrapplePoint");
-        lr = grapplePoint.GetComponent<LineRenderer>();
+        grappleGun = Car.transform.Find("Grapple Gun");
+        lr = grappleGun.GetComponent<LineRenderer>();
 
         isShooting = true;
         RaycastHit hit; 
         //Speciaal point voor grapplinghook
-        if (Physics.Raycast(grapplePoint.position + Vector3.up, grapplePoint.TransformDirection(Vector3.forward), out hit, maxGrappleDistance, grappleLayer))
+        if (Physics.Raycast(grappleGun.position + Vector3.up, grappleGun.TransformDirection(Vector3.forward), out hit, maxGrappleDistance, grappleLayer))
         {
-            Debug.Log("Grapple: " + grapplePoint.position.z + " Car: " + Car.transform.position.z + 1);
+            Debug.Log("Grapple: " + grappleGun.position.z + " Car: " + Car.transform.position.z + 1);
             hookPoint = hit.point;
-
-            isGrappling = true;
-
-            lr.SetPosition(0, grapplePoint.position);
-            lr.SetPosition(1, hookPoint);
+        }
+        else
+        {
+            hookPoint = grappleGun.position + grappleGun.forward * maxGrappleDistance;
         }
 
+        lr.SetPosition(0, grappleGun.position);
+        lr.SetPosition(1, hookPoint);
+
+        isGrappling = true;
         lr.enabled = true;
 
         isShooting = false;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class AbilityController : MonoBehaviour
 {
     private float cd = 0;
+    [NonSerialized] public static AbilityController controller;
 
     [SerializeField]
     private Ability Ability;
@@ -14,6 +16,7 @@ public class AbilityController : MonoBehaviour
 
     private void Start()
     {
+        AbilityController.controller = this;
         //Ability = ScriptableObject.CreateInstance<Ability>();
     }
 
