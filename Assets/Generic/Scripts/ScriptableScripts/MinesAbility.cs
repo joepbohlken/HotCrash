@@ -25,7 +25,7 @@ public class MinesAbility : Ability
             mineCounter++;
         }
 
-        Vector3 minePosition = Car.transform.position;
+        Vector3 minePosition = Car.transform.position + Vector3.up + Vector3.back;
         Instantiate(MineObject, minePosition, Quaternion.identity);
         Debug.Log("Mine Ability " + Car.name);
         Debug.Log(mineCounter);
