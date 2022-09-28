@@ -6,6 +6,7 @@ public class CarDeformation : MonoBehaviour
     [Header("Deformation Properties")]
     [Tooltip("Minimum velocity required on impact to deform car meshes.")]
     [SerializeField] private float minVelocity = 3f;
+    [HideInInspector] public float MinVelocity { get { return minVelocity; } }
     [Tooltip("Max distance of a mesh vertice from the impact point to become deformed.")]
     [SerializeField] private float deformRadius = 0.5f;
     [Tooltip("Strength of the mesh deformation.")]
