@@ -1,4 +1,5 @@
 using UnityEngine;
+using static CarStateController;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +10,7 @@ public class DeformablePart : MonoBehaviour
 {
     [Tooltip("The total damage that is allowed to be dealt to this mesh before it breaks off of the car.")]
     [SerializeField] private float maxAllowedDamage = 50f;
+    [HideInInspector] public float MaxAllowedDamage { get { return maxAllowedDamage; } }
     
     [Space(12)]
 
@@ -19,10 +21,12 @@ public class DeformablePart : MonoBehaviour
     [HideInInspector] public float hingeMinLimit;
     [HideInInspector] public float hingeMaxLimit;
 
+    [HideInInspector] public VitalType vitalType = VitalType.None;
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
     private HingeJoint hinge;
     private CarDeformation carDeformation;
+    private CarStateController carStateController;
 
     private bool hingeCreated = false;
     private bool isDestroyed = false;
@@ -36,6 +40,7 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.MarkDynamic();
 
         if (isHinge) carDeformation = GetComponentInParent<CarDeformation>();
+        if (vitalType != VitalType.None) carStateController = GetComponentInParent<CarStateController>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -50,16 +55,21 @@ public class DeformablePart : MonoBehaviour
 
     ///<summary>Applies damage to the part based on the given parameters.
     ///Return true if the part has been detached or already destroyed, else returns false.</summary>
-    public bool ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength)
+    public bool ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength, Rigidbody body)
     {
         if (isDestroyed) return true;
 
-        // Get the direction of the collision in local space of the hit mesh
-        Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
+        float damage = (collision.relativeVelocity.magnitude - minVelocity);
+        maxAllowedDamage -= damage;
+        if (carStateController) carStateController.AddVitalDamage(vitalType, damage);
 
-        maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
+        if (isHinge && !hingeCreated) CreateHinge(body);
+
         if (maxAllowedDamage <= 0f)
         {
+            // Get the direction of the collision in local space of the hit mesh
+            Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
+
             DetachPart(hitDirection, -collision.relativeVelocity.magnitude);
             return true;
         }
@@ -70,7 +80,7 @@ public class DeformablePart : MonoBehaviour
     }
 
     ///<summary>Deforms the mesh with the given parameters.</summary>
-    public void DeformPart(int i, Collision collision, float deformRadius, float deformStrength, Rigidbody body)
+    public void DeformPart(int i, Collision collision, float deformRadius, float deformStrength)
     {
         // Get the direction of the collision in local space of the hit mesh
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
@@ -93,8 +103,6 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.RecalculateBounds();
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = meshFilter.mesh;
-
-        if (isHinge && !hingeCreated) CreateHinge(body);
     }
 
     private void DetachPart(Vector3 hitDirection, float force)

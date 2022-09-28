@@ -51,10 +51,10 @@ public class CarDeformation : MonoBehaviour
                 if (hitPart != null)
                 {
                     // Apply damage and only deform if the part has not been destroyed
-                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength);
+                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
                     if (!partDestroyed && canDeform)
                     {
-                        hitPart.DeformPart(i, collision, deformRadius, deformStrength, myRigidbody);
+                        hitPart.DeformPart(i, collision, deformRadius, deformStrength);
                     }
                 }
             }

@@ -450,6 +450,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &1190522151590938274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1746,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &2534332432155585939
 GameObject:
   m_ObjectHideFlags: 0
@@ -2666,6 +2668,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &4149164604902207707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,6 +3051,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &4976409312106142110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,6 +3172,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: -90
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &5415797839773379983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,6 +3376,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: -100
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &5590456663110356959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3489,6 +3495,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 1}
   hingeMinLimit: 0
   hingeMaxLimit: 115
+  vitalType: 0
 --- !u!1 &5642681456538208095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3642,6 +3649,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 90
+  vitalType: 0
 --- !u!1 &5762519735941957613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4174,6 +4182,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalType: 0
 --- !u!1 &6819094072711535452
 GameObject:
   m_ObjectHideFlags: 0
