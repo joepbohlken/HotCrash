@@ -12,6 +12,7 @@ public class DeformablePart : MonoBehaviour
     
     [Space(12)]
 
+    [Tooltip("If true will create a hinge with the specified properties on first contact hit.")]
     public bool isHinge = false;
     [HideInInspector] public Vector3 hingeAnchor;
     [HideInInspector] public Vector3 hingeAxis;
@@ -30,22 +31,30 @@ public class DeformablePart : MonoBehaviour
     {
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
+        // Instantiate a 'clone' of the mesh, so it does not affect all other objects using the same mesh
         meshFilter.mesh = (Mesh)Instantiate(meshFilter.sharedMesh);
         meshFilter.mesh.MarkDynamic();
+
+        if (isHinge) carDeformation = GetComponentInParent<CarDeformation>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Forward the collision event to the CarDeformation script of the car
+        // As the car won't receive these events anymore, because the hinge adds a rigidbody to this object
         if (hingeCreated && carDeformation)
         {
             carDeformation.OnCollision(collision);
         }
     }
 
+    ///<summary>Applies damage to the part based on the given parameters.
+    ///Return true if the part has been detached or already destroyed, else returns false.</summary>
     public bool ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength)
     {
         if (isDestroyed) return true;
 
+        // Get the direction of the collision in local space of the hit mesh
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
 
         maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
@@ -60,9 +69,12 @@ public class DeformablePart : MonoBehaviour
         }
     }
 
+    ///<summary>Deforms the mesh with the given parameters.</summary>
     public void DeformPart(int i, Collision collision, float deformRadius, float deformStrength, Rigidbody body)
     {
+        // Get the direction of the collision in local space of the hit mesh
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
+        // Get the impact position of the collision in local space of the hit mesh
         Vector3 impactPoint = meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
         Vector3[] vertices = meshFilter.mesh.vertices;
 
@@ -71,6 +83,7 @@ public class DeformablePart : MonoBehaviour
             float distance = (impactPoint - vertices[j]).magnitude;
             if (distance <= deformRadius)
             {
+                // Reposition the vertice
                 vertices[j] += hitDirection * (deformRadius - distance) * deformStrength;
             }
         }
@@ -87,7 +100,9 @@ public class DeformablePart : MonoBehaviour
     private void DetachPart(Vector3 hitDirection, float force)
     {
         isDestroyed = true;
+        // Destroy the hinge if present
         if (isHinge) Destroy(hinge);
+        // Add a force to the part in the direction of the collision
         transform.SetParent(null, true);
         Rigidbody myRigidbody = GetComponent<Rigidbody>();
         if (myRigidbody == null) myRigidbody = gameObject.AddComponent<Rigidbody>();
@@ -109,8 +124,6 @@ public class DeformablePart : MonoBehaviour
         limits.max = hingeMaxLimit;
         limits.bounciness = 0.4f;
         hinge.limits = limits;
-
-        carDeformation = GetComponentInParent<CarDeformation>();
     }
 }
 
