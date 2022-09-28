@@ -15,9 +15,8 @@ MonoBehaviour:
   Duration: 0
   Cooldown: 0
   grapplingHook: {fileID: 6407592492083799175, guid: d61f035c1b015ba49be9de58e713fda2, type: 3}
-  carPos: {fileID: 5430485851209145735, guid: f4c623efbd4c52e48980728d2063918b, type: 3}
+  carPos: {fileID: 3663098822042570447, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
   grappleLayer:
     serializedVersion: 2
     m_Bits: 64
   maxGrappleDistance: 30
-  lr: {fileID: 3055277735221952907, guid: 202ea7bc820bc56408c18166319457da, type: 3}
