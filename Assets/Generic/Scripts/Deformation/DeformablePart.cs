@@ -1,5 +1,6 @@
 using UnityEngine;
 using static CarStateController;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,7 +22,7 @@ public class DeformablePart : MonoBehaviour
     [HideInInspector] public float hingeMinLimit;
     [HideInInspector] public float hingeMaxLimit;
 
-    [HideInInspector] public VitalType vitalType = VitalType.None;
+    [HideInInspector] public List<VitalType> vitalTypes = new List<VitalType>();
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
     private HingeJoint hinge;
@@ -40,7 +41,7 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.MarkDynamic();
 
         if (isHinge) carDeformation = GetComponentInParent<CarDeformation>();
-        if (vitalType != VitalType.None) carStateController = GetComponentInParent<CarStateController>();
+        if (vitalTypes.Count > 0) carStateController = GetComponentInParent<CarStateController>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -61,7 +62,7 @@ public class DeformablePart : MonoBehaviour
 
         float damage = (collision.relativeVelocity.magnitude - minVelocity);
         maxAllowedDamage -= damage;
-        if (carStateController) carStateController.AddVitalDamage(vitalType, damage);
+        if (carStateController) carStateController.AddVitalDamage(vitalTypes, damage);
 
         if (isHinge && !hingeCreated) CreateHinge(body);
 

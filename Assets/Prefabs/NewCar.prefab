@@ -450,7 +450,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &1190522151590938274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1746,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &2534332432155585939
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,6 +2280,7 @@ GameObject:
   - component: {fileID: 8757538530856571848}
   - component: {fileID: 8757538530856571849}
   - component: {fileID: 8757538530856571855}
+  - component: {fileID: 2517618493186834195}
   m_Layer: 0
   m_Name: NewCar
   m_TagString: Untagged
@@ -2294,7 +2295,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3663098822042570447}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 80, y: 6, z: -54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2551,6 +2552,57 @@ MonoBehaviour:
   deformStrength: 0.5
   collisionDebounce: 0.2
   maxCollisionPoints: 2
+--- !u!114 &2517618493186834195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663098822042570447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engine: {fileID: 1733030995}
+  engineHealth: 100
+  engineImage: {fileID: 0}
+  vitals:
+  - vitalType: 1
+    image: {fileID: 0}
+    parts:
+    - {fileID: 8017068312312666970}
+    - {fileID: 4779975313822199947}
+    - {fileID: 2390116216244106250}
+    - {fileID: 7823646318839644316}
+    maxHealth: 0
+    currentHealth: 0
+  - vitalType: 2
+    image: {fileID: 0}
+    parts:
+    - {fileID: 7518210700071884078}
+    - {fileID: 7058621852918829429}
+    - {fileID: 7823646318839644316}
+    maxHealth: 0
+    currentHealth: 0
+  - vitalType: 3
+    image: {fileID: 0}
+    parts:
+    - {fileID: 8378578237575718920}
+    - {fileID: 7823646318839644316}
+    - {fileID: 7633239330125899257}
+    maxHealth: 0
+    currentHealth: 0
+  - vitalType: 4
+    image: {fileID: 0}
+    parts:
+    - {fileID: 7702177834894284714}
+    - {fileID: 7823646318839644316}
+    - {fileID: 7633239330125899257}
+    maxHealth: 0
+    currentHealth: 0
+  useCarDeformation: 1
+  minVelocity: 3
 --- !u!1 &3663296656781793016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2662,13 +2714,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAllowedDamage: 500
+  maxAllowedDamage: 100
   isHinge: 0
   hingeAnchor: {x: 0, y: 0, z: 0}
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &4149164604902207707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +3103,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &4976409312106142110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3172,7 +3224,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: -90
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &5415797839773379983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,7 +3428,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: -100
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &5590456663110356959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,7 +3547,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 1}
   hingeMinLimit: 0
   hingeMaxLimit: 115
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &5642681456538208095
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,7 +3701,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 1, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 90
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &5762519735941957613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4176,13 +4228,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAllowedDamage: 1000
+  maxAllowedDamage: 100
   isHinge: 0
   hingeAnchor: {x: 0, y: 0, z: 0}
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &6819094072711535452
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,7 +5044,8 @@ GameObject:
   - component: {fileID: 6238457586018636769}
   - component: {fileID: 6859845442208270712}
   - component: {fileID: 7814176596078725867}
-  m_Layer: 0
+  - component: {fileID: 1733030995}
+  m_Layer: 2
   m_Name: Engine_bay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5064,6 +5117,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1733030995
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060142772417014455}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5183497908929915551, guid: 7d76718c32b44c242baad1f4ee2f7420, type: 3}
 --- !u!1 &8143856770828949570
 GameObject:
   m_ObjectHideFlags: 0

@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1564663 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3663098822042570447, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &52324609
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,28 +204,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52324609}
   m_CullTransparentMesh: 1
---- !u!114 &152740498 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7058621852918829429, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &234215775 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2390116216244106250, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &258752624
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,39 +674,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372307413}
   m_CullTransparentMesh: 1
---- !u!114 &429080307 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4779975313822199947, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &570567231 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8017068312312666970, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &675596130 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7518210700071884078, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,17 +768,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &721883416 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7702177834894284714, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &730029200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +986,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalType: 0
+  vitalTypes: 
 --- !u!1 &810025927
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,17 +2503,6 @@ Transform:
   m_Father: {fileID: 966161030}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1262534827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8378578237575718920, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1272774925
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,25 +3123,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716694444}
   m_CullTransparentMesh: 1
---- !u!1 &1733030991 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8060142772417014455, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-  m_PrefabInstance: {fileID: 1976588729553611645}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1733030995
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733030991}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5183497908929915551, guid: 7d76718c32b44c242baad1f4ee2f7420, type: 3}
 --- !u!1 &1750810811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3737,6 +3636,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2517618493186834195, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: engineImage
+      value: 
+      objectReference: {fileID: 372307415}
+    - target: {fileID: 2517618493186834195, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: vitals.Array.data[0].image
+      value: 
+      objectReference: {fileID: 1475078029}
+    - target: {fileID: 2517618493186834195, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: vitals.Array.data[1].image
+      value: 
+      objectReference: {fileID: 1716694446}
+    - target: {fileID: 2517618493186834195, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: vitals.Array.data[2].image
+      value: 
+      objectReference: {fileID: 1794632965}
+    - target: {fileID: 2517618493186834195, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: vitals.Array.data[3].image
+      value: 
+      objectReference: {fileID: 1528127721}
     - target: {fileID: 3663098822042570447, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
       propertyPath: m_Name
       value: NewCar
@@ -3785,10 +3704,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8060142772417014455, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
 --- !u!4 &2517618493186834184 stripped
@@ -3796,47 +3711,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4151791452072940661, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
   m_PrefabInstance: {fileID: 1976588729553611645}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2517618493186834195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  engine: {fileID: 1733030995}
-  engineHealth: 200
-  vitals:
-  - vitalType: 1
-    image: {fileID: 1475078029}
-    parts:
-    - {fileID: 570567231}
-    - {fileID: 429080307}
-    - {fileID: 234215775}
-    maxHealth: 0
-    currentHealth: 0
-  - vitalType: 2
-    image: {fileID: 1716694446}
-    parts:
-    - {fileID: 675596130}
-    - {fileID: 152740498}
-    maxHealth: 0
-    currentHealth: 0
-  - vitalType: 3
-    image: {fileID: 1794632965}
-    parts:
-    - {fileID: 1262534827}
-    maxHealth: 0
-    currentHealth: 0
-  - vitalType: 4
-    image: {fileID: 1528127721}
-    parts:
-    - {fileID: 721883416}
-    maxHealth: 0
-    currentHealth: 0
-  useCarDeformation: 1
-  minVelocity: 3

@@ -24,8 +24,10 @@ public class CarStateController : MonoBehaviour
 
     [Tooltip("The collider component of the engine.")]
     [SerializeField] private Collider engine;
-    [Tooltip("The total damage the engine can withstand before the car stops working.")]
+    [Tooltip("The health points of the engine. These get added to the total health points of the car, along with the health points of all deformable parts.")]
     [SerializeField] private float engineHealth = 200f;
+    [Tooltip("The vital image of the engine on the UI.")]
+    [SerializeField] private Image engineImage;
     [Space(12)]
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
     [SerializeField] private List<Vitals> vitals;
@@ -37,6 +39,8 @@ public class CarStateController : MonoBehaviour
     [HideInInspector] public float minVelocity = 3f;
 
     private CarDeformation carDeformation;
+    private float maxTotalHealth = 0f;
+    private float currentTotalHealth = 0f;
     private bool isDestroyed = false;
 
     private void Awake()
@@ -54,30 +58,59 @@ public class CarStateController : MonoBehaviour
 
             foreach (DeformablePart deformablePart in vital.parts)
             {
-                deformablePart.vitalType = vital.vitalType;
+                deformablePart.vitalTypes.Add(vital.vitalType);
                 vital.maxHealth += deformablePart.MaxAllowedDamage;
+                if (deformablePart.vitalTypes.Count == 1) maxTotalHealth += deformablePart.MaxAllowedDamage;
             }
             vital.currentHealth = vital.maxHealth;
         }
+
+        maxTotalHealth += engineHealth;
+        currentTotalHealth = maxTotalHealth;
+        Debug.Log("Total Car Health: " + maxTotalHealth);
     }
 
-    public void AddVitalDamage(VitalType _vitalType, float damage)
+    public void AddVitalDamage(List<VitalType> vitalTypes, float damage)
     {
-        // Get and update the correct vital information
-        Vitals vital = vitals.FirstOrDefault(v => v.vitalType == _vitalType);
-        vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.maxHealth);
+        foreach (VitalType vitalType in vitalTypes)
+        {
+            // Get and update the correct vital information
+            Vitals vital = vitals.FirstOrDefault(v => v.vitalType == vitalType);
+            vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.maxHealth);
 
-        // Change the color of the vital image
-        float progress = 1f - (1f / vital.maxHealth * vital.currentHealth);
+            vital.image.color = GetVitalColor(vital.maxHealth, vital.currentHealth);
+        }
+
+        // Update the total health
+        currentTotalHealth = Mathf.Clamp(currentTotalHealth - damage, 0, maxTotalHealth);
+        engineImage.color = GetVitalColor(maxTotalHealth, currentTotalHealth);
+
+        CheckHealth();
+    }
+
+    private Color GetVitalColor(float max, float current)
+    {
+        float progress = 1f - (1f / max * current);
         float threshold = 0.5f;
 
         if (progress <= threshold)
         {
-            vital.image.color = Color.Lerp(Color.white, Color.yellow, progress / threshold);
+            return Color.Lerp(Color.white, Color.yellow, progress / threshold);
         }
         else
         {
-            vital.image.color = Color.Lerp(Color.yellow, Color.red, (progress - threshold)/(1 - threshold));
+            return Color.Lerp(Color.yellow, Color.red, (progress - threshold) / (1 - threshold));
+        }
+    }
+
+    private void CheckHealth()
+    {
+        if (currentTotalHealth <= 0)
+        {
+            isDestroyed = true;
+
+            // Temporarily
+            Destroy(GetComponent<Vehicle>());
         }
     }
 
@@ -93,16 +126,9 @@ public class CarStateController : MonoBehaviour
             // Check if the collision was made with the engine
             if (collision.GetContact(0).thisCollider == engine)
             {
-                // Decrease engine health
-                engineHealth -= (collision.relativeVelocity.magnitude - _minVelocity);
+                currentTotalHealth -= (collision.relativeVelocity.magnitude - _minVelocity) * 2;
 
-                if (engineHealth <= 0)
-                {
-                    isDestroyed = true;
-
-                    // Temporarily
-                    Destroy(GetComponent<Vehicle>());
-                }
+                CheckHealth();
             }
         }
     }
