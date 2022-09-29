@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,6 +32,9 @@ public class CarStateController : MonoBehaviour
     [Space(12)]
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
     [SerializeField] private List<Vitals> vitals;
+    [Space(12)]
+
+    public UnityEvent onCarDestroyed;
 
     [Space(12)]
     [Tooltip("If true will use the minVelocity property from the CarDeformation script on this object.")]
@@ -105,12 +109,16 @@ public class CarStateController : MonoBehaviour
 
     private void CheckHealth()
     {
-        if (currentTotalHealth <= 0)
+        if (currentTotalHealth <= 0 && !isDestroyed)
         {
             isDestroyed = true;
+            onCarDestroyed.Invoke();
 
             // Temporarily
-            Destroy(GetComponent<Vehicle>());
+            foreach (Wheel wheel in GetComponentsInChildren<Wheel>())
+            {
+                wheel.enabled = false;
+            }
         }
     }
 
