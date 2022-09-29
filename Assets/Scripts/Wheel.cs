@@ -1,371 +1,274 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 
+public struct HitData
+{
+    public Vector3 point;
+    public Vector3 normal;
+    public Vector3 direction;
+    public Vector3 relativeVelocity;
+    public float distance;
+    public bool hasHit;
+    public float surfaceFriction;
+    public int surfaceType;
+}
+
 public class Wheel : MonoBehaviour
 {
-    // get some info from the user
-    public BasicWheelConfig wheelConfig;
+    private Rigidbody carRigidbody;
+    private Suspension suspensionParent;
 
-    //[Tooltip("The radius of the wheel")]
-    /// <summary>
-    /// The radius of the wheel
-    /// </summary>
-    //public float radius = 0.5f;
+    [Header("Size")]
+    [Tooltip("The radius of the wheel.")]
+    public float radius;
+    [Tooltip("The width of the wheel.")]
+    public float width;
 
-    [Header("Spring")]
-    [Tooltip("How far the spring expands when it is in air.")]
-    /// <summary>
-    /// How far the spring expands when it is in air.
-    /// </summary>
-    public float suspensionDistance = .2f;
+    [Header("Raycasts")]
+    [Tooltip("The amount of rays in a single disk of raycasts going around the center of the wheel.")]
+    [Range(100, 500)]
+    public int rayCount = 100;
+    [Tooltip("Amount of raycast disks covering the wheel width.")]
+    [Range(2, 5)]
+    public int rayDiskCount = 2;
+    public float raycastOffset;
+    [Tooltip("The layers that the raycast can take into account.")]
+    public LayerMask rayLayerMask;
 
-    [Tooltip(
-        "The constant in the Hooke's spring law." +
-        " High values make the spring hard to compress" +
-        " Make this higher for heavier vehicles"
-    )]
-    /// <summary>
-    /// The k in the Hooke's spring law.
-    /// High values make the spring hard to compress
-    /// Make this higher for heavier vehicles
-    /// </summary>
-    public float stiffness = 10000;
+    // Hit data
+    public HitData averageOutput;
+    public HitData shortestOutput;
 
-    [Tooltip("Damping applied to the wheel. Lower values make the wheel bounce more.")]
-    /// <summary>
-    /// Damping applied to the wheel. 
-    /// Lower values make the wheel bounce more.
-    /// </summary>
-    public float damping = 5000;
+    [NonSerialized]
+    public bool isGrounded;
 
-    [Tooltip("The rate (m/s) at which the spring relaxes to maximum length when the wheel is not on the ground.")]
-    /// <summary>
-    /// The rate (m/s) at which the spring relaxes to maximum length when the wheel is not on the ground.
-    /// </summary>
-    public float relaxRate = .5f;
+    // Rays
+    public List<WheelcastRayData> wheelcastRays;
 
-    [Header("Friction")]
-    [Tooltip(
-        "Multiplier for the wheels sideways friction." +
-        " Values below 1 will cause the wheel to drift" +
-        " Values above 1 will cause sharp turns"
-    )]
-    /// <summary>
-    /// Multiplier for the wheels sideways friction.
-    /// Values below 1 will cause the wheel to drift
-    /// Values above 1 will cause sharp turns
-    /// </summary>
-    public float sidewaysGrip = 1;
+    // Data for processing raycasts
+    public RayProcesing rayProcessing;
 
-    [Tooltip(
-        "Multiplier for the wheels forward friction." +
-        " Values below 1 will cause the wheel to slip (like ice)" +
-        " Values above 1 will cause the wheel to have high traction (and this higher speed)"
-    )]
-    /// <summary>
-    /// Multiplier for the wheels forward friction.
-    /// Values below 1 will cause the wheel to slip (like ice)
-    /// Values above 1 will cause the wheel to have high traction (and this higher speed)
-    /// </summary>
-    public float forwardGrip = 1;
-
-    [Tooltip(
-        "Multiplier for the wheels sideways friction. " +
-        " Values below 1 cause the wheel to skid" +
-        " Values above 1 will cause the wheel to take sharper turns"
-    )]
-    /// <summary>
-    /// Multiplier for the wheels sideways friction
-    /// Values below 1 cause the wheel to skid
-    /// Values above 1 will cause the wheel to take sharper turns
-    /// </summary>
-    public float rollingFriction = .1f;
-
-    [Header("Collision")]
-    [Tooltip(
-        "Whether the normal force from the wheel collision should be faked. " +
-        " True causes the force to be applied only along the wheels upward direction" +
-        " causing causing it to not slow down from collisions"
-    )]
-    /// <summary>
-    /// Whether the normal force from the wheel collision should be faked.
-    /// True causes the force to be applied only along the wheels upward direction
-    /// causing causing it to not slow down from collisions
-    /// </summary>
-    public bool useFakeNormals;
-
-    [Header("Forces and Suspension Info")]
-    /// <summary>
-    /// The distance to which the spring of the wheel is compressed
-    /// </summary>
-    public float CompressionDistance;
-    float m_PrevCompressionDist;
-
-    /// <summary>
-    /// The ratio of compression distance and suspension distance
-    /// 0 when the wheel is entirely uncompressed, 
-    /// 1 when the wheel is entirely compressed
-    /// </summary>
-    public float CompressionRatio;
-
-    /// <summary>
-    /// The force the spring exerts on the rigidbody
-    /// </summary>
-    public Vector3 SpringForce;
-
-
-    private Rigidbody rigidbody;
-    private float k_RayStartHeight = 1;
-
-    private WheelCast wheelcast;
-    private Transform suspensionAnchor;
-
-
-
-    // data containers
-    public InternalData internalData;
-    public SharedData sharedData;
-
-    public WheelCast.HitData active_hit_data;
-
-    void Start()
+    public struct RayProcesing
     {
-
-        // Remove rigidbody component from the wheel
-        rigidbody = GetComponent<Rigidbody>();
-        if (rigidbody)
-            Destroy(rigidbody);
-
-        // Get the rigidbody component from the parent
-        rigidbody = GetComponentInParent<Rigidbody>();
-
-        // add wheelcast child object
-        GameObject tmp;
-        tmp = new GameObject("wheelcast");
-        tmp.transform.SetParent(this.transform);
-        wheelcast = tmp.AddComponent<WheelCast>();
-        wheelcast.wheelConfig = wheelConfig;
-        wheelcast.PrepWheelcastRayData(this.transform, wheelConfig.wheelRadius, suspensionDistance, k_RayStartHeight);
-
-        // suspension anchor 
-        suspensionAnchor = new GameObject("Anchor").transform;
-        suspensionAnchor.transform.SetParent(this.transform);
-        suspensionAnchor.position = this.transform.position + (this.transform.up * k_RayStartHeight);
-
+        public NativeArray<RaycastHit> raycast_hits;
+        public RaycastHit raycast_hit;
+        public NativeArray<RaycastCommand> raycast_commands;
+        public RaycastCommand raycast_command;
+        public JobHandle raycast_job_handle;
     }
 
-    void FixedUpdate()
+    public struct WheelcastRayData
     {
-        transform.localEulerAngles = new Vector3(0, sharedData.steerAngle, 0);
+        public Vector3 localPosition;
+        public Vector3 localDirection;
+        public Vector3 direction;
+        public float distance;
+        public Transform parentTransform;
 
-        SetupWheelcast();
-        CalculateSuspension();
-        CalculateFriction();
+        public HitData hitData;
     }
 
-    public void SetupWheelcast()
+    // RayProcessing cleanup
+    private void OnDisable()
     {
+        // cleanup
+        OnDestroy();
+    }
 
-
-        // align wheelcast to axle position
-        internalData.suspension_distance = (GetRayLen() - k_RayStartHeight - CompressionDistance - wheelConfig.wheelRadius);
-        wheelcast.transform.position = transform.TransformPoint(-Vector3.up * internalData.suspension_distance);
-        wheelcast.ProcessRays();
-
-        // pass data along
-        //active_hit_data = wheelcast.shortest_output;
-        active_hit_data = wheelcast.average_output;
-        sharedData.isGrounded = active_hit_data.hasHit;
-
-        // calculate hit distance in suspension space
-        // get suspension axis aligned radius for hit point
-        internalData.local_hit_point = wheelcast.transform.InverseTransformPoint(active_hit_data.point);
-        internalData.local_hit_distance = Mathf.Abs(internalData.local_hit_point.y);
-        internalData.hit_radius = Mathf.Abs((internalData.local_hit_point.normalized * wheelConfig.wheelRadius).y);
-        internalData.full_hit_distance = Mathf.Abs(suspensionAnchor.transform.InverseTransformPoint(active_hit_data.point).y);
-        internalData.full_ray_length = suspensionDistance + internalData.hit_radius + k_RayStartHeight;
-
-        // for situation when top of wheel is hit, todo
-        // if touching on top of wheel, inverse wheel offset 
-        if (internalData.local_hit_point.y > 0)
+    private void OnDestroy()
+    {
+        // cleanup
+        try
         {
-
-            // reverse hit distance, rather than a hit at the top, indicate a pull at the bottom
-            internalData.full_hit_distance = internalData.hit_radius + (internalData.full_ray_length - internalData.full_hit_distance);
+            rayProcessing.raycast_commands.Dispose();
+            rayProcessing.raycast_hits.Dispose();
         }
+        catch { }
     }
 
-    void CalculateSuspension()
+    private void Start()
     {
-        // If we did not hit, relax the spring and return
-        if (!active_hit_data.hasHit)
+        carRigidbody = GetComponentInParent<Rigidbody>();
+        suspensionParent = GetComponentInParent<Suspension>();
+        transform.localPosition = -Vector3.up * suspensionParent.restLength;
+
+        SetupRaycasts();
+    }
+
+    private void FixedUpdate()
+    {
+        ProcessRays();
+    }
+
+    public void SetupRaycasts()
+    {
+        // WheelCast data
+        wheelcastRays = new List<WheelcastRayData>();
+
+        // main ray, fixed
+        var mainTmpRay = new WheelcastRayData();
+        mainTmpRay.parentTransform = transform.parent;
+        //mainTmpRay.localPosition = Vector3.up * rayStartHeight;
+        //mainTmpRay.localDirection = Vector3.down;
+        //mainTmpRay.distance = radius + suspensionParent.suspensionDistance + rayStartHeight;
+        //wheelcastRays.Add(mainTmpRay);
+
+        // Define some steps
+        float cStep = width / (rayDiskCount - 1);
+        float radianStep = (2 * Mathf.PI / rayCount);
+        float angle;
+        float x;
+        float y;
+        float z;
+
+        // Loop
+        for (int c = 0; c < rayDiskCount; c++)
         {
-            m_PrevCompressionDist = CompressionDistance;
-            CompressionDistance = CompressionDistance - Time.fixedDeltaTime * relaxRate;
-            CompressionDistance = Mathf.Clamp(CompressionDistance, 0, suspensionDistance);
-            CompressionRatio = Mathf.Clamp01(CompressionDistance / suspensionDistance);
-            sharedData.isGrounded = false;
-            return;
+            for (int r = 0; r < rayCount; r++)
+            {
+                // Create 
+                var tmpRay = new WheelcastRayData();
+
+                // Parent
+                tmpRay.parentTransform = this.transform;
+
+                // Local center
+                tmpRay.localPosition = (-Vector3.right * width * 0.5f) + (Vector3.right * cStep * c);
+
+                // Local direction
+                angle = radianStep * r;
+                x = 0f;
+                y = Mathf.Sin(angle);
+                z = Mathf.Cos(angle);
+                tmpRay.localDirection = new Vector3(x, y, z).normalized;
+
+                // Distance
+                tmpRay.distance = radius + raycastOffset;
+
+                wheelcastRays.Add(tmpRay);
+            }
         }
 
-        var force = 0.0f;
-        sharedData.isGrounded = true;
-        internalData.localUpHitNormalDot = Vector3.Dot(active_hit_data.normal, transform.up);
-        internalData.fakedScale = internalData.localUpHitNormalDot * Mathf.Sign(internalData.localUpHitNormalDot);
 
-        // calculate compression distance and ratio
-        CompressionDistance = internalData.full_ray_length - internalData.full_hit_distance;
-        CompressionRatio = Mathf.Clamp01(CompressionDistance / suspensionDistance); // if we get overcompressed, allow the compression ratio to go beyond 1 for this moment
-        CompressionDistance = Mathf.Clamp(CompressionDistance, 0, suspensionDistance);
+        // Raycast jobs
+        rayProcessing.raycast_commands = new NativeArray<RaycastCommand>(wheelcastRays.Count, Allocator.Persistent);
+        rayProcessing.raycast_hits = new NativeArray<RaycastHit>(wheelcastRays.Count, Allocator.Persistent);
+    }
 
-        // Calculate the force from the springs compression using Hooke's Law
-        float springForce = stiffness * CompressionRatio;
-        force += springForce;
-
-        // Calculate the damping force based on compression rate of the spring
-        float rate = (CompressionDistance - m_PrevCompressionDist) / Time.fixedDeltaTime;
-        m_PrevCompressionDist = CompressionDistance;
-
-        float damperForce = rate * damping;
-        force += damperForce;
-
-        // When normals are faked, the spring force vector is not applied towards the wheel's center,
-        // instead it is resolved along the global Y axis and applied
-        // This helps maintain velocity over speed bumps, however may be unrealistic
-        if (useFakeNormals)
-            SpringForce = Vector3.up * force;
-        else
+    public void ProcessRays()
+    {
+        // Process into world space
+        for (int i = 0; i < wheelcastRays.Count; i++)
         {
-            /*
-            float fakedScale = Vector3.Dot(Hit.normal, transform.up);
-            force *= fakedScale;
-            SpringForce = transform.up * force;
-            */
-            internalData.forceDirection = active_hit_data.normal;// Vector3.Lerp(Vector3.up, transform.up, Mathf.Clamp01(internalData.fakedScale));
-            SpringForce = internalData.forceDirection * force;
+            var w = wheelcastRays[i];
+
+            // Center position
+            rayProcessing.raycast_command.from = w.parentTransform.TransformPoint(w.localPosition);
+
+            // Direction
+            w.direction = w.parentTransform.TransformDirection(w.localDirection);
+            rayProcessing.raycast_command.direction = w.direction;
+
+            // Other params
+            rayProcessing.raycast_command.distance = w.distance;
+            rayProcessing.raycast_command.layerMask = rayLayerMask;
+            rayProcessing.raycast_command.maxHits = 1;
+
+            // Add to batch process
+            rayProcessing.raycast_commands[i] = rayProcessing.raycast_command;
+
+            // Debugging
+            Debug.DrawRay(rayProcessing.raycast_command.from, rayProcessing.raycast_command.direction.normalized * rayProcessing.raycast_command.distance, Color.magenta);
+
+            // Store
+            wheelcastRays[i] = w;
         }
 
-        // Apply suspension force
-        Debug.DrawRay(active_hit_data.point, SpringForce, Color.red);
-        rigidbody.AddForceAtPosition(SpringForce, (active_hit_data.point));
+        // Process 
+        rayProcessing.raycast_job_handle = RaycastCommand.ScheduleBatch(rayProcessing.raycast_commands, rayProcessing.raycast_hits, 10);
+        rayProcessing.raycast_job_handle.Complete();
+
+        // Outputs
+        averageOutput = NewHitData();
+        shortestOutput = NewHitData();
+
+        float weight = 0f;
+        float total_weight = 0f;
+        int count = 0;
+        float shortestDistance = 1000f;
+
+        for (int i = 0; i < wheelcastRays.Count; i++)
+        {
+            // Collect data
+            var w = wheelcastRays[i];
+            w.hitData = NewHitData();
+
+
+            // No hit, skip
+            rayProcessing.raycast_hit = rayProcessing.raycast_hits[i];
+            if (!(rayProcessing.raycast_hit.distance > 0))
+            {
+                continue;
+            }
+
+            // Store data
+            w.hitData.distance = rayProcessing.raycast_hit.distance;
+            w.hitData.hasHit = true;
+            w.hitData.normal = rayProcessing.raycast_hit.normal;
+            w.hitData.point = rayProcessing.raycast_hit.point;
+            w.hitData.relativeVelocity = transform.InverseTransformDirection(transform.position);
+            w.hitData.direction = w.direction;
+            w.hitData.surfaceFriction = 1f;
+
+            // Get weight
+            weight = rayProcessing.raycast_hit.distance;
+            // Weight = Mathf.Pow(weight, 5);
+            total_weight += weight;
+
+            // Shortest
+            if (rayProcessing.raycast_hit.distance < shortestDistance)
+            {
+                shortestOutput = w.hitData;
+                shortestDistance = rayProcessing.raycast_hit.distance;
+            }
+
+            // Average
+            averageOutput.hasHit = true;
+            averageOutput.point += rayProcessing.raycast_hit.point * weight;
+            averageOutput.normal += rayProcessing.raycast_hit.normal * weight;
+            averageOutput.distance += rayProcessing.raycast_hit.distance * weight;
+            averageOutput.direction += w.hitData.direction * weight;
+
+            wheelcastRays[i] = w;
+
+            count++;
+        }
+
+        averageOutput.normal = averageOutput.hasHit ? Vector3.Normalize(averageOutput.normal) : Vector3.zero;
+        averageOutput.point = averageOutput.hasHit ? averageOutput.point / total_weight : Vector3.zero;
+        averageOutput.distance = averageOutput.hasHit ? averageOutput.distance / total_weight : 0f;
+        averageOutput.direction = averageOutput.hasHit ? averageOutput.direction / total_weight : Vector3.zero;
+
+        // Debugging
+        Debug.DrawRay(shortestOutput.point, shortestOutput.normal * shortestOutput.distance, Color.yellow, 0, false);
     }
 
-    void CalculateFriction()
+    public HitData NewHitData()
     {
-        // opt out
-        if (!active_hit_data.hasHit) return;
-
-        // sample velocity
-        sharedData.velocity = rigidbody.GetPointVelocity(active_hit_data.point);
-
-        // Contact basis (can be different from wheel basis)
-        Vector3 normal = active_hit_data.normal;// Hit.normal;
-        Vector3 side = transform.right;
-        Vector3 forward = transform.forward;
-
-        // Apply less force if the vehicle is tilted
-        var angle = Vector3.Angle(normal, transform.up);
-        float multiplier = Mathf.Cos(angle * Mathf.Deg2Rad);
-
-        // Calculate sliding velocity (velocity without normal force)
-        Vector3 sideVel = Vector3.Dot(sharedData.velocity, side) * side * multiplier;
-        Vector3 forwardVel = Vector3.Dot(sharedData.velocity, forward) * forward * multiplier;
-        Vector3 velocity2D = sideVel + forwardVel;
-
-        // contact forward normal
-        internalData.momentum = velocity2D;// * rigidbody.mass;
-
-        internalData.latForce = Vector3.Dot(-internalData.momentum, side) * side * sidewaysGrip;
-        internalData.longForce = Vector3.Dot(-internalData.momentum, forward) * forward * forwardGrip;
-        Vector3 frictionForce = Vector3.zero;
-
-        frictionForce += internalData.longForce;
-        frictionForce += internalData.latForce;
-
-        // Apply rolling friction
-        internalData.longForce *= 1 - rollingFriction;
-
-        // Apply brake force
-        var brakeForceMag = sharedData.brakeTorque / wheelConfig.wheelRadius;
-        brakeForceMag = Mathf.Clamp(brakeForceMag, 0, internalData.longForce.magnitude);
-        internalData.longForce -= internalData.longForce.normalized * brakeForceMag;
-        frictionForce -= internalData.longForce;
-
-        Debug.DrawRay(active_hit_data.point, frictionForce, Color.blue);
-        rigidbody.AddForceAtPosition(frictionForce * rigidbody.mass, active_hit_data.point); //Hit.point
-
-        Debug.DrawRay(active_hit_data.point, forward * sharedData.motorTorque / wheelConfig.wheelRadius * forwardGrip, Color.magenta);
-        rigidbody.AddForceAtPosition(forward * sharedData.motorTorque / wheelConfig.wheelRadius * forwardGrip, active_hit_data.point);//Hit.point
-
+        var hitData = new HitData();
+        hitData.point = Vector3.zero;
+        hitData.normal = Vector3.zero;
+        hitData.relativeVelocity = Vector3.zero;
+        hitData.distance = 0;
+        hitData.hasHit = false;
+        hitData.surfaceFriction = 0;
+        hitData.surfaceType = 0;
+        return hitData;
     }
 
-    float GetRayLen()
-    {
-        return suspensionDistance + wheelConfig.wheelRadius + k_RayStartHeight;
-    }
-
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        Handles.color = Color.yellow;
-        Handles.DrawWireDisc(transform.position, transform.right, wheelConfig.wheelRadius);
-
-        Handles.color = Color.red;
-        var p1 = transform.position + transform.up * k_RayStartHeight;
-        var p2 = transform.position - transform.up * (GetRayLen() - k_RayStartHeight);
-        Handles.DrawLine(p1, p2);
-
-        var pos = transform.position + (-transform.up * (GetRayLen() - k_RayStartHeight - CompressionDistance - wheelConfig.wheelRadius));
-        Handles.DrawWireDisc(pos, transform.right, wheelConfig.wheelRadius);
-    }
-#endif
-
-    [Serializable]
-    public struct BasicWheelConfig
-    {
-        [Header("WheelSetup")]
-        public bool enable3DRaycasts;
-        public float wheelRadius;
-        public float wheelWidth;
-
-        [Header("Raycasts")]
-        public int rayCountRadial;
-        public int rayCountCrossSection;
-        public float span;
-
-        [HideInInspector]
-        public int raycastCount;
-
-        [Header("Layers")]
-        public LayerMask layer_mask;
-    }
-    [Serializable]
-    public struct InternalData
-    {
-        public float local_hit_distance;
-        public Vector3 local_hit_point;
-        public float hit_radius;
-        public float full_hit_distance;
-        public float full_ray_length;
-        public float suspension_distance;
-        public float fakedScale;
-        public float localUpHitNormalDot;
-        public Vector3 forceDirection;
-        public Vector3 latForce;
-        public Vector3 longForce;
-        public Vector3 momentum;
-    }
-
-    [Serializable]
-    public struct SharedData
-    {
-        public Vector3 velocity;
-        public float steerAngle;
-        public float motorTorque;
-        public float brakeTorque;
-        public bool isGrounded;
-    }
 }
