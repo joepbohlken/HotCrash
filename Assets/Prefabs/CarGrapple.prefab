@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7674301094145265617}
   - component: {fileID: 1268808955141534797}
   - component: {fileID: 3963707120087304377}
+  - component: {fileID: -6792557410650609422}
   m_Layer: 0
   m_Name: CarGrapple
   m_TagString: Untagged
@@ -198,6 +199,18 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-6792557410650609422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519479309125342849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9865ee41df8071f4f8ddeb63060d76bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3840887845941349158
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,15 +10,9 @@ public class GrapplingHookAbility : Ability
 {
     private Transform grappleGun;
     private LineRenderer lr;
-    private bool isShooting, isGrappling;
+    private bool isShooting;
     private Vector3 hookPoint;
-    [Range(0f, 1f)] public float positionStrength = 1f;
-    [Range(0f, 1f)] public float rotationStrength = 1f;
 
-    [SerializeField]
-    private GameObject grapplingHook;
-    [SerializeField]
-    private GameObject carPos;
     [SerializeField]
     private LayerMask grappleLayer;
     [SerializeField]
@@ -28,6 +23,7 @@ public class GrapplingHookAbility : Ability
 
     public override void Use()
     {
+        if(!isShooting && !GrapplePull.isGrappling)
         ShootHook();
     }
 
@@ -39,7 +35,7 @@ public class GrapplingHookAbility : Ability
         //    return;
         //}
 
-        grappleGun = Car.transform.Find("Grapple Gun");
+        grappleGun = Car.transform.Find("CarGrapple");
         lr = grappleGun.GetComponent<LineRenderer>();
 
         isShooting = true;
@@ -58,7 +54,7 @@ public class GrapplingHookAbility : Ability
         lr.SetPosition(0, grappleGun.position);
         lr.SetPosition(1, hookPoint);
 
-        isGrappling = true;
+        GrapplePull.isGrappling = true;
         lr.enabled = true;
 
         isShooting = false;

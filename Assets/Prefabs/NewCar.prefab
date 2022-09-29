@@ -2302,7 +2302,7 @@ Transform:
   - {fileID: 8421586875292990353}
   - {fileID: 1976588731052862572}
   - {fileID: 1976588730533537437}
-  - {fileID: 2539281397003487087}
+  - {fileID: 8606356086932022076}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5597,7 +5597,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7265744515449303197, guid: 7d76718c32b44c242baad1f4ee2f7420, type: 3}
---- !u!1001 &4681545007376613440
+--- !u!1001 &1489158587624449043
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -5606,7 +5606,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3519479309125342849, guid: b5564a07c052d1442a1aac128a6ecd8c, type: 3}
       propertyPath: m_Name
-      value: Grapple Gun
+      value: CarGrapple
       objectReference: {fileID: 0}
     - target: {fileID: 7189265197306562351, guid: b5564a07c052d1442a1aac128a6ecd8c, type: 3}
       propertyPath: m_RootOrder
@@ -5654,8 +5654,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5564a07c052d1442a1aac128a6ecd8c, type: 3}
---- !u!4 &2539281397003487087 stripped
+--- !u!4 &8606356086932022076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7189265197306562351, guid: b5564a07c052d1442a1aac128a6ecd8c, type: 3}
-  m_PrefabInstance: {fileID: 4681545007376613440}
+  m_PrefabInstance: {fileID: 1489158587624449043}
   m_PrefabAsset: {fileID: 0}

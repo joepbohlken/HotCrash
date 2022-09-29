@@ -1271,6 +1271,65 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
+--- !u!1 &1682157772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2629325998768992914, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+  m_PrefabInstance: {fileID: 1973355190}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1682157774 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3823961659281165537, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+  m_PrefabInstance: {fileID: 1973355190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682157772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9865ee41df8071f4f8ddeb63060d76bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1682157779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682157772}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8370b6859c243c441be63d541e7d739b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapplingGun: {fileID: 1682157774}
+  quality: 500
+  damper: 14
+  strength: 800
+  velocity: 15
+  waveCount: 3
+  waveHeight: 1
+  affectCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 7.336155
+      outSlope: 7.336155
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13165744
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1750810811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1622,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewCar
       objectReference: {fileID: 0}
+    - target: {fileID: 3823961659281165537, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: speed
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823961659281165537, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: maxSpeed
+      value: 1000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3823961659281165537, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: rotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4151791452072940661, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1606,6 +1677,10 @@ PrefabInstance:
     - target: {fileID: 4151791452072940661, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606356086932022076, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
