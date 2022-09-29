@@ -58,12 +58,16 @@ public class CarStateController : MonoBehaviour
         // Set up vitals and vital parts
         foreach(Vitals vital in vitals)
         {
+            // Ignore vital type None, it's main purpose is to prevent any unwanted bugs
             if (vital.vitalType == VitalType.None) continue;
 
+            // Set up every deformable part that is assigned to this vital type
             foreach (DeformablePart deformablePart in vital.parts)
             {
                 deformablePart.vitalTypes.Add(vital.vitalType);
+                // Add the 'health' of this part to the corresponding vital type total health
                 vital.maxHealth += deformablePart.MaxAllowedDamage;
+                // Add the 'health' of this part to the total health of the car, but only if it has not been added yet
                 if (deformablePart.vitalTypes.Count == 1) maxTotalHealth += deformablePart.MaxAllowedDamage;
             }
             vital.currentHealth = vital.maxHealth;
@@ -71,11 +75,11 @@ public class CarStateController : MonoBehaviour
 
         maxTotalHealth += engineHealth;
         currentTotalHealth = maxTotalHealth;
-        Debug.Log("Total Car Health: " + maxTotalHealth);
     }
 
     public void AddVitalDamage(List<VitalType> vitalTypes, float damage)
     {
+        // Go through each vital type the part belongs to
         foreach (VitalType vitalType in vitalTypes)
         {
             // Get and update the correct vital information
@@ -119,6 +123,8 @@ public class CarStateController : MonoBehaviour
             {
                 wheel.enabled = false;
             }
+            // Disabling AntiRoll prevents the car from becoming crazy
+            GetComponent<AntiRoll>().enabled = false;
         }
     }
 

@@ -62,8 +62,10 @@ public class DeformablePart : MonoBehaviour
 
         float damage = (collision.relativeVelocity.magnitude - minVelocity);
         maxAllowedDamage -= damage;
+        // Update the car vitals on the UI
         if (carStateController) carStateController.AddVitalDamage(vitalTypes, damage);
 
+        // Create a hinge on first collision
         if (isHinge && !hingeCreated) CreateHinge(body);
 
         if (maxAllowedDamage <= 0f)
@@ -99,6 +101,7 @@ public class DeformablePart : MonoBehaviour
             }
         }
 
+        // Apply modifications to the mesh
         meshFilter.mesh.vertices = vertices;
         meshFilter.mesh.RecalculateNormals();
         meshFilter.mesh.RecalculateBounds();
