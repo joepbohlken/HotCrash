@@ -21,8 +21,9 @@ public class Suspension : MonoBehaviour
 
     private float relaxRate;
     private float suspensionForce;
+    private float prevVel;
 
-    // Start is called before the first frame update
+
     private void Start()
     {
         carRigidbody = GetComponentInParent<Rigidbody>();
@@ -30,17 +31,10 @@ public class Suspension : MonoBehaviour
         compression = travelDist * compressionRatio;
     }
 
-    // Update is called once per frame
+
     private void FixedUpdate()
     {
-        GetRaycastInfo();
-
         CalculateSuspension();
-    }
-
-    private void GetRaycastInfo()
-    {
-
     }
 
     private void CalculateSuspension()
@@ -58,7 +52,6 @@ public class Suspension : MonoBehaviour
         }
 
         relaxRate = 0;
-
         compression = restLength - Vector3.Distance(wheel.transform.position, transform.position);
         compressionRatio = Mathf.Clamp01(compression / travelDist);
 
@@ -66,7 +59,8 @@ public class Suspension : MonoBehaviour
 
         suspensionForce = (compression * springStrength) - (velocity * springDamping);
 
-        carRigidbody.AddForceAtPosition(transform.up * suspensionForce, transform.position);
+        carRigidbody.AddForceAtPosition(-wheel.averageOutput.direction * suspensionForce, transform.position);
+        //carRigidbody.AddForce(-wheel.averageOutput.direction * suspensionForce);
     }
 
 #if UNITY_EDITOR

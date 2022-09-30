@@ -31,11 +31,13 @@ public class Wheel : MonoBehaviour
 
     [Header("Raycasts")]
     [Tooltip("The amount of rays in a single disk of raycasts going around the center of the wheel.")]
-    [Range(100, 500)]
+    [Range(15, 50)]
     public int rayCount = 100;
     [Tooltip("Amount of raycast disks covering the wheel width.")]
     [Range(2, 5)]
     public int rayDiskCount = 2;
+    [Range(90, 180)]
+    public int raycastAngle;
     public float raycastOffset;
     [Tooltip("The layers that the raycast can take into account.")]
     public LayerMask rayLayerMask;
@@ -100,7 +102,7 @@ public class Wheel : MonoBehaviour
         SetupRaycasts();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         isGrounded = averageOutput.hasHit;
         float lowestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * suspensionParent.restLength).y;
@@ -115,17 +117,10 @@ public class Wheel : MonoBehaviour
         // WheelCast data
         wheelcastRays = new List<WheelcastRayData>();
 
-        // main ray, fixed
-        var mainTmpRay = new WheelcastRayData();
-        mainTmpRay.parentTransform = transform.parent;
-        //mainTmpRay.localPosition = Vector3.up * rayStartHeight;dd
-        //mainTmpRay.localDirection = Vector3.down;
-        //mainTmpRay.distance = radius + suspensionParent.suspensionDistance + rayStartHeight;
-        //wheelcastRays.Add(mainTmpRay);
-
         // Define some steps
+        float startAngle = -raycastAngle / 2f;
         float cStep = width / (rayDiskCount - 1);
-        float radianStep = (2 * Mathf.PI / rayCount);
+        float radianStep = (float)raycastAngle / (float)(rayCount - 1);
         float angle;
         float x;
         float y;
@@ -140,17 +135,14 @@ public class Wheel : MonoBehaviour
                 var tmpRay = new WheelcastRayData();
 
                 // Parent
-                tmpRay.parentTransform = this.transform;
+                tmpRay.parentTransform = transform;
 
                 // Local center
                 tmpRay.localPosition = (-Vector3.right * width * 0.5f) + (Vector3.right * cStep * c);
 
                 // Local direction
-                angle = radianStep * r;
-                x = 0f;
-                y = Mathf.Sin(angle);
-                z = Mathf.Cos(angle);
-                tmpRay.localDirection = new Vector3(x, y, z).normalized;
+                angle = radianStep * r + startAngle;
+                tmpRay.localDirection = Quaternion.AngleAxis(angle, transform.forward) * -transform.up;
 
                 // Distance
                 tmpRay.distance = radius + raycastOffset;
@@ -260,7 +252,7 @@ public class Wheel : MonoBehaviour
         averageOutput.direction = averageOutput.hasHit ? averageOutput.direction / total_weight : Vector3.zero;
 
         // Debugging
-        Debug.DrawRay(shortestOutput.point, shortestOutput.normal * shortestOutput.distance, Color.yellow, 0, false);
+        Debug.DrawRay(shortestOutput.point, -shortestOutput.direction * shortestOutput.distance, Color.yellow, 0, false);
     }
 
     public HitData NewHitData()
