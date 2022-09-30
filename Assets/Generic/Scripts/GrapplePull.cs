@@ -39,7 +39,6 @@ public class GrapplePull : MonoBehaviour
             if(!hookSet)
             {
                 hookPoint = lr.GetPosition(1);
-                hookPoint.y = grappleGun.position.y;
                 joint = grappleGun.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = hookPoint;
@@ -66,7 +65,7 @@ public class GrapplePull : MonoBehaviour
 
         if (Vector3.Distance(grappleGun.position, hookPoint) > 1 && isGrappling)
         {
-            if (rb.velocity.magnitude < maxSpeed) rb.AddForce(transform.forward * speed, ForceMode.Force);
+            if (rb.velocity.magnitude < maxSpeed) rb.AddForce((hookPoint - transform.position).normalized * speed);
         }
         else
         {
