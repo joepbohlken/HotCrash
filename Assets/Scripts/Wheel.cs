@@ -102,6 +102,11 @@ public class Wheel : MonoBehaviour
 
     private void FixedUpdate()
     {
+        isGrounded = averageOutput.hasHit;
+        float lowestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * suspensionParent.restLength).y;
+        float highestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist)).y;
+        transform.position = isGrounded ? new Vector3(transform.position.x, Mathf.Clamp(averageOutput.point.y + radius, lowestPoint, highestPoint), transform.position.z) : suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist * suspensionParent.compressionRatio));
+
         ProcessRays();
     }
 
@@ -113,7 +118,7 @@ public class Wheel : MonoBehaviour
         // main ray, fixed
         var mainTmpRay = new WheelcastRayData();
         mainTmpRay.parentTransform = transform.parent;
-        //mainTmpRay.localPosition = Vector3.up * rayStartHeight;
+        //mainTmpRay.localPosition = Vector3.up * rayStartHeight;dd
         //mainTmpRay.localDirection = Vector3.down;
         //mainTmpRay.distance = radius + suspensionParent.suspensionDistance + rayStartHeight;
         //wheelcastRays.Add(mainTmpRay);

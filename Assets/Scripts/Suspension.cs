@@ -47,8 +47,6 @@ public class Suspension : MonoBehaviour
     {
         if (!wheel.averageOutput.hasHit)
         {
-            wheel.isGrounded = false;
-
             if(compression > 0)
             {
                 relaxRate += Time.fixedDeltaTime;
@@ -59,9 +57,7 @@ public class Suspension : MonoBehaviour
             return;
         }
 
-        wheel.isGrounded = true;
         relaxRate = 0;
-        wheel.transform.position = new Vector3(wheel.transform.position.x, wheel.averageOutput.point.y + wheel.radius, wheel.transform.position.z);
 
         compression = restLength - Vector3.Distance(wheel.transform.position, transform.position);
         compressionRatio = Mathf.Clamp01(compression / travelDist);
@@ -71,26 +67,6 @@ public class Suspension : MonoBehaviour
         suspensionForce = (compression * springStrength) - (velocity * springDamping);
 
         carRigidbody.AddForceAtPosition(transform.up * suspensionForce, transform.position);
-
-        /*
-        float fullHitDistance = Mathf.Abs(Vector3.Distance(transform.position, wheel.averageOuput.point) - wheel.raycastOffset);
-        float fullRayLength = restLength + wheel.radius + wheel.raycastOffset;
-
-        compression = fullRayLength - fullHitDistance;
-        compressionRatio = Mathf.Clamp01(compression / travelDist);
-        compression = Mathf.Clamp(compression, 0, travelDist);
-
-        float springForce = springStrength * compressionRatio;
-
-        float springVelocity = (compression - prevCompression) / Time.fixedDeltaTime;
-        prevCompression = compression;
-
-        float damperForce = springVelocity * springDamping;
-
-        Debug.Log(springForce - damperForce);
-
-        carRigidbody.AddForceAtPosition(upDir * (springForce - damperForce), wheel.transform.position);
-        */
     }
 
 #if UNITY_EDITOR
