@@ -42,6 +42,8 @@ public class Wheel : MonoBehaviour
     [Tooltip("The layers that the raycast can take into account.")]
     public LayerMask rayLayerMask;
 
+    [Header("Friction")]
+
     // Hit data
     public HitData averageOutput;
     public HitData shortestOutput;
@@ -97,22 +99,27 @@ public class Wheel : MonoBehaviour
     {
         carRigidbody = GetComponentInParent<Rigidbody>();
         suspensionParent = GetComponentInParent<Suspension>();
-        transform.localPosition = -Vector3.up * suspensionParent.restLength;
+        transform.localPosition = -Vector3.up * (suspensionParent.restLength - (suspensionParent.travelDist * suspensionParent.compressionRatio));
 
         SetupRaycasts();
     }
 
     private void Update()
     {
-        isGrounded = averageOutput.hasHit;
+        isGrounded = shortestOutput.hasHit;
         float lowestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * suspensionParent.restLength).y;
         float highestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist)).y;
-        transform.position = isGrounded ? new Vector3(transform.position.x, Mathf.Clamp(averageOutput.point.y + radius, lowestPoint, highestPoint), transform.position.z) : suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist * suspensionParent.compressionRatio));
+        transform.position = isGrounded ? new Vector3(transform.position.x, Mathf.Clamp((shortestOutput.point - (shortestOutput.direction * radius)).y, lowestPoint, highestPoint), transform.position.z) : suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist * suspensionParent.compressionRatio));
 
         ProcessRays();
     }
 
-    public void SetupRaycasts()
+    private void FixedUpdate()
+    {
+        
+    }
+
+    private void SetupRaycasts()
     {
         // WheelCast data
         wheelcastRays = new List<WheelcastRayData>();
@@ -122,9 +129,6 @@ public class Wheel : MonoBehaviour
         float cStep = width / (rayDiskCount - 1);
         float radianStep = (float)raycastAngle / (float)(rayCount - 1);
         float angle;
-        float x;
-        float y;
-        float z;
 
         // Loop
         for (int c = 0; c < rayDiskCount; c++)
@@ -157,7 +161,7 @@ public class Wheel : MonoBehaviour
         rayProcessing.raycast_hits = new NativeArray<RaycastHit>(wheelcastRays.Count, Allocator.Persistent);
     }
 
-    public void ProcessRays()
+    private void ProcessRays()
     {
         // Process into world space
         for (int i = 0; i < wheelcastRays.Count; i++)
@@ -252,10 +256,15 @@ public class Wheel : MonoBehaviour
         averageOutput.direction = averageOutput.hasHit ? averageOutput.direction / total_weight : Vector3.zero;
 
         // Debugging
-        Debug.DrawRay(shortestOutput.point, -shortestOutput.direction * shortestOutput.distance, Color.yellow, 0, false);
+        Debug.DrawRay(shortestOutput.point, -shortestOutput.direction * radius, Color.yellow, 0, false);
     }
 
-    public HitData NewHitData()
+    private void CalculateFriction()
+    {
+
+    }
+
+    private HitData NewHitData()
     {
         var hitData = new HitData();
         hitData.point = Vector3.zero;
@@ -268,4 +277,14 @@ public class Wheel : MonoBehaviour
         return hitData;
     }
 
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if(!Application.isPlaying)
+        {
+            Handles.color = Color.magenta;
+            Handles.DrawSolidArc(transform.position, transform.right, Quaternion.AngleAxis((180 - raycastAngle)/2, transform.right) * transform.forward, raycastAngle, radius);
+        }
+    }
+#endif
 }

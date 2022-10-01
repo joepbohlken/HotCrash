@@ -21,13 +21,10 @@ public class Suspension : MonoBehaviour
 
     private float relaxRate;
     private float suspensionForce;
-    private float prevVel;
-
 
     private void Start()
     {
         carRigidbody = GetComponentInParent<Rigidbody>();
-
         compression = travelDist * compressionRatio;
     }
 
@@ -39,7 +36,7 @@ public class Suspension : MonoBehaviour
 
     private void CalculateSuspension()
     {
-        if (!wheel.averageOutput.hasHit)
+        if (!wheel.isGrounded)
         {
             if(compression > 0)
             {
@@ -59,17 +56,17 @@ public class Suspension : MonoBehaviour
 
         suspensionForce = (compression * springStrength) - (velocity * springDamping);
 
-        carRigidbody.AddForceAtPosition(-wheel.averageOutput.direction * suspensionForce, transform.position);
-        //carRigidbody.AddForce(-wheel.averageOutput.direction * suspensionForce);
+        carRigidbody.AddForceAtPosition(transform.up * suspensionForce, transform.position);
     }
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        Handles.color = Color.yellow;
-        var p1 = transform.position;
-        var p2 = transform.position - transform.up * restLength;
-        Handles.DrawLine(p1, p2);
+        if(!Application.isPlaying)
+        {
+        Handles.color = Color.magenta;
+        Handles.DrawWireDisc(transform.position + -transform.up * (restLength - travelDist * compressionRatio), transform.right, wheel.radius);
+        }
 
         Handles.color = Color.red;
         Handles.DrawLine(transform.position, transform.position + transform.up * suspensionForce / 100f, 5f);
