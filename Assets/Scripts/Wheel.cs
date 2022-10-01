@@ -28,6 +28,8 @@ public class Wheel : MonoBehaviour
     public float radius;
     [Tooltip("The width of the wheel.")]
     public float width;
+    [Tooltip("The mass of the wheel.")]
+    public float mass;
 
     [Header("Raycasts")]
     [Tooltip("The amount of rays in a single disk of raycasts going around the center of the wheel.")]
@@ -44,12 +46,14 @@ public class Wheel : MonoBehaviour
 
     [Header("Friction")]
 
+
     // Hit data
     public HitData averageOutput;
     public HitData shortestOutput;
 
     [NonSerialized]
     public bool isGrounded;
+    private float circumference;
 
     // Rays
     public List<WheelcastRayData> wheelcastRays;
@@ -101,6 +105,8 @@ public class Wheel : MonoBehaviour
         suspensionParent = GetComponentInParent<Suspension>();
         transform.localPosition = -Vector3.up * (suspensionParent.restLength - (suspensionParent.travelDist * suspensionParent.compressionRatio));
 
+        circumference = Mathf.PI * radius * 2;
+
         SetupRaycasts();
     }
 
@@ -116,7 +122,7 @@ public class Wheel : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
     }
 
     private void SetupRaycasts()
@@ -154,7 +160,6 @@ public class Wheel : MonoBehaviour
                 wheelcastRays.Add(tmpRay);
             }
         }
-
 
         // Raycast jobs
         rayProcessing.raycast_commands = new NativeArray<RaycastCommand>(wheelcastRays.Count, Allocator.Persistent);
@@ -209,7 +214,6 @@ public class Wheel : MonoBehaviour
             var w = wheelcastRays[i];
             w.hitData = NewHitData();
 
-
             // No hit, skip
             rayProcessing.raycast_hit = rayProcessing.raycast_hits[i];
             if (!(rayProcessing.raycast_hit.distance > 0))
@@ -222,7 +226,6 @@ public class Wheel : MonoBehaviour
             w.hitData.hasHit = true;
             w.hitData.normal = rayProcessing.raycast_hit.normal;
             w.hitData.point = rayProcessing.raycast_hit.point;
-            w.hitData.relativeVelocity = transform.InverseTransformDirection(transform.position);
             w.hitData.direction = w.direction;
             w.hitData.surfaceFriction = 1f;
 
@@ -244,7 +247,6 @@ public class Wheel : MonoBehaviour
             averageOutput.normal += rayProcessing.raycast_hit.normal * weight;
             averageOutput.distance += rayProcessing.raycast_hit.distance * weight;
             averageOutput.direction += w.hitData.direction * weight;
-
             wheelcastRays[i] = w;
 
             count++;
@@ -261,6 +263,11 @@ public class Wheel : MonoBehaviour
 
     private void CalculateFriction()
     {
+        if (!isGrounded)
+        {
+            return;
+        }
+
 
     }
 
@@ -269,7 +276,6 @@ public class Wheel : MonoBehaviour
         var hitData = new HitData();
         hitData.point = Vector3.zero;
         hitData.normal = Vector3.zero;
-        hitData.relativeVelocity = Vector3.zero;
         hitData.distance = 0;
         hitData.hasHit = false;
         hitData.surfaceFriction = 0;
@@ -280,10 +286,10 @@ public class Wheel : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        if(!Application.isPlaying)
+        if (!Application.isPlaying)
         {
             Handles.color = Color.magenta;
-            Handles.DrawSolidArc(transform.position, transform.right, Quaternion.AngleAxis((180 - raycastAngle)/2, transform.right) * transform.forward, raycastAngle, radius);
+            Handles.DrawSolidArc(transform.position, transform.right, Quaternion.AngleAxis((180 - raycastAngle) / 2, transform.right) * transform.forward, raycastAngle, radius);
         }
     }
 #endif

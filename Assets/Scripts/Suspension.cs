@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,7 +12,6 @@ public class Suspension : MonoBehaviour
     [Header("Spring")]
     public float restLength;
     public float travelDist;
-    private float compression;
     [Range(0, 1)]
     public float compressionRatio = 0;
     [Min(0)]
@@ -19,6 +19,8 @@ public class Suspension : MonoBehaviour
     [Min(0)]
     public float springDamping;
 
+    [NonSerialized]
+    public float compression;
     private float relaxRate;
     private float suspensionForce;
 
@@ -38,7 +40,7 @@ public class Suspension : MonoBehaviour
     {
         if (!wheel.isGrounded)
         {
-            if(compression > 0)
+            if (compression > 0)
             {
                 relaxRate += Time.fixedDeltaTime;
                 compression = Mathf.Lerp(compression, 0, relaxRate);
@@ -56,20 +58,20 @@ public class Suspension : MonoBehaviour
 
         suspensionForce = (compression * springStrength) - (velocity * springDamping);
 
-        carRigidbody.AddForceAtPosition(transform.up * suspensionForce, transform.position);
+        carRigidbody.AddForceAtPosition(transform.up * suspensionForce, wheel.transform.position);
     }
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        if(!Application.isPlaying)
+        if (!Application.isPlaying)
         {
-        Handles.color = Color.magenta;
-        Handles.DrawWireDisc(transform.position + -transform.up * (restLength - travelDist * compressionRatio), transform.right, wheel.radius);
+            Handles.color = Color.magenta;
+            Handles.DrawWireDisc(transform.position + -transform.up * (restLength - travelDist * compressionRatio), transform.right, wheel.radius);
         }
 
-        Handles.color = Color.red;
-        Handles.DrawLine(transform.position, transform.position + transform.up * suspensionForce / 100f, 5f);
+        Handles.color = Color.green;
+        Handles.DrawLine(transform.position, transform.position + transform.up * Mathf.Clamp(suspensionForce / 10, -10, 10), 5f);
     }
 #endif
 }
