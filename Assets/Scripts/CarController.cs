@@ -8,6 +8,9 @@ public class CarController : MonoBehaviour
     private Rigidbody rigidbody;
 
     [NonSerialized]
+    public Vector3 localVelocity;
+
+    [NonSerialized]
     public float accelInput;
     [NonSerialized]
     public float brakeInput;
@@ -65,6 +68,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        localVelocity = transform.InverseTransformDirection(rigidbody.velocity);
         velMag = rigidbody.velocity.magnitude;
     }
 

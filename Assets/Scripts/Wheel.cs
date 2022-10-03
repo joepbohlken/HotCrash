@@ -117,12 +117,10 @@ public class Wheel : MonoBehaviour
         float highestPoint = suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist)).y;
         transform.position = isGrounded ? new Vector3(transform.position.x, Mathf.Clamp((shortestOutput.point - (shortestOutput.direction * radius)).y, lowestPoint, highestPoint), transform.position.z) : suspensionParent.transform.TransformPoint(-Vector3.up * (suspensionParent.restLength - suspensionParent.travelDist * suspensionParent.compressionRatio));
 
+        float ackermannVal = Mathf.Sign(suspensionParent.steerAngle) == suspensionParent.flippedSideFactor ? 1 + suspensionParent.ackermannFactor : 1 - suspensionParent.ackermannFactor;
+        transform.localEulerAngles = new Vector3(0, suspensionParent.steerDegrees * ackermannVal, 0);
+
         ProcessRays();
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
     private void SetupRaycasts()
@@ -261,16 +259,6 @@ public class Wheel : MonoBehaviour
         Debug.DrawRay(shortestOutput.point, -shortestOutput.direction * radius, Color.yellow, 0, false);
     }
 
-    private void CalculateFriction()
-    {
-        if (!isGrounded)
-        {
-            return;
-        }
-
-
-    }
-
     private HitData NewHitData()
     {
         var hitData = new HitData();
@@ -288,8 +276,8 @@ public class Wheel : MonoBehaviour
     {
         if (!Application.isPlaying)
         {
-            Handles.color = Color.magenta;
-            Handles.DrawSolidArc(transform.position, transform.right, Quaternion.AngleAxis((180 - raycastAngle) / 2, transform.right) * transform.forward, raycastAngle, radius);
+            //Handles.color = Color.magenta;
+            //Handles.DrawSolidArc(transform.position, transform.right, Quaternion.AngleAxis((180 - raycastAngle) / 2, transform.right) * transform.forward, raycastAngle, radius);
         }
     }
 #endif
