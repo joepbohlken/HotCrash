@@ -152,7 +152,7 @@ public class Wheel : MonoBehaviour
 
                 // Local direction
                 angle = radianStep * r + startAngle;
-                tmpRay.localDirection = Quaternion.AngleAxis(angle, transform.forward) * -transform.up;
+                tmpRay.localDirection = Quaternion.AngleAxis(angle, Vector3.right) * -transform.up;
 
                 // Distance
                 tmpRay.distance = radius + raycastOffset;
