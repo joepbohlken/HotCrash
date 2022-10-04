@@ -426,6 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702902569}
   - component: {fileID: 702902570}
+  - component: {fileID: 702902571}
   m_Layer: 2
   m_Name: RR Suspension
   m_TagString: Untagged
@@ -474,6 +475,18 @@ MonoBehaviour:
   steerFactor: 0
   steerAngle: 0
   ackermannFactor: 0.2
+--- !u!114 &702902571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702902568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &730792972
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +664,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 991201532}
+  - component: {fileID: 991201533}
+  - component: {fileID: 991201534}
   m_Layer: 2
   m_Name: Engine
   m_TagString: Untagged
@@ -673,6 +688,99 @@ Transform:
   m_Father: {fileID: 543450651595121697}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &991201533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991201531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 024fbb49e4adcda4ca86e5d0b6126923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignition: 1
+  power: 0.7
+  inputCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minPitch: 0.5
+  maxPitch: 1.5
+  strength: 1
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.869695
+      inSlope: 0.061536875
+      outSlope: 0.061536875
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.6353285
+      value: 0.9766364
+      inSlope: -0.014466913
+      outSlope: -0.014466913
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7.011009
+      value: 0.004496321
+      inSlope: -0.52951765
+      outSlope: -0.52951765
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  inertia: 0.87
+  canReverse: 0
+  outputDrives:
+  - {fileID: 1222285298}
+  driveDividePower: 3
+  transmission: {fileID: 1222285297}
+  pitchIncreaseBetweenShift: 0
+--- !u!114 &991201534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991201531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1033039113
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1033039114}
   - component: {fileID: 1033039115}
+  - component: {fileID: 1033039116}
   m_Layer: 2
   m_Name: FL Suspension
   m_TagString: Untagged
@@ -731,6 +840,18 @@ MonoBehaviour:
   steerFactor: 1
   steerAngle: 0
   ackermannFactor: 0.1
+--- !u!114 &1033039116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033039113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1054001097
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +1004,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222285296}
+  - component: {fileID: 1222285297}
+  - component: {fileID: 1222285298}
   m_Layer: 2
   m_Name: Transmission
   m_TagString: Untagged
@@ -905,6 +1028,65 @@ Transform:
   m_Father: {fileID: 543450651595121697}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1222285297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222285295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8009a24c94f904942b9fd2f40ec44172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 1
+  skidSteerDrive: 0
+  outputDrives:
+  - {fileID: 1033039116}
+  - {fileID: 1960915080}
+  - {fileID: 1787880700}
+  - {fileID: 702902571}
+  driveDividePower: 2
+  gears:
+  - ratio: -3.5
+    minRPM: -1101.7301
+    maxRPM: 0
+  - ratio: 0
+    minRPM: 0
+    maxRPM: 0
+  - ratio: 3
+    minRPM: 0
+    maxRPM: 1285.3518
+  - ratio: 2
+    minRPM: 964.0138
+    maxRPM: 1928.0276
+  - ratio: 1.5
+    minRPM: 1606.6897
+    maxRPM: 2570.7036
+  - ratio: 1
+    minRPM: 1928.0276
+    maxRPM: 3856.0552
+  - ratio: 0.8
+    minRPM: 3374.048
+    maxRPM: 4820.069
+  startGear: 2
+  skipNeutral: 1
+  autoCalculateRpmRanges: 1
+  shiftDelay: 30
+  shiftThreshold: 1
+--- !u!114 &1222285298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222285295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1477236279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689351902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.49, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1290,7 +1472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1697921617
 Transform:
   m_ObjectHideFlags: 0
@@ -1533,6 +1715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1787880698}
   - component: {fileID: 1787880699}
+  - component: {fileID: 1787880700}
   m_Layer: 2
   m_Name: RL Suspension
   m_TagString: Untagged
@@ -1581,6 +1764,18 @@ MonoBehaviour:
   steerFactor: 0
   steerAngle: 0
   ackermannFactor: 0.2
+--- !u!114 &1787880700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787880697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1957809882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,6 +1883,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960915078}
   - component: {fileID: 1960915079}
+  - component: {fileID: 1960915080}
   m_Layer: 2
   m_Name: FR Suspension
   m_TagString: Untagged
@@ -1736,6 +1932,18 @@ MonoBehaviour:
   steerFactor: 1
   steerAngle: 0
   ackermannFactor: 0.1
+--- !u!114 &1960915080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960915077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcdcb4fe3627154d97b16314f851911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2077951503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,7 +2163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147946127003}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 15.127, y: 3.627, z: 0.739}
+  m_LocalPosition: {x: 15.127, y: 0.51, z: 0.739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2055,8 +2263,6 @@ MonoBehaviour:
   brakeAxis: Brake
   steerAxis: Horizontal
   handbrakeAxis: Handbrake
-  upshiftButton: Upshift
-  downshiftButton: Downshift
 --- !u!114 &919132147946127006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2069,6 +2275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a89ba5a4c23bf4e89a522ac790acff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdEbrakePark: 0
+  burnoutThreshold: 0.9
+  burnoutSpin: 5
+  burnoutSmoothness: 0.5
+  engine: {fileID: 991201533}
+  wheels: []
 --- !u!4 &927336110351277564
 Transform:
   m_ObjectHideFlags: 0

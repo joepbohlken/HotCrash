@@ -18,20 +18,27 @@ public class CarController : MonoBehaviour
     public float steerInput;
     [NonSerialized]
     public float handbrakeInput;
-    [NonSerialized]
-    public bool upshiftPressed;
-    [NonSerialized]
-    public bool downshiftPressed;
-    [NonSerialized]
-    public float upshiftHold;
-    [NonSerialized]
-    public float downshiftHold;
+
+    [Tooltip("Automatically hold ebrake if it's pressed while parked")]
+    public bool holdEbrakePark;
+
+    public float burnoutThreshold = 0.9f;
+    [System.NonSerialized]
+    public float burnout;
+    public float burnoutSpin = 5;
+    [Range(0, 0.9f)]
+    public float burnoutSmoothness = 0.5f;
+    public Engine engine;
 
     [NonSerialized]
     public float velMag;
 
-    private bool stopUpshift;
-    private bool stopDownShift;
+    [NonSerialized]
+    public bool reversing;
+
+    public Wheel[] wheels;
+    [NonSerialized]
+    public int groundedWheels; // Number of wheels grounded
 
     // Start is called before the first frame update
     void Start()
@@ -39,37 +46,25 @@ public class CarController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Shift single frame pressing logic
-        if (stopUpshift)
-        {
-            upshiftPressed = false;
-            stopUpshift = false;
-        }
-
-        if (stopDownShift)
-        {
-            downshiftPressed = false;
-            stopDownShift = false;
-        }
-
-        if (upshiftPressed)
-        {
-            stopUpshift = true;
-        }
-
-        if (downshiftPressed)
-        {
-            stopDownShift = true;
-        }
-    }
-
     private void FixedUpdate()
     {
         localVelocity = transform.InverseTransformDirection(rigidbody.velocity);
         velMag = rigidbody.velocity.magnitude;
+
+        GetGroundedWheels();
+    }
+
+    void GetGroundedWheels()
+    {
+        groundedWheels = 0;
+
+        for (int i = 0; i < wheels.Length; i++)
+        {
+            if (wheels[i].isGrounded)
+            {
+                groundedWheels++;
+            }
+        }
     }
 
     // Set accel input
@@ -102,29 +97,5 @@ public class CarController : MonoBehaviour
         {
             handbrakeInput = Mathf.Clamp01(f);
         }
-    }
-
-    // Do upshift input
-    public void PressUpshift()
-    {
-        upshiftPressed = true;
-    }
-
-    // Do downshift input
-    public void PressDownshift()
-    {
-        downshiftPressed = true;
-    }
-
-    // Set held upshift input
-    public void SetUpshift(float f)
-    {
-        upshiftHold = f;
-    }
-
-    // Set held downshift input
-    public void SetDownshift(float f)
-    {
-        downshiftHold = f;
     }
 }

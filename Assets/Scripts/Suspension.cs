@@ -8,6 +8,7 @@ public class Suspension : MonoBehaviour
 {
     private CarController carController;
     private Rigidbody carRigidbody;
+    private DriveForce targetDrive;
     public Wheel wheel;
 
     // Variables for inverting certain values on opposite sides of the vehicle
@@ -53,6 +54,7 @@ public class Suspension : MonoBehaviour
     {
         carController = GetComponentInParent<CarController>();
         carRigidbody = GetComponentInParent<Rigidbody>();
+        targetDrive = GetComponent<DriveForce>();
         compression = travelDist * compressionRatio;
 
         flippedSide = transform.position.x < carController.transform.position.x;
@@ -68,7 +70,11 @@ public class Suspension : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Debug.Log("rpm: " + targetDrive.rpm + " | torque: " + targetDrive.torque);
+
         CalculateSuspension();
+
+        carRigidbody.AddForceAtPosition(transform.forward * targetDrive.rpm / 1000, wheel.transform.position);
     }
 
     private void CalculateSuspension()
