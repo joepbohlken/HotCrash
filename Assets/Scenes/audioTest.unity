@@ -3144,7 +3144,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: dbd66976be54d7f4b8a47fc6d3aaa891, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 565b76529e70fcb4797ad83bacab8026, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -3249,15 +3249,16 @@ MonoBehaviour:
     maxAudioPitch: 1.5
   - name: Gear2
     audioClip: {fileID: 8300000, guid: f2095fe756f82da4c975b8a4f9d4b884, type: 3}
-    minAudioPitch: 0
-    maxAudioPitch: 0
+    minAudioPitch: 0.75
+    maxAudioPitch: 1.5
   - name: Gear3
     audioClip: {fileID: 8300000, guid: 4239b613e345f5742be71891c52ef6d2, type: 3}
-    minAudioPitch: 0
-    maxAudioPitch: 0
+    minAudioPitch: 0.75
+    maxAudioPitch: 1.5
   - name: Gear4
     audioClip: {fileID: 8300000, guid: ce91369cb6b9b224b925ea567ae34436, type: 3}
-    minAudioPitch: 0
-    maxAudioPitch: 0
-  audioPitch: 1
+    minAudioPitch: 0.75
+    maxAudioPitch: 1.5
   audioSource: {fileID: 2517618493186834185}
+  gearIndex: 0
+  rpm: 0
