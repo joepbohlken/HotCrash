@@ -22,7 +22,7 @@ public class AbilityController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && cd <= 0)
+        if (Input.GetKeyDown(KeyCode.E) && cd <= 0 && Ability != null)
         {
             Ability.Use();
             if (consumableAbilities)
