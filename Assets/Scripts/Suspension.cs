@@ -99,21 +99,21 @@ public class Suspension : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
-        if (!Application.isPlaying)
+        if (Application.isPlaying)
         {
             //Handles.color = Color.magenta;
             //Handles.DrawWireDisc(transform.position + -transform.up * (restLength - travelDist * compressionRatio), transform.right, wheel.radius);
+
+            float susForce = Mathf.Clamp(suspensionForce / 10, -10, 10);
+            Handles.color = Color.green;
+            Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.up * (susForce == 0 ? .2f : susForce), 5f);
+
+            Handles.color = Color.red;
+            Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.right * .2f, 5f);
+
+            Handles.color = Color.blue;
+            Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.forward * .2f, 5f);
         }
-
-        float susForce = Mathf.Clamp(suspensionForce / 10, -10, 10);
-        Handles.color = Color.green;
-        Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.up * (susForce == 0 ? .2f : susForce), 5f);
-
-        Handles.color = Color.red;
-        Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.right * .2f, 5f);
-
-        Handles.color = Color.blue;
-        Handles.DrawLine(wheel.transform.position, wheel.transform.position + wheel.transform.forward * .2f, 5f);
     }
 #endif
 }
