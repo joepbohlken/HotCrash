@@ -33,6 +33,5 @@ public class TransparentAbility : Ability
             }
         }
         InvisibilityTimer.invisTimer.StartCoroutine(InvisibilityTimer.invisTimer.BecomeVisible(Duration, originalValues));
-
     }
 }

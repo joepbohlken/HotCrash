@@ -26,9 +26,6 @@ public class MineExplode : MonoBehaviour
                 if (rb != null)
                 {
                     StartCoroutine(explode(explosionDelay, rb));
-                    Debug.Log(i);
-                    
-                    Debug.Log(rb);
                 }
             }
         }

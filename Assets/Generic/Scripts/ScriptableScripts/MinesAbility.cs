@@ -27,7 +27,5 @@ public class MinesAbility : Ability
 
         Vector3 minePosition = Car.transform.position + Vector3.up + Car.transform.forward.normalized * -2;
         Instantiate(MineObject, minePosition, Quaternion.identity);
-        Debug.Log("Mine Ability " + Car.name);
-        Debug.Log(mineCounter);
     }
 }
