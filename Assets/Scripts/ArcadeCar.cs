@@ -977,7 +977,7 @@ public class ArcadeCar : MonoBehaviour
                 CalculateWheelVisualTransform(wsL, wsDownDirection, axle, axle.wheelDataL, WHEEL_LEFT_INDEX, axle.wheelDataL.visualRotationRad, out wsPos, out wsRot);
                 axle.wheelVisualLeft.transform.position = wsPos;
                 axle.wheelVisualLeft.transform.rotation = wsRot;
-                axle.wheelVisualLeft.transform.localScale = new Vector3(axle.radius, axle.radius, axle.radius) * axle.visualScale;
+                axle.wheelVisualLeft.transform.localScale = Vector3.one * axle.visualScale;
 
                 if (!isBrake)
                 {
@@ -990,7 +990,7 @@ public class ArcadeCar : MonoBehaviour
                 CalculateWheelVisualTransform(wsR, wsDownDirection, axle, axle.wheelDataR, WHEEL_RIGHT_INDEX, axle.wheelDataR.visualRotationRad, out wsPos, out wsRot);
                 axle.wheelVisualRight.transform.position = wsPos;
                 axle.wheelVisualRight.transform.rotation = wsRot;
-                axle.wheelVisualRight.transform.localScale = new Vector3(axle.radius, axle.radius, axle.radius) * axle.visualScale;
+                axle.wheelVisualRight.transform.localScale = Vector3.one * axle.visualScale;
 
                 if (!isBrake)
                 {
