@@ -6,6 +6,7 @@ public class CarDeformation : MonoBehaviour
     [Header("Deformation Properties")]
     [Tooltip("Minimum velocity required on impact to deform car meshes.")]
     [SerializeField] private float minVelocity = 3f;
+    [HideInInspector] public float MinVelocity { get { return minVelocity; } }
     [Tooltip("Max distance of a mesh vertice from the impact point to become deformed.")]
     [SerializeField] private float deformRadius = 0.5f;
     [Tooltip("Strength of the mesh deformation.")]
@@ -50,10 +51,10 @@ public class CarDeformation : MonoBehaviour
                 if (hitPart != null)
                 {
                     // Apply damage and only deform if the part has not been destroyed
-                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength);
+                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
                     if (!partDestroyed && canDeform)
                     {
-                        hitPart.DeformPart(i, collision, deformRadius, deformStrength, myRigidbody);
+                        hitPart.DeformPart(i, collision, deformRadius, deformStrength);
                     }
                 }
             }
