@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class GrapplePull : MonoBehaviour
 {
@@ -11,24 +12,27 @@ public class GrapplePull : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform car;
 
-    [SerializeField] float maxSpeed;
-    [SerializeField] float speed;
-    [SerializeField] float rotationSpeed;
-
     public static bool isGrappling;
     private bool hookSet = false;
     private SpringJoint joint;
     private Steering steering;
     private Ackermann ackermann;
     public Transform hitPlayer = null;
+    public List<Transform> visibleTargets = new List<Transform>();
 
-    [SerializeField]
-    private LayerMask grappleLayer;
     [SerializeField]
     List<GameObject> players;
     [SerializeField]
     List<Transform> playerCars;
 
+    //Ability Params
+    [SerializeField] private LayerMask grappleLayer;
+    [SerializeField] private LayerMask objectLayer;
+    [SerializeField] float maxSpeed;
+    [SerializeField] float speed;
+    [SerializeField] float rotationSpeed;
+    [SerializeField] float range;
+    [SerializeField] float playerTargetAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,10 @@ public class GrapplePull : MonoBehaviour
         ackermann = grappleGun.GetComponent<Ackermann>();
         car = rb.GetComponent<Transform>();
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+        foreach (GameObject player in players)
+        {
+            playerCars.Add(player.transform);
+        }
     }
 
     // Update is called once per frame
@@ -49,19 +57,14 @@ public class GrapplePull : MonoBehaviour
         {
             if (!hookSet)
             {
-                for(int i = 0; i < players.Length; i++)
-                {
-                    playerCars[i] = players[i].transform;
-                }
-
                 ShootHook();
                 SetJoint();
                 hookSet = true;
-                steering.rate = 10;
-                ackermann.SetAngle(0);
+                steering.rate = 0;
             }
             if (hookSet)
             {
+                steering.m_CurrAngle = 0;
                 Rotate();
                 Pull();
             }
@@ -72,13 +75,13 @@ public class GrapplePull : MonoBehaviour
     {
         Vector3 difference = gunTip.position - hookPoint;
 
-        if (Vector3.Distance(gunTip.position, hookPoint) > 1 && isGrappling)
+        if (Vector3.Distance(gunTip.position, hookPoint) > 4 && isGrappling)
         {
             if (rb.velocity.magnitude < maxSpeed) rb.AddForce((hookPoint - gunTip.position).normalized * speed, ForceMode.VelocityChange);
             if(hitPlayer != null)
             {
                 hookPoint = hitPlayer.transform.position;
-            }    
+            }
         }
         else
         {
@@ -107,16 +110,45 @@ public class GrapplePull : MonoBehaviour
 
     public void ShootHook()
     {
+        FindVisibleTargets();
         RaycastHit hit;
         //Speciaal point voor grapplinghook
-        if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, 30, grappleLayer))
+        if (visibleTargets.Count > 0)
         {
+            Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, grappleLayer);
             hookPoint = hit.point;
             hitPlayer = GetClosestPlayer(playerCars);
         }
+        else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, grappleLayer))
+        {
+            hookPoint = hit.point;
+        }
         else
         {
-            hookPoint = gunTip.position + grappleGun.forward * 30;
+            hookPoint = gunTip.position + grappleGun.forward * range;
+        }
+    }
+
+    public void FindVisibleTargets()
+    {
+        visibleTargets.Clear();
+
+        for (int i = 0; i < playerCars.Count; i++)
+        {
+            Transform target = playerCars[i].transform;
+            Vector3 dirToTarget = (target.position - gunTip.position).normalized;
+            if (Vector3.Angle(gunTip.forward, dirToTarget) < playerTargetAngle / 2)
+            { 
+                float dstToTarget = Vector3.Distance(gunTip.position, target.position);
+
+                if (!Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
+                {
+                    if(dstToTarget <= range)
+                    {
+                        visibleTargets.Add(target);
+                    }
+                }
+            }
         }
     }
 
@@ -137,14 +169,13 @@ public class GrapplePull : MonoBehaviour
         joint.massScale = 4.5f;
     }
 
-    public Transform GetClosestPlayer(Transform[] playerCars)
+    public Transform GetClosestPlayer(List<Transform> playerCars)
     {
         Transform tMin = null;
         float minDist = Mathf.Infinity;
-        Vector3 currentPos = transform.position;
         foreach (Transform t in playerCars)
         {
-            float dist = Vector3.Distance(t.position, currentPos);
+            float dist = Vector3.Distance(t.position, hookPoint);
             if (dist < minDist)
             {
                 tMin = t;

@@ -2450,6 +2450,7 @@ MonoBehaviour:
   range: 0
   value: 0
   rate: 90
+  m_CurrAngle: 0
 --- !u!114 &8757538530856571851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2727,15 +2728,21 @@ MonoBehaviour:
   grappleGun: {fileID: 0}
   rb: {fileID: 0}
   car: {fileID: 0}
-  maxSpeed: 0
-  speed: 0
-  rotationSpeed: 0
   hitPlayer: {fileID: 0}
+  visibleTargets: []
+  players: []
+  playerCars: []
   grappleLayer:
     serializedVersion: 2
     m_Bits: 0
-  players: []
-  playerCars: []
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxSpeed: 0
+  speed: 0
+  rotationSpeed: 0
+  range: 0
+  playerTargetAngle: 0
 --- !u!114 &6062604151674605353
 MonoBehaviour:
   m_ObjectHideFlags: 0

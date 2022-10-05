@@ -10,7 +10,7 @@ public class Steering : MonoBehaviour
 	public float rate = 45;
 
 	public Ackermann m_Ackermann { get; private set; }
-	float m_CurrAngle;
+	public float m_CurrAngle;
 
 	private void Awake()
 	{
