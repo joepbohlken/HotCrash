@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 105520550226233435}
   m_Layer: 0
   m_Name: Gisela
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,21 +236,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 32.309433
-      outSlope: 32.309433
+      value: -0.5090332
+      inSlope: 51.103138
+      outSlope: 51.103138
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.059681695
+      outWeight: 0.0464191
     - serializedVersion: 3
       time: 10
-      value: 100
-      inSlope: 1.1993723
-      outSlope: 1.1993723
+      value: 155
+      inSlope: 0.281571
+      outSlope: 0.281571
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.16194487
+      inWeight: 0.7024589
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -286,20 +286,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 32
-      inSlope: -0.3749111
-      outSlope: -0.3749111
+      inSlope: -0.25053576
+      outSlope: -0.25053576
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.024201361
+      outWeight: 0.1127321
     - serializedVersion: 3
       time: 197.41309
       value: 4.065192
-      inSlope: -0.01809133
-      outSlope: -0.01809133
+      inSlope: -0.04313697
+      outSlope: -0.04313697
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.1172876
+      inWeight: 0.21750657
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -371,7 +371,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   handBrakeSlipperyTime: 2
-  controllable: 1
+  controllable: 0
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -461,11 +461,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f93d4c23957fde4b9ae56522d91a72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minVelocity: 3
-  deformRadius: 0.5
-  deformStrength: 1
+  minVelocity: 0
+  deformRadius: 1
+  deformStrength: 0.2
   collisionDebounce: 0.1
-  maxCollisionPoints: 2
+  maxCollisionPoints: 10
 --- !u!1 &5545049242205019707
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAllowedDamage: 1000
+  detachable: 0
   isHinge: 0
   hingeAnchor: {x: 0, y: 0, z: 0}
   hingeAxis: {x: 0, y: 0, z: 0}

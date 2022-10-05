@@ -11,7 +11,7 @@ public class DeformablePart : MonoBehaviour
     [SerializeField] private float maxAllowedDamage = 50f;
     
     [Space(12)]
-
+    public bool detachable = false;
     public bool isHinge = false;
     [HideInInspector] public Vector3 hingeAnchor;
     [HideInInspector] public Vector3 hingeAxis;
@@ -49,7 +49,7 @@ public class DeformablePart : MonoBehaviour
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
 
         maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
-        if (maxAllowedDamage <= 0f)
+        if (maxAllowedDamage <= 0f && detachable)
         {
             DetachPart(hitDirection, -collision.relativeVelocity.magnitude);
             return true;
