@@ -18,11 +18,6 @@ public class Car1 : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void playExplosion()
     {
