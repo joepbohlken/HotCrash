@@ -3245,20 +3245,106 @@ MonoBehaviour:
   gears:
   - name: Gear1
     audioClip: {fileID: 8300000, guid: 565b76529e70fcb4797ad83bacab8026, type: 3}
+    minSpeed: 0
+    maxSpeed: 50
     minAudioPitch: 0.75
     maxAudioPitch: 1.5
   - name: Gear2
     audioClip: {fileID: 8300000, guid: f2095fe756f82da4c975b8a4f9d4b884, type: 3}
+    minSpeed: 50.1
+    maxSpeed: 100
     minAudioPitch: 0.75
     maxAudioPitch: 1.5
   - name: Gear3
     audioClip: {fileID: 8300000, guid: 4239b613e345f5742be71891c52ef6d2, type: 3}
+    minSpeed: 100.1
+    maxSpeed: 175
     minAudioPitch: 0.75
     maxAudioPitch: 1.5
   - name: Gear4
     audioClip: {fileID: 8300000, guid: ce91369cb6b9b224b925ea567ae34436, type: 3}
+    minSpeed: 175.1
+    maxSpeed: 250
     minAudioPitch: 0.75
     maxAudioPitch: 1.5
-  audioSource: {fileID: 2517618493186834185}
   gearIndex: 0
-  rpm: 0
+  _rpm: 0
+  speed: 0
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 75
+      inSlope: 1.2343024
+      outSlope: 1.2343024
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.14673887
+    - serializedVersion: 3
+      time: 50
+      value: 150
+      inSlope: 1.8548316
+      outSlope: 1.8548316
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09123626
+      outWeight: 1
+    - serializedVersion: 3
+      time: 50.1
+      value: 75
+      inSlope: 1.4267933
+      outSlope: 1.4267933
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.1467082
+    - serializedVersion: 3
+      time: 100
+      value: 150
+      inSlope: 1.8003659
+      outSlope: 1.8003659
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12250086
+      outWeight: 0
+    - serializedVersion: 3
+      time: 100.1
+      value: 75
+      inSlope: 0.87646985
+      outSlope: 0.87646985
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1764026
+    - serializedVersion: 3
+      time: 175
+      value: 150
+      inSlope: 1.2373781
+      outSlope: 1.2373781
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12220252
+      outWeight: 0
+    - serializedVersion: 3
+      time: 175.1
+      value: 75
+      inSlope: 0.5900337
+      outSlope: 0.5900337
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13972825
+    - serializedVersion: 3
+      time: 300
+      value: 150
+      inSlope: 0.70364094
+      outSlope: 0.70364094
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11718995
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

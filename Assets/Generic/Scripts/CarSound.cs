@@ -15,6 +15,10 @@ public class CarSound : MonoBehaviour
     {
         public string name;
         public AudioClip audioClip;
+        [Range(0,250)]
+        public float minSpeed;
+        [Range(0, 250)]
+        public float maxSpeed;
         [Range(0.1f, 2f)]
         public float minAudioPitch;
         [Range(0.1f, 2f)]
@@ -26,33 +30,54 @@ public class CarSound : MonoBehaviour
     // Debugging
     [HideInInspector] public int gearIndex;
     [Header("Debugging")]
+    [SerializeField] 
     [Range(0f, 1f)]
-    [SerializeField] private float _rpm;
+    private float _rpm;
+    [Range(0, 300)]
+    public float speed;
+
+    public AnimationCurve animationCurve; 
 
     private AudioSource audioSource;
     private Gear currentGear;
+    private float t;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        SetEngineSound(gearIndex, _rpm);
     }
 
     void Update()
     {
-        SetEngineSound(gearIndex, _rpm);
+        t += Time.deltaTime / 10000f;
+        speed = Mathf.Lerp(speed, 200, t);
+        SetEngineSound();
     }
 
-    public void SetEngineSound(int gearNumber, float rpm)
+    public void SetEngineSound()
     {
-        if (gears.IndexOf(currentGear) != gearNumber)
+        audioSource.pitch = animationCurve.Evaluate(speed)/100;
+
+        foreach (var gear in gears)
         {
-            currentGear = gears.FirstOrDefault(g => g.name == "Gear" + (gearNumber + 1));
-            audioSource.clip = currentGear.audioClip;
-            audioSource.Play();
+            if (speed < gear.maxSpeed && speed > gear.minSpeed)
+            {
+                currentGear = gear;
+                gearIndex = gears.IndexOf(gear);
+                audioSource.clip = gear.audioClip;
+                audioSource.Play();
+            }
         }
 
-        audioSource.pitch = Mathf.Lerp(currentGear.minAudioPitch, currentGear.maxAudioPitch, rpm);
+
+        //if (gears.IndexOf(currentGear) != gearNumber)
+        //{
+        //    currentGear = gears.FirstOrDefault(g => g.name == "Gear" + (gearNumber + 1));
+        //    audioSource.clip = currentGear.audioClip;
+        //    audioSource.Play();
+        //}
+
+        //audioSource.pitch = Mathf.Lerp(currentGear.minAudioPitch, currentGear.maxAudioPitch, rpm);
     }
 }
 
