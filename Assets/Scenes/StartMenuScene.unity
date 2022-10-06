@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,7 +158,7 @@ RectTransform:
   m_Children:
   - {fileID: 522679677}
   m_Father: {fileID: 91210499}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 91210498}
   - component: {fileID: 91210497}
   - component: {fileID: 91210496}
+  - component: {fileID: 91210500}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -387,9 +388,9 @@ RectTransform:
   - {fileID: 1856339212}
   - {fileID: 1302641603}
   - {fileID: 623686128}
+  - {fileID: 2068678536885601246}
   - {fileID: 42055414}
   - {fileID: 530935114}
-  - {fileID: 2068678536885601246}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -398,6 +399,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &91210500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91210495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b1dd2a1a7f3c545a1228c4e380a342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &413888766
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +634,7 @@ GameObject:
   - component: {fileID: 530935117}
   - component: {fileID: 530935116}
   - component: {fileID: 530935115}
+  - component: {fileID: 530935118}
   m_Layer: 5
   m_Name: Pants
   m_TagString: Untagged
@@ -641,7 +655,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 91210499}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 24.92}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -706,6 +720,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530935113}
   m_CullTransparentMesh: 1
+--- !u!114 &530935118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530935113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3acd3e59007fdf14fbb0dc6d83810b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623686127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,7 +1871,7 @@ RectTransform:
   - {fileID: 2068678536878190060}
   - {fileID: 2068678536878230024}
   m_Father: {fileID: 91210499}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

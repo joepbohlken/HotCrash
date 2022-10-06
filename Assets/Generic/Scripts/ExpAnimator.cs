@@ -11,4 +11,9 @@ public class ExpAnimator : MonoBehaviour
     {
         pants.SetActive(true);
     }
+
+    public void hideExplosion()
+    {
+        gameObject.SetActive(false);
+    }
 }
