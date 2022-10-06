@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2176306150170199507}
   - component: {fileID: 3913810150856920991}
   - component: {fileID: 7002640977324733890}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FRW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747668845604030072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.89500034, y: -0.5, z: 1.5926915}
+  m_LocalPosition: {x: 0.895, y: -0.5, z: 1.592692}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 644816040705391795}
   - component: {fileID: 3318877298318450416}
   - component: {fileID: 3140769916764230356}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RRW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4519450153551399736}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.895, y: -0.5, z: -1.4793227}
+  m_LocalPosition: {x: 0.895, y: -0.5, z: -1.479323}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7835919997140201603}
   - component: {fileID: 7010104313756434540}
   - component: {fileID: 1707583595296156970}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RLW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4666200807637012787}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8950002, y: -0.5, z: -1.4793223}
+  m_LocalPosition: {x: -0.8950002, y: -0.5, z: -1.479323}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5275436293413212997}
   - component: {fileID: 3068697569485717034}
   - component: {fileID: 1299025390430734155}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FLW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5416501798250099117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.89500034, y: -0.5, z: 1.5926918}
+  m_LocalPosition: {x: -0.8950002, y: -0.5, z: 1.592692}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -341,7 +341,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6321618843758871120}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 6462615869558239932}
   - component: {fileID: 6462615869558239935}
   - component: {fileID: 6462615869558239934}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Raiden
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -650,6 +650,8 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugDraw: 0
+  v: 0
+  h: 0
 --- !u!114 &6462615869558239934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +682,7 @@ GameObject:
   - component: {fileID: 1070097443452992136}
   - component: {fileID: 9045953729472799308}
   - component: {fileID: 6265774420277866755}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,6 +723,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalTypes: 
 --- !u!33 &1070097443452992136
 MeshFilter:
   m_ObjectHideFlags: 0

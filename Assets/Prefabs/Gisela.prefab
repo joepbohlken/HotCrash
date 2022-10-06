@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 105520550226233445}
   - component: {fileID: 105520550226233434}
   - component: {fileID: 105520550226233435}
+  - component: {fileID: 44688031276887351}
   m_Layer: 0
   m_Name: Gisela
   m_TagString: Car
@@ -449,6 +450,8 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugDraw: 0
+  v: 0
+  h: 0
 --- !u!114 &105520550226233435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,6 +469,19 @@ MonoBehaviour:
   deformStrength: 0.2
   collisionDebounce: 0.1
   maxCollisionPoints: 10
+--- !u!65 &44688031276887351
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5252175745470138114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5545049242205019707
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +536,7 @@ MonoBehaviour:
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
+  vitalTypes: 
 --- !u!33 &1503858952714606001
 MeshFilter:
   m_ObjectHideFlags: 0

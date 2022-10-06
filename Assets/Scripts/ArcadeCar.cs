@@ -153,6 +153,9 @@ public class ArcadeCar : MonoBehaviour
     private Ray wheelRay = new Ray();
     private RaycastHit[] wheelRayHits = new RaycastHit[16];
 
+    [HideInInspector] public float v = 0f;
+    [HideInInspector] public float h = 0f;
+
     private void OnValidate()
     {
         //HACK: to apply steering in editor
@@ -417,14 +420,11 @@ public class ArcadeCar : MonoBehaviour
 
     private void UpdateInput()
     {
-        float v = Input.GetAxis("Vertical");
-        float h = Input.GetAxis("Horizontal");
-
         //Debug.Log (string.Format ("H = {0}", h));
-        if (!controllable)
+        if (controllable)
         {
-            v = 0.0f;
-            h = 0.0f;
+            v = Input.GetAxis("Vertical");
+            h = Input.GetAxis("Horizontal");
         }
 
         if (Input.GetKey(KeyCode.R) && controllable)
