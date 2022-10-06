@@ -15,6 +15,7 @@ public class DeformablePart : MonoBehaviour
     
     [Space(12)]
 
+    public bool detachable = false;
     [Tooltip("If true will create a hinge with the specified properties on first contact hit.")]
     public bool isHinge = false;
     [HideInInspector] public Vector3 hingeAnchor;
@@ -68,7 +69,8 @@ public class DeformablePart : MonoBehaviour
         // Create a hinge on first collision
         if (isHinge && !hingeCreated) CreateHinge(body);
 
-        if (maxAllowedDamage <= 0f)
+        maxAllowedDamage -= (collision.relativeVelocity.magnitude - minVelocity);
+        if (maxAllowedDamage <= 0f && detachable)
         {
             // Get the direction of the collision in local space of the hit mesh
             Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);

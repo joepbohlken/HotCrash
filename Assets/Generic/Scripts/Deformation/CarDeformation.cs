@@ -33,8 +33,7 @@ public class CarDeformation : MonoBehaviour
 
     public void OnCollision(Collision collision)
     {
-        // Check if the velocity on impact is high enough to deform the meshes
-        if (collision.relativeVelocity.magnitude >= minVelocity)
+        if (collision.relativeVelocity.magnitude >= minVelocity && collision.gameObject.CompareTag("Car"))
         {
             // Debounce between deformations to improve performance
             bool canDeform = currentDebounce <= 0f;
