@@ -9,7 +9,7 @@ public class AbilityController : MonoBehaviour
     [NonSerialized] public static AbilityController controller;
 
     [SerializeField]
-    private Ability Ability;
+    public Ability Ability;
     [SerializeField]
     private bool consumableAbilities;
 

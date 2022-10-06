@@ -6,6 +6,8 @@ public abstract class Ability : ScriptableObject
 {
     protected GameObject Car;
 
+    public string a_Name;
+
     [SerializeField]
     protected float Duration;
     [SerializeField]

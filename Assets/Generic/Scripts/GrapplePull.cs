@@ -11,14 +11,17 @@ public class GrapplePull : MonoBehaviour
     private Transform gunTip;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform car;
+    [SerializeField] private AbilityController abilityController;
 
-    public static bool isGrappling;
+    [SerializeField] public static bool isGrappling;
     private bool hookSet = false;
     private SpringJoint joint;
     private Steering steering;
     private Ackermann ackermann;
+    private TargetIndicator targetIndicator;
     public Transform hitPlayer = null;
     public List<Transform> visibleTargets = new List<Transform>();
+    private List<Collider> targets = new List<Collider>();
 
     [SerializeField]
     List<GameObject> players;
@@ -33,6 +36,7 @@ public class GrapplePull : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float range;
     [SerializeField] float playerTargetAngle;
+    [SerializeField] float hookSetTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +46,9 @@ public class GrapplePull : MonoBehaviour
         gunTip = grappleGun.transform.Find("GunTip");
         steering = grappleGun.GetComponent<Steering>();
         ackermann = grappleGun.GetComponent<Ackermann>();
+        abilityController = grappleGun.GetComponent<AbilityController>();
         car = rb.GetComponent<Transform>();
+        targetIndicator = grappleGun.GetComponent<TargetIndicator>();
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
         foreach (GameObject player in players)
         {
@@ -53,17 +59,27 @@ public class GrapplePull : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(abilityController.Ability != null)
+        {
+            if (abilityController.Ability.a_Name == "Grapple")
+            {
+                FindVisibleTargets();
+                targetIndicator.OnGUI();
+            }
+        }
         if(isGrappling)
         {
+            hookSetTime += Time.deltaTime;
             if (!hookSet)
             {
                 ShootHook();
                 SetJoint();
                 hookSet = true;
-                steering.rate = 0;
+                hookSetTime = 0;
             }
-            if (hookSet)
+            if (hookSet && hookSetTime > 0.25f)
             {
+                steering.rate = 0;
                 steering.m_CurrAngle = 0;
                 Rotate();
                 Pull();
@@ -75,9 +91,12 @@ public class GrapplePull : MonoBehaviour
     {
         Vector3 difference = gunTip.position - hookPoint;
 
-        if (Vector3.Distance(gunTip.position, hookPoint) > 4 && isGrappling)
+        if (Vector3.Distance(gunTip.position, hookPoint) > 1)
         {
-            if (rb.velocity.magnitude < maxSpeed) rb.AddForce((hookPoint - gunTip.position).normalized * speed, ForceMode.VelocityChange);
+            if (rb.velocity.magnitude < maxSpeed)
+            {
+                rb.AddForce((hookPoint - gunTip.position).normalized * speed, ForceMode.VelocityChange);
+            }
             if(hitPlayer != null)
             {
                 hookPoint = hitPlayer.transform.position;
@@ -85,11 +104,15 @@ public class GrapplePull : MonoBehaviour
         }
         else
         {
-            isGrappling = false;
-            Destroy(joint);
-            hookSet = false;
-            steering.rate = 90;
-            hitPlayer = null;
+            StopGrapple();
+        }
+
+        if(hitPlayer != null)
+        {
+            if (Vector3.Distance(gunTip.position, hitPlayer.position) < 4)
+            {
+                StopGrapple();
+            }
         }
     }
 
@@ -106,6 +129,15 @@ public class GrapplePull : MonoBehaviour
     public bool IsGrappling()
     {
         return joint != null;
+    }
+
+    public void StopGrapple()
+    {
+        isGrappling = false;
+        Destroy(joint);
+        hookSet = false;
+        steering.rate = 90;
+        hitPlayer = null;
     }
 
     public void ShootHook()
@@ -136,6 +168,7 @@ public class GrapplePull : MonoBehaviour
         for (int i = 0; i < playerCars.Count; i++)
         {
             Transform target = playerCars[i].transform;
+            BoxCollider cTarget = playerCars[i].GetComponent<BoxCollider>();
             Vector3 dirToTarget = (target.position - gunTip.position).normalized;
             if (Vector3.Angle(gunTip.forward, dirToTarget) < playerTargetAngle / 2)
             { 
@@ -146,6 +179,7 @@ public class GrapplePull : MonoBehaviour
                     if(dstToTarget <= range)
                     {
                         visibleTargets.Add(target);
+                        targetIndicator.targets.Add(cTarget);
                     }
                 }
             }

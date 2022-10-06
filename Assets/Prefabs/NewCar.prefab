@@ -2314,6 +2314,7 @@ GameObject:
   - component: {fileID: 6700520837538196464}
   - component: {fileID: 1513421628179506055}
   - component: {fileID: 6062604151674605353}
+  - component: {fileID: -5593542719214614720}
   m_Layer: 0
   m_Name: NewCar
   m_TagString: Untagged
@@ -2659,7 +2660,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -2728,6 +2729,7 @@ MonoBehaviour:
   grappleGun: {fileID: 0}
   rb: {fileID: 0}
   car: {fileID: 0}
+  abilityController: {fileID: 0}
   hitPlayer: {fileID: 0}
   visibleTargets: []
   players: []
@@ -2743,6 +2745,7 @@ MonoBehaviour:
   rotationSpeed: 0
   range: 0
   playerTargetAngle: 0
+  hookSetTime: 0.5
 --- !u!114 &6062604151674605353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2768,6 +2771,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &-5593542719214614720
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663098822042570447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9710693, y: 2.1442752, z: 1.0999985}
+  m_Center: {x: -79.85077, y: -6.193471, z: 54.5}
 --- !u!1 &3663296656781793016
 GameObject:
   m_ObjectHideFlags: 0
