@@ -12,6 +12,8 @@ public class MineExplode : MonoBehaviour
     private float mineStrength = 10000;
     [SerializeField]
     private ParticleSystem explosion;
+    [SerializeField]
+    private float explosionDelay = 5;
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -20,17 +22,20 @@ public class MineExplode : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, mineRadius);
             for (int i = 0; i < colliders.Length; i++)
             {
-                Rigidbody rb = colliders[i].GetComponent<Rigidbody>();
+                Rigidbody rb = collider.GetComponentInParent<Rigidbody>();
                 if (rb != null)
                 {
-                    Debug.Log(i);
-                    rb.AddExplosionForce(mineStrength, transform.position, mineRadius, 1f, ForceMode.Impulse);
+                    StartCoroutine(explode(explosionDelay, rb));
                 }
             }
-            Debug.Log("kaboom");
-            Instantiate(explosion, transform.position, transform.rotation);
-            Destroy(gameObject);
         }
+    }
+    private IEnumerator explode(float time, Rigidbody rb)
+    {
+        yield return new WaitForSeconds(time);
+        rb.AddExplosionForce(mineStrength, transform.position, mineRadius, 1f, ForceMode.Impulse);
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
     private void Update()

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3689386118985644652}
   - component: {fileID: 2361822520737410408}
   - component: {fileID: 2597928670106028257}
+  - component: {fileID: 4723245117105705430}
+  - component: {fileID: 5801994501306910871}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -110,5 +112,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4cb1701e4c85c47a9f8c0f7ef84a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mineStrength: 8000
+  armingTime: 1
+  mineRadius: 10
+  mineStrength: 500
   explosion: {fileID: 7358857875241618812, guid: e81c1577bcc405547afd22f545bce7e3, type: 3}
+  explosionDelay: 0.3
+--- !u!54 &4723245117105705430
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728907566336860761}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &5801994501306910871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728907566336860761}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.79803467, y: 1.9999999, z: 0.58216095}
+  m_Center: {x: -0.0024032593, y: 0, z: -0.005060196}

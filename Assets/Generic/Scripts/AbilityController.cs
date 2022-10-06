@@ -11,12 +11,6 @@ public class AbilityController : MonoBehaviour
     [SerializeField]
     private bool consumableAbilities;
 
-
-    private void Start()
-    {
-        //Ability = ScriptableObject.CreateInstance<Ability>();
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && cd <= 0)
@@ -24,7 +18,7 @@ public class AbilityController : MonoBehaviour
             Ability.Use();
             if (consumableAbilities)
             {
-                Ability = ScriptableObject.CreateInstance<Ability>();
+                Ability = null;
             }
             else
             {

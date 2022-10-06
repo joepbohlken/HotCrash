@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,20 +11,17 @@ public class InvisibilityTimer : MonoBehaviour
     {
         invisTimer = this;
     }
-    public IEnumerator BecomeVisible(float duration, Dictionary<Renderer, List<Color>> originalValues)
+    public IEnumerator BecomeVisible(float duration, Dictionary<Renderer, List<Tuple<Color, int>>> originalValues)
     {
         yield return new WaitForSeconds(duration);
 
-        foreach (KeyValuePair<Renderer, List<Color>> obj in originalValues)
+        foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> obj in originalValues)
         {
-            int index = 0;
-            foreach(Material mat in obj.Key.materials)
+            for(int i = 0; i < obj.Value.Count; i++)
             {
-                mat.color = obj.Value[index];
-                mat.renderQueue = 2500;
-                index++;
+                obj.Key.materials[i].color = obj.Value[i].Item1;
+                obj.Key.materials[i].renderQueue = obj.Value[i].Item2;
             }
-
             obj.Key.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
     }
