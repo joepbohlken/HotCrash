@@ -119,12 +119,12 @@ public class CarStateController : MonoBehaviour
             onCarDestroyed.Invoke();
 
             // Temporarily
-            foreach (Wheel wheel in GetComponentsInChildren<Wheel>())
-            {
-                wheel.enabled = false;
-            }
-            // Disabling AntiRoll prevents the car from becoming crazy
-            GetComponent<AntiRoll>().enabled = false;
+            //foreach (Wheel wheel in GetComponentsInChildren<Wheel>())
+            //{
+            //    wheel.enabled = false;
+            //}
+            //// Disabling AntiRoll prevents the car from becoming crazy
+            //GetComponent<AntiRoll>().enabled = false;
         }
     }
 

@@ -16,10 +16,11 @@ public class TransparentAbility : Ability
 
     public override void Use()
     {
-        Dictionary<Renderer, Tuple<Color, int>> originalValues = new();
+        Dictionary<Renderer, List<Tuple<Color, int>>> originalValues = new();
 
         foreach (Renderer rend in CarRenderers)
         {
+            originalValues.Add(rend, new List<Tuple<Color, int>>());
             foreach (Material mat in rend.materials)
             {
                 Color originalColor = new Color
@@ -31,7 +32,7 @@ public class TransparentAbility : Ability
                 };
                 int renderQueue = mat.renderQueue;
 
-                originalValues.TryAdd(rend, new Tuple<Color, int>(originalColor, renderQueue));
+                originalValues[rend].Add(new Tuple<Color, int>(originalColor, renderQueue));
 
                 rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 Color tempColor = mat.color;
