@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5731e43de838c84b8c1da3950a7eab2, type: 3}
   m_Name: Grappling Hook Ability
   m_EditorClassIdentifier: 
+  a_Name: Grapple
   Duration: 0
   Cooldown: 0
-  grapplingHook: {fileID: 6407592492083799175, guid: d61f035c1b015ba49be9de58e713fda2, type: 3}
-  carPos: {fileID: 3663098822042570447, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
   grappleLayer:
     serializedVersion: 2
     m_Bits: 64

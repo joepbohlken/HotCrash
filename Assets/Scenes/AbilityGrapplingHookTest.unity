@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258752624}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.76038, y: -25.48955, z: -62.840836}
+  m_LocalPosition: {x: -39.1, y: -25.48955, z: -62.840836}
   m_LocalScale: {x: 3.652307, y: 3.652307, z: 3.652307}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1431,6 +1431,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cef988ca0cc51047b1ff6df5d5375c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowMultipleTargets: 0
+  topLeftBorder: {fileID: 2800000, guid: db01c73bf5f897f4995decaab575b183, type: 3}
+  bottomLeftBorder: {fileID: 2800000, guid: b150b4b92409a734ab8381760d44f272, type: 3}
+  topRightBorder: {fileID: 2800000, guid: 0ba792037b75c4649a9cac8ddddc8b01, type: 3}
+  bottomRightBorder: {fileID: 2800000, guid: 5f6e2da1746dd2e41a9e2bb22e469454, type: 3}
+  targetCamera: {fileID: 1417352964}
+  targets: []
 --- !u!1 &1417352961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1900,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5593542719214614720, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1513421628179506055, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
       propertyPath: range
       value: 30
