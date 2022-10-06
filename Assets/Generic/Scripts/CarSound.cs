@@ -49,8 +49,10 @@ public class CarSound : MonoBehaviour
 
     void Update()
     {
-        t += Time.deltaTime / 10000f;
-        speed = Mathf.Lerp(speed, 200, t);
+        //t += Time.deltaTime / 10000f;
+        //speed = Mathf.Lerp(speed, 200, t);
+
+        speed = GetComponent<ArcadeCar>().GetSpeed() * 3.6f;
         SetEngineSound();
     }
 
