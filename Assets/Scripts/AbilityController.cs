@@ -21,6 +21,15 @@ public class AbilityController : MonoBehaviour
         {
             Ability.Use();
             StartCoroutine(ActivateAfterDelay(Ability.AbilityDuration));
+
+            if (consumableAbilities)
+            {
+                Ability = null;
+            }
+            else
+            {
+                cd = Ability.AbilityCooldown + Ability.AbilityDuration;
+            }
         }
 
         cd -= Time.deltaTime;
@@ -44,13 +53,5 @@ public class AbilityController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         OnAbilityComplete.Invoke();
 
-        if (consumableAbilities)
-        {
-            Ability = null;
-        }
-        else
-        {
-            cd = Ability.AbilityCooldown;
-        }
     }
 }
