@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class AbilityController : MonoBehaviour
 {
     private float cd = 0;
-    [NonSerialized] public static AbilityController controller;
 
     [SerializeField]
     public Ability Ability;
@@ -15,11 +14,6 @@ public class AbilityController : MonoBehaviour
     private bool consumableAbilities;
 
 
-    private void Start()
-    {
-        AbilityController.controller = this;
-        //Ability = ScriptableObject.CreateInstance<Ability>();
-    }
     [HideInInspector]
     public UnityEvent OnAbilityComplete = new UnityEvent();
 
@@ -60,6 +54,5 @@ public class AbilityController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         OnAbilityComplete.Invoke();
-
     }
 }
