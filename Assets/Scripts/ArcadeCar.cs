@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WheelData
 {
@@ -95,6 +96,21 @@ public class Axle
     public float handBrakeSlipperyK = 0.01f;
 }
 
+[Serializable]
+public class Gear
+{
+    public string name;
+    public AudioClip audioClip;
+    [Range(0, 250)]
+    public float minSpeed;
+    [Range(0, 250)]
+    public float maxSpeed;
+    [Range(0.1f, 2f)]
+    public float minAudioPitch;
+    [Range(0.1f, 2f)]
+    public float maxAudioPitch;
+}
+
 public class ArcadeCar : MonoBehaviour
 {
     const int WHEEL_LEFT_INDEX = 0;
@@ -111,6 +127,9 @@ public class ArcadeCar : MonoBehaviour
     public AnimationCurve accelerationCurveReverse = AnimationCurve.Linear(0.0f, 0.0f, 5.0f, 20.0f);
     [Tooltip("Number of times to iterate reverse evaluation of Acceleration Curve. May need to increase with higher max vehicle speed. ")]
     public int reverseEvaluationAccuracy = 25;
+
+    public int currentGear = 1;
+    public List<Gear> gears = new List<Gear>();
 
     [Header("Steering")]
     [Tooltip("Y - Steering angle limit (deg). X - Vehicle speed (km/h)")]
@@ -129,13 +148,17 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Downforce")]
     public float downForce = 5.0f;
 
+    [Header("Sounds")]
+    [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
+    public AnimationCurve pitchCurve;
+
     [Header("Axles")]
     public Axle[] axles = new Axle[2];
 
     [Header("Debug")]
     public bool debugDraw = true;
 
-
+    private float pitchRate;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
     private float handBrakeSlipperyTiresTime = 0.0f;
@@ -145,6 +168,7 @@ public class ArcadeCar : MonoBehaviour
     private bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
+    private AudioSource audioSource;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -170,6 +194,7 @@ public class ArcadeCar : MonoBehaviour
         style.normal.textColor = Color.red;
 
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         rb.centerOfMass = centerOfMass;
     }
 
@@ -192,6 +217,8 @@ public class ArcadeCar : MonoBehaviour
     private void Update()
     {
         ApplyVisual();
+
+        SetEngineSound();
     }
 
     private void FixedUpdate()
@@ -281,6 +308,31 @@ public class ArcadeCar : MonoBehaviour
             handBrakeSlipperyTiresTime = 0.0f;
         }
 
+    }
+    public void SetEngineSound()
+    {
+        float speed = GetSpeed() * 3.6f;
+
+        if (isAcceleration || isReverseAcceleration)
+        {
+            pitchRate = 0;
+            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
+        } 
+        else if(audioSource.pitch != 1)
+        {
+            pitchRate += Time.fixedDeltaTime / 10;
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
+        }
+
+        foreach (var gear in gears)
+        {
+            if (speed < gear.maxSpeed && speed > gear.minSpeed)
+            {
+                currentGear = gears.IndexOf(gear);
+                audioSource.clip = gear.audioClip;
+                audioSource.Play();
+            }
+        }
     }
 
     private void Reset(Vector3 position)
