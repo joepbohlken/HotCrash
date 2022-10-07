@@ -17,7 +17,11 @@ public abstract class Ability : ScriptableObject
 
     public virtual void OnPickup()
     {
-        Debug.Log("Picked Up ability");
+        Car.GetComponent<AbilityController>().OnAbilityComplete.AddListener(OnAbilityEnded);
+    }
+    public virtual void OnAbilityEnded()
+    {
+        Debug.Log("Ability Ended");
     }
 
     public void PickedUp(GameObject player)
@@ -36,6 +40,13 @@ public abstract class Ability : ScriptableObject
         get
         {
             return Cooldown;
+        }
+    }
+    public float AbilityDuration
+    {
+        get
+        {
+            return Duration;
         }
     }
 }
