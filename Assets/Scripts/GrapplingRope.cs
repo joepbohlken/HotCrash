@@ -9,12 +9,12 @@ public class GrapplingRope : MonoBehaviour
     private Vector3 currentGrapplePosition;
     private Transform gunTip;
     public GrapplePull grapplingGun;
-    public int quality;
-    public float damper;
-    public float strength;
-    public float velocity;
-    public float waveCount;
-    public float waveHeight;
+    public int quality = 100;
+    public float damper = 14;
+    public float strength = 800;
+    public float velocity = 30;
+    public float waveCount = 3;
+    public float waveHeight = 1;
     public AnimationCurve affectCurve;
 
     void Awake()
