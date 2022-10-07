@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2220867554108906053}
   - component: {fileID: 2220867554108906052}
   - component: {fileID: 7849499508104352944}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Freya
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -488,7 +488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2220867554433404415}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 2220867554441443171}
   - component: {fileID: 2220867554441443169}
   - component: {fileID: 2220867554441443168}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FLW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 2220867554863225358}
   - component: {fileID: 2220867554863225356}
   - component: {fileID: 2220867554863225359}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FRW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 2220867555157796336}
   - component: {fileID: 2220867555157796334}
   - component: {fileID: 2220867555157796337}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RLW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 2220867555211661012}
   - component: {fileID: 2220867555211661015}
   - component: {fileID: 2220867555211661014}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 2220867555653397959}
   - component: {fileID: 2220867555653397958}
   - component: {fileID: 2220867555653397961}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RRW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
