@@ -13,7 +13,7 @@ public class GrapplePull : MonoBehaviour
     [SerializeField] private Transform car;
     [SerializeField] private AbilityController abilityController;
 
-    [SerializeField] public static bool isGrappling;
+    public static bool isGrappling;
     private bool hookSet = false;
     private SpringJoint joint;
     private TargetIndicator targetIndicator;
@@ -46,7 +46,7 @@ public class GrapplePull : MonoBehaviour
         abilityController = grappleGun.GetComponent<AbilityController>();
         car = rb.GetComponent<Transform>();
         targetIndicator = grappleGun.GetComponent<TargetIndicator>();
-        players.AddRange(GameObject.FindGameObjectsWithTag("Car"));
+        players.AddRange(GameObject.FindGameObjectsWithTag("OpponentCar"));
         foreach (GameObject player in players)
         {
             playerCars.Add(player.transform);
@@ -54,7 +54,7 @@ public class GrapplePull : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if(abilityController.Ability != null && abilityController.Ability.a_Name == "Grapple")
         {
@@ -144,7 +144,7 @@ public class GrapplePull : MonoBehaviour
             hookPoint = hit.point;
             hitPlayer = GetClosestPlayer(playerCars);
         }
-        else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, (1 << LayerMask.NameToLayer("Grapple") | (1 << LayerMask.NameToLayer("Ignore Raycast")))))
+        else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, (1 << LayerMask.NameToLayer("Grapple") | (1 << LayerMask.NameToLayer("Default")))))
         {
             hookPoint = hit.point;
         }

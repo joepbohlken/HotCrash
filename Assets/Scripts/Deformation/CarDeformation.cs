@@ -33,7 +33,7 @@ public class CarDeformation : MonoBehaviour
 
     public void OnCollision(Collision collision)
     {
-        if (collision.relativeVelocity.magnitude >= minVelocity && collision.gameObject.CompareTag("Car"))
+        if (collision.relativeVelocity.magnitude >= minVelocity && (collision.gameObject.CompareTag("Car") || collision.gameObject.CompareTag("OpponentCar")))
         {
             // Debounce between deformations to improve performance
             bool canDeform = currentDebounce <= 0f;
