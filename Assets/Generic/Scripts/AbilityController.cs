@@ -29,10 +29,13 @@ public class AbilityController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<AbilityBlock>())
         {
-            AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
-            Ability = block.GetRandomAbility();
+            if (Ability == null)
+            {
+                AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
+                Ability = block.GetRandomAbility();
 
-            Ability.PickedUp(gameObject);
+                Ability.PickedUp(gameObject);
+            }
         }
     }
 
