@@ -23,7 +23,6 @@ public abstract class Ability : ScriptableObject
     }
     public virtual void OnAbilityEnded()
     {
-        Debug.Log("Ability Ended");
     }
 
     public void PickedUp(GameObject player)

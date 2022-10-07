@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [CreateAssetMenu(menuName = "Abilities/Transparent")]
 public class TransparentAbility : Ability
@@ -13,7 +14,7 @@ public class TransparentAbility : Ability
     public override void OnPickup()
     {
         base.OnPickup();
-        Car.GetComponentsInChildren(CarRenderers);
+        CarRenderers = Car.GetComponentsInChildren<Renderer>().ToList();
     }
 
     public override void Use()
