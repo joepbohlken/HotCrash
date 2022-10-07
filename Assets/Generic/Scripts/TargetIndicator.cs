@@ -17,9 +17,14 @@ public class TargetIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
-    public void OnGUI()
+    private void Update()
+    {
+    }
+
+    void OnGUI()
     {
         for (int i = 0; i < targets.Count; i++)
         {

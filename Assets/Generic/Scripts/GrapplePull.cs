@@ -21,7 +21,6 @@ public class GrapplePull : MonoBehaviour
     private TargetIndicator targetIndicator;
     public Transform hitPlayer = null;
     public List<Transform> visibleTargets = new List<Transform>();
-    private List<Collider> targets = new List<Collider>();
 
     [SerializeField]
     List<GameObject> players;
@@ -31,16 +30,18 @@ public class GrapplePull : MonoBehaviour
     //Ability Params
     [SerializeField] private LayerMask grappleLayer;
     [SerializeField] private LayerMask objectLayer;
-    [SerializeField] float maxSpeed;
-    [SerializeField] float speed;
-    [SerializeField] float rotationSpeed;
-    [SerializeField] float range;
-    [SerializeField] float playerTargetAngle;
-    [SerializeField] float hookSetTime = 0;
+    [SerializeField] float maxSpeed = 15f;
+    [SerializeField] float speed = 3f;
+    [SerializeField] float rotationSpeed = 50f;
+    [SerializeField] float range = 30f;
+    [SerializeField] float playerTargetAngle = 33f;
+    [SerializeField] float hookSetTime = 0.25f;
 
     // Start is called before the first frame update
     void Start()
     {
+        grappleLayer = LayerMask.GetMask("Grapple");
+        objectLayer = LayerMask.GetMask("Default");
         grappleGun = gameObject.transform;
         rb = grappleGun.GetComponent<Rigidbody>();
         gunTip = grappleGun.transform.Find("GunTip");
@@ -59,30 +60,26 @@ public class GrapplePull : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(abilityController.Ability != null)
+        if(abilityController.Ability != null && abilityController.Ability.a_Name == "Grapple")
         {
-            if (abilityController.Ability.a_Name == "Grapple")
+            targetBox();
+            if (isGrappling)
             {
-                FindVisibleTargets();
-                targetIndicator.OnGUI();
-            }
-        }
-        if(isGrappling)
-        {
-            hookSetTime += Time.deltaTime;
-            if (!hookSet)
-            {
-                ShootHook();
-                SetJoint();
-                hookSet = true;
-                hookSetTime = 0;
-            }
-            if (hookSet && hookSetTime > 0.25f)
-            {
-                steering.rate = 0;
-                steering.m_CurrAngle = 0;
-                Rotate();
-                Pull();
+                hookSetTime += Time.deltaTime;
+                if (!hookSet)
+                {
+                    ShootHook();
+                    SetJoint();
+                    hookSet = true;
+                    hookSetTime = 0;
+                }
+                if (hookSet && hookSetTime > 0.25f)
+                {
+                    steering.rate = 0;
+                    steering.m_CurrAngle = 0;
+                    Rotate();
+                    Pull();
+                }
             }
         }
     }
@@ -168,17 +165,38 @@ public class GrapplePull : MonoBehaviour
         for (int i = 0; i < playerCars.Count; i++)
         {
             Transform target = playerCars[i].transform;
-            BoxCollider cTarget = playerCars[i].GetComponent<BoxCollider>();
             Vector3 dirToTarget = (target.position - gunTip.position).normalized;
             if (Vector3.Angle(gunTip.forward, dirToTarget) < playerTargetAngle / 2)
             { 
                 float dstToTarget = Vector3.Distance(gunTip.position, target.position);
 
-                if (!Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
+                if (Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
                 {
                     if(dstToTarget <= range)
                     {
                         visibleTargets.Add(target);
+                    }
+                }
+            }
+        }
+    }
+
+    public void targetBox()
+    {
+        targetIndicator.targets.Clear();
+        for (int i = 0; i < playerCars.Count; i++)
+        {
+            Transform target = playerCars[i].transform;
+            BoxCollider cTarget = players[i].GetComponent<BoxCollider>();
+            Vector3 dirToTarget = (target.position - gunTip.position).normalized;
+            if (Vector3.Angle(gunTip.forward, dirToTarget) < playerTargetAngle / 2)
+            {
+                float dstToTarget = Vector3.Distance(gunTip.position, target.position);
+
+                if (Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
+                {
+                    if (dstToTarget <= range)
+                    {
                         targetIndicator.targets.Add(cTarget);
                     }
                 }
