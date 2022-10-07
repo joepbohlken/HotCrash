@@ -5,18 +5,20 @@ using System;
 [CreateAssetMenu(menuName = "Abilities/Transparent")]
 public class TransparentAbility : Ability
 {
+    private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
     private List<Renderer> CarRenderers;
     [SerializeField]
     private float opacity;
 
     public override void OnPickup()
     {
+        base.OnPickup();
         Car.GetComponentsInChildren(CarRenderers);
     }
 
     public override void Use()
     {
-        Dictionary<Renderer, List<Tuple<Color, int>>> originalValues = new();
+        originalValues = new();
 
         foreach (Renderer rend in CarRenderers)
         {
@@ -41,6 +43,18 @@ public class TransparentAbility : Ability
                 mat.renderQueue = 3000;
             }
         }
-        InvisibilityTimer.invisTimer.StartCoroutine(InvisibilityTimer.invisTimer.BecomeVisible(Duration, originalValues));
+    }
+
+    public override void OnAbilityEnded()
+    {
+        foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> rendValuesPair in originalValues)
+        {
+            for (int i = 0; i < rendValuesPair.Value.Count; i++)
+            {
+                rendValuesPair.Key.materials[i].color = rendValuesPair.Value[i].Item1;
+                rendValuesPair.Key.materials[i].renderQueue = rendValuesPair.Value[i].Item2;
+            }
+            rendValuesPair.Key.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
     }
 }
