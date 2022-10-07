@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
@@ -19,20 +20,15 @@ public class AbilityController : MonoBehaviour
         AbilityController.controller = this;
         //Ability = ScriptableObject.CreateInstance<Ability>();
     }
+    [HideInInspector]
+    public UnityEvent OnAbilityComplete = new UnityEvent();
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && cd <= 0 && Ability != null)
         {
             Ability.Use();
-            if (consumableAbilities)
-            {
-                Ability = ScriptableObject.CreateInstance<Ability>();
-            }
-            else
-            {
-                cd = Ability.AbilityCooldown;
-            }
+            StartCoroutine(ActivateAfterDelay(Ability.AbilityDuration));
         }
 
         cd -= Time.deltaTime;
@@ -41,10 +37,28 @@ public class AbilityController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<AbilityBlock>())
         {
-            AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
-            Ability = block.GetRandomAbility();
+            if (Ability == null)
+            {
+                AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
+                Ability = block.GetRandomAbility();
 
-            Ability.PickedUp(gameObject);
+                Ability.PickedUp(gameObject);
+            }
+        }
+    }
+
+    IEnumerator ActivateAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        OnAbilityComplete.Invoke();
+
+        if (consumableAbilities)
+        {
+            Ability = null;
+        }
+        else
+        {
+            cd = Ability.AbilityCooldown;
         }
     }
 }
