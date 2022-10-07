@@ -16,9 +16,8 @@ public class GrapplePull : MonoBehaviour
     [SerializeField] public static bool isGrappling;
     private bool hookSet = false;
     private SpringJoint joint;
-    private Steering steering;
-    private Ackermann ackermann;
     private TargetIndicator targetIndicator;
+    private ArcadeCar arcadeCar;
     public Transform hitPlayer = null;
     public List<Transform> visibleTargets = new List<Transform>();
 
@@ -28,7 +27,6 @@ public class GrapplePull : MonoBehaviour
     List<Transform> playerCars;
 
     //Ability Params
-    [SerializeField] private LayerMask grappleLayer;
     [SerializeField] private LayerMask objectLayer;
     [SerializeField] float maxSpeed = 15f;
     [SerializeField] float speed = 3f;
@@ -40,17 +38,15 @@ public class GrapplePull : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        grappleLayer = LayerMask.GetMask("Grapple");
         objectLayer = LayerMask.GetMask("Default");
         grappleGun = gameObject.transform;
+        arcadeCar = grappleGun.GetComponent<ArcadeCar>();
         rb = grappleGun.GetComponent<Rigidbody>();
         gunTip = grappleGun.transform.Find("GunTip");
-        steering = grappleGun.GetComponent<Steering>();
-        ackermann = grappleGun.GetComponent<Ackermann>();
         abilityController = grappleGun.GetComponent<AbilityController>();
         car = rb.GetComponent<Transform>();
         targetIndicator = grappleGun.GetComponent<TargetIndicator>();
-        players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+        players.AddRange(GameObject.FindGameObjectsWithTag("Car"));
         foreach (GameObject player in players)
         {
             playerCars.Add(player.transform);
@@ -75,8 +71,8 @@ public class GrapplePull : MonoBehaviour
                 }
                 if (hookSet && hookSetTime > 0.25f)
                 {
-                    steering.rate = 0;
-                    steering.m_CurrAngle = 0;
+                    //arcadeCar.steerAngleLimit = 0;
+                    //steering.m_CurrAngle = 0;
                     Rotate();
                     Pull();
                 }
@@ -115,7 +111,7 @@ public class GrapplePull : MonoBehaviour
 
     public void Rotate()
     {
-        ackermann.SetAngle(0);
+        //ackermann.SetAngle(0);
         Quaternion targetDirection = Quaternion.LookRotation(hookPoint - car.position);
 
         float step = rotationSpeed * Time.deltaTime/2;
@@ -133,7 +129,7 @@ public class GrapplePull : MonoBehaviour
         isGrappling = false;
         Destroy(joint);
         hookSet = false;
-        steering.rate = 90;
+        //steering.rate = 90;
         hitPlayer = null;
     }
 
@@ -144,11 +140,11 @@ public class GrapplePull : MonoBehaviour
         //Speciaal point voor grapplinghook
         if (visibleTargets.Count > 0)
         {
-            Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, grappleLayer);
+            Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, (1 << LayerMask.NameToLayer("Grapple") | (1 << LayerMask.NameToLayer("Ignore Raycast"))));
             hookPoint = hit.point;
             hitPlayer = GetClosestPlayer(playerCars);
         }
-        else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, grappleLayer))
+        else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, (1 << LayerMask.NameToLayer("Grapple") | (1 << LayerMask.NameToLayer("Ignore Raycast")))))
         {
             hookPoint = hit.point;
         }
@@ -170,7 +166,7 @@ public class GrapplePull : MonoBehaviour
             { 
                 float dstToTarget = Vector3.Distance(gunTip.position, target.position);
 
-                if (Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
+                if (!Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
                 {
                     if(dstToTarget <= range)
                     {
@@ -187,13 +183,13 @@ public class GrapplePull : MonoBehaviour
         for (int i = 0; i < playerCars.Count; i++)
         {
             Transform target = playerCars[i].transform;
-            BoxCollider cTarget = players[i].GetComponent<BoxCollider>();
+            MeshCollider cTarget = players[i].GetComponentInChildren<MeshCollider>();
             Vector3 dirToTarget = (target.position - gunTip.position).normalized;
             if (Vector3.Angle(gunTip.forward, dirToTarget) < playerTargetAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(gunTip.position, target.position);
 
-                if (Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
+                if (!Physics.Raycast(gunTip.position, dirToTarget, dstToTarget, objectLayer))
                 {
                     if (dstToTarget <= range)
                     {

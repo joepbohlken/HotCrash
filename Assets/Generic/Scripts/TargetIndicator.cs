@@ -12,7 +12,7 @@ public class TargetIndicator : MonoBehaviour
 
     public Camera targetCamera;
 
-    public List<BoxCollider> targets;
+    public List<MeshCollider> targets;
 
     // Start is called before the first frame update
     void Start()
