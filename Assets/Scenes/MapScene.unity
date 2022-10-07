@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1378,6 +1378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raiden (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
+      objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1712,6 +1716,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -2573,6 +2581,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raiden (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
+      objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3349,6 +3361,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -4333,6 +4349,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -12445,6 +12465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gisela
       objectReference: {fileID: 0}
+    - target: {fileID: 5252175745470138114, guid: 85197fac5ad172c4fab156cc6d3fa922, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
+      objectReference: {fileID: 0}
     - target: {fileID: 5994683701165882492, guid: 85197fac5ad172c4fab156cc6d3fa922, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8499985
@@ -13158,6 +13182,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1369456461}
     m_Modifications:
+    - target: {fileID: 2931154192456074864, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
+      propertyPath: abilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931154192456074864, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4de7081415978ee43badaef38cee9fa1, type: 2}
     - target: {fileID: 2931154192456074866, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
       propertyPath: m_Name
       value: AbilityBlock (2)
@@ -13242,6 +13274,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -13358,6 +13394,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -14020,7 +14060,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507737495}
-  m_LocalRotation: {x: 0.23361571, y: -0.000000008365132, z: 0.0000000020098407, w: 0.972329}
+  m_LocalRotation: {x: 0.23361571, y: 0.000000008365131, z: -0.0000000020098403, w: 0.972329}
   m_LocalPosition: {x: 101.8, y: 14.765987, z: -46.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38329,6 +38369,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raiden (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
+      objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -38479,6 +38523,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
@@ -39157,7 +39205,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805494930}
-  m_LocalRotation: {x: 0.23361571, y: -0.000000008365132, z: 0.0000000020098407, w: 0.972329}
+  m_LocalRotation: {x: 0.23361571, y: 0.000000008365131, z: -0.0000000020098403, w: 0.972329}
   m_LocalPosition: {x: 101.8, y: 14.765987, z: -46.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39763,6 +39811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Raiden (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
+      objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -39928,6 +39980,179 @@ MonoBehaviour:
         m_CallState: 2
   useCarDeformation: 1
   minVelocity: 3
+--- !u!120 &1942008490
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942008479}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b29b1f14ded45a64dbcab1243181d998, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 0.1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+--- !u!114 &1942008491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942008479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8370b6859c243c441be63d541e7d739b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapplingGun: {fileID: 1942008492}
+  quality: 100
+  damper: 14
+  strength: 800
+  velocity: 30
+  waveCount: 3
+  waveHeight: 1
+  affectCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1942008492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942008479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9865ee41df8071f4f8ddeb63060d76bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hookPoint: {x: 0, y: 0, z: 0}
+  grappleGun: {fileID: 0}
+  rb: {fileID: 0}
+  car: {fileID: 0}
+  abilityController: {fileID: 0}
+  hitPlayer: {fileID: 0}
+  visibleTargets: []
+  players: []
+  playerCars: []
+  objectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxSpeed: 15
+  speed: 3
+  rotationSpeed: 50
+  range: 30
+  playerTargetAngle: 33
+  hookSetTime: 0.25
+--- !u!114 &1942008493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942008479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cef988ca0cc51047b1ff6df5d5375c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowMultipleTargets: 0
+  topLeftBorder: {fileID: 2800000, guid: db01c73bf5f897f4995decaab575b183, type: 3}
+  bottomLeftBorder: {fileID: 2800000, guid: b150b4b92409a734ab8381760d44f272, type: 3}
+  topRightBorder: {fileID: 2800000, guid: 0ba792037b75c4649a9cac8ddddc8b01, type: 3}
+  bottomRightBorder: {fileID: 2800000, guid: 5f6e2da1746dd2e41a9e2bb22e469454, type: 3}
+  targetCamera: {fileID: 1805494932}
+  targets: []
 --- !u!4 &1973423229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 5bc5cbd2067e372409c260b3be2aba72, type: 3}
@@ -39938,6 +40163,37 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3106581947072011122, guid: 8f1e4783118d0bc448af8acfe6f62369, type: 3}
   m_PrefabInstance: {fileID: 179247288}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2078212320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2078212321}
+  m_Layer: 2
+  m_Name: GunTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2078212321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078212320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1942008484}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2079768272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2931154192456074867, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
@@ -40382,6 +40638,10 @@ PrefabInstance:
     - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_Name
       value: Raiden (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972901514101024827, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
+      propertyPath: m_TagString
+      value: OpponentCar
       objectReference: {fileID: 0}
     - target: {fileID: 6462615869558239873, guid: dcc3775d8dc18bf4fb57437ad1060e8e, type: 3}
       propertyPath: m_RootOrder
