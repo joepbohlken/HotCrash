@@ -139,6 +139,14 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Y - Steering speed (deg/sec). X - Vehicle speed (km/h)")]
     public AnimationCurve steeringSpeed = AnimationCurve.Linear(0.0f, 2.0f, 100.0f, 0.5f);
 
+    [Header("Aerial")]
+    [Tooltip("Speed at which the car rolls in the air")]
+    public float rollRotationSpeed = 15f;
+    [Tooltip("Speed at which the car turns (yaw axis) in the air")]
+    public float yawRotationSpeed = 15f;
+    [Tooltip("Speed at which the car rotates forwards and backwards (pitch axis) in the air")]
+    public float pitchRotationSpeed = 15f;
+
     [Header("Other")]
     [Tooltip("Hand brake slippery time in seconds")]
     public float handBrakeSlipperyTime = 2.2f;
@@ -179,6 +187,8 @@ public class ArcadeCar : MonoBehaviour
 
     [HideInInspector] public float v = 0f;
     [HideInInspector] public float h = 0f;
+    private bool q = false;
+    private bool e = false;
 
     private void OnValidate()
     {
@@ -264,6 +274,8 @@ public class ArcadeCar : MonoBehaviour
         {
             // set after flight tire slippery time (1 sec)
             afterFlightSlipperyTiresTime = 1.0f;
+
+            HandleAirMovement();
         }
         else
         {
@@ -310,7 +322,18 @@ public class ArcadeCar : MonoBehaviour
         }
 
     }
-    public void SetEngineSound()
+
+    private  void HandleAirMovement()
+    {
+        if(!(q && e) && (q || e))
+        {
+            // Roll the car 
+            // if e is pressed instead of q invert the direction
+            transform.Rotate(Vector3.forward * rollRotationSpeed * Time.deltaTime * (q ? 1 : -1));
+        }
+    }
+
+    private void SetEngineSound()
     {
         float speed = GetSpeed() * 3.6f;
 
@@ -475,6 +498,8 @@ public class ArcadeCar : MonoBehaviour
         {
             v = Input.GetAxis("Vertical");
             h = Input.GetAxis("Horizontal");
+            q = Input.GetKey(KeyCode.Q);
+            e = Input.GetKey(KeyCode.E);
         }
 
         if (Input.GetKey(KeyCode.R) && controllable && debugMode)
