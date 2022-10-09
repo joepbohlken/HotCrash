@@ -156,7 +156,7 @@ public class ArcadeCar : MonoBehaviour
     public Axle[] axles = new Axle[2];
 
     [Header("Debug")]
-    public bool debugMode = true;
+    public bool debugMode = false;
 
     private float pitchRate;
     private float afterFlightSlipperyTiresTime = 0.0f;
@@ -182,7 +182,6 @@ public class ArcadeCar : MonoBehaviour
 
     private void OnValidate()
     {
-        //HACK: to apply steering in editor
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
@@ -201,7 +200,6 @@ public class ArcadeCar : MonoBehaviour
         rb.centerOfMass = centerOfMass;
     }
 
-    //TODO: Refactor (remove this func, GetAccelerationForceMagnitude is enough)
     private float CalcAccelerationForceMagnitude()
     {
         if (!isAcceleration && !isReverseAcceleration)
@@ -212,7 +210,7 @@ public class ArcadeCar : MonoBehaviour
         float speed = GetSpeed();
         float dt = Time.fixedDeltaTime;
 
-        float forceMag = GetAccelerationForceMagnitude(accelerationCurve, isAcceleration ? speed : -speed, Time.fixedDeltaTime);
+        float forceMag = GetAccelerationForceMagnitude(accelerationCurve, isAcceleration ? speed : -speed, dt);
 
         return isAcceleration ? forceMag : -forceMag;
     }
@@ -1057,7 +1055,7 @@ public class ArcadeCar : MonoBehaviour
     #region "Gizmos & GUI"
     private void OnGUI()
     {
-        if (!controllable && !debugMode)
+        if (!controllable || !debugMode)
         {
             return;
         }

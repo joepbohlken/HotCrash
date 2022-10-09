@@ -226,7 +226,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   handBrakeSlipperyTime: 2
-  controllable: 0
+  controllable: 1
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -363,7 +363,7 @@ MonoBehaviour:
     afterFlightSlipperyK: 0.02
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
-  debugDraw: 0
+  debugMode: 0
   v: 0
   h: 0
 --- !u!114 &2220867554108906052
