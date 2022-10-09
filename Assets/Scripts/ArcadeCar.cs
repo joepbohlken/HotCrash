@@ -210,7 +210,7 @@ public class ArcadeCar : MonoBehaviour
         float speed = GetSpeed();
         float dt = Time.fixedDeltaTime;
 
-        float forceMag = GetAccelerationForceMagnitude(accelerationCurve, isAcceleration ? speed : -speed, dt);
+        float forceMag = GetAccelerationForceMagnitude(isAcceleration ? accelerationCurve : accelerationCurveReverse, isAcceleration ? speed : -speed, dt);
 
         return isAcceleration ? forceMag : -forceMag;
     }
