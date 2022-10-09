@@ -156,7 +156,7 @@ public class ArcadeCar : MonoBehaviour
     public Axle[] axles = new Axle[2];
 
     [Header("Debug")]
-    public bool debugDraw = true;
+    public bool debugMode = true;
 
     private float pitchRate;
     private float afterFlightSlipperyTiresTime = 0.0f;
@@ -219,6 +219,8 @@ public class ArcadeCar : MonoBehaviour
 
     private void Update()
     {
+        UpdateInput();
+
         ApplyVisual();
 
         SetEngineSound();
@@ -226,8 +228,6 @@ public class ArcadeCar : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateInput();
-
         accelerationForceMagnitude = CalcAccelerationForceMagnitude();
 
         // 0.8 - pressed
@@ -320,8 +320,8 @@ public class ArcadeCar : MonoBehaviour
         {
             pitchRate = 0;
             audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        } 
-        else if(audioSource.pitch != 1)
+        }
+        else if (audioSource.pitch != 1)
         {
             pitchRate += Time.fixedDeltaTime / 10;
             audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
@@ -444,7 +444,7 @@ public class ArcadeCar : MonoBehaviour
 
         }
 
-        if (debugDraw)
+        if (debugMode)
         {
             Debug.Log("Max speed reached!");
         }
@@ -479,7 +479,7 @@ public class ArcadeCar : MonoBehaviour
             h = Input.GetAxis("Horizontal");
         }
 
-        if (Input.GetKey(KeyCode.R) && controllable)
+        if (Input.GetKey(KeyCode.R) && controllable && debugMode)
         {
             Debug.Log("Reset pressed");
             Ray resetRay = new Ray();
@@ -771,7 +771,7 @@ public class ArcadeCar : MonoBehaviour
         // Calculate current sliding force
         Vector3 slidingForce = (slideVelocity * rb.mass / dt) / (float)totalWheelsCount;
 
-        if (debugDraw)
+        if (debugMode)
         {
             Debug.DrawRay(wheelData.touchPoint.point, slideVelocity, Color.red);
         }
@@ -836,7 +836,7 @@ public class ArcadeCar : MonoBehaviour
 
         frictionForce -= longitudinalForce;
 
-        if (debugDraw)
+        if (debugMode)
         {
             Debug.DrawRay(wheelData.touchPoint.point, frictionForce, Color.red);
             Debug.DrawRay(wheelData.touchPoint.point, longitudinalForce, Color.white);
@@ -856,7 +856,7 @@ public class ArcadeCar : MonoBehaviour
             Vector3 engineForce = c_fwd * accelerationForceMagnitude / (float)numberOfPoweredWheels / dt;
             AddForceAtPosition(engineForce, accForcePoint);
 
-            if (debugDraw)
+            if (debugMode)
             {
                 Debug.DrawRay(accForcePoint, engineForce, Color.green);
             }
@@ -892,7 +892,7 @@ public class ArcadeCar : MonoBehaviour
         if (axle.wheelDataL.isOnGround)
         {
             AddForceAtPosition(wsDownDirection * antiRollForce, axle.wheelDataL.touchPoint.point);
-            if (debugDraw)
+            if (debugMode)
             {
                 Debug.DrawRay(axle.wheelDataL.touchPoint.point, wsDownDirection * antiRollForce, Color.magenta);
             }
@@ -901,7 +901,7 @@ public class ArcadeCar : MonoBehaviour
         if (axle.wheelDataR.isOnGround)
         {
             AddForceAtPosition(wsDownDirection * -antiRollForce, axle.wheelDataR.touchPoint.point);
-            if (debugDraw)
+            if (debugMode)
             {
                 Debug.DrawRay(axle.wheelDataR.touchPoint.point, wsDownDirection * -antiRollForce, Color.magenta);
             }
@@ -1057,7 +1057,7 @@ public class ArcadeCar : MonoBehaviour
     #region "Gizmos & GUI"
     private void OnGUI()
     {
-        if (!controllable)
+        if (!controllable && !debugMode)
         {
             return;
         }
@@ -1081,24 +1081,21 @@ public class ArcadeCar : MonoBehaviour
             return;
         }
 
-        if (debugDraw)
+        foreach (Axle axle in axles)
         {
-            foreach (Axle axle in axles)
+            Vector3 localL = new Vector3(axle.width * -0.5f, axle.offset.y, axle.offset.x);
+            Vector3 localR = new Vector3(axle.width * 0.5f, axle.offset.y, axle.offset.x);
+
+            Vector3 wsL = transform.TransformPoint(localL);
+            Vector3 wsR = transform.TransformPoint(localR);
+
+            for (int wheelIndex = 0; wheelIndex < 2; wheelIndex++)
             {
-                Vector3 localL = new Vector3(axle.width * -0.5f, axle.offset.y, axle.offset.x);
-                Vector3 localR = new Vector3(axle.width * 0.5f, axle.offset.y, axle.offset.x);
+                WheelData wheelData = (wheelIndex == WHEEL_LEFT_INDEX) ? axle.wheelDataL : axle.wheelDataR;
+                Vector3 wsFrom = (wheelIndex == WHEEL_LEFT_INDEX) ? wsL : wsR;
 
-                Vector3 wsL = transform.TransformPoint(localL);
-                Vector3 wsR = transform.TransformPoint(localR);
-
-                for (int wheelIndex = 0; wheelIndex < 2; wheelIndex++)
-                {
-                    WheelData wheelData = (wheelIndex == WHEEL_LEFT_INDEX) ? axle.wheelDataL : axle.wheelDataR;
-                    Vector3 wsFrom = (wheelIndex == WHEEL_LEFT_INDEX) ? wsL : wsR;
-
-                    Vector3 screenPos = cam.WorldToScreenPoint(wsFrom);
-                    GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 150, 130), wheelData.debugText, style);
-                }
+                Vector3 screenPos = cam.WorldToScreenPoint(wsFrom);
+                GUI.Label(new Rect(screenPos.x, Screen.height - screenPos.y, 150, 130), wheelData.debugText, style);
             }
         }
     }
@@ -1167,6 +1164,6 @@ public class ArcadeCar : MonoBehaviour
         }
         Gizmos.DrawSphere(transform.TransformPoint(centerOfMass), 0.1f);
     }
-    #endif
+#endif
     #endregion
 }
