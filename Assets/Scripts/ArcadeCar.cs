@@ -323,13 +323,23 @@ public class ArcadeCar : MonoBehaviour
 
     }
 
-    private  void HandleAirMovement()
+    private void HandleAirMovement()
     {
         if(!(q && e) && (q || e))
         {
             // Roll the car 
             // if e is pressed instead of q invert the direction
             transform.Rotate(Vector3.forward * rollRotationSpeed * Time.deltaTime * (q ? 1 : -1));
+        }
+
+        if(v != 0)
+        {
+            transform.Rotate(Vector3.right * pitchRotationSpeed * Time.deltaTime * Mathf.Sign(v));
+        }
+
+        if(h != 0)
+        {
+            transform.Rotate(Vector3.up * yawRotationSpeed * Time.deltaTime * Mathf.Sign(h));
         }
     }
 
@@ -634,7 +644,6 @@ public class ArcadeCar : MonoBehaviour
             float angleReturnSpeedDegPerSec = steeringResetSpeed.Evaluate(speedKmH);
 
             angleReturnSpeedDegPerSec = Mathf.Lerp(0.0f, angleReturnSpeedDegPerSec, Mathf.Clamp01(speedKmH / 2.0f));
-
 
             float ang = axles[0].steerAngle;
             float sgn = Mathf.Sign(ang);
