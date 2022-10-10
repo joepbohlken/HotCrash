@@ -140,12 +140,11 @@ public class ArcadeCar : MonoBehaviour
     public AnimationCurve steeringSpeed = AnimationCurve.Linear(0.0f, 2.0f, 100.0f, 0.5f);
 
     [Header("Aerial")]
-    [Tooltip("Speed at which the car rolls in the air")]
-    public float rollRotationSpeed = 15f;
-    [Tooltip("Speed at which the car turns (yaw axis) in the air")]
-    public float yawRotationSpeed = 15f;
-    [Tooltip("Speed at which the car rotates forwards and backwards (pitch axis) in the air")]
-    public float pitchRotationSpeed = 15f;
+    public float rotationSpeedMultiplier = 10f;
+    [Tooltip("Speed at which the car rotates in the air")]
+    public float rotationSpeed = 1f;
+    [Tooltip("Time it takes for rotation to accelerate to full speed")]
+    public float rotationAccelTime = .5f;
 
     [Header("Other")]
     [Tooltip("Hand brake slippery time in seconds")]
@@ -167,6 +166,9 @@ public class ArcadeCar : MonoBehaviour
     public bool debugMode = false;
 
     private float pitchRate;
+    private float pitchRotationRate;
+    private bool isTouchingGround = false;
+    private float rollRotationRate;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
     private float handBrakeSlipperyTiresTime = 0.0f;
@@ -275,7 +277,10 @@ public class ArcadeCar : MonoBehaviour
             // set after flight tire slippery time (1 sec)
             afterFlightSlipperyTiresTime = 1.0f;
 
-            HandleAirMovement();
+            if(!isTouchingGround)
+            {
+                HandleAirMovement();
+            }
         }
         else
         {
@@ -323,24 +328,42 @@ public class ArcadeCar : MonoBehaviour
 
     }
 
+    private void FlipCarOver()
+    {
+
+    }
+
     private void HandleAirMovement()
     {
-        if(!(q && e) && (q || e))
+        float actualRotationSpeed = rotationSpeed * rotationSpeedMultiplier;
+
+        // Roll axis --> z-axis 
+        if (!(q && e) && (q || e))
         {
-            // Roll the car 
-            // if e is pressed instead of q invert the direction
-            transform.Rotate(Vector3.forward * rollRotationSpeed * Time.deltaTime * (q ? 1 : -1));
+            rollRotationRate += Time.fixedDeltaTime;
+            float result = Mathf.Lerp(0, actualRotationSpeed, rollRotationRate / rotationAccelTime);
+
+            rb.AddTorque(Vector3.forward * result * (q ? 1 : -1));
         }
 
-        if(v != 0)
+        // Pitch axis --> x-axis
+        if (v != 0)
         {
-            transform.Rotate(Vector3.right * pitchRotationSpeed * Time.deltaTime * Mathf.Sign(v));
-        }
+            pitchRotationRate += Time.fixedDeltaTime;
+            float result = Mathf.Lerp(0, actualRotationSpeed, pitchRotationRate / rotationAccelTime);
 
-        if(h != 0)
-        {
-            transform.Rotate(Vector3.up * yawRotationSpeed * Time.deltaTime * Mathf.Sign(h));
+            rb.AddTorque(Vector3.right * result * Mathf.Sign(v));
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isTouchingGround = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isTouchingGround = false;
     }
 
     private void SetEngineSound()
@@ -507,9 +530,20 @@ public class ArcadeCar : MonoBehaviour
         if (controllable)
         {
             v = Input.GetAxis("Vertical");
+
+            if (v == 0)
+            {
+                pitchRotationRate = 0;
+            }
+
             h = Input.GetAxis("Horizontal");
             q = Input.GetKey(KeyCode.Q);
             e = Input.GetKey(KeyCode.E);
+
+            if ((!q && !e) || (q && e))
+            {
+                rollRotationRate = 0;
+            }
         }
 
         if (Input.GetKey(KeyCode.R) && controllable && debugMode)
