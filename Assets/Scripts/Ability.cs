@@ -19,7 +19,6 @@ public abstract class Ability : ScriptableObject
 
     public virtual void OnPickup()
     {
-        Car.GetComponent<AbilityController>().OnAbilityComplete.AddListener(OnAbilityEnded);
     }
     public virtual void OnAbilityEnded()
     {

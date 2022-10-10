@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
+    private UnityEvent OnAbilityComplete = new UnityEvent();
     private float cd = 0;
 
     [SerializeField]
@@ -13,9 +14,6 @@ public class AbilityController : MonoBehaviour
     [SerializeField]
     private bool consumableAbilities;
 
-
-    [HideInInspector]
-    public UnityEvent OnAbilityComplete = new UnityEvent();
 
     void Update()
     {
@@ -44,7 +42,7 @@ public class AbilityController : MonoBehaviour
             {
                 AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
                 Ability = block.GetRandomAbility();
-
+                OnAbilityComplete.AddListener(Ability.OnAbilityEnded);
                 Ability.PickedUp(gameObject);
             }
         }
