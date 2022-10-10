@@ -68,8 +68,6 @@ public class Axle
     public float stiffness = 8500.0f;
     [Tooltip("Suspension Damping (Suspension 'Bounce')")]
     public float damping = 3000.0f;
-    [Tooltip("Suspension Restitution (Not used now)")]
-    public float restitution = 1.0f;
     [Tooltip("Relaxed suspension length")]
     public float lengthRelaxed = 0.55f;
     [Tooltip("Stabilizer bar anti-roll force")]
@@ -140,11 +138,7 @@ public class ArcadeCar : MonoBehaviour
     public AnimationCurve steeringSpeed = AnimationCurve.Linear(0.0f, 2.0f, 100.0f, 0.5f);
 
     [Header("Aerial")]
-    public float rotationSpeedMultiplier = 10f;
-    [Tooltip("Speed at which the car rotates in the air")]
-    public float rotationSpeed = 1f;
-    [Tooltip("Time it takes for rotation to accelerate to full speed")]
-    public float rotationAccelTime = .5f;
+    public AnimationCurve rotationCurve;
 
     [Header("Other")]
     [Tooltip("Hand brake slippery time in seconds")]
@@ -165,10 +159,11 @@ public class ArcadeCar : MonoBehaviour
     [Header("Debug")]
     public bool debugMode = false;
 
+    private float rollTime = 0f;
+    private float pitchTime = 0f;
+    private float yawTime = 0f;
     private float pitchRate;
-    private float pitchRotationRate;
     private bool isTouchingGround = false;
-    private float rollRotationRate;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
     private float handBrakeSlipperyTiresTime = 0.0f;
@@ -212,26 +207,26 @@ public class ArcadeCar : MonoBehaviour
         rb.centerOfMass = centerOfMass;
     }
 
-    private float CalcAccelerationForceMagnitude()
-    {
-        if (!isAcceleration && !isReverseAcceleration)
-        {
-            return 0.0f;
-        }
-
-        float speed = GetSpeed();
-        float dt = Time.fixedDeltaTime;
-
-        float forceMag = GetAccelerationForceMagnitude(isAcceleration ? accelerationCurve : accelerationCurveReverse, isAcceleration ? speed : -speed, dt);
-
-        return isAcceleration ? forceMag : -forceMag;
-    }
-
     private void Update()
     {
         UpdateInput();
 
         ApplyVisual();
+
+        bool allWheelIsOnAir = true;
+        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
+        {
+            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
+            {
+                allWheelIsOnAir = false;
+                break;
+            }
+        }
+
+        if (!isTouchingGround && allWheelIsOnAir)
+        {
+            HandleAirMovement();
+        }
 
         SetEngineSound();
     }
@@ -276,14 +271,11 @@ public class ArcadeCar : MonoBehaviour
         {
             // set after flight tire slippery time (1 sec)
             afterFlightSlipperyTiresTime = 1.0f;
-
-            if(!isTouchingGround)
-            {
-                HandleAirMovement();
-            }
         }
         else
         {
+            rb.angularDrag = 0.05f;
+
             // downforce
             Vector3 carDown = transform.TransformDirection(new Vector3(0.0f, -1.0f, 0.0f));
 
@@ -328,34 +320,6 @@ public class ArcadeCar : MonoBehaviour
 
     }
 
-    private void FlipCarOver()
-    {
-
-    }
-
-    private void HandleAirMovement()
-    {
-        float actualRotationSpeed = rotationSpeed * rotationSpeedMultiplier;
-
-        // Roll axis --> z-axis 
-        if (!(q && e) && (q || e))
-        {
-            rollRotationRate += Time.fixedDeltaTime;
-            float result = Mathf.Lerp(0, actualRotationSpeed, rollRotationRate / rotationAccelTime);
-
-            rb.AddTorque(Vector3.forward * result * (q ? 1 : -1));
-        }
-
-        // Pitch axis --> x-axis
-        if (v != 0)
-        {
-            pitchRotationRate += Time.fixedDeltaTime;
-            float result = Mathf.Lerp(0, actualRotationSpeed, pitchRotationRate / rotationAccelTime);
-
-            rb.AddTorque(Vector3.right * result * Mathf.Sign(v));
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         isTouchingGround = true;
@@ -366,49 +330,40 @@ public class ArcadeCar : MonoBehaviour
         isTouchingGround = false;
     }
 
-    private void SetEngineSound()
+    private void AddForceAtPosition(Vector3 force, Vector3 position)
     {
-        float speed = GetSpeed() * 3.6f;
-
-        if (isAcceleration || isReverseAcceleration)
-        {
-            pitchRate = 0;
-            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        }
-        else if (audioSource.pitch != 1)
-        {
-            pitchRate += Time.fixedDeltaTime / 10;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
-        }
-
-        foreach (var gear in gears)
-        {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
-            {
-                currentGear = gears.IndexOf(gear);
-                audioSource.clip = gear.audioClip;
-                audioSource.Play();
-            }
-        }
+        rb.AddForceAtPosition(force, position);
     }
 
-    private void Reset(Vector3 position)
+    private void HandleAirMovement()
     {
-        position += new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0.0f, UnityEngine.Random.Range(-1.0f, 1.0f));
-        float yaw = transform.eulerAngles.y + UnityEngine.Random.Range(-10.0f, 10.0f);
+        float dt = Time.fixedDeltaTime;
 
-        transform.position = position;
-        transform.rotation = Quaternion.Euler(new Vector3(0.0f, yaw, 0.0f));
+        bool roll = (!(q && e) && (q || e));
+        bool pitch = v != 0;
+        bool yaw = h != 0;
 
-        rb.velocity = new Vector3(0f, 0f, 0f);
-        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+        float rollRotation = roll ? rotationCurve.Evaluate(rollTime) * dt * (q ? 1 : -1) : 0;
+        float pitchRotation = pitch ? rotationCurve.Evaluate(pitchTime) * dt * Mathf.Sign(v) : 0;
+        float yawRotation = yaw ? rotationCurve.Evaluate(yawTime) * dt * Mathf.Sign(h) : 0;
 
-        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
-        {
-            axles[axleIndex].steerAngle = 0.0f;
-        }
+        rollTime += dt;
+        pitchTime += dt;
+        yawTime += dt;
 
-        Debug.Log(string.Format("Reset {0}, {1}, {2}, Rot {3}", position.x, position.y, position.z, yaw));
+        if(roll || pitch || yaw)
+            rb.angularDrag = 1f;
+
+        if (!roll)
+            rollTime = 0;
+
+        if (!pitch)
+            pitchTime = 0;
+
+        if (!yaw)
+            yawTime = 0;
+
+        transform.Rotate(new Vector3(pitchRotation, yawRotation, rollRotation));
     }
 
     private float GetHandBrakeK()
@@ -425,6 +380,21 @@ public class ArcadeCar : MonoBehaviour
         // 1.0 - not pressed
         float steeringK = Mathf.Clamp01(0.4f + (1.0f - GetHandBrakeK()) * 0.6f);
         return steeringK;
+    }
+
+    private float CalcAccelerationForceMagnitude()
+    {
+        if (!isAcceleration && !isReverseAcceleration)
+        {
+            return 0.0f;
+        }
+
+        float speed = GetSpeed();
+        float dt = Time.fixedDeltaTime;
+
+        float forceMag = GetAccelerationForceMagnitude(isAcceleration ? accelerationCurve : accelerationCurveReverse, isAcceleration ? speed : -speed, dt);
+
+        return isAcceleration ? forceMag : -forceMag;
     }
 
     private float GetAccelerationForceMagnitude(AnimationCurve accCurve, float speedMetersPerSec, float dt)
@@ -530,20 +500,9 @@ public class ArcadeCar : MonoBehaviour
         if (controllable)
         {
             v = Input.GetAxis("Vertical");
-
-            if (v == 0)
-            {
-                pitchRotationRate = 0;
-            }
-
             h = Input.GetAxis("Horizontal");
             q = Input.GetKey(KeyCode.Q);
             e = Input.GetKey(KeyCode.E);
-
-            if ((!q && !e) || (q && e))
-            {
-                rollRotationRate = 0;
-            }
         }
 
         if (Input.GetKey(KeyCode.R) && controllable && debugMode)
@@ -689,11 +648,6 @@ public class ArcadeCar : MonoBehaviour
 
             axles[0].steerAngle = ang;
         }
-    }
-
-    private void AddForceAtPosition(Vector3 force, Vector3 position)
-    {
-        rb.AddForceAtPosition(force, position);
     }
 
     private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
@@ -1033,6 +987,34 @@ public class ArcadeCar : MonoBehaviour
     }
     #endregion
 
+    #region "Sound"
+    private void SetEngineSound()
+    {
+        float speed = GetSpeed() * 3.6f;
+
+        if (isAcceleration || isReverseAcceleration)
+        {
+            pitchRate = 0;
+            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
+        }
+        else if (audioSource.pitch != 1)
+        {
+            pitchRate += Time.fixedDeltaTime / 10;
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
+        }
+
+        foreach (var gear in gears)
+        {
+            if (speed < gear.maxSpeed && speed > gear.minSpeed)
+            {
+                currentGear = gears.IndexOf(gear);
+                audioSource.clip = gear.audioClip;
+                audioSource.Play();
+            }
+        }
+    }
+    #endregion
+
     #region "Visual Wheel Functions"
     private void CalculateWheelVisualTransform(Vector3 wsAttachPoint, Vector3 wsDownDirection, Axle axle, WheelData data, int wheelIndex, float visualRotationRad, out Vector3 pos, out Quaternion rot)
     {
@@ -1120,7 +1102,27 @@ public class ArcadeCar : MonoBehaviour
     }
     #endregion
 
-    #region "Gizmos & GUI"
+    #region "Debugging"
+
+    private void Reset(Vector3 position)
+    {
+        position += new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0.0f, UnityEngine.Random.Range(-1.0f, 1.0f));
+        float yaw = transform.eulerAngles.y + UnityEngine.Random.Range(-10.0f, 10.0f);
+
+        transform.position = position;
+        transform.rotation = Quaternion.Euler(new Vector3(0.0f, yaw, 0.0f));
+
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
+        {
+            axles[axleIndex].steerAngle = 0.0f;
+        }
+
+        Debug.Log(string.Format("Reset {0}, {1}, {2}, Rot {3}", position.x, position.y, position.z, yaw));
+    }
+
     private void OnGUI()
     {
         if (!controllable || !debugMode)

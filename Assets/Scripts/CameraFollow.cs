@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Transform target;
 
+    private bool isReady = false;
     private Vector3 currentRotation = Vector3.zero;
 
     private void OnValidate()
@@ -20,11 +21,22 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
+        currentRotation = transform.localEulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        isReady = focus;
     }
 
     private void LateUpdate()
     {
+        if(!isReady)
+        {
+            return;
+        }
+
         Vector3 newPosition = offset;
 
         // Handle camera collision
@@ -40,11 +52,10 @@ public class CameraFollow : MonoBehaviour
         Vector2 mouseAxis = new Vector2(-Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         if (mouseAxis.x != 0 || mouseAxis.y != 0)
         {
-            currentRotation -= new Vector3(mouseAxis.x * mouseSensitivity, mouseAxis.y * mouseSensitivity, 0);
-            currentRotation.y = Mathf.Clamp(currentRotation.y, -50, 60);
-            Debug.Log(currentRotation);
+            currentRotation -= new Vector3(mouseAxis.y * mouseSensitivity, mouseAxis.x * mouseSensitivity, 0);
+            currentRotation.x = Mathf.Clamp(currentRotation.x, -50, 60);
 
-            Quaternion cameraQuaternion = Quaternion.Euler(currentRotation.y, currentRotation.x, 0);
+            Quaternion cameraQuaternion = Quaternion.Euler(currentRotation.x, currentRotation.y, 0);
             transform.rotation = cameraQuaternion;
         }
 
