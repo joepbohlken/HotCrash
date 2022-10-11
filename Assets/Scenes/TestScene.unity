@@ -2523,6 +2523,10 @@ PrefabInstance:
       value: 50000
       objectReference: {fileID: 0}
     - target: {fileID: 2220867554108906053, guid: a7bbcfd91a00b8246ae1a05d4de1f466, type: 3}
+      propertyPath: rotationCurve.m_Curve.Array.data[1].value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220867554108906053, guid: a7bbcfd91a00b8246ae1a05d4de1f466, type: 3}
       propertyPath: rotationSpeedCurve.m_Curve.Array.data[1].time
       value: 1
       objectReference: {fileID: 0}
