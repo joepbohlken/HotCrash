@@ -691,6 +691,7 @@ public class ArcadeCar : MonoBehaviour
     private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
     {
         int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
+        Debug.DrawRay(wheelRay.origin, wheelRay.direction, Color.magenta);
         if (numHits == 0)
         {
             return false;
@@ -712,11 +713,13 @@ public class ArcadeCar : MonoBehaviour
                 continue;
             }
 
+            /*
             // Skip contacts with strange normals (walls?)
             if (Vector3.Dot(wheelRayHits[j].normal, new Vector3(0.0f, 1.0f, 0.0f)) < 0.6f)
             {
                 continue;
             }
+            */
 
             if (wheelRayHits[j].distance < nearestHit.distance)
             {
