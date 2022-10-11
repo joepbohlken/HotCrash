@@ -11,9 +11,9 @@ public class TransparentAbility : Ability
     [SerializeField]
     private float opacity;
 
-    public override void OnPickup()
+    public override void OnObtained()
     {
-        base.OnPickup();
+        base.OnObtained();
         CarRenderers = Car.GetComponentsInChildren<Renderer>().ToList();
     }
 

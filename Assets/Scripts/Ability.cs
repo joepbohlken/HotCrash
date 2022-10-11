@@ -17,17 +17,17 @@ public abstract class Ability : ScriptableObject
         Debug.Log("Ability not implemented OR No ability active");
     }
 
-    public virtual void OnPickup()
+    public virtual void OnObtained()
     {
     }
     public virtual void OnAbilityEnded()
     {
     }
 
-    public void PickedUp(GameObject player)
+    public void Obtained(GameObject player)
     {
         SetCar(player);
-        OnPickup();
+        OnObtained();
     }
 
     private void SetCar(GameObject player)
