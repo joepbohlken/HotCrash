@@ -185,8 +185,10 @@ public class ArcadeCar : MonoBehaviour
     private Ray wheelRay = new Ray();
     private RaycastHit[] wheelRayHits = new RaycastHit[16];
 
-    [HideInInspector] public float v = 0f;
-    [HideInInspector] public float h = 0f;
+    [HideInInspector] 
+    public float v = 0f;
+    [HideInInspector] 
+    public float h = 0f;
     private bool q = false;
     private bool e = false;
     private bool rightMouse = false;
