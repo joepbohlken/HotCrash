@@ -1,24 +1,24 @@
 using System;
+using Random = UnityEngine.Random;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CarSound : MonoBehaviour
 {
+    private float pitchRate;
+    private ArcadeCar arcadeCar;
+    private AudioSource gearShiftSource;
+    [Range(0, 1)]
+    public float gearShiftVolume;
     private AudioSource audioSource;
-
     public int currentGear = 1;
     public List<Gear> gears = new List<Gear>();
-
-
-
+    public List<AudioClip> gearShiftSFX = new List<AudioClip>();
     [Header("Sounds")]
     [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
     public AnimationCurve pitchCurve;
 
-    private float pitchRate;
-
-    private ArcadeCar arcadeCar;
 
     [Serializable]
     public class Gear
@@ -39,7 +39,8 @@ public class CarSound : MonoBehaviour
     {
         arcadeCar = GetComponent<ArcadeCar>();
         audioSource = GetComponent<AudioSource>();
-
+        gearShiftSource = gameObject.AddComponent<AudioSource>();
+        gearShiftSource.volume = gearShiftVolume;
     }
 
     void Update()
@@ -70,6 +71,11 @@ public class CarSound : MonoBehaviour
                 if (temp != currentGear)
                 {
                     currentGear = temp;
+                    // Plays Gearshift sfx
+                    gearShiftSource.clip = gearShiftSFX[Random.Range(0 ,gearShiftSFX.Count)];
+                    gearShiftSource.Play();
+
+                    // Changes Engine Sound
                     audioSource.clip = gear.audioClip;
                     audioSource.Play();
                 }
