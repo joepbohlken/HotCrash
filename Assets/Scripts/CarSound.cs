@@ -9,6 +9,13 @@ public class CarSound : MonoBehaviour
     private float pitchRate;
     private ArcadeCar arcadeCar;
     private AudioSource gearShiftSource;
+
+    private AudioSource driftSource;
+    public AudioClip driftingClip;
+    [Range(0, 1)]
+    public float driftVolume;
+    private bool isDrifting = false;
+
     [Range(0, 1)]
     public float gearShiftVolume;
     private AudioSource audioSource;
@@ -41,11 +48,15 @@ public class CarSound : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         gearShiftSource = gameObject.AddComponent<AudioSource>();
         gearShiftSource.volume = gearShiftVolume;
+        driftSource = gameObject.AddComponent<AudioSource>();
+        driftSource.clip = driftingClip;
+        driftSource.loop = true;
     }
 
     void Update()
     {
         SetEngineSound();
+        PlayDriftSound();
     }
 
     public void SetEngineSound()
@@ -81,5 +92,33 @@ public class CarSound : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PlayDriftSound()
+    {
+        if (arcadeCar.isHandBrakeNow && !isDrifting)
+        {
+            isDrifting = true;
+            Debug.Log("start playing");
+            driftSource.volume = driftVolume;
+            driftSource.Play();
+            StopAllCoroutines();
+        }
+        else if (!arcadeCar.isHandBrakeNow && isDrifting)
+        {
+            isDrifting = false;
+            Debug.Log("stop playing");
+            StartCoroutine(LerpVolume());
+        }
+    }
+
+    public IEnumerator LerpVolume()
+    {
+        for (float i = 0f; i < 1f; i+= 0.1f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            driftSource.volume = Mathf.Lerp(driftVolume, 0, i);
+        }
+            driftSource.Stop();
     }
 }

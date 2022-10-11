@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39500
+  m_Name: pb_Mesh42786
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -293,7 +293,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39672
+  m_Name: pb_Mesh42958
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -457,7 +457,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39514
+  m_Name: pb_Mesh42800
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1185,7 +1185,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39788
+  m_Name: pb_Mesh43074
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1414,7 +1414,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39444
+  m_Name: pb_Mesh42730
   serializedVersion: 10
   m_SubMeshes: []
   m_Shapes:
@@ -2472,7 +2472,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39712
+  m_Name: pb_Mesh42998
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2747,7 +2747,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39900
+  m_Name: pb_Mesh43188
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4390,7 +4390,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39590
+  m_Name: pb_Mesh42876
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5198,7 +5198,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507737495}
-  m_LocalRotation: {x: 0.23361571, y: 0.000000008365131, z: -0.0000000020098403, w: 0.972329}
+  m_LocalRotation: {x: 0.23361571, y: -0.000000008365132, z: 0.0000000020098407, w: 0.972329}
   m_LocalPosition: {x: 101.8, y: 14.765987, z: -46.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30103,7 +30103,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805494930}
-  m_LocalRotation: {x: 0.23361571, y: 0.000000008365131, z: -0.0000000020098403, w: 0.972329}
+  m_LocalRotation: {x: 0.23361571, y: -0.000000008365132, z: 0.0000000020098407, w: 0.972329}
   m_LocalPosition: {x: 101.8, y: 14.765987, z: -46.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30516,7 +30516,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39750
+  m_Name: pb_Mesh43036
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -30943,8 +30943,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301d8e6a756d51d409cf9599689cb318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  driftingClip: {fileID: 8300000, guid: c2728e5539257c241b15ab5ae5008b0b, type: 3}
+  driftVolume: 0.25
+  gearShiftVolume: 0.05
   currentGear: 1
   gears:
+  - name: Reverse
+    audioClip: {fileID: 8300000, guid: c78b4cf7ed6acf34ca6a377573552d0f, type: 3}
+    minSpeed: -100
+    maxSpeed: 0
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
   - name: Gear1
     audioClip: {fileID: 8300000, guid: c78b4cf7ed6acf34ca6a377573552d0f, type: 3}
     minSpeed: 0.1
@@ -30963,12 +30972,10 @@ MonoBehaviour:
     maxSpeed: 150
     minAudioPitch: 1
     maxAudioPitch: 1.5
-  - name: Reverse
-    audioClip: {fileID: 8300000, guid: c78b4cf7ed6acf34ca6a377573552d0f, type: 3}
-    minSpeed: -100
-    maxSpeed: 0
-    minAudioPitch: 1
-    maxAudioPitch: 1.5
+  gearShiftSFX:
+  - {fileID: 8300000, guid: 576b30cd33c11b74589e7cf4eb403af3, type: 3}
+  - {fileID: 8300000, guid: bc5da5a5e50e82e46ae238813ab4e879, type: 3}
+  - {fileID: 8300000, guid: 6fb85b603e3105946b5df2af39ddc277, type: 3}
   pitchCurve:
     serializedVersion: 2
     m_Curve:

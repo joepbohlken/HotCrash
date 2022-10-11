@@ -165,6 +165,7 @@ public class ArcadeCar : MonoBehaviour
 
     [HideInInspector] public float v = 0f;
     [HideInInspector] public float h = 0f;
+    [HideInInspector] public bool isHandBrakeNow;
 
     private void OnValidate()
     {
@@ -489,7 +490,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
+        isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
 
         float speed = GetSpeed();
         isAcceleration = false;
