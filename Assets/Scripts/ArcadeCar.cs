@@ -148,6 +148,8 @@ public class ArcadeCar : MonoBehaviour
     public AnimationCurve downForceCurve = AnimationCurve.Linear(0.0f, 0.0f, 200.0f, 100.0f);
     [Tooltip("Downforce")]
     public float downForce = 5.0f;
+    [Tooltip("Car flipping duration")]
+    public float flipDuration = .8f;
 
     [Header("Sounds")]
     [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
@@ -163,6 +165,7 @@ public class ArcadeCar : MonoBehaviour
     private float pitchTime = 0f;
     private float yawTime = 0f;
     private float pitchRate;
+    private float carAngle;
     private bool isTouchingGround = false;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
@@ -186,6 +189,7 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector] public float h = 0f;
     private bool q = false;
     private bool e = false;
+    private bool rightMouse = false;
 
     private void OnValidate()
     {
@@ -209,24 +213,11 @@ public class ArcadeCar : MonoBehaviour
 
     private void Update()
     {
+        carAngle = Vector3.Dot(transform.up, Vector3.down);
+
         UpdateInput();
 
         ApplyVisual();
-
-        bool allWheelIsOnAir = true;
-        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
-        {
-            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
-            {
-                allWheelIsOnAir = false;
-                break;
-            }
-        }
-
-        if (!isTouchingGround && allWheelIsOnAir)
-        {
-            HandleAirMovement();
-        }
 
         SetEngineSound();
     }
@@ -347,11 +338,11 @@ public class ArcadeCar : MonoBehaviour
         float pitchRotation = pitch ? rotationCurve.Evaluate(pitchTime) * dt * Mathf.Sign(v) : 0;
         float yawRotation = yaw ? rotationCurve.Evaluate(yawTime) * dt * Mathf.Sign(h) : 0;
 
-        rollTime += dt;
-        pitchTime += dt;
-        yawTime += dt;
+        rollTime += roll ? dt : 0;
+        pitchTime += pitch ? dt : 0;
+        yawTime += yaw ? dt : 0;
 
-        if(roll || pitch || yaw)
+        if (roll || pitch || yaw)
             rb.angularDrag = 1f;
 
         if (!roll)
@@ -364,6 +355,30 @@ public class ArcadeCar : MonoBehaviour
             yawTime = 0;
 
         transform.Rotate(new Vector3(pitchRotation, yawRotation, rollRotation));
+    }
+
+    private IEnumerator FlipCar()
+    {
+        float timeElapsed = 0;
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = transform.position + Vector3.up * 1.5f;
+        Quaternion startRotation = transform.rotation;
+        Quaternion targetRotation = transform.rotation * Quaternion.Euler(0, 0, 180);
+
+        bool reachedTargetPosition = false;
+
+        while (timeElapsed < flipDuration)
+        {
+            if (!reachedTargetPosition)
+            {
+                transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / (flipDuration / 1.5f));
+                reachedTargetPosition = transform.position == targetPosition;
+            }
+
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, timeElapsed / flipDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
     private float GetHandBrakeK()
@@ -503,6 +518,27 @@ public class ArcadeCar : MonoBehaviour
             h = Input.GetAxis("Horizontal");
             q = Input.GetKey(KeyCode.Q);
             e = Input.GetKey(KeyCode.E);
+            rightMouse = Input.GetMouseButtonDown(1);
+        }
+
+        bool allWheelIsOnAir = true;
+        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
+        {
+            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
+            {
+                allWheelIsOnAir = false;
+                break;
+            }
+        }
+
+        if (!isTouchingGround && allWheelIsOnAir && controllable)
+        {
+            HandleAirMovement();
+        }
+
+        if (isTouchingGround && carAngle > .85f && rightMouse && controllable)
+        {
+            StartCoroutine(FlipCar());
         }
 
         if (Input.GetKey(KeyCode.R) && controllable && debugMode)
