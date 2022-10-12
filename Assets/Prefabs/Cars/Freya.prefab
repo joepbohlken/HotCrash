@@ -52,7 +52,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2220867554108906053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,20 +72,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: -0.5090332
-      inSlope: 51.103138
-      outSlope: 51.103138
+      inSlope: 58.8944
+      outSlope: 58.8944
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.0464191
+      outWeight: 0.08659437
     - serializedVersion: 3
       time: 10
-      value: 155
-      inSlope: 0.281571
-      outSlope: 0.281571
+      value: 200
+      inSlope: 3.0545337
+      outSlope: 3.0545337
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.7024589
+      inWeight: 0.30080336
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -96,14 +96,14 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 19.301634
-      outSlope: 19.301634
+      inSlope: 34.57882
+      outSlope: 34.57882
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.05636605
+      outWeight: 0.0729443
     - serializedVersion: 3
-      time: 10
+      time: 3
       value: 60
       inSlope: 0.8058311
       outSlope: 0.8058311
@@ -114,7 +114,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  reverseEvaluationAccuracy: 25
+  reverseEvaluationAccuracy: 30
   currentGear: 1
   gears:
   - name: Gear1
@@ -188,31 +188,22 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 6
-      inSlope: -0.4193606
-      outSlope: -0.4193606
+      value: 10
+      inSlope: -0.17771126
+      outSlope: -0.17771126
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.010936174
+      outWeight: 0.27532735
     - serializedVersion: 3
-      time: 6.8692474
-      value: 2.9183295
-      inSlope: -0.111321695
-      outSlope: -0.111321695
+      time: 51.504684
+      value: 2.181842
+      inSlope: -0.0705057
+      outSlope: -0.0705057
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.43607616
-      outWeight: 0.021040527
-    - serializedVersion: 3
-      time: 35.626457
-      value: 1.3433164
-      inSlope: -0.028252108
-      outSlope: -0.028252108
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.089595065
+      inWeight: 0.07513811
+      outWeight: 0.07616195
     - serializedVersion: 3
       time: 99.76825
       value: 0.38061523
@@ -225,8 +216,32 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0033156497
+      value: 0.0054127406
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 40
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   handBrakeSlipperyTime: 2
-  controllable: 0
+  controllable: 1
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -251,7 +266,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  downForce: 10
+  downForce: 2
+  flipDuration: 0.6
   pitchCurve:
     serializedVersion: 2
     m_Curve:
@@ -325,11 +341,10 @@ MonoBehaviour:
     brakeRight: 0
     handBrakeLeft: 0
     handBrakeRight: 0
-    brakeForceMag: 5
-    stiffness: 15000
-    damping: 3000
-    restitution: 1
-    lengthRelaxed: 0.5
+    brakeForceMag: 9
+    stiffness: 10163
+    damping: 1500
+    lengthRelaxed: 0.6
     antiRollForce: 60000
     visualScale: 1
     wheelVisualLeft: {fileID: 2220867554441443170}
@@ -350,11 +365,10 @@ MonoBehaviour:
     brakeRight: 0
     handBrakeLeft: 0
     handBrakeRight: 0
-    brakeForceMag: 5
-    stiffness: 13300
-    damping: 3000
-    restitution: 1
-    lengthRelaxed: 0.5
+    brakeForceMag: 6
+    stiffness: 9000
+    damping: 1500
+    lengthRelaxed: 0.6
     antiRollForce: 60000
     visualScale: 1
     wheelVisualLeft: {fileID: 2220867555157796339}
@@ -363,7 +377,7 @@ MonoBehaviour:
     afterFlightSlipperyK: 0.02
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
-  debugDraw: 0
+  debugMode: 0
   v: 0
   h: 0
 --- !u!114 &2220867554108906052
@@ -395,7 +409,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -540,7 +554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220867554441443170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0150002, y: -0.5, z: 1.4956439}
+  m_LocalPosition: {x: -1.0150002, y: -0.6, z: 1.4956439}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -623,7 +637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220867554863225361}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0150001, y: -0.5, z: 1.4956435}
+  m_LocalPosition: {x: 1.0150001, y: -0.6, z: 1.4956435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -706,7 +720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220867555157796339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0350002, y: -0.5, z: -1.6889707}
+  m_LocalPosition: {x: -1.0350002, y: -0.6, z: -1.6889707}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -910,7 +924,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2220867555653397960}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.0350002, y: -0.5, z: -1.6889709}
+  m_LocalPosition: {x: 1.0350002, y: -0.6, z: -1.6889709}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
