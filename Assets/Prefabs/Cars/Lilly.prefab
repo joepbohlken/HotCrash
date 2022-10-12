@@ -414,7 +414,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1500
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -574,27 +574,36 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  rotationCurve:
+  torqueCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0033156497
-      value: 0.0054127406
+      time: -5
+      value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 136
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 60
+      time: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 136
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5
+      value: 0
+      inSlope: 0.00038649997
+      outSlope: 0.00038649997
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.7002653
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -700,8 +709,8 @@ MonoBehaviour:
     handBrakeLeft: 0
     handBrakeRight: 0
     brakeForceMag: 9
-    stiffness: 8000
-    damping: 1000
+    stiffness: 7000
+    damping: 2000
     lengthRelaxed: 0.3
     antiRollForce: 60000
     visualScale: 1
@@ -724,8 +733,8 @@ MonoBehaviour:
     handBrakeLeft: 0
     handBrakeRight: 0
     brakeForceMag: 6
-    stiffness: 9195
-    damping: 1000
+    stiffness: 8195
+    damping: 2000
     lengthRelaxed: 0.3
     antiRollForce: 60000
     visualScale: 1

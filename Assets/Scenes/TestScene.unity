@@ -2161,7 +2161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813092642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.62600005, z: 1.78}
+  m_LocalPosition: {x: 0, y: 0.536, z: 1.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2775,6 +2775,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2971744170900994512, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4610792907446108336, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5580486507002082784, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564081490649863718, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8298756536242646360, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_Name
       value: Lilly
@@ -2789,7 +2805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.09
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2801,15 +2817,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2822,6 +2838,26 @@ PrefabInstance:
     - target: {fileID: 8674156861748017122, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674156861748017124, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: yawTorque
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674156861748017124, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: rollTorque
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674156861748017124, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: pitchTorque
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674156861748017124, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: rotationCurve.m_Curve.Array.data[1].value
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674156861748017125, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
