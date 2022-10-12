@@ -161,9 +161,6 @@ public class ArcadeCar : MonoBehaviour
     [Header("Debug")]
     public bool debugMode = false;
 
-    private float rollTime = 0f;
-    private float pitchTime = 0f;
-    private float yawTime = 0f;
     private float pitchRate;
     private float carAngle;
     private bool isTouchingGround = false;

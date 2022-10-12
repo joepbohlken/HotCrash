@@ -12,7 +12,7 @@ public class DeformablePart : MonoBehaviour
     [Tooltip("The total damage that is allowed to be dealt to this mesh before it breaks off of the car.")]
     [SerializeField] private float maxAllowedDamage = 50f;
     [HideInInspector] public float MaxAllowedDamage { get { return maxAllowedDamage; } }
-    
+
     [Space(12)]
 
     public bool detachable = false;
@@ -41,7 +41,8 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh = (Mesh)Instantiate(meshFilter.sharedMesh);
         meshFilter.mesh.MarkDynamic();
 
-        if (isHinge) carDeformation = GetComponentInParent<CarDeformation>();
+        carDeformation = GetComponentInParent<CarDeformation>();
+
         if (vitalTypes.Count > 0) carStateController = GetComponentInParent<CarStateController>();
     }
 
@@ -93,11 +94,24 @@ public class DeformablePart : MonoBehaviour
         Vector3 impactPoint = meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
         Vector3[] vertices = meshFilter.mesh.vertices;
 
+        if(carDeformation.debugMode) 
+            carDeformation.hitOrigin += collision.GetContact(i).point;
+
         for (int j = 0; j < vertices.Length; j++)
         {
             float distance = (impactPoint - vertices[j]).magnitude;
             if (distance <= deformRadius)
             {
+                if (!carDeformation.verticesUpdated.Contains(vertices[j]) && carDeformation.debugMode)
+                {
+                    carDeformation.verticesUpdated.Add(vertices[j]);
+                }
+
+                int index = carDeformation.verticesUpdated.IndexOf(vertices[j]);
+
+                if (index >= 0)
+                    carDeformation.verticesUpdated[index] += hitDirection * (deformRadius - distance) * deformStrength;
+
                 // Reposition the vertice
                 vertices[j] += hitDirection * (deformRadius - distance) * deformStrength;
             }
