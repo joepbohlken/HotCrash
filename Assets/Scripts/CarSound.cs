@@ -86,7 +86,7 @@ public class CarSound : MonoBehaviour
                     gearShiftSource.clip = gearShiftSFX[Random.Range(0 ,gearShiftSFX.Count)];
                     gearShiftSource.Play();
 
-                    // Changes Engine Sound
+                    // Changes Engine Gear Sound
                     audioSource.clip = gear.audioClip;
                     audioSource.Play();
                 }
@@ -99,7 +99,6 @@ public class CarSound : MonoBehaviour
         if (arcadeCar.isHandBrakeNow && !isDrifting)
         {
             isDrifting = true;
-            Debug.Log("start playing");
             driftSource.volume = driftVolume;
             driftSource.Play();
             StopAllCoroutines();
@@ -107,7 +106,6 @@ public class CarSound : MonoBehaviour
         else if (!arcadeCar.isHandBrakeNow && isDrifting)
         {
             isDrifting = false;
-            Debug.Log("stop playing");
             StartCoroutine(LerpVolume());
         }
     }
