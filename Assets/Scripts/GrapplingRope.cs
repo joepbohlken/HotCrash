@@ -8,7 +8,7 @@ public class GrapplingRope : MonoBehaviour
     private LineRenderer lr;
     private Vector3 currentGrapplePosition;
     private Transform gunTip;
-    public GrapplePull grapplingGun;
+    public FistPush carFist;
     public int quality = 100;
     public float damper = 14;
     public float strength = 800;
@@ -19,7 +19,7 @@ public class GrapplingRope : MonoBehaviour
 
     void Awake()
     {
-        gunTip = grapplingGun.transform.Find("GunTip");
+        gunTip = carFist.transform.Find("GunTip");
         lr = GetComponent<LineRenderer>();
         spring = new Spring();
         spring.SetTarget(0);
@@ -34,7 +34,7 @@ public class GrapplingRope : MonoBehaviour
     void DrawRope()
     {
         //If not grappling, don't draw rope
-        if (!grapplingGun.IsGrappling())
+        if (!carFist.IsGrappling())
         {
             currentGrapplePosition = gunTip.position;
             spring.Reset();
@@ -55,13 +55,13 @@ public class GrapplingRope : MonoBehaviour
 
         Vector3 grapplePoint;
 
-        if (grapplingGun.hitPlayer != null)
+        if (carFist.hitPlayer != null)
         {
-            grapplePoint = grapplingGun.hitPlayer.transform.position;
+            grapplePoint = carFist.hitPlayer.transform.position;
         }
         else
         {
-            grapplePoint = grapplingGun.hookPoint;
+            grapplePoint = carFist.hookPoint;
         }
 
         var gunTipPosition = gunTip.position;
