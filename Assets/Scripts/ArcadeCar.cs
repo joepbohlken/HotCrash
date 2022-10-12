@@ -185,9 +185,9 @@ public class ArcadeCar : MonoBehaviour
     private Ray wheelRay = new Ray();
     private RaycastHit[] wheelRayHits = new RaycastHit[16];
 
-    [HideInInspector] 
+    [HideInInspector]
     public float v = 0f;
-    [HideInInspector] 
+    [HideInInspector]
     public float h = 0f;
     private bool q = false;
     private bool e = false;
@@ -264,6 +264,11 @@ public class ArcadeCar : MonoBehaviour
         {
             // set after flight tire slippery time (1 sec)
             afterFlightSlipperyTiresTime = 1.0f;
+
+            if (isTouchingGround)
+            {
+                rb.angularDrag = 0.05f;
+            }
         }
         else
         {
