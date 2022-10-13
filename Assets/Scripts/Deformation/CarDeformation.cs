@@ -12,6 +12,8 @@ public class CarDeformation : MonoBehaviour
     [SerializeField] private float deformRadius = 0.5f;
     [Tooltip("Strength of the mesh deformation.")]
     [SerializeField] private float deformStrength = 1f;
+    [Tooltip("Maximum distance a vertex can deform to: x-axis being the max side deformation, y-axis being the top side, z-axis being the front and back")]
+    [SerializeField] private Vector3 maxDeformDistance = new Vector3(.2f, .3f, .5f);
 
     [Header("Performance Properties")]
     [Tooltip("Minimum time in seconds between deformations.")]
@@ -70,17 +72,19 @@ public class CarDeformation : MonoBehaviour
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
                 if (hitPart != null)
                 {
+                    bool hitBottom = currentCollisionAngle > 0.7f;
+
                     bool partDestroyed = false;
-                    if ((collision.gameObject.CompareTag("Ground") && currentCollisionAngle > -.5) || collision.gameObject.CompareTag("Car"))
+                    if ((collision.gameObject.CompareTag("Ground") && !hitBottom) || collision.gameObject.CompareTag("Car"))
                     {
                         // Apply damage and only deform if the part has not been destroyed
                         partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
                     }
 
-                    if (!partDestroyed && canDeform && currentCollisionAngle < -.8f)
+                    if (!partDestroyed && canDeform && !hitBottom)
                     {
                         deformedMesh = true;
-                        hitPart.DeformPart(i, collision, deformRadius, deformStrength);
+                        hitPart.DeformPart(i, collision, deformRadius, maxDeformDistance, deformStrength);
                     }
                 }
             }
