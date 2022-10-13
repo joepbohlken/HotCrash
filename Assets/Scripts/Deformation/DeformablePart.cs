@@ -13,7 +13,8 @@ public enum HitLocation
     LEFT,
     RIGHT,
     TOP,
-    BOTTOM
+    BOTTOM,
+    NONE
 }
 
 [RequireComponent(typeof(MeshCollider), typeof(MeshFilter))]
@@ -43,6 +44,10 @@ public class DeformablePart : MonoBehaviour
     private Vector3[] originalMeshVertices;
     private bool hingeCreated = false;
     private bool isDestroyed = false;
+    private HitLocation impactLocation = HitLocation.NONE;
+
+    // UI style for debug render
+    private static GUIStyle style = new GUIStyle();
 
     private void Start()
     {
@@ -53,6 +58,9 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.MarkDynamic();
 
         carDeformation = GetComponentInParent<CarDeformation>();
+
+        style.normal.textColor = Color.red;
+        style.fontSize = 24;
 
         // Store original mesh vertices
         originalMeshVertices = meshFilter.mesh.vertices;
@@ -107,7 +115,7 @@ public class DeformablePart : MonoBehaviour
         Vector3 impactPoint = meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
         Vector3[] vertices = meshFilter.mesh.vertices;
 
-        HitLocation impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
+        impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
 
         for (int j = 0; j < vertices.Length; j++)
         {
@@ -163,7 +171,7 @@ public class DeformablePart : MonoBehaviour
             return HitLocation.RIGHT;
         }
 
-        return HitLocation.BOTTOM;
+        return HitLocation.NONE;
     }
 
     private void DetachPart(Vector3 hitDirection, float force)
@@ -193,6 +201,16 @@ public class DeformablePart : MonoBehaviour
         limits.max = hingeMaxLimit;
         limits.bounciness = 0.4f;
         hinge.limits = limits;
+    }
+
+    private void OnGUI()
+    {
+        if (!carDeformation.debugMode)
+        {
+            return;
+        }
+
+        GUI.Label(new Rect(30.0f, 20.0f, 150, 130), "Last hit location: " + impactLocation, style);
     }
 }
 
