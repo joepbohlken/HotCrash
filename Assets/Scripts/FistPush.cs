@@ -30,7 +30,7 @@ public class FistPush : MonoBehaviour
     [SerializeField] float range = 10f;
     [SerializeField] float playerTargetAngle = 60f;
     [SerializeField] float hookSetTime = 0.25f;
-    [SerializeField] float pushForce = 100000f;
+    [SerializeField] float pushForce = 35f;
 
     // Start is called before the first frame update
     void Start()
@@ -100,7 +100,7 @@ public class FistPush : MonoBehaviour
         {
             Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, LayerMask.NameToLayer("Ignore Raycast"));
             hookPoint = hit.point;
-            hitPlayer = GetClosestPlayer(playerCars);
+            hitPlayer = GetClosestPlayer();
             dirToPlayer = (hitPlayer.position - gunTip.position).normalized;
         }
         else
@@ -134,7 +134,7 @@ public class FistPush : MonoBehaviour
                 else if(Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, LayerMask.NameToLayer("Ignore Raycast")))
                 {
                     hookPoint = hit.point;
-                    hitPlayer = GetClosestPlayer(playerCars);
+                    hitPlayer = GetClosestPlayer();
 
                     if (dstToTarget <= range + 2)
                     {
@@ -163,11 +163,11 @@ public class FistPush : MonoBehaviour
         joint.massScale = 4.5f;
     }
 
-    public Transform GetClosestPlayer(List<Transform> playerCars)
+    public Transform GetClosestPlayer()
     {
         Transform tMin = null;
         float minDist = Mathf.Infinity;
-        foreach (Transform t in playerCars)
+        foreach (Transform t in visibleTargets)
         {
             float dist = Vector3.Distance(t.position, hookPoint);
             if (dist < minDist)
