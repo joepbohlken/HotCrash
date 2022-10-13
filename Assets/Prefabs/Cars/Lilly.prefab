@@ -759,11 +759,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f93d4c23957fde4b9ae56522d91a72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minVelocity: 0
+  minVelocity: 4
   deformRadius: 1
   deformStrength: 0.2
   collisionDebounce: 0.1
   maxCollisionPoints: 10
+  debugMode: 1
+  hitOrigin: {x: 0, y: 0, z: 0}
+  hitDirection: {x: 0, y: 0, z: 0}
+  verticesUpdated: []
 --- !u!82 &8674156861748017127
 AudioSource:
   m_ObjectHideFlags: 0

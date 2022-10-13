@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -25,10 +24,10 @@ public class CarDeformation : MonoBehaviour
 
     private Rigidbody myRigidbody;
     private float currentDebounce = 0f;
+    public bool hitBottom = false;
 
     public Vector3 hitOrigin;
     public Vector3 hitDirection;
-    public List<Vector3> verticesUpdated;
 
     private void Start()
     {
@@ -50,7 +49,6 @@ public class CarDeformation : MonoBehaviour
 
             hitOrigin = Vector3.zero;
             hitDirection = Vector3.zero;
-            verticesUpdated.Clear();
 
             // Go through each contact point of the collision
             for (int i = 0; i < collision.contactCount; i++)
@@ -58,29 +56,31 @@ public class CarDeformation : MonoBehaviour
                 // Limit the contact points to improve performance
                 if (i == maxCollisionPoints) break;
 
+                if (debugMode)
+                {
+                    hitOrigin += collision.GetContact(i).point;
+                    hitDirection += collision.GetContact(i).normal;
+                }
+
                 // Check if the hit object can be deformed (does it contain the DeformablePart script)
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
                 if (hitPart != null)
                 {
                     // Apply damage and only deform if the part has not been destroyed
                     bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
-                    if (!partDestroyed && canDeform)
+                    if (!partDestroyed && canDeform && !hitBottom)
                     {
                         hitPart.DeformPart(i, collision, deformRadius, deformStrength);
                     }
                 }
             }
 
-            if(debugMode)
+            if (debugMode)
             {
                 hitOrigin /= collision.contactCount;
+                hitDirection /= collision.contactCount;
 
-                for (int i = 0; i < verticesUpdated.Count; i++)
-                {
-                    hitDirection += transform.TransformVector(verticesUpdated[i]);
-                }
-
-                hitDirection /= verticesUpdated.Count;
+                Debug.DrawRay(hitOrigin, hitDirection * .5f, Color.cyan, 10);
             }
         }
     }
@@ -89,15 +89,4 @@ public class CarDeformation : MonoBehaviour
     {
         OnCollision(collision);
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Handles.color = Color.cyan;
-        Handles.DrawLine(hitOrigin, hitDirection, 5f);
-
-        Handles.color = Color.red;
-        Handles.DrawWireCube(hitOrigin, Vector3.one * .1f);
-    }
-#endif
 }

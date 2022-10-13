@@ -347,7 +347,7 @@ public class ArcadeCar : MonoBehaviour
     private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
     {
         int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
-        Debug.DrawRay(wheelRay.origin, wheelRay.direction, Color.magenta);
+
         if (numHits == 0)
         {
             return false;
