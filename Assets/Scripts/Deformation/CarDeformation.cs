@@ -24,10 +24,10 @@ public class CarDeformation : MonoBehaviour
 
     private Rigidbody myRigidbody;
     private float currentDebounce = 0f;
-    public bool hitBottom = false;
+    private float currentCollisionAngle;
 
-    public Vector3 hitOrigin;
-    public Vector3 hitDirection;
+    private Vector3 hitOrigin;
+    private Vector3 hitDirection;
 
     private void Start()
     {
@@ -43,6 +43,8 @@ public class CarDeformation : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude >= minVelocity)
         {
+            bool deformedMesh = false;
+
             // Debounce between deformations to improve performance
             bool canDeform = currentDebounce <= 0f;
             if (canDeform) currentDebounce = collisionDebounce;
@@ -62,20 +64,28 @@ public class CarDeformation : MonoBehaviour
                     hitDirection += collision.GetContact(i).normal;
                 }
 
+                currentCollisionAngle = Vector3.Dot(collision.GetContact(i).normal, transform.up);
+
                 // Check if the hit object can be deformed (does it contain the DeformablePart script)
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
                 if (hitPart != null)
                 {
-                    // Apply damage and only deform if the part has not been destroyed
-                    bool partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
-                    if (!partDestroyed && canDeform && !hitBottom)
+                    bool partDestroyed = false;
+                    if ((collision.gameObject.CompareTag("Ground") && currentCollisionAngle > -.5) || collision.gameObject.CompareTag("Car"))
                     {
+                        // Apply damage and only deform if the part has not been destroyed
+                        partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
+                    }
+
+                    if (!partDestroyed && canDeform && currentCollisionAngle < -.8f)
+                    {
+                        deformedMesh = true;
                         hitPart.DeformPart(i, collision, deformRadius, deformStrength);
                     }
                 }
             }
 
-            if (debugMode)
+            if (debugMode && deformedMesh)
             {
                 hitOrigin /= collision.contactCount;
                 hitDirection /= collision.contactCount;
