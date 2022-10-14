@@ -12,8 +12,8 @@ public class CarDeformation : MonoBehaviour
     [SerializeField] private float deformRadius = 0.5f;
     [Tooltip("Strength of the mesh deformation.")]
     [SerializeField] private float deformStrength = 1f;
-    [Tooltip("Maximum distance a vertex can deform to: x-axis being the max side deformation, y-axis being the top side, z-axis being the front and back")]
-    [SerializeField] private Vector3 maxDeformDistance = new Vector3(.2f, .3f, .5f);
+    [Tooltip("Maximum distance a vertex can deform from its original position: x-axis being for the side, y-axis being the top side, z-axis being the front and back")]
+    [SerializeField] private Vector3 maxTotalDeformDistance = new Vector3(.2f, .3f, .5f);
 
     [Header("Performance Properties")]
     [Tooltip("Minimum time in seconds between deformations.")]
@@ -84,7 +84,7 @@ public class CarDeformation : MonoBehaviour
                     if (!partDestroyed && canDeform && !hitBottom)
                     {
                         deformedMesh = true;
-                        hitPart.DeformPart(i, collision, deformRadius, maxDeformDistance, deformStrength);
+                        hitPart.DeformPart(i, collision, deformRadius, maxTotalDeformDistance, deformStrength);
                     }
                 }
             }

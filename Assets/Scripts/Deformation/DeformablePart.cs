@@ -107,7 +107,7 @@ public class DeformablePart : MonoBehaviour
     }
 
     ///<summary>Deforms the mesh with the given parameters.</summary>
-    public void DeformPart(int i, Collision collision, float deformRadius, Vector3 maxDeformDist, float deformStrength)
+    public void DeformPart(int i, Collision collision, float deformRadius, Vector3 maxTotalDeformDist, float deformStrength)
     {
         // Get the direction of the collision in local space of the hit mesh
         Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
@@ -117,13 +117,49 @@ public class DeformablePart : MonoBehaviour
 
         impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
 
+        float currentMaxDeformDist = 0;
+
+        switch (impactLocation)
+        {
+            case HitLocation.FRONT:
+                currentMaxDeformDist = maxTotalDeformDist.z;
+                break;
+            case HitLocation.BACK:
+                currentMaxDeformDist = maxTotalDeformDist.z;
+                break;
+            case HitLocation.LEFT:
+                currentMaxDeformDist = maxTotalDeformDist.x;
+                break;
+            case HitLocation.RIGHT:
+                currentMaxDeformDist = maxTotalDeformDist.x;
+                break;
+            case HitLocation.TOP:
+                currentMaxDeformDist = maxTotalDeformDist.y;
+                break;
+            case HitLocation.BOTTOM:
+                return;
+            case HitLocation.NONE:
+                return;
+        }
+
         for (int j = 0; j < vertices.Length; j++)
         {
             float distance = (impactPoint - vertices[j]).magnitude;
             if (distance <= deformRadius)
             {
                 // Reposition the vertice
-                vertices[j] += hitDirection * (deformRadius - distance) * deformStrength * (impactLocation == HitLocation.TOP ? 2 : 1);
+                Vector3 movement = hitDirection * (deformRadius - distance) * deformStrength;
+
+                float offset = (vertices[j] - originalMeshVertices[j]).magnitude;
+
+                if (offset < currentMaxDeformDist)
+                {
+                    vertices[j] += movement;
+                }
+                else if (carDeformation.debugMode)
+                {
+                    Debug.Log("Maxmimum deformation reached!");
+                }
             }
         }
 
