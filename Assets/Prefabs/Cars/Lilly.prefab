@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 4450794903244610550}
   - component: {fileID: 4450794903244610551}
   - component: {fileID: 4450794903244610549}
+  - component: {fileID: 6705634366953801955}
   - component: {fileID: 4450794903244610548}
   m_Layer: 2
   m_Name: Lilly
@@ -686,6 +687,27 @@ MonoBehaviour:
   collisionDebounce: 0.1
   maxCollisionPoints: 10
   debugMode: 1
+--- !u!114 &6705634366953801955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931561997790069067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engine: {fileID: 0}
+  engineHealth: 200
+  engineImage: {fileID: 0}
+  vitals: []
+  onCarDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+  useCarDeformation: 1
+  minVelocity: 3
 --- !u!82 &4450794903244610548
 AudioSource:
   m_ObjectHideFlags: 0
