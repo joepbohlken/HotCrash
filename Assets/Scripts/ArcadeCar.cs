@@ -178,6 +178,9 @@ public class ArcadeCar : MonoBehaviour
     private float qe = 0f;
     private bool rightMouse = false;
 
+    [HideInInspector]
+    public bool isHandBrakeNow;
+
     private void OnValidate()
     {
         if (rb == null)
@@ -999,34 +1002,6 @@ public class ArcadeCar : MonoBehaviour
 
         frontAxle.wheelDataL.yawRad = steerAngleLeft;
         frontAxle.wheelDataR.yawRad = steerAngleRight;
-    }
-    #endregion
-
-    #region "Sound"
-    private void SetEngineSound()
-    {
-        float speed = GetSpeed() * 3.6f;
-
-        if (isAcceleration || isReverseAcceleration)
-        {
-            pitchRate = 0;
-            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        }
-        else if (audioSource.pitch != 1)
-        {
-            pitchRate += Time.fixedDeltaTime / 10;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
-        }
-
-        foreach (var gear in gears)
-        {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
-            {
-                currentGear = gears.IndexOf(gear);
-                audioSource.clip = gear.audioClip;
-                audioSource.Play();
-            }
-        }
     }
     #endregion
 
