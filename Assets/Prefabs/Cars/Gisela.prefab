@@ -529,7 +529,7 @@ MonoBehaviour:
     afterFlightSlipperyK: 0.02
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
-  debugDraw: 0
+  debugMode: 0
   v: 0
   h: 0
 --- !u!114 &105520550226233435
