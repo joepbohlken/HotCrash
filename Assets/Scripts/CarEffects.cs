@@ -26,6 +26,7 @@ public class CarEffects : MonoBehaviour
     {
         if (arcadeCar.isHandBrakeNow && !isDrifting)
         {
+            Debug.Log("dikke poep");
             isDrifting = true;
             StartEmitter();
         }
