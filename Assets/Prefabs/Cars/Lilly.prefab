@@ -213,10 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatlh: 50
   hitLocation: 6
-  detachable: 0
   isHinge: 0
+  health: 50
+  hingeCreationThreshold: 1
   hingeAnchor: {x: 0, y: 0, z: 0}
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
@@ -476,13 +476,13 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 8
-      inSlope: -0.20505525
-      outSlope: -0.20505525
+      value: 4
+      inSlope: -0.10176634
+      outSlope: -0.10176634
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.06285134
+      outWeight: 0.11604775
     - serializedVersion: 3
       time: 100
       value: 0.38061523
@@ -686,7 +686,7 @@ MonoBehaviour:
   maxTotalDeformDistance: {x: 0.1, y: 0.3, z: 0.2}
   collisionDebounce: 0.1
   maxCollisionPoints: 10
-  debugMode: 1
+  debugMode: 0
 --- !u!114 &6705634366953801955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,13 +699,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealth: 1000
+  health: 1000
+  healthBar: {fileID: 0}
+  healthText: {fileID: 0}
+  damageMultiplierCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.01
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   vitals: []
-  onCarDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
-  useCarDeformation: 1
-  minVelocity: 3
+  bars: []
 --- !u!82 &4450794903244610548
 AudioSource:
   m_ObjectHideFlags: 0

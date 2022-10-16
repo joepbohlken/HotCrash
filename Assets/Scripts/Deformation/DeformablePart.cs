@@ -95,7 +95,7 @@ public class DeformablePart : MonoBehaviour
         if (hitLocation == HitLocation.NONE) 
             dmgLocation= CheckImpactLocation(collision.GetContact(i).normal);
 
-        float damage = (collision.relativeVelocity.magnitude - minVelocity);
+        float damage = (collision.relativeVelocity.magnitude - minVelocity) / collision.contactCount;
 
         // Update the car vitals on the UI
         if (carHealth) carHealth.AddVitalDamage(dmgLocation, damage);
@@ -108,7 +108,7 @@ public class DeformablePart : MonoBehaviour
         if (isHinge && createHinge && !hingeCreated) CreateHinge(body);
 
         // Detach hinge when it loses all its hp
-        if (hingeCreated && currentHealth == 0 && !justCreatedHinge)
+        if (hingeCreated && currentHealth < 0 && !justCreatedHinge)
         {
             // Get the direction of the collision in local space of the hit mesh
             Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
