@@ -78,7 +78,7 @@ public class CarDeformation : MonoBehaviour
                     if ((collision.gameObject.CompareTag("Ground") && !hitBottom) || collision.gameObject.CompareTag("Car"))
                     {
                         // Apply damage and only deform if the part has not been destroyed
-                        partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, deformRadius, deformStrength, myRigidbody);
+                        partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, myRigidbody);
                     }
 
                     if (!partDestroyed && canDeform && !hitBottom)

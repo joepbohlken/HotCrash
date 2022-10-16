@@ -213,14 +213,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAllowedDamage: 1000
+  heatlh: 50
+  hitLocation: 6
   detachable: 0
   isHinge: 0
   hingeAnchor: {x: 0, y: 0, z: 0}
   hingeAxis: {x: 0, y: 0, z: 0}
   hingeMinLimit: 0
   hingeMaxLimit: 0
-  vitalTypes: 
 --- !u!33 &7688220098275841016
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -699,9 +699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engine: {fileID: 0}
-  engineHealth: 200
-  engineImage: {fileID: 0}
+  baseHealth: 1000
   vitals: []
   onCarDestroyed:
     m_PersistentCalls:

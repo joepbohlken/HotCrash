@@ -1,5 +1,4 @@
 using UnityEngine;
-using static CarStateController;
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
@@ -20,26 +19,28 @@ public enum HitLocation
 [RequireComponent(typeof(MeshCollider), typeof(MeshFilter))]
 public class DeformablePart : MonoBehaviour
 {
-    [Tooltip("The total damage that is allowed to be dealt to this mesh before it breaks off of the car.")]
-    [SerializeField] private float maxAllowedDamage = 50f;
-    [HideInInspector] public float MaxAllowedDamage { get { return maxAllowedDamage; } }
+    [Tooltip("The side which is affected when impacted. Set to NONE in case it handles multiple sides like the body.")]
+    public HitLocation hitLocation = HitLocation.NONE;
 
     [Space(12)]
-
-    public bool detachable = false;
     [Tooltip("If true will create a hinge with the specified properties on first contact hit.")]
     public bool isHinge = false;
+    [Tooltip("The total damage that is allowed to be dealt to this mesh before it breaks off of the car.")]
+    [HideInInspector] public float health = 50f;
+    private float currentHealth;
+    [Range(0, 1)]
+    [HideInInspector] public float hingeCreationThreshold = 1;
     [HideInInspector] public Vector3 hingeAnchor;
     [HideInInspector] public Vector3 hingeAxis;
     [HideInInspector] public float hingeMinLimit;
     [HideInInspector] public float hingeMaxLimit;
+    private bool justCreatedHinge = false;
 
-    [HideInInspector] public List<VitalType> vitalTypes = new List<VitalType>();
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
     private HingeJoint hinge;
     private CarDeformation carDeformation;
-    private CarStateController carStateController;
+    private CarHealth carHealth;
 
     private Vector3[] originalMeshVertices;
     private bool hingeCreated = false;
@@ -58,6 +59,7 @@ public class DeformablePart : MonoBehaviour
         meshFilter.mesh.MarkDynamic();
 
         carDeformation = GetComponentInParent<CarDeformation>();
+        carHealth = GetComponentInParent<CarHealth>();
 
         style.normal.textColor = Color.red;
         style.fontSize = 24;
@@ -65,7 +67,10 @@ public class DeformablePart : MonoBehaviour
         // Store original mesh vertices
         originalMeshVertices = meshFilter.mesh.vertices;
 
-        if (vitalTypes.Count > 0) carStateController = GetComponentInParent<CarStateController>();
+        if (isHinge)
+        {
+            currentHealth = health;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -80,19 +85,30 @@ public class DeformablePart : MonoBehaviour
 
     ///<summary>Applies damage to the part based on the given parameters.
     ///Return true if the part has been detached or already destroyed, else returns false.</summary>
-    public bool ApplyDamage(int i, Collision collision, float minVelocity, float deformRadius, float deformStrength, Rigidbody body)
+    public bool ApplyDamage(int i, Collision collision, float minVelocity, Rigidbody body)
     {
         if (isDestroyed) return true;
 
+        justCreatedHinge = false;
+
+        HitLocation dmgLocation = hitLocation;
+        if (hitLocation == HitLocation.NONE) 
+            dmgLocation= CheckImpactLocation(collision.GetContact(i).normal);
+
         float damage = (collision.relativeVelocity.magnitude - minVelocity);
-        maxAllowedDamage -= damage;
+
         // Update the car vitals on the UI
-        if (carStateController) carStateController.AddVitalDamage(vitalTypes, damage);
+        if (carHealth) carHealth.AddVitalDamage(dmgLocation, damage);
 
-        // Create a hinge on first collision
-        if (isHinge && !hingeCreated) CreateHinge(body);
+        // Update hinge health
+        if (isHinge) currentHealth -= damage;
 
-        if (maxAllowedDamage <= 0f && detachable)
+        // Create hinge when currentHealth is under the threshold
+        bool createHinge = (currentHealth / health) <= hingeCreationThreshold;
+        if (isHinge && createHinge && !hingeCreated) CreateHinge(body);
+
+        // Detach hinge when it loses all its hp
+        if (hingeCreated && currentHealth == 0 && !justCreatedHinge)
         {
             // Get the direction of the collision in local space of the hit mesh
             Vector3 hitDirection = meshCollider.transform.InverseTransformDirection(collision.relativeVelocity * 0.02f);
@@ -115,9 +131,14 @@ public class DeformablePart : MonoBehaviour
         Vector3 impactPoint = meshCollider.transform.InverseTransformPoint(collision.GetContact(i).point);
         Vector3[] vertices = meshFilter.mesh.vertices;
 
-        impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
+        // Default max deformation set to very high 
+        float currentMaxDeformDist = 1000;
 
-        float currentMaxDeformDist = 0;
+        // Check impact location in case its the body, else use the dedicated hitLocation
+        if (hitLocation == HitLocation.NONE)
+            impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
+        else
+            impactLocation = hitLocation;
 
         switch (impactLocation)
         {
@@ -225,6 +246,7 @@ public class DeformablePart : MonoBehaviour
     private void CreateHinge(Rigidbody body)
     {
         hingeCreated = true;
+        justCreatedHinge = true;
 
         hinge = gameObject.AddComponent<HingeJoint>();
         hinge.connectedBody = body;
@@ -263,6 +285,8 @@ public class HingeEditor : Editor
         if (myScript.isHinge)
         {
             GUILayout.Label("Hinge Properties:", EditorStyles.boldLabel);
+            myScript.health = EditorGUILayout.FloatField("Health", myScript.health);
+            myScript.hingeCreationThreshold = EditorGUILayout.FloatField("Hinge Creation Threshold", myScript.hingeCreationThreshold);
             myScript.hingeAnchor = EditorGUILayout.Vector3Field("Anchor", myScript.hingeAnchor);
             myScript.hingeAxis = EditorGUILayout.Vector3Field("Axis", myScript.hingeAxis);
             myScript.hingeMinLimit = EditorGUILayout.FloatField("Min Limit", myScript.hingeMinLimit);
