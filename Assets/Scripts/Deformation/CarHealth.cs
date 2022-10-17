@@ -26,14 +26,14 @@ public class CarHealth : MonoBehaviour
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
     [SerializeField] private List<Vitals> vitals;
 
-    private CarDeformation carDeformation;
+    private ArcadeCar arcadeCar;
     public Image[] bars;
     private float currentHealth;
     private bool isDestroyed = false;
 
     private void Awake()
     {
-        carDeformation = GetComponent<CarDeformation>();
+        arcadeCar = GetComponent<ArcadeCar>();
         bars = healthBar.GetComponentsInChildren<Image>();
 
         // Set current health of each vital
@@ -103,9 +103,10 @@ public class CarHealth : MonoBehaviour
 
     private void CheckHealth()
     {
-        if (health <= 0 && !isDestroyed)
+        if (currentHealth <= 0 && !isDestroyed)
         {
             isDestroyed = true;
+            arcadeCar.controllable = false;
         }
     }
 }

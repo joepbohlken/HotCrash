@@ -396,6 +396,13 @@ public class ArcadeCar : MonoBehaviour
             qe = Input.GetAxis("Roll");
             rightMouse = Input.GetMouseButtonDown(1);
         }
+        else
+        {
+            v = 0;
+            h = 0;
+            qe = 0;
+            rightMouse = false;
+        }
 
         bool allWheelIsOnAir = true;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)

@@ -8782,6 +8782,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1241410890}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1392699284}
@@ -8811,19 +8815,19 @@ PrefabInstance:
       objectReference: {fileID: 559350028}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: vitals.Array.data[0].health
-      value: 150
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: vitals.Array.data[1].health
-      value: 150
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: vitals.Array.data[2].health
-      value: 150
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: vitals.Array.data[3].health
-      value: 150
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: vitals.Array.data[1].vitalType
