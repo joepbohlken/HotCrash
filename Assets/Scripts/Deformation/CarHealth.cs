@@ -107,7 +107,6 @@ public class CarHealth : MonoBehaviour
         if (currentHealth <= 0 && !isDestroyed)
         {
             isDestroyed = true;
-            arcadeCar.controllable = false;
             arcadeCar.GetComponent<Rigidbody>().centerOfMass = arcadeCar.originalCenterOfMass;
         }
     }

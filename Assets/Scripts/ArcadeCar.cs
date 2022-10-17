@@ -175,6 +175,7 @@ public class ArcadeCar : MonoBehaviour
     private bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
+    private CarHealth carHealth;
     private AudioSource audioSource;
 
     // UI style for debug render
@@ -208,6 +209,7 @@ public class ArcadeCar : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        carHealth = GetComponent<CarHealth>();
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
@@ -231,6 +233,8 @@ public class ArcadeCar : MonoBehaviour
         // 1.0 - not pressed
         float accelerationK = Mathf.Clamp01(0.8f + (1.0f - GetHandBrakeK()) * 0.2f);
         accelerationForceMagnitude *= accelerationK;
+
+        Debug.Log(accelerationForceMagnitude);
 
         CalculateAckermannSteering();
 
@@ -391,6 +395,14 @@ public class ArcadeCar : MonoBehaviour
 
     private void UpdateInput()
     {
+        if (carHealth.isDestroyed)
+        {
+            v = 0;
+            h = 0;
+            qe = 0;
+            return;
+        }
+
         //Debug.Log (string.Format ("H = {0}", h));
         if (controllable)
         {
@@ -398,13 +410,6 @@ public class ArcadeCar : MonoBehaviour
             h = Input.GetAxis("Horizontal");
             qe = Input.GetAxis("Roll");
             rightMouse = Input.GetMouseButtonDown(1);
-        }
-        else
-        {
-            v = 0;
-            h = 0;
-            qe = 0;
-            rightMouse = false;
         }
 
         bool allWheelIsOnAir = true;
@@ -628,7 +633,7 @@ public class ArcadeCar : MonoBehaviour
 
     private float CalcAccelerationForceMagnitude()
     {
-        if (!isAcceleration && !isReverseAcceleration)
+        if ((!isAcceleration && !isReverseAcceleration) || carHealth.isDestroyed)
         {
             return 0.0f;
         }
@@ -943,6 +948,11 @@ public class ArcadeCar : MonoBehaviour
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         float travelL = 1.0f - Mathf.Clamp01(axle.wheelDataL.compression);
         float travelR = 1.0f - Mathf.Clamp01(axle.wheelDataR.compression);
 
