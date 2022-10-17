@@ -117,6 +117,8 @@ public class ArcadeCar : MonoBehaviour
     const float wheelWidth = 0.085f;
 
     public Vector3 centerOfMass = Vector3.zero;
+    [HideInInspector]
+    public Vector3 originalCenterOfMass;
 
     [Header("Engine")]
     [Tooltip("Y - Desired vehicle speed (km/h). X - Time (seconds)")]
@@ -206,6 +208,7 @@ public class ArcadeCar : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
 

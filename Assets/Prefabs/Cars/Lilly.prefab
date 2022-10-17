@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerOfMass: {x: 0, y: -0.4, z: 0}
+  originalCenterOfMass: {x: 0, y: 0, z: 0}
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -451,22 +452,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.8945923
-      value: 50.282104
-      inSlope: 0.039620772
-      outSlope: 0.039620772
+      time: 0
+      value: 55
+      inSlope: 0.0000058410646
+      outSlope: 0.0000058410646
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.10829674
+      outWeight: 0.21551724
     - serializedVersion: 3
-      time: 99.79596
-      value: 54.96643
-      inSlope: -0.01015079
-      outSlope: -0.01015079
+      time: 100
+      value: 55
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.12491761
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -476,21 +477,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 4
-      inSlope: -0.10176634
-      outSlope: -0.10176634
+      value: 3
+      inSlope: -0.000017429968
+      outSlope: -0.000017429968
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.11604775
+      outWeight: 0.3183024
     - serializedVersion: 3
       time: 100
-      value: 0.38061523
-      inSlope: -0.0020675415
-      outSlope: -0.0020675415
+      value: 1
+      inSlope: -0.0021896777
+      outSlope: -0.0021896777
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.19947235
+      inWeight: 0.8517718
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -499,7 +500,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -5
+      time: -3
       value: 0
       inSlope: 0
       outSlope: 0
@@ -509,7 +510,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 0
-      value: 0.8
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -517,7 +518,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 5
+      time: 3
       value: 0
       inSlope: 0.00038649997
       outSlope: 0.00038649997
@@ -630,14 +631,14 @@ MonoBehaviour:
     handBrakeLeft: 0
     handBrakeRight: 0
     brakeForceMag: 9
-    stiffness: 7000
-    damping: 2000
+    stiffness: 8000
+    damping: 3000
     lengthRelaxed: 0.3
     antiRollForce: 60000
     visualScale: 1
     wheelVisualLeft: {fileID: 3404988733846952157}
     wheelVisualRight: {fileID: 8947318789426343688}
-    isPowered: 1
+    isPowered: 0
     afterFlightSlipperyK: 0.02
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.16
@@ -654,8 +655,8 @@ MonoBehaviour:
     handBrakeLeft: 0
     handBrakeRight: 0
     brakeForceMag: 6
-    stiffness: 8195
-    damping: 2000
+    stiffness: 10800
+    damping: 3000
     lengthRelaxed: 0.3
     antiRollForce: 60000
     visualScale: 1

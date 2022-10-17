@@ -29,7 +29,8 @@ public class CarHealth : MonoBehaviour
     private ArcadeCar arcadeCar;
     public Image[] bars;
     private float currentHealth;
-    private bool isDestroyed = false;
+    [HideInInspector]
+    public bool isDestroyed = false;
 
     private void Awake()
     {
@@ -107,6 +108,7 @@ public class CarHealth : MonoBehaviour
         {
             isDestroyed = true;
             arcadeCar.controllable = false;
+            arcadeCar.GetComponent<Rigidbody>().centerOfMass = arcadeCar.originalCenterOfMass;
         }
     }
 }
