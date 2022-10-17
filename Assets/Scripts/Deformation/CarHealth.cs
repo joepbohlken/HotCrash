@@ -26,6 +26,7 @@ public class CarHealth : MonoBehaviour
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
     [SerializeField] private List<Vitals> vitals;
 
+    private ArcadeCar controller;
     private CarDeformation carDeformation;
     public Image[] bars;
     private float currentHealth;
@@ -33,8 +34,9 @@ public class CarHealth : MonoBehaviour
 
     private void Awake()
     {
+        controller = GetComponent<ArcadeCar>();
         carDeformation = GetComponent<CarDeformation>();
-        bars = healthBar.GetComponentsInChildren<Image>();
+        if (controller.controllable) bars = healthBar.GetComponentsInChildren<Image>();
 
         // Set current health of each vital
         foreach (Vitals vital in vitals)
@@ -48,7 +50,7 @@ public class CarHealth : MonoBehaviour
 
     public void AddVitalDamage(HitLocation hitLocation, float damage)
     {
-        if(hitLocation == HitLocation.NONE) return;
+        if (hitLocation == HitLocation.NONE) return;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
@@ -66,24 +68,27 @@ public class CarHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth - (damage * multiplier), 0, health);
 
         // Update health bar
-        float healthPercentage = Mathf.Round(Mathf.Clamp01(currentHealth / health) * 100);
-        healthText.text = healthPercentage.ToString();
-
-        float barPercentage = 100 / bars.Length;
-        foreach (var (bar, i) in bars.Select((value, i) => (value, i)))
+        if (controller.controllable)
         {
-            float minPercentage = barPercentage * i;
-            float maxPercentage = barPercentage * (i + 1);
+            float healthPercentage = Mathf.Round(Mathf.Clamp01(currentHealth / health) * 100);
+            healthText.text = healthPercentage.ToString();
 
-            float fillAmount = 1;
-
-            if (healthPercentage < maxPercentage)
+            float barPercentage = 100 / bars.Length;
+            foreach (var (bar, i) in bars.Select((value, i) => (value, i)))
             {
-                float offset = Mathf.Clamp(maxPercentage - healthPercentage, 0, barPercentage);
-                fillAmount = Mathf.Clamp01((barPercentage - offset) / barPercentage);
-            }
+                float minPercentage = barPercentage * i;
+                float maxPercentage = barPercentage * (i + 1);
 
-            bar.fillAmount = fillAmount;
+                float fillAmount = 1;
+
+                if (healthPercentage < maxPercentage)
+                {
+                    float offset = Mathf.Clamp(maxPercentage - healthPercentage, 0, barPercentage);
+                    fillAmount = Mathf.Clamp01((barPercentage - offset) / barPercentage);
+                }
+
+                bar.fillAmount = fillAmount;
+            }
         }
 
         CheckHealth();
