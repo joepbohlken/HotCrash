@@ -216,6 +216,11 @@ public class ArcadeCar : MonoBehaviour
 
     private void Update()
     {
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         carAngle = Vector3.Dot(transform.up, Vector3.down);
 
         UpdateInput();
@@ -227,14 +232,17 @@ public class ArcadeCar : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         accelerationForceMagnitude = CalcAccelerationForceMagnitude();
 
         // 0.8 - pressed
         // 1.0 - not pressed
         float accelerationK = Mathf.Clamp01(0.8f + (1.0f - GetHandBrakeK()) * 0.2f);
         accelerationForceMagnitude *= accelerationK;
-
-        Debug.Log(accelerationForceMagnitude);
 
         CalculateAckermannSteering();
 
@@ -395,14 +403,6 @@ public class ArcadeCar : MonoBehaviour
 
     private void UpdateInput()
     {
-        if (carHealth.isDestroyed)
-        {
-            v = 0;
-            h = 0;
-            qe = 0;
-            return;
-        }
-
         //Debug.Log (string.Format ("H = {0}", h));
         if (controllable)
         {
@@ -615,6 +615,29 @@ public class ArcadeCar : MonoBehaviour
         }
     }
 
+    public void DestroyCar()
+    {
+        foreach (Axle axle in axles)
+        {
+            PopOffWheel(axle.wheelVisualLeft, -1);
+            PopOffWheel(axle.wheelVisualRight, 1);
+        }
+    }
+
+    private void PopOffWheel(GameObject wheel, int direction)
+    {
+        wheel.transform.SetParent(null);
+
+        Rigidbody wheelRb = wheel.AddComponent<Rigidbody>();
+        MeshCollider wheelMesh = wheel.AddComponent<MeshCollider>();
+
+        wheelRb.mass = 50;
+        wheelRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        wheelMesh.convex = true;
+
+        wheelRb.AddForce((UnityEngine.Random.onUnitSphere.normalized * 10) + rb.velocity, ForceMode.VelocityChange);
+    }
+
     private float GetHandBrakeK()
     {
         float x = handBrakeSlipperyTiresTime / Math.Max(0.1f, handBrakeSlipperyTime);
@@ -633,7 +656,7 @@ public class ArcadeCar : MonoBehaviour
 
     private float CalcAccelerationForceMagnitude()
     {
-        if ((!isAcceleration && !isReverseAcceleration) || carHealth.isDestroyed)
+        if (!isAcceleration && !isReverseAcceleration)
         {
             return 0.0f;
         }
@@ -948,10 +971,6 @@ public class ArcadeCar : MonoBehaviour
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
-        if (carHealth.isDestroyed)
-        {
-            return;
-        }
 
         float travelL = 1.0f - Mathf.Clamp01(axle.wheelDataL.compression);
         float travelR = 1.0f - Mathf.Clamp01(axle.wheelDataR.compression);

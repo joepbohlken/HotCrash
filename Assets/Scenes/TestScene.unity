@@ -8897,6 +8897,10 @@ PrefabInstance:
       propertyPath: onCarDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8483588572720922577, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
 --- !u!4 &5061858006504264871 stripped
