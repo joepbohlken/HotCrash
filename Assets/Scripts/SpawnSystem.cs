@@ -34,7 +34,6 @@ public class SpawnSystem : MonoBehaviour
             if (playersSpawned < playerAmount)
             {
                 GameObject car = Instantiate(carToSpawn, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation);
-                playersSpawned++;
 
                 GameObject camBrain = Instantiate(cameraBrain, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation);
                 camBrain.transform.parent = car.transform;
@@ -47,8 +46,9 @@ public class SpawnSystem : MonoBehaviour
                 car.GetComponent<ArcadeCar>().controllable = true;
                 cine.LookAt = car.transform;
                 cine.Follow = car.transform;
-                cam.rect = setup.GetRect(playersSpawned - 1);
-                LayerConfig(playersSpawned - 1, cine, cam);
+                cam.rect = setup.GetRect(playersSpawned);
+                LayerConfig(playersSpawned, cine, cam);
+                playersSpawned++;
                 continue;
             }
             if(botsSpawned < botAmount)

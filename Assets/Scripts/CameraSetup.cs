@@ -22,14 +22,31 @@ public class CameraSetup : MonoBehaviour
         if (LoadScene.playerAmount == 2)
         {
             rect1.x = -0.5f;
-            rect1.width = 0.99f;
+            rect1.width = 0.1f;
             rect1.height = 1f;
 
             rect2.x = 0.5f;
-            rect2.width = 0.99f;
+            rect2.width = 0.1f;
             rect2.height = 1f;
         }
-        else if(LoadScene.playerAmount >= 3)
+        else if (LoadScene.playerAmount >= 3)
+        {
+            rect1.x = -0.5f;
+            rect1.y = 0.5f;
+            rect1.width = 1f;
+            rect1.height = 1f;
+
+            rect2.x = 0.5f;
+            rect2.y = 0.5f;
+            rect2.width = 1f;
+            rect2.height = 1f;
+
+            rect3.x = 0f;
+            rect3.y = -0.5f;
+            rect3.width = 1f;
+            rect3.height = 1f;
+        }
+        else if (LoadScene.playerAmount >= 3)
         {
             rect1.x = -0.5f;
             rect1.y = 0.5f;

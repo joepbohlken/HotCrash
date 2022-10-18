@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6764306663376803234}
   - component: {fileID: 6764306663376803232}
   m_Layer: 0
-  m_Name: Car Cam
+  m_Name: CamCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
