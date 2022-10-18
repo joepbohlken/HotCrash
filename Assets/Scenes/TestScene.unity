@@ -2246,7 +2246,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4417,6 +4417,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 326123348053882709, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348098133183, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348202886831, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348249449338, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348270851683, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348296143322, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348553769274, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348668084906, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348711966427, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348963395785, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349222575052, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349399721734, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349552006914, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349695660369, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349889695100, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 636541632689887731, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.83
@@ -4436,6 +4496,10 @@ PrefabInstance:
     - target: {fileID: 721345901007350378, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1318398133191004999, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1893429408956039117, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: VelocityModule.x.scalar
@@ -4701,6 +4765,10 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 2232392364048634250, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3268955672280611381, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.83
@@ -4773,6 +4841,10 @@ PrefabInstance:
       propertyPath: deathParticeSys
       value: 
       objectReference: {fileID: 763328971}
+    - target: {fileID: 4522757154419047341, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: HPBar
       value: 
@@ -4917,6 +4989,10 @@ PrefabInstance:
       propertyPath: InitialModule.startSizeZ.minMaxState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8397372528696900196, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: cameraToFollow
+      value: 
+      objectReference: {fileID: 803265587}
     - target: {fileID: 8447123345892700715, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_Name
       value: DamagedCarSmoke
@@ -6271,7 +6347,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 375
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6608,6 +6684,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 326123348053882709, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348098133183, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348202886831, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348249449338, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348270851683, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348296143322, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348553769274, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348668084906, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348711966427, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123348963395785, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349222575052, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349399721734, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349552006914, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349695660369, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 326123349889695100, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 636541632689887731, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8299999
@@ -6627,6 +6763,10 @@ PrefabInstance:
     - target: {fileID: 721345901007350378, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1318398133191004999, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1893429408956039117, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: VelocityModule.x.scalar
@@ -6892,6 +7032,10 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 2232392364048634250, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3268955672280611381, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8299999
@@ -6960,6 +7104,14 @@ PrefabInstance:
       propertyPath: deathParticeSys
       value: 
       objectReference: {fileID: 5018327024243450504}
+    - target: {fileID: 4522757154419047341, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522757154419047341, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: HPBar
       value: 
@@ -7104,6 +7256,10 @@ PrefabInstance:
       propertyPath: InitialModule.startSizeZ.minMaxState
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8397372528696900196, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: cameraToFollow
+      value: 
+      objectReference: {fileID: 2048948771}
     - target: {fileID: 8447123345892700715, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_Name
       value: DamagedCarSmoke
