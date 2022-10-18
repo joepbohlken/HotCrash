@@ -4217,134 +4217,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1060826660
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1060826663}
-  - component: {fileID: 1060826661}
-  m_Layer: 0
-  m_Name: Music
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1060826661
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060826660}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f3733debfa72ac44a96332a40477b8de, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.558
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1060826663
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060826660}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 91.969826, y: 16.399767, z: 39.329308}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1087594281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2931154192456074867, guid: d7f5ab9cfaee10149b2b34305719a950, type: 3}
@@ -4450,7 +4322,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.1907043
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5148281203468267823, guid: 85197fac5ad172c4fab156cc6d3fa922, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 85197fac5ad172c4fab156cc6d3fa922, type: 3}
 --- !u!114 &1098858424 stripped
 MonoBehaviour:
@@ -31371,39 +31244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301d8e6a756d51d409cf9599689cb318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driftingClip: {fileID: 8300000, guid: c2728e5539257c241b15ab5ae5008b0b, type: 3}
-  driftVolume: 0.1
-  gearShiftVolume: 0.025
-  currentGear: 1
-  gears:
-  - name: Reverse
-    audioClip: {fileID: 8300000, guid: c78b4cf7ed6acf34ca6a377573552d0f, type: 3}
-    minSpeed: -100
-    maxSpeed: 0
-    minAudioPitch: 1
-    maxAudioPitch: 1.5
-  - name: Gear1
-    audioClip: {fileID: 8300000, guid: c78b4cf7ed6acf34ca6a377573552d0f, type: 3}
-    minSpeed: 0.1
-    maxSpeed: 50
-    minAudioPitch: 1
-    maxAudioPitch: 1.5
-  - name: Gear2
-    audioClip: {fileID: 8300000, guid: 356fe08d119195d408c1ba6c2d059ba0, type: 3}
-    minSpeed: 50.1
-    maxSpeed: 100
-    minAudioPitch: 1
-    maxAudioPitch: 1.5
-  - name: Gear3
-    audioClip: {fileID: 8300000, guid: 6e874ec4ad092754ab0aa5b4ae340ee2, type: 3}
-    minSpeed: 100.1
-    maxSpeed: 150
-    minAudioPitch: 1
-    maxAudioPitch: 1.5
-  gearShiftSFX:
-  - {fileID: 8300000, guid: 576b30cd33c11b74589e7cf4eb403af3, type: 3}
-  - {fileID: 8300000, guid: bc5da5a5e50e82e46ae238813ab4e879, type: 3}
-  - {fileID: 8300000, guid: 6fb85b603e3105946b5df2af39ddc277, type: 3}
+  carStartClip: {fileID: 8300000, guid: 37cab69e2cedad347ae569e9d4139459, type: 3}
+  engineVolume: 0.5
   pitchCurve:
     serializedVersion: 2
     m_Curve:
@@ -31491,6 +31333,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  gears:
+  - name: Reverse
+    audioClip: {fileID: 8300000, guid: d446133dab9eaec43a2c215489abaf22, type: 3}
+    minSpeed: -100
+    maxSpeed: 0
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear1
+    audioClip: {fileID: 8300000, guid: d446133dab9eaec43a2c215489abaf22, type: 3}
+    minSpeed: 0.1
+    maxSpeed: 50
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear2
+    audioClip: {fileID: 8300000, guid: 9078427bba737294b8cce5e56165a903, type: 3}
+    minSpeed: 50.1
+    maxSpeed: 100
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear3
+    audioClip: {fileID: 8300000, guid: 18350e1d311d161439b5ceef54046f68, type: 3}
+    minSpeed: 100.1
+    maxSpeed: 150
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  gearShiftVolume: 0.01
+  currentGear: 1
+  gearShiftSFX:
+  - {fileID: 8300000, guid: 576b30cd33c11b74589e7cf4eb403af3, type: 3}
+  - {fileID: 8300000, guid: bc5da5a5e50e82e46ae238813ab4e879, type: 3}
+  - {fileID: 8300000, guid: 6fb85b603e3105946b5df2af39ddc277, type: 3}
+  driftingClip: {fileID: 8300000, guid: c2728e5539257c241b15ab5ae5008b0b, type: 3}
+  driftVolume: 0.1
 --- !u!114 &1942008499
 MonoBehaviour:
   m_ObjectHideFlags: 0
