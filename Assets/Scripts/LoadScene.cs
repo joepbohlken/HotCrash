@@ -17,6 +17,6 @@ public class LoadScene : MonoBehaviour
     {
         Time.timeScale = 1;
         playerAmount = PlayerAmount;
-        SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene("Stadium");
     }
 }
