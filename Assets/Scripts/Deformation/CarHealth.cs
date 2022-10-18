@@ -24,7 +24,7 @@ public class CarHealth : MonoBehaviour
     public AnimationCurve damageMultiplierCurve;
     [Space(6)]
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
-    [SerializeField] private List<Vitals> vitals;
+    [SerializeField] public List<Vitals> vitals;
 
     private ArcadeCar arcadeCar;
     private Image[] bars;
@@ -32,7 +32,7 @@ public class CarHealth : MonoBehaviour
     [HideInInspector]
     public bool isDestroyed = false;
 
-    private void Awake()
+    private void Start()
     {
         arcadeCar = GetComponent<ArcadeCar>();
 

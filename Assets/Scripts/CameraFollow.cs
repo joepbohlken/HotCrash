@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     [Header("Camera Properties")]
     [SerializeField] private float mouseSensitivity = 6f;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private Transform target;
+    public Transform target;
 
     private bool isReady = false;
     private Vector3 currentRotation = Vector3.zero;
@@ -23,6 +23,8 @@ public class CameraFollow : MonoBehaviour
     {
         currentRotation = transform.localEulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
+
+        ResetPosition();
     }
 
     private void OnApplicationFocus(bool focus)
