@@ -176,6 +176,7 @@ public class ArcadeCar : MonoBehaviour
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
     private CarHealth carHealth;
+    private ParticleSystem particleSystem;
     private AudioSource audioSource;
 
     // UI style for debug render
@@ -210,12 +211,18 @@ public class ArcadeCar : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         carHealth = GetComponent<CarHealth>();
+        particleSystem = GetComponentInChildren<ParticleSystem>();
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
 
     private void Update()
     {
+        if (particleSystem)
+        {
+            particleSystem.transform.localRotation = Quaternion.LookRotation(particleSystem.transform.parent.InverseTransformDirection(Vector3.up), particleSystem.transform.up);
+        }
+
         if (carHealth.isDestroyed)
         {
             return;
@@ -617,14 +624,16 @@ public class ArcadeCar : MonoBehaviour
 
     public void DestroyCar()
     {
+        particleSystem.Play();
+
         foreach (Axle axle in axles)
         {
-            PopOffWheel(axle.wheelVisualLeft, -1);
-            PopOffWheel(axle.wheelVisualRight, 1);
+            PopOffWheel(axle.wheelVisualLeft);
+            PopOffWheel(axle.wheelVisualRight);
         }
     }
 
-    private void PopOffWheel(GameObject wheel, int direction)
+    private void PopOffWheel(GameObject wheel)
     {
         wheel.transform.SetParent(null);
 

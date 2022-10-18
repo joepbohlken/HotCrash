@@ -56,6 +56,8 @@ public class CarDeformation : MonoBehaviour
             hitOrigin = Vector3.zero;
             hitDirection = Vector3.zero;
 
+            Debug.Log((collision.relativeVelocity.magnitude - minVelocity));
+
             // Go through each contact point of the collision
             for (int i = 0; i < collision.contactCount; i++)
             {
