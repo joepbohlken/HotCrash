@@ -20,7 +20,7 @@ public class Avoiding : Observant
         controller.h = currentDetectResult == DetectResult.Left ? 1f : -1f;
 
         // Transition
-        if (currentDetectResult == DetectResult.None) carAI.ChangeState(carAI.pursuing);
+        if (currentDetectResult == DetectResult.None) carAI.ChangeState(carAI.currentDrivingMode == CarAI.DrivingMode.Pursue ? carAI.pursuing : carAI.idle);
     }
 
     public override void Exit()

@@ -7,18 +7,24 @@ using UnityEditor;
 [RequireComponent(typeof(ArcadeCar))]
 public class CarAI : StateMachine
 {
+    public enum DrivingMode { Pursue, Idle }
+
     [Space(12)]
     [Tooltip("This box is used to shoot the detection rays from. X and Z are used for size, Y is used for height placement.")]
     public Vector3 boxSize;
     [HideInInspector] public Rigidbody mainRb;
 
     // Blackboard Variables
+    [HideInInspector] public DrivingMode currentDrivingMode = DrivingMode.Pursue;
     [HideInInspector] public bool hitOpponent = false;
+    [HideInInspector] public bool gotHit = false;
+    [HideInInspector] public float idleTime;
 
     // States
     [HideInInspector] public BaseState pursuing;
     [HideInInspector] public BaseState avoiding;
     [HideInInspector] public BaseState reversing;
+    [HideInInspector] public BaseState idle;
 
     private void Start()
     {
@@ -28,17 +34,19 @@ public class CarAI : StateMachine
         pursuing = new Pursuing(controller, this);
         avoiding = new Avoiding(controller, this);
         reversing = new Reversing(controller, this);
+        idle = new Idle(controller, this);
 
         Initialize(pursuing);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.parent == transform.parent && currentState != reversing)
+        if (collision.transform.parent == transform.parent)
         {
             bool isPossibleAttacker = Mathf.Abs(Vector3.SignedAngle(transform.forward, collision.relativeVelocity.normalized, Vector3.up)) > 100f;
 
-            if (isPossibleAttacker) hitOpponent = true;
+            if (isPossibleAttacker && currentState != reversing) hitOpponent = true;
+            else if (currentDrivingMode == DrivingMode.Idle) gotHit = true;
         }
     }
 

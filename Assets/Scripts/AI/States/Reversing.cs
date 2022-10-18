@@ -27,7 +27,7 @@ public class Reversing : BaseState
 
         reverseTime -= Time.deltaTime;
         // Transition
-        if (reverseTime <= 0f) carAI.ChangeState(carAI.pursuing);
+        if (reverseTime <= 0f) carAI.ChangeState(carAI.avoiding);
     }
 
     public override void Exit()

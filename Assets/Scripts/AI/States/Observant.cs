@@ -48,7 +48,7 @@ public class Observant : BaseState
         foreach (DetectRay detectRay in detectRays)
         {
             RaycastHit hit;
-            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 3f))
+            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f))
             {
                 if (hit.distance < closestHit)
                 {
@@ -58,14 +58,25 @@ public class Observant : BaseState
             }
 
 #if UNITY_EDITOR
-            if (carAI.debugging) Debug.DrawRay(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward * (currentSpeed / 3f), detectRay.side == DetectResult.Left ? Color.white : Color.red);
+            if (carAI.debugging) Debug.DrawRay(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward * (currentSpeed / 2f), detectRay.side == DetectResult.Left ? Color.white : Color.red);
 #endif
         }
 
         if (closestHit < 1f || carAI.hitOpponent)
         {
+            if (carAI.hitOpponent && carAI.currentDrivingMode != CarAI.DrivingMode.Idle)
+            {
+                carAI.currentDrivingMode = CarAI.DrivingMode.Idle;
+                carAI.idleTime = Random.Range(5f, 10f);
+            }
             currentDetectResult = DetectResult.Reverse;
             carAI.hitOpponent = false;
+        }
+
+        if (carAI.gotHit && carAI.currentDrivingMode == CarAI.DrivingMode.Idle)
+        {
+            carAI.currentDrivingMode = CarAI.DrivingMode.Pursue;
+            carAI.gotHit = false;
         }
 
         // Transition
