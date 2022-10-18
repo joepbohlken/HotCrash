@@ -27,7 +27,7 @@ public class CarHealth : MonoBehaviour
     [SerializeField] private List<Vitals> vitals;
 
     private ArcadeCar arcadeCar;
-    public Image[] bars;
+    private Image[] bars;
     private float currentHealth;
     [HideInInspector]
     public bool isDestroyed = false;
