@@ -192,6 +192,7 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
+    private bool handbrake = false;
 
     private void OnValidate()
     {
@@ -416,7 +417,8 @@ public class ArcadeCar : MonoBehaviour
             v = Input.GetAxis("Vertical");
             h = Input.GetAxis("Horizontal");
             qe = Input.GetAxis("Roll");
-            rightMouse = Input.GetMouseButtonDown(1);
+            rightMouse = Input.GetButtonDown("Flip");
+            handbrake = Input.GetButtonDown("Drift");
         }
 
         bool allWheelIsOnAir = true;
@@ -489,7 +491,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
+        bool isHandBrakeNow = handbrake && controllable;
 
         float speed = GetSpeed();
         isAcceleration = false;
