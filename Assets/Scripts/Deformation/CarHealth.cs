@@ -35,7 +35,11 @@ public class CarHealth : MonoBehaviour
     private void Awake()
     {
         arcadeCar = GetComponent<ArcadeCar>();
-        bars = healthBar.GetComponentsInChildren<Image>();
+
+        if(healthBar != null)
+        {
+            bars = healthBar.GetComponentsInChildren<Image>();
+        }
 
         // Set current health of each vital
         foreach (Vitals vital in vitals)
@@ -58,7 +62,11 @@ public class CarHealth : MonoBehaviour
         if (vital != null)
         {
             vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.health);
-            vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
+
+            if(vital.image != null)
+            {
+                vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
+            }
 
             multiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
         }
@@ -66,7 +74,14 @@ public class CarHealth : MonoBehaviour
         // Damage base health
         currentHealth = Mathf.Clamp(currentHealth - (damage * multiplier), 0, health);
 
+        CheckHealth();
+
         // Update health bar
+        if (healthText == null || bars == null)
+        {
+            return;
+        }
+
         float healthPercentage = Mathf.Round(Mathf.Clamp01(currentHealth / health) * 100);
         healthText.text = healthPercentage.ToString();
 
@@ -86,8 +101,6 @@ public class CarHealth : MonoBehaviour
 
             bar.fillAmount = fillAmount;
         }
-
-        CheckHealth();
     }
 
     private Color GetVitalColor(float max, float current)
