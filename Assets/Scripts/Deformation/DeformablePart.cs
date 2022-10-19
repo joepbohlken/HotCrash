@@ -20,7 +20,7 @@ public enum HitLocation
 public class DeformablePart : MonoBehaviour
 {
     [Tooltip("The side which is affected when impacted. Set to NONE in case it handles multiple sides like the body.")]
-    public HitLocation hitLocation = HitLocation.NONE;
+    public HitLocation carSide = HitLocation.NONE;
 
     [Space(12)]
     [Tooltip("If true will create a hinge with the specified properties on first contact hit.")]
@@ -91,14 +91,18 @@ public class DeformablePart : MonoBehaviour
 
         justCreatedHinge = false;
 
-        HitLocation dmgLocation = hitLocation;
-        if (hitLocation == HitLocation.NONE) 
-            dmgLocation= CheckImpactLocation(collision.GetContact(i).normal);
+        HitLocation hitLocation = carSide;
+        if (carSide == HitLocation.NONE)
+            hitLocation = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).thisCollider);
 
+        bool isAttacker = CheckAttacker(collision.GetContact(i));
         float damage = (collision.relativeVelocity.magnitude - minVelocity) / collision.contactCount;
+        HitLocation opponentImpactedSide = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).otherCollider);
+
+        Vitals opponentVital = collision.GetContact(i).otherCollider.transform.GetComponentInParent<CarHealth>().vitals.Find(v => v.vitalType == opponentImpactedSide);
 
         // Update the car vitals on the UI
-        if (carHealth) carHealth.AddVitalDamage(dmgLocation, damage);
+        if (carHealth) carHealth.AddCarDamage(hitLocation, opponentVital, damage, isAttacker);
 
         // Update hinge health
         if (isHinge) currentHealth -= damage;
@@ -135,10 +139,10 @@ public class DeformablePart : MonoBehaviour
         float currentMaxDeformDist = 1000;
 
         // Check impact location in case its the body, else use the dedicated hitLocation
-        if (hitLocation == HitLocation.NONE)
-            impactLocation = CheckImpactLocation(collision.GetContact(i).normal);
+        if (carSide == HitLocation.NONE)
+            impactLocation = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).thisCollider);
         else
-            impactLocation = hitLocation;
+            impactLocation = carSide;
 
         switch (impactLocation)
         {
@@ -192,11 +196,52 @@ public class DeformablePart : MonoBehaviour
         meshCollider.sharedMesh = meshFilter.mesh;
     }
 
-    private HitLocation CheckImpactLocation(Vector3 collisionNormal)
+    private void DetachPart(Vector3 hitDirection, float force)
     {
-        float right = Vector3.Dot(collisionNormal, carDeformation.transform.right);
-        float up = Vector3.Dot(collisionNormal, carDeformation.transform.up);
-        float forward = Vector3.Dot(collisionNormal, carDeformation.transform.forward);
+        isDestroyed = true;
+        // Destroy the hinge if present
+        if (isHinge) Destroy(hinge);
+        // Add a force to the part in the direction of the collision
+        transform.SetParent(null, true);
+        Rigidbody myRigidbody = GetComponent<Rigidbody>();
+        if (myRigidbody == null) myRigidbody = gameObject.AddComponent<Rigidbody>();
+        myRigidbody.AddForce(hitDirection.normalized * force, ForceMode.Impulse);
+    }
+
+    private void CreateHinge(Rigidbody body)
+    {
+        hingeCreated = true;
+        justCreatedHinge = true;
+
+        hinge = gameObject.AddComponent<HingeJoint>();
+        hinge.connectedBody = body;
+        hinge.anchor = hingeAnchor;
+        hinge.axis = hingeAxis;
+        hinge.useLimits = true;
+
+        JointLimits limits = new JointLimits();
+        limits.min = hingeMinLimit;
+        limits.max = hingeMaxLimit;
+        limits.bounciness = 0.4f;
+        hinge.limits = limits;
+    }
+
+    private bool CheckAttacker(ContactPoint contactPoint)
+    {
+        float angle = Vector3.Dot(contactPoint.thisCollider.transform.forward, contactPoint.normal);
+        if (angle < -.95f)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private HitLocation CheckImpactLocation(Vector3 collisionNormal, Collider collider)
+    {
+        float right = Vector3.Dot(collisionNormal, collider.transform.right);
+        float up = Vector3.Dot(collisionNormal, collider.transform.up);
+        float forward = Vector3.Dot(collisionNormal, collider.transform.forward);
 
         if (-0.7 > up)
         {
@@ -229,36 +274,6 @@ public class DeformablePart : MonoBehaviour
         }
 
         return HitLocation.NONE;
-    }
-
-    private void DetachPart(Vector3 hitDirection, float force)
-    {
-        isDestroyed = true;
-        // Destroy the hinge if present
-        if (isHinge) Destroy(hinge);
-        // Add a force to the part in the direction of the collision
-        transform.SetParent(null, true);
-        Rigidbody myRigidbody = GetComponent<Rigidbody>();
-        if (myRigidbody == null) myRigidbody = gameObject.AddComponent<Rigidbody>();
-        myRigidbody.AddForce(hitDirection.normalized * force, ForceMode.Impulse);
-    }
-
-    private void CreateHinge(Rigidbody body)
-    {
-        hingeCreated = true;
-        justCreatedHinge = true;
-
-        hinge = gameObject.AddComponent<HingeJoint>();
-        hinge.connectedBody = body;
-        hinge.anchor = hingeAnchor;
-        hinge.axis = hingeAxis;
-        hinge.useLimits = true;
-
-        JointLimits limits = new JointLimits();
-        limits.min = hingeMinLimit;
-        limits.max = hingeMaxLimit;
-        limits.bounciness = 0.4f;
-        hinge.limits = limits;
     }
 
     private void OnGUI()

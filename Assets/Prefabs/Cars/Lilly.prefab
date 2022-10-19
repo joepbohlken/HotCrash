@@ -5554,18 +5554,26 @@ MonoBehaviour:
   - vitalType: 0
     image: {fileID: 0}
     health: 50
+    offenseMultiplier: 1.2
+    defenseMultiplier: 1
     currentHealth: 0
   - vitalType: 2
     image: {fileID: 0}
     health: 50
+    offenseMultiplier: 0.5
+    defenseMultiplier: 0.7
     currentHealth: 0
   - vitalType: 3
     image: {fileID: 0}
     health: 50
+    offenseMultiplier: 0.5
+    defenseMultiplier: 0.7
     currentHealth: 0
   - vitalType: 1
     image: {fileID: 0}
     health: 50
+    offenseMultiplier: 0.9
+    defenseMultiplier: 1.3
     currentHealth: 0
   isDestroyed: 0
 --- !u!82 &4450794903244610548

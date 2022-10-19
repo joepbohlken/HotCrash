@@ -11,6 +11,8 @@ public class Vitals
     public HitLocation vitalType;
     public Image image;
     public float health = 100f;
+    public float offenseMultiplier = 1f;
+    public float defenseMultiplier = 1f;
     [HideInInspector] public float currentHealth;
 }
 
@@ -36,7 +38,7 @@ public class CarHealth : MonoBehaviour
     {
         arcadeCar = GetComponent<ArcadeCar>();
 
-        if(healthBars != null)
+        if (healthBars != null)
         {
             foreach (GameObject bar in healthBars)
             {
@@ -54,28 +56,30 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
-    public void AddVitalDamage(HitLocation hitLocation, float damage)
+    public void AddCarDamage(HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
-        if(hitLocation == HitLocation.NONE) return;
+        if (hitLocation == HitLocation.NONE) return;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
-        float multiplier = 1;
+        float vitalHealthMultiplier = 1;
 
         if (vital != null)
         {
             vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.health);
 
-            if(vital.image != null)
+            if (vital.image != null)
             {
                 vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
             }
 
-            multiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
+            vitalHealthMultiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
         }
 
-        // Damage base health
-        currentHealth = Mathf.Clamp(currentHealth - (damage * multiplier), 0, health);
+        float vitalDmgMultiplier = CalculateDamageMultiplier(vital, opponentVital);
+
+        float actualDmg = damage * vitalDmgMultiplier;
+        currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
         CheckHealth();
 
@@ -84,6 +88,43 @@ public class CarHealth : MonoBehaviour
         {
             UpdateUIElements();
         }
+    }
+
+    private float CalculateDamageMultiplier(Vitals vital = null, Vitals opponentVital = null)
+    {
+
+        // Calculate actual dmg and update base health (example: hitLocation = Front & opponentHitLocation = Right)
+        float vitalDmgMultiplier = 1;
+
+        // If both vitals are present
+        if (opponentVital != null && vital != null)
+        {
+            vitalDmgMultiplier = opponentVital.offenseMultiplier > vital.defenseMultiplier ? opponentVital.offenseMultiplier - vital.defenseMultiplier : vital.defenseMultiplier - opponentVital.offenseMultiplier;
+
+            if (opponentVital.offenseMultiplier > vital.defenseMultiplier)
+            {
+                vitalDmgMultiplier++;
+            }
+            else
+            {
+                vitalDmgMultiplier = 1 - vitalDmgMultiplier;
+            }
+
+        }
+
+        // If opponent vital is present but own vital isnt (example: hitLocation = Top & opponentHitLocation = Front)
+        if (opponentVital != null && vital == null)
+        {
+            vitalDmgMultiplier = 1.5f;
+        }
+
+        // If own vital is present but opponent vital isnt (example: hitLocation = Front & opponentHitLocation = Top)
+        if (opponentVital == null && vital != null)
+        {
+            vitalDmgMultiplier = 0.5f;
+        }
+
+        return vitalDmgMultiplier;
     }
 
     private void UpdateUIElements()

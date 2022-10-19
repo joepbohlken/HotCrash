@@ -19,7 +19,7 @@ public class CarDeformation : MonoBehaviour
     [Tooltip("Minimum time in seconds between deformations.")]
     [SerializeField] private float collisionDebounce = 0.1f;
     [Tooltip("Maximum collision points to use when deforming.")]
-    [SerializeField] private int maxCollisionPoints = 2;
+    [SerializeField] private int maxCollisionPoints = 1;
 
     [Header("Debug")]
     public bool debugMode = true;

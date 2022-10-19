@@ -63,7 +63,7 @@ public class CameraFollow : MonoBehaviour
         cameraObject.localPosition = offset;
 
         transform.position = target.position;
-        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent.localEulerAngles.y, 0);
+        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent != null ? target.parent.localEulerAngles.y : 0f, 0);
         transform.rotation = cameraQuaternion;
     }
 }

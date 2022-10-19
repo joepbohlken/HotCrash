@@ -18,7 +18,7 @@ public class GameMaster : MonoBehaviour
     public Transform cameraParentTransform;
     public Transform hudParentTransform;
 
-    public bool horizontalOnThreePlayers = true;
+    public bool spectatorCamera = true;
 
     public void InitializeScene(int playerCount = 0)
     {
@@ -33,6 +33,7 @@ public class GameMaster : MonoBehaviour
         {
             // Add car
             ArcadeCar car = Instantiate(carPrefab, (Vector3.up * 1.5f) + (Vector3.right * i * 4f), new Quaternion(0, 0, 0, 0), playerParentTransform).GetComponent<ArcadeCar>();
+            car.gameObject.name = "Player " + (i + 1);
             car.controllable = i == 0;
 
             // Add camera
@@ -58,7 +59,7 @@ public class GameMaster : MonoBehaviour
             rect.y = posY + (posY > 0 ? dividerOffset * 2 : 0);
 
             //Adjust screens on 3rd player
-            if (horizontalOnThreePlayers)
+            if (!spectatorCamera)
             {
                 if (i == 0 && playerCount == 3)
                 {
@@ -152,12 +153,31 @@ public class GameMaster : MonoBehaviour
                     int actualIndex = x < y ? y - 1 : y;
 
                     CarCanvas carCanvas = carCanvases.GetChild(actualIndex).GetComponentInChildren<CarCanvas>();
-                    carCanvas.cameraToFollow = cameraParentTransform.GetChild(actualIndex).GetComponentInChildren<Camera>();
+                    carCanvas.cameraToFollow = cameraParentTransform.GetChild(y).GetComponentInChildren<Camera>();
                 }
             }
         }
 
-        // Set spectator camera
+        // Add spectator camera
+        if (spectatorCamera && playerCount == 3)
+        {
+            CameraFollow cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraFollow>();
+            cameraFollow.gameObject.name = "Spectator Camera";
+            cameraFollow.target = playerParentTransform;
+            cameraFollow.mouseSensitivity = 0;
 
+            float dividerOffset = 0.001f;
+
+            // Set camera size and position
+            Camera camera = cameraFollow.GetComponentInChildren<Camera>();
+            Rect rect = camera.rect;
+
+            rect.width = 0.5f - dividerOffset;
+            rect.height = 0.5f - dividerOffset * 2;
+            rect.x = 0.5f + dividerOffset;
+            rect.y = 0;
+
+            camera.rect = rect;
+        }
     }
 }

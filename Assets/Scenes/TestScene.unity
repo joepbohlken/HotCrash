@@ -5840,7 +5840,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1854516153}
   - component: {fileID: 1854516152}
-  - component: {fileID: 1854516154}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -5868,6 +5867,7 @@ MonoBehaviour:
   playerParentTransform: {fileID: 1964843263}
   cameraParentTransform: {fileID: 621888627}
   hudParentTransform: {fileID: 1194303702}
+  spectatorCamera: 0
 --- !u!4 &1854516153
 Transform:
   m_ObjectHideFlags: 0
@@ -5883,50 +5883,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1854516154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854516151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NotificationBehavior: 2
-  m_MaxPlayerCount: 4
-  m_AllowJoining: 0
-  m_JoinBehavior: 2
-  m_PlayerJoinedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_PlayerLeftEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_JoinAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Join
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 25daec3a-3578-410f-9f7c-819c4e03e7f0
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 1155288293536565725, guid: ee46dc4af1a98164aa184d5bd375c85e, type: 3}
-  m_SplitScreen: 0
-  m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
-  m_SplitScreenRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &1862632595
 GameObject:
   m_ObjectHideFlags: 0
