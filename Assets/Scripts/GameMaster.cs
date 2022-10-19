@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
+    [HideInInspector]
+    public static GameMaster main;
+
+    [Header("Split-screen Testing")]
     public Canvas overlay;
     public GameObject cameraPrefab;
     public GameObject carCanvasPrefab;
@@ -19,6 +23,15 @@ public class GameMaster : MonoBehaviour
     public Transform hudParentTransform;
 
     public bool spectatorCamera = true;
+
+    [Header("Global References")]
+    public Transform wheelContainer;
+
+    private void Awake()
+    {
+        if (main != null) Destroy(this);
+        main = this;
+    }
 
     public void InitializeScene(int playerCount = 0)
     {

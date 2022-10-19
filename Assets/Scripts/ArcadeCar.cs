@@ -629,7 +629,7 @@ public class ArcadeCar : MonoBehaviour
 
     private void PopOffWheel(GameObject wheel)
     {
-        wheel.transform.SetParent(null);
+        wheel.transform.SetParent(GameMaster.main.wheelContainer);
 
         Rigidbody wheelRb = wheel.AddComponent<Rigidbody>();
         MeshCollider wheelMesh = wheel.AddComponent<MeshCollider>();

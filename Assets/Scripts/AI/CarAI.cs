@@ -34,7 +34,7 @@ public class CarAI : StateMachine
 
     private float gotHitDebounce = 0f;
 
-    private void Start()
+    public void InitializeAI()
     {
         mainRb = GetComponent<Rigidbody>();
 

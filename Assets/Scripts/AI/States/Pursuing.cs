@@ -52,7 +52,7 @@ public class Pursuing : Observant
         {
             targetTime += Time.deltaTime;
 
-            if (targetTime >= 5f)
+            if (targetTime >= 10f)
             {
                 whitelistedTarget = target;
                 target = null;
@@ -69,7 +69,7 @@ public class Pursuing : Observant
         {
             float predictValue = Mathf.Clamp(carAI.mainRb.velocity.magnitude / 3f, 0f, (target.position - carAI.transform.position).magnitude);
             float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (target.position + target.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
-            if (Mathf.Abs(playerSideLR) > 10f)
+            if (Mathf.Abs(playerSideLR) > 5f)
             {
                 controller.h = Mathf.Sign(playerSideLR);
             }

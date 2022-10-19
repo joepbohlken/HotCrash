@@ -12,7 +12,7 @@ public class StateMachine : MonoBehaviour
             currentState.LogicUpdate();
     }
 
-    public void Initialize(BaseState startingState)
+    protected void Initialize(BaseState startingState)
     {
         currentState = startingState;
         startingState.Enter();
