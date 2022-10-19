@@ -178,6 +178,7 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
+    private bool handbrake = false;
 
     [HideInInspector]
     public bool isHandBrakeNow;
