@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraToFollow: {fileID: 0}
+  bars: {fileID: 657000580449972654}
+  hpText: {fileID: 657000580804164464}
 --- !u!1 &2293275475273371222
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +213,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5580977687126713624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,3 +333,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6549981090188137559, guid: bb6bed56aac5ffd4082a463efe0b5795, type: 3}
   m_PrefabInstance: {fileID: 6050612028713565714}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &657000580449972654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6549981090149257148, guid: bb6bed56aac5ffd4082a463efe0b5795, type: 3}
+  m_PrefabInstance: {fileID: 6050612028713565714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &657000580804164464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6549981090506065250, guid: bb6bed56aac5ffd4082a463efe0b5795, type: 3}
+  m_PrefabInstance: {fileID: 6050612028713565714}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

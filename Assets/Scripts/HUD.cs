@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [Header("Damage model")]
-    public Image Front;
-    public Image Left;
-    public Image Right;
-    public Image Back;
+    public Image front;
+    public Image left;
+    public Image right;
+    public Image back;
 
     [Header("HP bar")]
-    public GameObject Bars;
+    public GameObject bars;
     public TextMeshProUGUI hpText;
 
     [Header("Kill Count")]

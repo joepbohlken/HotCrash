@@ -94,24 +94,24 @@ public class GameMaster : MonoBehaviour
             // Set car health HUD images
             CarHealth carHealth = car.GetComponent<CarHealth>();
             HUD hud = carHUD.GetComponent<HUD>();
-            carHealth.healthBar = hud.Bars;
-            carHealth.healthText = hud.hpText;
+            carHealth.healthBars.Add(hud.bars);
+            carHealth.healthTexts.Add(hud.hpText);
 
             foreach (Vitals vital in carHealth.vitals) 
             {
                 switch (vital.vitalType)
                 {
                     case HitLocation.FRONT:
-                        vital.image = hud.Front;
+                        vital.image = hud.front;
                         break;
                     case HitLocation.LEFT:
-                        vital.image = hud.Left;
+                        vital.image = hud.left;
                         break;
                     case HitLocation.RIGHT:
-                        vital.image = hud.Right;
+                        vital.image = hud.right;
                         break;
                     case HitLocation.BACK:
-                        vital.image = hud.Back;
+                        vital.image = hud.back;
                         break;
                 }
             }
@@ -121,10 +121,12 @@ public class GameMaster : MonoBehaviour
             {
                 if(j != i)
                 {
-                    GameObject carCanvas = Instantiate(carCanvasPrefab, car.transform);
-                    carCanvas.layer = LayerMask.NameToLayer("Player " + (j + 1));
+                    CarCanvas carCanvas = Instantiate(carCanvasPrefab, car.transform).GetComponentInChildren<CarCanvas>();
+                    carCanvas.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player " + (j + 1));
 
-                    carCanvas.GetComponentInChildren<CameraFollowUI>().cameraToFollow = camera;
+                    carCanvas.cameraToFollow = camera;
+                    carHealth.healthBars.Add(carCanvas.bars);
+                    carHealth.healthTexts.Add(carCanvas.hpText);
                 }
             }
         }

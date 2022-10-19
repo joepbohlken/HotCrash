@@ -18,8 +18,8 @@ public class CarHealth : MonoBehaviour
 {
     [Tooltip("The base health of the car.")]
     [SerializeField] private float health = 1000f;
-    public GameObject healthBar;
-    public TextMeshProUGUI healthText;
+    public List<GameObject> healthBars = new List<GameObject>();
+    public List<TextMeshProUGUI> healthTexts = new List<TextMeshProUGUI>();
     [Tooltip("Y - Desired damage multiplier. X - Health ratio")]
     public AnimationCurve damageMultiplierCurve;
     [Space(6)]
@@ -27,7 +27,7 @@ public class CarHealth : MonoBehaviour
     [SerializeField] public List<Vitals> vitals;
 
     private ArcadeCar arcadeCar;
-    private Image[] bars;
+    private List<Image[]> bars = new List<Image[]>();
     private float currentHealth;
     [HideInInspector]
     public bool isDestroyed = false;
@@ -36,9 +36,12 @@ public class CarHealth : MonoBehaviour
     {
         arcadeCar = GetComponent<ArcadeCar>();
 
-        if(healthBar != null)
+        if(healthBars != null)
         {
-            bars = healthBar.GetComponentsInChildren<Image>();
+            foreach (GameObject bar in healthBars)
+            {
+                bars.Add(bar.GetComponentsInChildren<Image>());
+            }
         }
 
         // Set current health of each vital
@@ -77,29 +80,41 @@ public class CarHealth : MonoBehaviour
         CheckHealth();
 
         // Update health bar
-        if (healthText == null || bars == null)
+        if (healthTexts.Count != 0 && bars.Count != 0)
         {
-            return;
+            UpdateUIElements();
+        }
+    }
+
+    private void UpdateUIElements()
+    {
+        float healthPercentage = Mathf.Round(Mathf.Clamp01(currentHealth / health) * 100);
+
+        // Update HP text
+        foreach (TextMeshProUGUI healthText in healthTexts)
+        {
+            healthText.text = healthPercentage.ToString();
         }
 
-        float healthPercentage = Mathf.Round(Mathf.Clamp01(currentHealth / health) * 100);
-        healthText.text = healthPercentage.ToString();
-
-        float barPercentage = 100 / bars.Length;
-        foreach (var (bar, i) in bars.Select((value, i) => (value, i)))
+        foreach (Image[] bars in bars)
         {
-            float minPercentage = barPercentage * i;
-            float maxPercentage = barPercentage * (i + 1);
-
-            float fillAmount = 1;
-
-            if (healthPercentage < maxPercentage)
+            // Update HP bars
+            float barPercentage = 100 / bars.Length;
+            foreach (var (bar, i) in bars.Select((value, i) => (value, i)))
             {
-                float offset = Mathf.Clamp(maxPercentage - healthPercentage, 0, barPercentage);
-                fillAmount = Mathf.Clamp01((barPercentage - offset) / barPercentage);
-            }
+                float minPercentage = barPercentage * i;
+                float maxPercentage = barPercentage * (i + 1);
 
-            bar.fillAmount = fillAmount;
+                float fillAmount = 1;
+
+                if (healthPercentage < maxPercentage)
+                {
+                    float offset = Mathf.Clamp(maxPercentage - healthPercentage, 0, barPercentage);
+                    fillAmount = Mathf.Clamp01((barPercentage - offset) / barPercentage);
+                }
+
+                bar.fillAmount = fillAmount;
+            }
         }
     }
 

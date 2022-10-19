@@ -827,11 +827,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea99d7f203b9d444b108f469a1b6a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Front: {fileID: 7905057190570849428}
-  Left: {fileID: 7905057189736801734}
-  Right: {fileID: 7905057190793412092}
-  Back: {fileID: 7905057190985251684}
-  Bars: {fileID: 7905057189671689724}
+  front: {fileID: 7905057190570849428}
+  left: {fileID: 7905057189736801734}
+  right: {fileID: 7905057190793412092}
+  back: {fileID: 7905057190985251684}
+  bars: {fileID: 7905057189671689724}
   hpText: {fileID: 7905057189503162146}
   killsText: {fileID: 7905057191354244132}
   opponentsText: {fileID: 7905057190419599449}
