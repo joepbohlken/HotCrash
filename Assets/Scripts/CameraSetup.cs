@@ -13,23 +13,23 @@ public class CameraSetup : MonoBehaviour
     [NonSerialized] public Rect rect3;
     [NonSerialized] public Rect rect4;
     // Start is called before the first frame update
-    public void SetCamera()
+    public void SetCamera(int playerAmount)
     {
         rect1.x = 0f;
         rect1.y = 0f;
         rect1.width = 1f;
         rect1.height = 1f;
-        if (LoadScene.playerAmount == 2)
+        if (playerAmount == 2)
         {
             rect1.x = -0.5f;
-            rect1.width = 0.1f;
+            rect1.width = 1f;
             rect1.height = 1f;
 
             rect2.x = 0.5f;
-            rect2.width = 0.1f;
+            rect2.width = 1f;
             rect2.height = 1f;
         }
-        else if (LoadScene.playerAmount >= 3)
+        else if (playerAmount >= 3)
         {
             rect1.x = -0.5f;
             rect1.y = 0.5f;
@@ -46,7 +46,7 @@ public class CameraSetup : MonoBehaviour
             rect3.width = 1f;
             rect3.height = 1f;
         }
-        else if (LoadScene.playerAmount >= 3)
+        else if (playerAmount >= 3)
         {
             rect1.x = -0.5f;
             rect1.y = 0.5f;

@@ -391,6 +391,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0.2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5
+      value: 1
+      inSlope: 0.2
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   handBrakeSlipperyTime: 2
   controllable: 0
   downForceCurve:
@@ -418,6 +442,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   downForce: 10
+  flipDuration: 0.8
   pitchCurve:
     serializedVersion: 2
     m_Curve:
@@ -494,7 +519,6 @@ MonoBehaviour:
     brakeForceMag: 5
     stiffness: 15000
     damping: 3000
-    restitution: 1
     lengthRelaxed: 0.5
     antiRollForce: 60000
     visualScale: 1
@@ -519,7 +543,6 @@ MonoBehaviour:
     brakeForceMag: 5
     stiffness: 18650
     damping: 3000
-    restitution: 1
     lengthRelaxed: 0.5
     antiRollForce: 60000
     visualScale: 1
@@ -530,6 +553,31 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugMode: 0
+  movement:
+    m_Name: Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 063e87e2-091b-4583-92ec-28fb97ebc7fc
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  roll:
+    m_Name: Roll
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ba539fdc-9179-4e0e-9c71-a303dc4945db
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  inputAsset: {fileID: 0}
+  player:
+    m_Name: Player
+    m_Id: 68b034e4-d3f7-45e9-8c08-0c0022cfa1b6
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
   v: 0
   h: 0
 --- !u!114 &105520550226233435

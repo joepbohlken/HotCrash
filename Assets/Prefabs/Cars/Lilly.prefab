@@ -608,7 +608,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   handBrakeSlipperyTime: 2
-  controllable: 1
+  controllable: 0
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -745,6 +745,31 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugMode: 0
+  movement:
+    m_Name: Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cc3b0620-cf3a-4edc-b3b7-d5c43d593f58
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  roll:
+    m_Name: Roll
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 00d79d56-c0b4-4fa1-a141-10fc1c9ed2ab
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  inputAsset: {fileID: 0}
+  player:
+    m_Name: Player
+    m_Id: c1eaaaeb-2657-44a1-8ebc-f26286792862
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
   v: 0
   h: 0
 --- !u!114 &8674156861748017126

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class WheelData
 {
@@ -161,6 +162,17 @@ public class ArcadeCar : MonoBehaviour
     [Header("Debug")]
     public bool debugMode = false;
 
+    //Input controls
+    private InputAction movement;
+    private InputAction roll;
+    private InputAction handbrakeInput;
+    [SerializeField]
+    private InputActionAsset inputAsset;
+    [SerializeField]
+    private InputActionMap player;
+    private bool reset;
+    private bool isHandBrakeNow = false;
+
     private float rollTime = 0f;
     private float pitchTime = 0f;
     private float yawTime = 0f;
@@ -191,6 +203,30 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
+
+    private void Awake()
+    {
+        if(controllable)
+        {
+            inputAsset = this.GetComponent<PlayerInput>().actions;
+            player = inputAsset.FindActionMap("Player");
+        }
+    }
+
+    private void OnEnable()
+    {
+        movement = player.FindAction("Movement");
+        roll = player.FindAction("Roll");
+        handbrakeInput = player.FindAction("Handbrake");
+        //reset = player.FindAction("Reset");
+        //handbrake = player.FindAction("Handbrake");
+        player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        player.Disable();
+    }
 
     private void OnValidate()
     {
@@ -394,10 +430,12 @@ public class ArcadeCar : MonoBehaviour
         //Debug.Log (string.Format ("H = {0}", h));
         if (controllable)
         {
-            v = Input.GetAxis("Vertical");
-            h = Input.GetAxis("Horizontal");
-            qe = Input.GetAxis("Roll");
+            Vector2 move = movement.ReadValue<Vector2>();
+            v = move.y;
+            h = move.x;
+            qe = roll.ReadValue<float>();
             rightMouse = Input.GetMouseButtonDown(1);
+            isHandBrakeNow = handbrakeInput.ReadValue<float>() > 0.1f;
         }
 
         bool allWheelIsOnAir = true;
@@ -470,7 +508,6 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
 
         float speed = GetSpeed();
         isAcceleration = false;

@@ -1,39 +1,38 @@
 using Cinemachine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpawnSystem : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> spawnPoints;
     [SerializeField]
-    private List<LayerMask> playerLayers;
-    [SerializeField]
     private int botAmount;
-    [SerializeField]
-    private int playerAmount;
 
     public GameObject[] CarPrefabs;
-    public GameObject cameraBrain;
-    public GameObject cameraCar;
-
-    private CameraSetup setup = new CameraSetup();
 
     void Start()
     {
-        setup.SetCamera();
-        if(LoadScene.playerAmount != 0)
-        {
-            playerAmount = LoadScene.playerAmount;
-        }
-        int playersSpawned = 0;
         int botsSpawned = 0;
         foreach (GameObject spawnPoint in spawnPoints)
         {
             GameObject carToSpawn = CarPrefabs[Random.Range(0, CarPrefabs.Length)];
+            /*
             if (playersSpawned < playerAmount)
             {
                 GameObject car = Instantiate(carToSpawn, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation);
+                PlayerInput input = car.GetComponent<PlayerInput>();
+                input.enabled = true;
+                if(playersSpawned == 0)
+                {
+                    input.defaultControlScheme = "Keyboard";
+                }
+                else
+                {
+                    input.defaultControlScheme = "Controller";
+                }
 
                 GameObject camBrain = Instantiate(cameraBrain, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation);
                 camBrain.transform.parent = car.transform;
@@ -51,6 +50,7 @@ public class SpawnSystem : MonoBehaviour
                 playersSpawned++;
                 continue;
             }
+            */
             if(botsSpawned < botAmount)
             {
 
@@ -58,19 +58,10 @@ public class SpawnSystem : MonoBehaviour
                 car.GetComponent<ArcadeCar>().controllable = false;
                 botsSpawned++;
             }
-            if(playersSpawned == playerAmount && botsSpawned == botAmount)
+            if(botsSpawned == botAmount)
             {
                 return;
             }
         }
-    }
-
-    void LayerConfig(int player, CinemachineVirtualCamera cine, Camera cam)
-    {
-        int layerToAdd = (int)Mathf.Log(playerLayers[player].value, 2);
-
-        cine.gameObject.layer = layerToAdd;
-
-        cam.cullingMask |= 1 << layerToAdd;
     }
 }
