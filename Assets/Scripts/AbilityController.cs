@@ -9,6 +9,8 @@ public class AbilityController : MonoBehaviour
     private bool used;
 
     [SerializeField]
+    private AbilityDisplay abilityDisplay;
+    [SerializeField]
     private List<Ability> availableAbiliteis;
     [SerializeField]
     private float cooldownBetweenAbilities;
@@ -41,8 +43,10 @@ public class AbilityController : MonoBehaviour
 
     IEnumerator GiveAbility()
     {
+        abilityDisplay.StartCountdown(cooldownBetweenAbilities);
         yield return new WaitForSeconds(cooldownBetweenAbilities);
         GenerateAbility();
+        abilityDisplay.SetInfo(Ability);
     }
 
     private void GenerateAbility()

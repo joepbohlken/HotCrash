@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Mines Ability
   m_EditorClassIdentifier: 
   Duration: 0
-  Cooldown: 10
+  Cooldown: 0
+  AbilityImage: {fileID: 0}
+  a_Name: Mine
   MineObject: {fileID: 728907566336860761, guid: f6e261a34e693414b8c85278a717d581, type: 3}
   amountOfMines: 5
