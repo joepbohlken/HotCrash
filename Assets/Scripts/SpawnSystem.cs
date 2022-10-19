@@ -10,6 +10,12 @@ public class SpawnSystem : MonoBehaviour
     private List<GameObject> spawnPoints;
     [SerializeField]
     private int botAmount;
+    [SerializeField]
+    private int playerAmount;
+    [SerializeField]
+    private CinemachineVirtualCamera cameraBrainPrefab;
+    [SerializeField]
+    private Transform carContainer;
 
     public GameObject[] CarPrefabs;
 
@@ -42,6 +48,8 @@ public class SpawnSystem : MonoBehaviour
 
                 CinemachineVirtualCamera cine = camCar.GetComponent<CinemachineVirtualCamera>();
                 Camera cam = camBrain.GetComponent<Camera>();
+                CinemachineVirtualCamera cameraBrain = Instantiate(cameraBrainPrefab);
+                GameObject car = Instantiate(carToSpawn, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation, carContainer);
                 car.GetComponent<ArcadeCar>().controllable = true;
                 cine.LookAt = car.transform;
                 cine.Follow = car.transform;
@@ -54,8 +62,13 @@ public class SpawnSystem : MonoBehaviour
             if(botsSpawned < botAmount)
             {
 
-                GameObject car = Instantiate(carToSpawn, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation);
+                GameObject car = Instantiate(carToSpawn, spawnPoint.transform.position + new Vector3(0, 1, 0), spawnPoint.transform.rotation, carContainer);
                 car.GetComponent<ArcadeCar>().controllable = false;
+
+                CarAI carAI = car.AddComponent<CarAI>();
+                carAI.boxSize = new Vector3(2, 0.4f, 5);
+                carAI.InitializeAI();
+                
                 botsSpawned++;
             }
             if(botsSpawned == botAmount)

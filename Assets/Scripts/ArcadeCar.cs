@@ -95,20 +95,7 @@ public class Axle
     public float handBrakeSlipperyK = 0.01f;
 }
 
-[Serializable]
-public class Gear
-{
-    public string name;
-    public AudioClip audioClip;
-    [Range(0, 250)]
-    public float minSpeed;
-    [Range(0, 250)]
-    public float maxSpeed;
-    [Range(0.1f, 2f)]
-    public float minAudioPitch;
-    [Range(0.1f, 2f)]
-    public float maxAudioPitch;
-}
+
 
 public class ArcadeCar : MonoBehaviour
 {
@@ -118,6 +105,8 @@ public class ArcadeCar : MonoBehaviour
     const float wheelWidth = 0.085f;
 
     public Vector3 centerOfMass = Vector3.zero;
+    [HideInInspector]
+    public Vector3 originalCenterOfMass;
 
     [Header("Engine")]
     [Tooltip("Y - Desired vehicle speed (km/h). X - Time (seconds)")]
@@ -127,8 +116,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Number of times to iterate reverse evaluation of Acceleration Curve. May need to increase with higher max vehicle speed. ")]
     public int reverseEvaluationAccuracy = 25;
 
-    public int currentGear = 1;
-    public List<Gear> gears = new List<Gear>();
+
 
     [Header("Steering")]
     [Tooltip("Y - Steering angle limit (deg). X - Vehicle speed (km/h)")]
@@ -152,9 +140,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Car flipping duration")]
     public float flipDuration = .8f;
 
-    [Header("Sounds")]
-    [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
-    public AnimationCurve pitchCurve;
+
 
     [Header("Axles")]
     public Axle[] axles = new Axle[2];
@@ -184,10 +170,14 @@ public class ArcadeCar : MonoBehaviour
     private float handBrakeSlipperyTiresTime = 0.0f;
     private bool isBrake = false;
     private bool isHandBrake = false;
-    private bool isAcceleration = false;
-    private bool isReverseAcceleration = false;
+    [HideInInspector]
+    public bool isAcceleration = false;
+    [HideInInspector]
+    public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
+    private CarHealth carHealth;
+    private ParticleSystem ps;
     private AudioSource audioSource;
 
     // UI style for debug render
@@ -203,6 +193,7 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
+    private bool handbrake = false;
 
     private void Awake()
     {
@@ -245,22 +236,39 @@ public class ArcadeCar : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        carHealth = GetComponent<CarHealth>();
+        ps = GetComponentInChildren<ParticleSystem>();
+        originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
 
     private void Update()
     {
+        if (ps)
+        {
+            ps.transform.localRotation = Quaternion.LookRotation(ps.transform.parent.InverseTransformDirection(Vector3.up), ps.transform.up);
+        }
+
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         carAngle = Vector3.Dot(transform.up, Vector3.down);
 
         UpdateInput();
 
         ApplyVisual();
 
-        SetEngineSound();
     }
 
     private void FixedUpdate()
     {
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         accelerationForceMagnitude = CalcAccelerationForceMagnitude();
 
         // 0.8 - pressed
@@ -386,7 +394,7 @@ public class ArcadeCar : MonoBehaviour
     private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
     {
         int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
-        Debug.DrawRay(wheelRay.origin, wheelRay.direction, Color.magenta);
+
         if (numHits == 0)
         {
             return false;
@@ -438,17 +446,21 @@ public class ArcadeCar : MonoBehaviour
             isHandBrakeNow = handbrakeInput.ReadValue<float>() > 0.1f;
         }
 
-        bool allWheelIsOnAir = true;
+        int wheelsInAir = 4;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
-            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
+            if (axles[axleIndex].wheelDataL.isOnGround)
             {
-                allWheelIsOnAir = false;
-                break;
+                wheelsInAir --;
+            }
+
+            if (axles[axleIndex].wheelDataR.isOnGround)
+            {
+                wheelsInAir--;
             }
         }
 
-        if (!isTouchingGround && allWheelIsOnAir && controllable)
+        if (!isTouchingGround && wheelsInAir == 4 && controllable)
         {
             HandleAirMovement();
         }
@@ -508,6 +520,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
+        bool isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
 
         float speed = GetSpeed();
         isAcceleration = false;
@@ -638,6 +651,31 @@ public class ArcadeCar : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void DestroyCar()
+    {
+        ps.Play();
+
+        foreach (Axle axle in axles)
+        {
+            PopOffWheel(axle.wheelVisualLeft);
+            PopOffWheel(axle.wheelVisualRight);
+        }
+    }
+
+    private void PopOffWheel(GameObject wheel)
+    {
+        wheel.transform.SetParent(GameMaster.main.wheelContainer);
+
+        Rigidbody wheelRb = wheel.AddComponent<Rigidbody>();
+        MeshCollider wheelMesh = wheel.AddComponent<MeshCollider>();
+
+        wheelRb.mass = 50;
+        wheelRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        wheelMesh.convex = true;
+
+        wheelRb.AddForce((UnityEngine.Random.onUnitSphere.normalized * 10) + rb.velocity, ForceMode.VelocityChange);
     }
 
     private float GetHandBrakeK()
@@ -973,6 +1011,7 @@ public class ArcadeCar : MonoBehaviour
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
+
         float travelL = 1.0f - Mathf.Clamp01(axle.wheelDataL.compression);
         float travelR = 1.0f - Mathf.Clamp01(axle.wheelDataR.compression);
 
@@ -1052,34 +1091,6 @@ public class ArcadeCar : MonoBehaviour
 
         frontAxle.wheelDataL.yawRad = steerAngleLeft;
         frontAxle.wheelDataR.yawRad = steerAngleRight;
-    }
-    #endregion
-
-    #region "Sound"
-    private void SetEngineSound()
-    {
-        float speed = GetSpeed() * 3.6f;
-
-        if (isAcceleration || isReverseAcceleration)
-        {
-            pitchRate = 0;
-            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        }
-        else if (audioSource.pitch != 1)
-        {
-            pitchRate += Time.fixedDeltaTime / 10;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
-        }
-
-        foreach (var gear in gears)
-        {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
-            {
-                currentGear = gears.IndexOf(gear);
-                audioSource.clip = gear.audioClip;
-                audioSource.Play();
-            }
-        }
     }
     #endregion
 

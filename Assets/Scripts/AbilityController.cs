@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,47 +5,38 @@ using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
-    private float cd = 0;
+    private UnityEvent OnAbilityComplete = new UnityEvent();
 
     [SerializeField]
-    public Ability Ability;
+    private List<Ability> availableAbilities;
+    [SerializeField]
+    private float cooldownBetweenAbilities;
     [SerializeField]
     private bool consumableAbilities;
 
-
+    private CarHealth carHealth;
+    private ArcadeCar carController;
     [HideInInspector]
-    public UnityEvent OnAbilityComplete = new UnityEvent();
+    public Ability ability;
+    [HideInInspector]
+    public HUD hud;
+    private bool used;
+
+    private void Start()
+    {
+        carHealth = GetComponent<CarHealth>();
+        carController = GetComponent<ArcadeCar>();
+
+        StartCoroutine(GiveAbility());
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && cd <= 0 && Ability != null)
+        if (Input.GetMouseButtonDown(0) && used == false && carController.controllable && !carHealth.isDestroyed)
         {
-            Ability.Use();
-            StartCoroutine(ActivateAfterDelay(Ability.AbilityDuration));
-
-            if (consumableAbilities)
-            {
-                Ability = null;
-            }
-            else
-            {
-                cd = Ability.AbilityCooldown + Ability.AbilityDuration;
-            }
-        }
-
-        cd -= Time.deltaTime;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<AbilityBlock>())
-        {
-            if (Ability == null)
-            {
-                AbilityBlock block = other.gameObject.GetComponent<AbilityBlock>();
-                Ability = block.GetRandomAbility();
-
-                Ability.PickedUp(gameObject);
-            }
+            ability.Use();
+            used = true;
+            StartCoroutine(ActivateAfterDelay(ability.AbilityDuration));
         }
     }
 
@@ -54,5 +44,22 @@ public class AbilityController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         OnAbilityComplete.Invoke();
+        StartCoroutine(GiveAbility());
+    }
+
+    IEnumerator GiveAbility()
+    {
+        hud.StartCountdown(cooldownBetweenAbilities);
+        yield return new WaitForSeconds(cooldownBetweenAbilities);
+        GenerateAbility();
+        hud.SetInfo(ability);
+    }
+
+    private void GenerateAbility()
+    {
+        ability = availableAbilities[Random.Range(0, availableAbilities.Count)];
+        OnAbilityComplete.AddListener(ability.OnAbilityEnded);
+        ability.Obtained(gameObject);
+        used = false;
     }
 }
