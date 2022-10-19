@@ -157,7 +157,7 @@ public class ArcadeCar : MonoBehaviour
     [SerializeField]
     private InputActionMap player;
     private bool reset;
-    private bool isHandBrakeNow = false;
+    public bool isHandBrakeNow = false;
 
     private float rollTime = 0f;
     private float pitchTime = 0f;
@@ -193,7 +193,7 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
-    private bool handbrake = false;
+    public bool handbrake = false;
 
     private void Awake()
     {
@@ -443,7 +443,6 @@ public class ArcadeCar : MonoBehaviour
             h = move.x;
             qe = roll.ReadValue<float>();
             rightMouse = Input.GetMouseButtonDown(1);
-            isHandBrakeNow = handbrakeInput.ReadValue<float>() > 0.1f;
         }
 
         int wheelsInAir = 4;
@@ -520,7 +519,10 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
+        if(controllable)
+        {
+            isHandBrakeNow = handbrakeInput.ReadValue<float>() > 0.1f && wheelsInAir == 0;
+        }
 
         float speed = GetSpeed();
         isAcceleration = false;
