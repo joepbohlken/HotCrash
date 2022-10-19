@@ -99,7 +99,11 @@ public class DeformablePart : MonoBehaviour
         float damage = (collision.relativeVelocity.magnitude - minVelocity) / collision.contactCount;
         HitLocation opponentImpactedSide = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).otherCollider);
 
-        Vitals opponentVital = collision.GetContact(i).otherCollider.transform.GetComponentInParent<CarHealth>().vitals.Find(v => v.vitalType == opponentImpactedSide);
+        Vitals opponentVital = null;
+        if (opponentImpactedSide != HitLocation.BOTTOM && opponentImpactedSide != HitLocation.TOP && opponentImpactedSide != HitLocation.NONE)
+        {
+            opponentVital = collision.GetContact(i).otherCollider.transform.GetComponentInParent<CarHealth>().vitals.Find(v => v.vitalType == opponentImpactedSide);
+        }
 
         // Update the car vitals on the UI
         if (carHealth) carHealth.AddCarDamage(hitLocation, opponentVital, damage, isAttacker);

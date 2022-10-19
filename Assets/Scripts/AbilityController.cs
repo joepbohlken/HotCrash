@@ -6,31 +6,37 @@ using UnityEngine.Events;
 public class AbilityController : MonoBehaviour
 {
     private UnityEvent OnAbilityComplete = new UnityEvent();
-    private bool used;
 
     [SerializeField]
-    private AbilityDisplay abilityDisplay;
-    [SerializeField]
-    private List<Ability> availableAbiliteis;
+    private List<Ability> availableAbilities;
     [SerializeField]
     private float cooldownBetweenAbilities;
     [SerializeField]
     private bool consumableAbilities;
 
-    public Ability Ability;
+    private CarHealth carHealth;
+    private ArcadeCar carController;
+    [HideInInspector]
+    public Ability ability;
+    [HideInInspector]
+    public HUD hud;
+    private bool used;
 
     private void Start()
     {
-        GenerateAbility();
+        carHealth = GetComponent<CarHealth>();
+        carController = GetComponent<ArcadeCar>();
+
+        StartCoroutine(GiveAbility());
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && used == false)
+        if (Input.GetMouseButtonDown(0) && used == false && carController.controllable && !carHealth.isDestroyed)
         {
-            Ability.Use();
+            ability.Use();
             used = true;
-            StartCoroutine(ActivateAfterDelay(Ability.AbilityDuration));
+            StartCoroutine(ActivateAfterDelay(ability.AbilityDuration));
         }
     }
 
@@ -43,17 +49,17 @@ public class AbilityController : MonoBehaviour
 
     IEnumerator GiveAbility()
     {
-        abilityDisplay.StartCountdown(cooldownBetweenAbilities);
+        hud.StartCountdown(cooldownBetweenAbilities);
         yield return new WaitForSeconds(cooldownBetweenAbilities);
         GenerateAbility();
-        abilityDisplay.SetInfo(Ability);
+        hud.SetInfo(ability);
     }
 
     private void GenerateAbility()
     {
-        Ability = availableAbiliteis[Random.Range(0, availableAbiliteis.Count)];
-        OnAbilityComplete.AddListener(Ability.OnAbilityEnded);
-        Ability.Obtained(gameObject);
+        ability = availableAbilities[Random.Range(0, availableAbilities.Count)];
+        OnAbilityComplete.AddListener(ability.OnAbilityEnded);
+        ability.Obtained(gameObject);
         used = false;
     }
 }

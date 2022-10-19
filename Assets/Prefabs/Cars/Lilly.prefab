@@ -5025,7 +5025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f743fff80dbb954baf7b04818f56c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitLocation: 6
+  carSide: 6
   isHinge: 0
   health: 50
   hingeCreationThreshold: 1
@@ -5112,6 +5112,7 @@ GameObject:
   - component: {fileID: 4450794903244610551}
   - component: {fileID: 4450794903244610549}
   - component: {fileID: 6705634366953801955}
+  - component: {fileID: 8915069003306764829}
   - component: {fileID: 4450794903244610548}
   m_Layer: 2
   m_Name: Lilly
@@ -5576,6 +5577,26 @@ MonoBehaviour:
     defenseMultiplier: 1.3
     currentHealth: 0
   isDestroyed: 0
+--- !u!114 &8915069003306764829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931561997790069067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableAbilities:
+  - {fileID: 11400000, guid: b153d246838bdee4a920869605d74ab8, type: 2}
+  - {fileID: 11400000, guid: 50e7f714f515ea64794adf95d100ee8a, type: 2}
+  - {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
+  cooldownBetweenAbilities: 10
+  consumableAbilities: 0
+  ability: {fileID: 0}
+  hud: {fileID: 0}
 --- !u!82 &4450794903244610548
 AudioSource:
   m_ObjectHideFlags: 0

@@ -94,6 +94,7 @@ public class GameMaster : MonoBehaviour
             // Add player hud
             Canvas carHUD = Instantiate(playerHudPrefab, hudParentTransform).GetComponent<Canvas>();
             carHUD.worldCamera = cameraUI;
+            carHUD.GetComponent<HUD>().car = car.gameObject;
 
             if (playerCount >= 3)
             {
@@ -105,6 +106,8 @@ public class GameMaster : MonoBehaviour
             HUD hud = carHUD.GetComponent<HUD>();
             carHealth.healthBars.Add(hud.bars);
             carHealth.healthTexts.Add(hud.hpText);
+
+            car.GetComponent<AbilityController>().hud = hud;
 
             foreach (Vitals vital in carHealth.vitals)
             {
