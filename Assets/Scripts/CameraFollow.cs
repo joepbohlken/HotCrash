@@ -7,11 +7,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Transform cameraObject;
 
     [Header("Camera Properties")]
-    [SerializeField] private float mouseSensitivity = 6f;
+    public float mouseSensitivity = 6f;
     [SerializeField] private Vector3 offset;
     public Transform target;
 
-    private bool isReady = false;
     private Vector3 currentRotation = Vector3.zero;
 
     private void OnValidate()
@@ -27,18 +26,8 @@ public class CameraFollow : MonoBehaviour
         ResetPosition();
     }
 
-    private void OnApplicationFocus(bool focus)
-    {
-        isReady = focus;
-    }
-
     private void LateUpdate()
     {
-        if(!isReady)
-        {
-            return;
-        }
-
         Vector3 newPosition = offset;
 
         // Handle camera collision
