@@ -94,20 +94,7 @@ public class Axle
     public float handBrakeSlipperyK = 0.01f;
 }
 
-[Serializable]
-public class Gear
-{
-    public string name;
-    public AudioClip audioClip;
-    [Range(0, 250)]
-    public float minSpeed;
-    [Range(0, 250)]
-    public float maxSpeed;
-    [Range(0.1f, 2f)]
-    public float minAudioPitch;
-    [Range(0.1f, 2f)]
-    public float maxAudioPitch;
-}
+
 
 public class ArcadeCar : MonoBehaviour
 {
@@ -128,8 +115,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Number of times to iterate reverse evaluation of Acceleration Curve. May need to increase with higher max vehicle speed. ")]
     public int reverseEvaluationAccuracy = 25;
 
-    public int currentGear = 1;
-    public List<Gear> gears = new List<Gear>();
+
 
     [Header("Steering")]
     [Tooltip("Y - Steering angle limit (deg). X - Vehicle speed (km/h)")]
@@ -153,9 +139,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Car flipping duration")]
     public float flipDuration = .8f;
 
-    [Header("Sounds")]
-    [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
-    public AnimationCurve pitchCurve;
+
 
     [Header("Axles")]
     public Axle[] axles = new Axle[2];
@@ -171,8 +155,10 @@ public class ArcadeCar : MonoBehaviour
     private float handBrakeSlipperyTiresTime = 0.0f;
     private bool isBrake = false;
     private bool isHandBrake = false;
-    private bool isAcceleration = false;
-    private bool isReverseAcceleration = false;
+    [HideInInspector]
+    public bool isAcceleration = false;
+    [HideInInspector]
+    public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
     private CarHealth carHealth;
@@ -192,7 +178,9 @@ public class ArcadeCar : MonoBehaviour
     public float h = 0f;
     private float qe = 0f;
     private bool rightMouse = false;
-    private bool handbrake = false;
+
+    [HideInInspector]
+    public bool isHandBrakeNow;
 
     private void OnValidate()
     {
@@ -235,7 +223,6 @@ public class ArcadeCar : MonoBehaviour
 
         ApplyVisual();
 
-        SetEngineSound();
     }
 
     private void FixedUpdate()
@@ -421,17 +408,21 @@ public class ArcadeCar : MonoBehaviour
             handbrake = Input.GetButtonDown("Drift");
         }
 
-        bool allWheelIsOnAir = true;
+        int wheelsInAir = 4;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
-            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
+            if (axles[axleIndex].wheelDataL.isOnGround)
             {
-                allWheelIsOnAir = false;
-                break;
+                wheelsInAir --;
+            }
+
+            if (axles[axleIndex].wheelDataR.isOnGround)
+            {
+                wheelsInAir--;
             }
         }
 
-        if (!isTouchingGround && allWheelIsOnAir && controllable)
+        if (!isTouchingGround && wheelsInAir == 4 && controllable)
         {
             HandleAirMovement();
         }
@@ -491,7 +482,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = handbrake && controllable;
+        bool isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
 
         float speed = GetSpeed();
         isAcceleration = false;
@@ -1062,34 +1053,6 @@ public class ArcadeCar : MonoBehaviour
 
         frontAxle.wheelDataL.yawRad = steerAngleLeft;
         frontAxle.wheelDataR.yawRad = steerAngleRight;
-    }
-    #endregion
-
-    #region "Sound"
-    private void SetEngineSound()
-    {
-        float speed = GetSpeed() * 3.6f;
-
-        if (isAcceleration || isReverseAcceleration)
-        {
-            pitchRate = 0;
-            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        }
-        else if (audioSource.pitch != 1)
-        {
-            pitchRate += Time.fixedDeltaTime / 10;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
-        }
-
-        foreach (var gear in gears)
-        {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
-            {
-                currentGear = gears.IndexOf(gear);
-                audioSource.clip = gear.audioClip;
-                audioSource.Play();
-            }
-        }
     }
     #endregion
 
