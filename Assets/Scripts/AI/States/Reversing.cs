@@ -10,7 +10,7 @@ public class Reversing : BaseState
     {
         base.Enter();
 
-        reverseTime = Random.Range(0.5f, 1f);
+        reverseTime = Random.Range(1f, 2f);
 
         // Set acceleration direction
         controller.v = -1f;

@@ -432,6 +432,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299999
@@ -473,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -631,6 +679,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83000183
@@ -672,7 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -792,6 +888,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299998
@@ -833,7 +977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -915,6 +1059,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83000207
@@ -956,7 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -2000,6 +2192,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299978
@@ -2041,7 +2281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -2312,6 +2552,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8300002
@@ -2353,7 +2641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -3008,6 +3296,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83000183
@@ -3049,7 +3385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -3131,6 +3467,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83
@@ -3171,8 +3555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8a0c382c4fda749b5f6c5fdfa66131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  debugging: 1
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -3734,6 +4118,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8300003
@@ -3775,7 +4207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -4302,6 +4734,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299999
@@ -4343,7 +4823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -4947,6 +5427,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83000016
@@ -4988,7 +5516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -5687,6 +6215,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.82999754
@@ -5728,7 +6304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -5886,6 +6462,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299997
@@ -5927,7 +6551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -6246,6 +6870,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.8299999
@@ -6287,7 +6959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -6666,6 +7338,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83000183
@@ -6707,7 +7427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -6959,6 +7679,54 @@ PrefabInstance:
       propertyPath: controllable
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
+      objectReference: {fileID: 0}
     - target: {fileID: 7825404863816553923, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.83
@@ -7000,7 +7768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugging: 0
-  boxSize: {x: 2, y: 0, z: 5}
+  boxSize: {x: 2, y: 0.25, z: 5}
   mainRb: {fileID: 0}
   aggression: 0.25
   currentDrivingMode: 0
@@ -7275,6 +8043,54 @@ PrefabInstance:
     - target: {fileID: 4450794903244610545, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.0030055193
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.13456939
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].value
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].value
+      value: 54.991577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].inSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outSlope
+      value: -0.001597348
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].inWeight
+      value: 0.12562014
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[1].outSlope
+      value: 0.00039639187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4450794903244610551, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+      propertyPath: steeringResetSpeed.m_Curve.Array.data[0].outWeight
+      value: 0.08448939
       objectReference: {fileID: 0}
     - target: {fileID: 6705634366953801955, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
       propertyPath: HPBar
