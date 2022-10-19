@@ -14,8 +14,14 @@ public class CarAI : StateMachine
     public Vector3 boxSize;
     [HideInInspector] public Rigidbody mainRb;
 
+    // AI Atrributes
+    [Header("Attributes")]
+    [Range(0, 1)]
+    [Tooltip("How eager the AI is to keep pursuing. 0 means it rather idles, 1 means it rather pursues.")]
+    public float aggression = 0.25f;
+
     // Blackboard Variables
-    [HideInInspector] public DrivingMode currentDrivingMode = DrivingMode.Pursue;
+    [HideInInspector] public DrivingMode currentDrivingMode;
     [HideInInspector] public bool hitOpponent = false;
     [HideInInspector] public bool gotHit = false;
     [HideInInspector] public float idleTime;
@@ -25,6 +31,8 @@ public class CarAI : StateMachine
     [HideInInspector] public BaseState avoiding;
     [HideInInspector] public BaseState reversing;
     [HideInInspector] public BaseState idle;
+
+    private float gotHitDebounce = 0f;
 
     private void Start()
     {
@@ -36,7 +44,23 @@ public class CarAI : StateMachine
         reversing = new Reversing(controller, this);
         idle = new Idle(controller, this);
 
-        Initialize(pursuing);
+        int rndmStateNmbr = Random.Range(1, 4);
+        if (rndmStateNmbr == 3)
+        {
+            currentDrivingMode = DrivingMode.Idle;
+            idleTime = Random.Range(5f, 10f);
+            Initialize(idle);
+        }
+        else
+        {
+            currentDrivingMode = DrivingMode.Pursue;
+            Initialize(pursuing);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        gotHitDebounce -= Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,7 +70,11 @@ public class CarAI : StateMachine
             bool isPossibleAttacker = Mathf.Abs(Vector3.SignedAngle(transform.forward, collision.relativeVelocity.normalized, Vector3.up)) > 100f;
 
             if (isPossibleAttacker && currentState != reversing) hitOpponent = true;
-            else if (currentDrivingMode == DrivingMode.Idle) gotHit = true;
+            else if (currentDrivingMode == DrivingMode.Idle && gotHitDebounce <= 0f)
+            {
+                gotHit = true;
+                gotHitDebounce = 0.4f;
+            }
         }
     }
 

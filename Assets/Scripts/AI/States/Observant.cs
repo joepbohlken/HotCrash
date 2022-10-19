@@ -66,8 +66,13 @@ public class Observant : BaseState
         {
             if (carAI.hitOpponent && carAI.currentDrivingMode != CarAI.DrivingMode.Idle)
             {
-                carAI.currentDrivingMode = CarAI.DrivingMode.Idle;
-                carAI.idleTime = Random.Range(5f, 10f);
+                float idleValue = Random.Range(0f, 1f);
+
+                if (idleValue > carAI.aggression)
+                {
+                    carAI.currentDrivingMode = CarAI.DrivingMode.Idle;
+                    carAI.idleTime = Random.Range(5f, 10f);
+                }
             }
             currentDetectResult = DetectResult.Reverse;
             carAI.hitOpponent = false;
