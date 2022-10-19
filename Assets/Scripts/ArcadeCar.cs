@@ -387,17 +387,21 @@ public class ArcadeCar : MonoBehaviour
             rightMouse = Input.GetMouseButtonDown(1);
         }
 
-        bool allWheelIsOnAir = true;
+        int wheelsInAir = 4;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
-            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
+            if (axles[axleIndex].wheelDataL.isOnGround)
             {
-                allWheelIsOnAir = false;
-                break;
+                wheelsInAir --;
+            }
+
+            if (axles[axleIndex].wheelDataR.isOnGround)
+            {
+                wheelsInAir--;
             }
         }
 
-        if (!isTouchingGround && allWheelIsOnAir && controllable)
+        if (!isTouchingGround && wheelsInAir == 4 && controllable)
         {
             HandleAirMovement();
         }
@@ -457,7 +461,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
+        isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable && wheelsInAir == 0;
 
         float speed = GetSpeed();
         isAcceleration = false;
