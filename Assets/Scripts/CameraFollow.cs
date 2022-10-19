@@ -7,11 +7,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Transform cameraObject;
 
     [Header("Camera Properties")]
-    [SerializeField] private float mouseSensitivity = 6f;
+    public float mouseSensitivity = 6f;
     [SerializeField] private Vector3 offset;
-    [SerializeField] private Transform target;
+    public Transform target;
 
-    private bool isReady = false;
     private Vector3 currentRotation = Vector3.zero;
 
     private void OnValidate()
@@ -23,20 +22,12 @@ public class CameraFollow : MonoBehaviour
     {
         currentRotation = transform.localEulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
-    }
 
-    private void OnApplicationFocus(bool focus)
-    {
-        isReady = focus;
+        ResetPosition();
     }
 
     private void LateUpdate()
     {
-        if(!isReady)
-        {
-            return;
-        }
-
         Vector3 newPosition = offset;
 
         // Handle camera collision
@@ -72,7 +63,7 @@ public class CameraFollow : MonoBehaviour
         cameraObject.localPosition = offset;
 
         transform.position = target.position;
-        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent.localEulerAngles.y, 0);
+        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent != null ? target.parent.localEulerAngles.y : 0f, 0);
         transform.rotation = cameraQuaternion;
     }
 }

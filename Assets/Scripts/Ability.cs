@@ -6,29 +6,29 @@ public abstract class Ability : ScriptableObject
 {
     protected GameObject Car;
 
-    public string a_Name;
-
     [SerializeField]
     protected float Duration;
     [SerializeField]
     protected float Cooldown;
+
+    public Sprite AbilityImage;
+    public string a_Name;
     public virtual void Use()
     {
         Debug.Log("Ability not implemented OR No ability active");
     }
 
-    public virtual void OnPickup()
+    public virtual void OnObtained()
     {
-        Car.GetComponent<AbilityController>().OnAbilityComplete.AddListener(OnAbilityEnded);
     }
     public virtual void OnAbilityEnded()
     {
     }
 
-    public void PickedUp(GameObject player)
+    public void Obtained(GameObject player)
     {
         SetCar(player);
-        OnPickup();
+        OnObtained();
     }
 
     private void SetCar(GameObject player)

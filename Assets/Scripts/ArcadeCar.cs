@@ -94,20 +94,7 @@ public class Axle
     public float handBrakeSlipperyK = 0.01f;
 }
 
-[Serializable]
-public class Gear
-{
-    public string name;
-    public AudioClip audioClip;
-    [Range(0, 250)]
-    public float minSpeed;
-    [Range(0, 250)]
-    public float maxSpeed;
-    [Range(0.1f, 2f)]
-    public float minAudioPitch;
-    [Range(0.1f, 2f)]
-    public float maxAudioPitch;
-}
+
 
 public class ArcadeCar : MonoBehaviour
 {
@@ -117,6 +104,8 @@ public class ArcadeCar : MonoBehaviour
     const float wheelWidth = 0.085f;
 
     public Vector3 centerOfMass = Vector3.zero;
+    [HideInInspector]
+    public Vector3 originalCenterOfMass;
 
     [Header("Engine")]
     [Tooltip("Y - Desired vehicle speed (km/h). X - Time (seconds)")]
@@ -126,8 +115,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Number of times to iterate reverse evaluation of Acceleration Curve. May need to increase with higher max vehicle speed. ")]
     public int reverseEvaluationAccuracy = 25;
 
-    public int currentGear = 1;
-    public List<Gear> gears = new List<Gear>();
+
 
     [Header("Steering")]
     [Tooltip("Y - Steering angle limit (deg). X - Vehicle speed (km/h)")]
@@ -138,7 +126,7 @@ public class ArcadeCar : MonoBehaviour
     public AnimationCurve steeringSpeed = AnimationCurve.Linear(0.0f, 2.0f, 100.0f, 0.5f);
 
     [Header("Aerial")]
-    public AnimationCurve rotationCurve;
+    public AnimationCurve torqueCurve = AnimationCurve.Linear(0.0f, 0.0f, 5.0f, 1.0f);
 
     [Header("Other")]
     [Tooltip("Hand brake slippery time in seconds")]
@@ -151,9 +139,7 @@ public class ArcadeCar : MonoBehaviour
     [Tooltip("Car flipping duration")]
     public float flipDuration = .8f;
 
-    [Header("Sounds")]
-    [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
-    public AnimationCurve pitchCurve;
+
 
     [Header("Axles")]
     public Axle[] axles = new Axle[2];
@@ -161,9 +147,6 @@ public class ArcadeCar : MonoBehaviour
     [Header("Debug")]
     public bool debugMode = false;
 
-    private float rollTime = 0f;
-    private float pitchTime = 0f;
-    private float yawTime = 0f;
     private float pitchRate;
     private float carAngle;
     private bool isTouchingGround = false;
@@ -172,10 +155,14 @@ public class ArcadeCar : MonoBehaviour
     private float handBrakeSlipperyTiresTime = 0.0f;
     private bool isBrake = false;
     private bool isHandBrake = false;
-    private bool isAcceleration = false;
-    private bool isReverseAcceleration = false;
+    [HideInInspector]
+    public bool isAcceleration = false;
+    [HideInInspector]
+    public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
+    private CarHealth carHealth;
+    private ParticleSystem ps;
     private AudioSource audioSource;
 
     // UI style for debug render
@@ -185,13 +172,16 @@ public class ArcadeCar : MonoBehaviour
     private Ray wheelRay = new Ray();
     private RaycastHit[] wheelRayHits = new RaycastHit[16];
 
-    [HideInInspector] 
+    [HideInInspector]
     public float v = 0f;
-    [HideInInspector] 
+    [HideInInspector]
     public float h = 0f;
-    private bool q = false;
-    private bool e = false;
+    private float qe = 0f;
     private bool rightMouse = false;
+    private bool handbrake = false;
+
+    [HideInInspector]
+    public bool isHandBrakeNow;
 
     private void OnValidate()
     {
@@ -210,22 +200,39 @@ public class ArcadeCar : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        carHealth = GetComponent<CarHealth>();
+        ps = GetComponentInChildren<ParticleSystem>();
+        originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
 
     private void Update()
     {
+        if (ps)
+        {
+            ps.transform.localRotation = Quaternion.LookRotation(ps.transform.parent.InverseTransformDirection(Vector3.up), ps.transform.up);
+        }
+
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         carAngle = Vector3.Dot(transform.up, Vector3.down);
 
         UpdateInput();
 
         ApplyVisual();
 
-        SetEngineSound();
     }
 
     private void FixedUpdate()
     {
+        if (carHealth.isDestroyed)
+        {
+            return;
+        }
+
         accelerationForceMagnitude = CalcAccelerationForceMagnitude();
 
         // 0.8 - pressed
@@ -264,6 +271,15 @@ public class ArcadeCar : MonoBehaviour
         {
             // set after flight tire slippery time (1 sec)
             afterFlightSlipperyTiresTime = 1.0f;
+
+            if (isTouchingGround)
+            {
+                rb.angularDrag = 0.05f;
+            }
+            else
+            {
+                HandleAirMovement();
+            }
         }
         else
         {
@@ -328,35 +344,252 @@ public class ArcadeCar : MonoBehaviour
         rb.AddForceAtPosition(force, position);
     }
 
+    public float GetSpeed()
+    {
+        Vector3 velocity = rb.velocity;
+
+        Vector3 wsForward = rb.transform.rotation * Vector3.forward;
+        float vProj = Vector3.Dot(velocity, wsForward);
+        Vector3 projVelocity = vProj * wsForward;
+        float speed = projVelocity.magnitude * Mathf.Sign(vProj);
+        return speed;
+    }
+
+    private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
+    {
+        int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
+
+        if (numHits == 0)
+        {
+            return false;
+        }
+
+        // Find the nearest hit point and filter invalid hits
+        nearestHit.distance = float.MaxValue;
+        for (int j = 0; j < numHits; j++)
+        {
+            if (wheelRayHits[j].collider != null && wheelRayHits[j].collider.isTrigger)
+            {
+                // skip triggers
+                continue;
+            }
+
+            // Skip contacts with car body
+            if (wheelRayHits[j].rigidbody == rb)
+            {
+                continue;
+            }
+
+            /*
+            // Skip contacts with strange normals (walls?)
+            if (Vector3.Dot(wheelRayHits[j].normal, new Vector3(0.0f, 1.0f, 0.0f)) < 0.6f)
+            {
+                continue;
+            }
+            */
+
+            if (wheelRayHits[j].distance < nearestHit.distance)
+            {
+                nearestHit = wheelRayHits[j];
+            }
+        }
+
+        return (nearestHit.distance <= maxDistance);
+    }
+
+    private void UpdateInput()
+    {
+        //Debug.Log (string.Format ("H = {0}", h));
+        if (controllable)
+        {
+            v = Input.GetAxis("Vertical");
+            h = Input.GetAxis("Horizontal");
+            qe = Input.GetAxis("Roll");
+            rightMouse = Input.GetButtonDown("Flip");
+            handbrake = Input.GetButtonDown("Drift");
+        }
+
+        int wheelsInAir = 4;
+        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
+        {
+            if (axles[axleIndex].wheelDataL.isOnGround)
+            {
+                wheelsInAir --;
+            }
+
+            if (axles[axleIndex].wheelDataR.isOnGround)
+            {
+                wheelsInAir--;
+            }
+        }
+
+        if (!isTouchingGround && wheelsInAir == 4 && controllable)
+        {
+            HandleAirMovement();
+        }
+
+        if (isTouchingGround && carAngle > .85f && rightMouse && controllable)
+        {
+            StartCoroutine(FlipCar());
+        }
+
+        if (Input.GetKey(KeyCode.R) && controllable && debugMode)
+        {
+            Debug.Log("Reset pressed");
+            Ray resetRay = new Ray();
+
+            // trace top-down
+            resetRay.origin = transform.position + new Vector3(0.0f, 100.0f, 0.0f);
+            resetRay.direction = new Vector3(0.0f, -1.0f, 0.0f);
+
+            RaycastHit[] resetRayHits = new RaycastHit[16];
+
+            int numHits = Physics.RaycastNonAlloc(resetRay, resetRayHits, 250.0f);
+
+            if (numHits > 0)
+            {
+                float nearestDistance = float.MaxValue;
+                for (int j = 0; j < numHits; j++)
+                {
+                    if (resetRayHits[j].collider != null && resetRayHits[j].collider.isTrigger)
+                    {
+                        // skip triggers
+                        continue;
+                    }
+
+                    // Filter contacts with car body
+                    if (resetRayHits[j].rigidbody == rb)
+                    {
+                        continue;
+                    }
+
+                    if (resetRayHits[j].distance < nearestDistance)
+                    {
+                        nearestDistance = resetRayHits[j].distance;
+                    }
+                }
+
+                // -4 meters from surface
+                nearestDistance -= 4.0f;
+                Vector3 resetPos = resetRay.origin + resetRay.direction * nearestDistance;
+                Reset(resetPos);
+            }
+            else
+            {
+                // Hard reset
+                Reset(new Vector3(-69.48f, 5.25f, 132.71f));
+            }
+        }
+
+
+        bool isBrakeNow = false;
+        bool isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
+
+        float speed = GetSpeed();
+        isAcceleration = false;
+        isReverseAcceleration = false;
+        if (v > 0.4f)
+        {
+            if (speed < -0.5f)
+            {
+                isBrakeNow = true;
+            }
+            else
+            {
+                isAcceleration = true;
+            }
+        }
+        else if (v < -0.4f)
+        {
+            if (speed > 0.5f)
+            {
+                isBrakeNow = true;
+            }
+            else
+            {
+                isReverseAcceleration = true;
+            }
+        }
+
+        // Make tires more slippery (for 1 seconds) when player hit brakes
+        if (isBrakeNow == true && isBrake == false)
+        {
+            brakeSlipperyTiresTime = 1.0f;
+        }
+
+        // slippery tires while handsbrakes are pressed
+        if (isHandBrakeNow == true)
+        {
+            handBrakeSlipperyTiresTime = Math.Max(0.1f, handBrakeSlipperyTime);
+        }
+
+        isBrake = isBrakeNow;
+
+        // hand brake + acceleration = power slide
+        isHandBrake = isHandBrakeNow && !isAcceleration && !isReverseAcceleration;
+
+        axles[0].brakeLeft = isBrake;
+        axles[0].brakeRight = isBrake;
+        axles[1].brakeLeft = isBrake;
+        axles[1].brakeRight = isBrake;
+
+        axles[0].handBrakeLeft = isHandBrake;
+        axles[0].handBrakeRight = isHandBrake;
+        axles[1].handBrakeLeft = isHandBrake;
+        axles[1].handBrakeRight = isHandBrake;
+
+
+        //TODO: axles[0] always used for steering
+        if (Mathf.Abs(h) > 0.001f)
+        {
+            float speedKmH = Mathf.Abs(speed) * 3.6f;
+
+            // maximum steer speed when hand-brake is pressed
+            speedKmH *= GetSteeringHandBrakeK();
+
+            float steerSpeed = steeringSpeed.Evaluate(speedKmH);
+
+            float newSteerAngle = axles[0].steerAngle + (h * steerSpeed);
+            float sgn = Mathf.Sign(newSteerAngle);
+
+            float steerLimit = GetSteerAngleLimitInDeg(speed);
+
+            newSteerAngle = Mathf.Min(Math.Abs(newSteerAngle), steerLimit) * sgn;
+
+            axles[0].steerAngle = newSteerAngle;
+        }
+        else
+        {
+            float speedKmH = Mathf.Abs(speed) * 3.6f;
+
+            float angleReturnSpeedDegPerSec = steeringResetSpeed.Evaluate(speedKmH);
+
+            angleReturnSpeedDegPerSec = Mathf.Lerp(0.0f, angleReturnSpeedDegPerSec, Mathf.Clamp01(speedKmH / 2.0f));
+
+            float ang = axles[0].steerAngle;
+            float sgn = Mathf.Sign(ang);
+
+            ang = Mathf.Abs(ang);
+
+            ang -= angleReturnSpeedDegPerSec * Time.fixedDeltaTime;
+            ang = Mathf.Max(ang, 0.0f) * sgn;
+
+            axles[0].steerAngle = ang;
+        }
+    }
+
     private void HandleAirMovement()
     {
         float dt = Time.fixedDeltaTime;
 
-        bool roll = (!(q && e) && (q || e));
-        bool pitch = v != 0;
-        bool yaw = h != 0;
+        float rollRotation = qe * torqueCurve.Evaluate(rb.angularVelocity.z) * dt;
+        float pitchRotation = h * torqueCurve.Evaluate(rb.angularVelocity.x) * dt;
+        float yawRotation = v * torqueCurve.Evaluate(rb.angularVelocity.y) * dt;
 
-        float rollRotation = roll ? rotationCurve.Evaluate(rollTime) * dt * (q ? 1 : -1) : 0;
-        float pitchRotation = pitch ? rotationCurve.Evaluate(pitchTime) * dt * Mathf.Sign(v) : 0;
-        float yawRotation = yaw ? rotationCurve.Evaluate(yawTime) * dt * Mathf.Sign(h) : 0;
 
-        rollTime += roll ? dt : 0;
-        pitchTime += pitch ? dt : 0;
-        yawTime += yaw ? dt : 0;
-
-        if (roll || pitch || yaw)
-            rb.angularDrag = 1f;
-
-        if (!roll)
-            rollTime = 0;
-
-        if (!pitch)
-            pitchTime = 0;
-
-        if (!yaw)
-            yawTime = 0;
-
-        transform.Rotate(new Vector3(pitchRotation, yawRotation, rollRotation));
+        rb.AddTorque(transform.forward * rollRotation, ForceMode.VelocityChange);
+        rb.AddTorque(transform.right * yawRotation, ForceMode.VelocityChange);
+        rb.AddTorque(transform.up * pitchRotation, ForceMode.VelocityChange);
     }
 
     private IEnumerator FlipCar()
@@ -381,6 +614,31 @@ public class ArcadeCar : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void DestroyCar()
+    {
+        ps.Play();
+
+        foreach (Axle axle in axles)
+        {
+            PopOffWheel(axle.wheelVisualLeft);
+            PopOffWheel(axle.wheelVisualRight);
+        }
+    }
+
+    private void PopOffWheel(GameObject wheel)
+    {
+        wheel.transform.SetParent(null);
+
+        Rigidbody wheelRb = wheel.AddComponent<Rigidbody>();
+        MeshCollider wheelMesh = wheel.AddComponent<MeshCollider>();
+
+        wheelRb.mass = 50;
+        wheelRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        wheelMesh.convex = true;
+
+        wheelRb.AddForce((UnityEngine.Random.onUnitSphere.normalized * 10) + rb.velocity, ForceMode.VelocityChange);
     }
 
     private float GetHandBrakeK()
@@ -498,236 +756,6 @@ public class ArcadeCar : MonoBehaviour
         _forceMag = Mathf.Max(_forceMag, 0.0f);
         return _forceMag;
 
-    }
-
-    public float GetSpeed()
-    {
-        Vector3 velocity = rb.velocity;
-
-        Vector3 wsForward = rb.transform.rotation * Vector3.forward;
-        float vProj = Vector3.Dot(velocity, wsForward);
-        Vector3 projVelocity = vProj * wsForward;
-        float speed = projVelocity.magnitude * Mathf.Sign(vProj);
-        return speed;
-    }
-
-    private void UpdateInput()
-    {
-        //Debug.Log (string.Format ("H = {0}", h));
-        if (controllable)
-        {
-            v = Input.GetAxis("Vertical");
-            h = Input.GetAxis("Horizontal");
-            q = Input.GetKey(KeyCode.Q);
-            e = Input.GetKey(KeyCode.E);
-            rightMouse = Input.GetMouseButtonDown(1);
-        }
-
-        bool allWheelIsOnAir = true;
-        for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
-        {
-            if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
-            {
-                allWheelIsOnAir = false;
-                break;
-            }
-        }
-
-        if (!isTouchingGround && allWheelIsOnAir && controllable)
-        {
-            HandleAirMovement();
-        }
-
-        if (isTouchingGround && carAngle > .85f && rightMouse && controllable)
-        {
-            StartCoroutine(FlipCar());
-        }
-
-        if (Input.GetKey(KeyCode.R) && controllable && debugMode)
-        {
-            Debug.Log("Reset pressed");
-            Ray resetRay = new Ray();
-
-            // trace top-down
-            resetRay.origin = transform.position + new Vector3(0.0f, 100.0f, 0.0f);
-            resetRay.direction = new Vector3(0.0f, -1.0f, 0.0f);
-
-            RaycastHit[] resetRayHits = new RaycastHit[16];
-
-            int numHits = Physics.RaycastNonAlloc(resetRay, resetRayHits, 250.0f);
-
-            if (numHits > 0)
-            {
-                float nearestDistance = float.MaxValue;
-                for (int j = 0; j < numHits; j++)
-                {
-                    if (resetRayHits[j].collider != null && resetRayHits[j].collider.isTrigger)
-                    {
-                        // skip triggers
-                        continue;
-                    }
-
-                    // Filter contacts with car body
-                    if (resetRayHits[j].rigidbody == rb)
-                    {
-                        continue;
-                    }
-
-                    if (resetRayHits[j].distance < nearestDistance)
-                    {
-                        nearestDistance = resetRayHits[j].distance;
-                    }
-                }
-
-                // -4 meters from surface
-                nearestDistance -= 4.0f;
-                Vector3 resetPos = resetRay.origin + resetRay.direction * nearestDistance;
-                Reset(resetPos);
-            }
-            else
-            {
-                // Hard reset
-                Reset(new Vector3(-69.48f, 5.25f, 132.71f));
-            }
-        }
-
-
-        bool isBrakeNow = false;
-        bool isHandBrakeNow = Input.GetKey(KeyCode.Space) && controllable;
-
-        float speed = GetSpeed();
-        isAcceleration = false;
-        isReverseAcceleration = false;
-        if (v > 0.4f)
-        {
-            if (speed < -0.5f)
-            {
-                isBrakeNow = true;
-            }
-            else
-            {
-                isAcceleration = true;
-            }
-        }
-        else if (v < -0.4f)
-        {
-            if (speed > 0.5f)
-            {
-                isBrakeNow = true;
-            }
-            else
-            {
-                isReverseAcceleration = true;
-            }
-        }
-
-        // Make tires more slippery (for 1 seconds) when player hit brakes
-        if (isBrakeNow == true && isBrake == false)
-        {
-            brakeSlipperyTiresTime = 1.0f;
-        }
-
-        // slippery tires while handsbrakes are pressed
-        if (isHandBrakeNow == true)
-        {
-            handBrakeSlipperyTiresTime = Math.Max(0.1f, handBrakeSlipperyTime);
-        }
-
-        isBrake = isBrakeNow;
-
-        // hand brake + acceleration = power slide
-        isHandBrake = isHandBrakeNow && !isAcceleration && !isReverseAcceleration;
-
-        axles[0].brakeLeft = isBrake;
-        axles[0].brakeRight = isBrake;
-        axles[1].brakeLeft = isBrake;
-        axles[1].brakeRight = isBrake;
-
-        axles[0].handBrakeLeft = isHandBrake;
-        axles[0].handBrakeRight = isHandBrake;
-        axles[1].handBrakeLeft = isHandBrake;
-        axles[1].handBrakeRight = isHandBrake;
-
-
-        //TODO: axles[0] always used for steering
-        if (Mathf.Abs(h) > 0.001f)
-        {
-            float speedKmH = Mathf.Abs(speed) * 3.6f;
-
-            // maximum steer speed when hand-brake is pressed
-            speedKmH *= GetSteeringHandBrakeK();
-
-            float steerSpeed = steeringSpeed.Evaluate(speedKmH);
-
-            float newSteerAngle = axles[0].steerAngle + (h * steerSpeed);
-            float sgn = Mathf.Sign(newSteerAngle);
-
-            float steerLimit = GetSteerAngleLimitInDeg(speed);
-
-            newSteerAngle = Mathf.Min(Math.Abs(newSteerAngle), steerLimit) * sgn;
-
-            axles[0].steerAngle = newSteerAngle;
-        }
-        else
-        {
-            float speedKmH = Mathf.Abs(speed) * 3.6f;
-
-            float angleReturnSpeedDegPerSec = steeringResetSpeed.Evaluate(speedKmH);
-
-            angleReturnSpeedDegPerSec = Mathf.Lerp(0.0f, angleReturnSpeedDegPerSec, Mathf.Clamp01(speedKmH / 2.0f));
-
-            float ang = axles[0].steerAngle;
-            float sgn = Mathf.Sign(ang);
-
-            ang = Mathf.Abs(ang);
-
-            ang -= angleReturnSpeedDegPerSec * Time.fixedDeltaTime;
-            ang = Mathf.Max(ang, 0.0f) * sgn;
-
-            axles[0].steerAngle = ang;
-        }
-    }
-
-    private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
-    {
-        int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
-        Debug.DrawRay(wheelRay.origin, wheelRay.direction, Color.magenta);
-        if (numHits == 0)
-        {
-            return false;
-        }
-
-        // Find the nearest hit point and filter invalid hits
-        nearestHit.distance = float.MaxValue;
-        for (int j = 0; j < numHits; j++)
-        {
-            if (wheelRayHits[j].collider != null && wheelRayHits[j].collider.isTrigger)
-            {
-                // skip triggers
-                continue;
-            }
-
-            // Skip contacts with car body
-            if (wheelRayHits[j].rigidbody == rb)
-            {
-                continue;
-            }
-
-            /*
-            // Skip contacts with strange normals (walls?)
-            if (Vector3.Dot(wheelRayHits[j].normal, new Vector3(0.0f, 1.0f, 0.0f)) < 0.6f)
-            {
-                continue;
-            }
-            */
-
-            if (wheelRayHits[j].distance < nearestHit.distance)
-            {
-                nearestHit = wheelRayHits[j];
-            }
-        }
-
-        return (nearestHit.distance <= maxDistance);
     }
 
     #region "Wheel/Axle Force Calulcation"
@@ -946,6 +974,7 @@ public class ArcadeCar : MonoBehaviour
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
+
         float travelL = 1.0f - Mathf.Clamp01(axle.wheelDataL.compression);
         float travelR = 1.0f - Mathf.Clamp01(axle.wheelDataR.compression);
 
@@ -1025,34 +1054,6 @@ public class ArcadeCar : MonoBehaviour
 
         frontAxle.wheelDataL.yawRad = steerAngleLeft;
         frontAxle.wheelDataR.yawRad = steerAngleRight;
-    }
-    #endregion
-
-    #region "Sound"
-    private void SetEngineSound()
-    {
-        float speed = GetSpeed() * 3.6f;
-
-        if (isAcceleration || isReverseAcceleration)
-        {
-            pitchRate = 0;
-            audioSource.pitch = pitchCurve.Evaluate(speed) / 100;
-        }
-        else if (audioSource.pitch != 1)
-        {
-            pitchRate += Time.fixedDeltaTime / 10;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, 1f, pitchRate);
-        }
-
-        foreach (var gear in gears)
-        {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
-            {
-                currentGear = gears.IndexOf(gear);
-                audioSource.clip = gear.audioClip;
-                audioSource.Play();
-            }
-        }
     }
     #endregion
 
