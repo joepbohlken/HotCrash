@@ -89,7 +89,7 @@ public class GameMaster : MonoBehaviour
                 }
             }).ToArray();
 
-            camera.cullingMask = ~LayerMask.GetMask(layersToIgnore);
+            camera.cullingMask =~ LayerMask.GetMask(layersToIgnore);
 
             // Add player hud
             Canvas carHUD = Instantiate(playerHudPrefab, hudParentTransform).GetComponent<Canvas>();
