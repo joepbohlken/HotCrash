@@ -71,6 +71,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability"",
+                    ""type"": ""Button"",
+                    ""id"": ""afd0b328-1e5e-4452-97e4-c740d71a73cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,6 +324,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29b250c2-9cc4-4d52-b30a-00dfa30bec6d"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Ability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fbdf9905-6a3a-4b38-9f55-fa370695d784"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Ability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -351,6 +382,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Handbrake = m_Player.FindAction("Handbrake", throwIfNotFound: true);
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
+        m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -415,6 +447,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Handbrake;
     private readonly InputAction m_Player_Reset;
     private readonly InputAction m_Player_Join;
+    private readonly InputAction m_Player_Ability;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -424,6 +457,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Handbrake => m_Wrapper.m_Player_Handbrake;
         public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputAction @Join => m_Wrapper.m_Player_Join;
+        public InputAction @Ability => m_Wrapper.m_Player_Ability;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -448,6 +482,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Join.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJoin;
                 @Join.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJoin;
                 @Join.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJoin;
+                @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -467,6 +504,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Join.started += instance.OnJoin;
                 @Join.performed += instance.OnJoin;
                 @Join.canceled += instance.OnJoin;
+                @Ability.started += instance.OnAbility;
+                @Ability.performed += instance.OnAbility;
+                @Ability.canceled += instance.OnAbility;
             }
         }
     }
@@ -496,5 +536,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnHandbrake(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnJoin(InputAction.CallbackContext context);
+        void OnAbility(InputAction.CallbackContext context);
     }
 }

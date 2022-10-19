@@ -5325,7 +5325,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   handBrakeSlipperyTime: 2
-  controllable: 1
+  controllable: 0
   downForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -5402,11 +5402,19 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugMode: 0
+  inputAsset: {fileID: 0}
+  player:
+    m_Name: Player
+    m_Id: 7e8e8d73-b8d1-484a-a693-2ee2042843e1
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
+  isHandBrakeNow: 0
   isAcceleration: 0
   isReverseAcceleration: 0
   v: 0
   h: 0
-  isHandBrakeNow: 0
+  handbrake: 0
 --- !u!114 &4450794903244610549
 MonoBehaviour:
   m_ObjectHideFlags: 0
