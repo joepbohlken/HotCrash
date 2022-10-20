@@ -34,6 +34,7 @@ public class CarSound : MonoBehaviour
     private int currentGear = 1;
     private float pitchRate;
     private bool isDrifting = false;
+    private bool isSetUp = false;
 
     private ArcadeCar arcadeCar;
 
@@ -52,29 +53,36 @@ public class CarSound : MonoBehaviour
         public float maxAudioPitch;
     }
 
-    void Start()
+    public void SetUpSources(ArcadeCar car)
     {
-        arcadeCar = GetComponent<ArcadeCar>();
+        arcadeCar = car;
 
-        // Engine sound
+        // Engine source
         engineAudioSource = gameObject.AddComponent<AudioSource>();
         engineAudioSource.volume = engineVolume;
         engineAudioSource.loop = true;
         engineAudioSource.spatialBlend = 1f;
+        engineAudioSource.minDistance = 15;
         engineAudioSource.maxDistance = 50;
 
-        // Drifting Sound
+        // Drifting source
         driftSource = gameObject.AddComponent<AudioSource>();
         driftSource.clip = driftingClip;
         driftSource.loop = true;
         driftSource.spatialBlend = 1f;
+        engineAudioSource.minDistance = 15;
         driftSource.maxDistance = 50;
+    }
 
+    public void StartSounds()
+    {
         engineAudioSource.PlayOneShot(carStartClip, engineStartVolume);
+        isSetUp = true;
     }
 
     void Update()
     {
+        if (!isSetUp) return;
         SetEngineSound();
     }
 
@@ -114,7 +122,7 @@ public class CarSound : MonoBehaviour
 
     public void PlayDriftSound()
     {
-        if (!isDrifting)
+        if (!isDrifting && isSetUp)
         {
             isDrifting = true;
             driftSource.volume = driftVolume;
@@ -125,7 +133,7 @@ public class CarSound : MonoBehaviour
 
     public void StopDriftSound()
     {
-        if (isDrifting)
+        if (isDrifting && isSetUp)
         {
             isDrifting = false;
             StartCoroutine(LerpVolume());
