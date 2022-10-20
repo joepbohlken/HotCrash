@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameMaster : MonoBehaviour
 {
     [HideInInspector]
     public static GameMaster main;
+    [HideInInspector]
+    public UnityEvent onCarsInitialized;
 
     [Header("Global settings")]
     public int totalPlayers = 12;
@@ -34,6 +35,8 @@ public class GameMaster : MonoBehaviour
     private List<Transform> spawnPoints = new List<Transform>();
     [HideInInspector]
     public List<PlayerInput> players = new List<PlayerInput>();
+    public List<GameObject> cars = new List<GameObject>();
+
     private string sceneLoaded = "";
     private bool isLoading = false;
     private bool gameStarted = false;
@@ -146,6 +149,11 @@ public class GameMaster : MonoBehaviour
             SpawnCar(i);
         }
 
+        if (cars.Count == totalPlayers)
+        {
+            onCarsInitialized.Invoke();
+        }
+
         // Set camera to follow 
         // Loop through all the players
         for (int x = 0; x < totalPlayers; x++)
@@ -211,6 +219,7 @@ public class GameMaster : MonoBehaviour
         ArcadeCar car = Instantiate(carPrefab, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
         car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot";
         car.isBot = !isPlayer;
+        cars.Add(car.gameObject);
 
         CarHealth carHealth = car.GetComponent<CarHealth>();
 
