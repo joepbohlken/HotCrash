@@ -147,10 +147,9 @@ public class GameMaster : MonoBehaviour
         // Add spectator camera
         if (spectatorCamera && playerCount == 3)
         {
-            CameraFollow cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraFollow>();
+            CameraController cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraController>();
             cameraFollow.gameObject.name = "Spectator Camera";
             cameraFollow.target = carParentTransform;
-            cameraFollow.mouseSensitivity = 0;
 
             float dividerOffset = 0.001f;
 
@@ -196,10 +195,9 @@ public class GameMaster : MonoBehaviour
         if (isPlayer)
         {
             // Add camera
-            CameraFollow cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraFollow>();
+            CameraController cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraController>();
             cameraFollow.gameObject.name = "Camera Player " + (i + 1);
             cameraFollow.target = car.transform.Find("Body");
-            cameraFollow.mouseSensitivity = i != 0 ? 0 : 2;
 
             // Calculate camera size
             float dividerOffset = playerCount != 1 ? 0.001f : 0;

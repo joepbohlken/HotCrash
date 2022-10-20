@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform cameraObject;
 
     [Header("Camera Properties")]
-    public float mouseSensitivity = 6f;
+    [SerializeField] private float angle = 10f;
     [SerializeField] private Vector3 offset;
     public Transform target;
 
@@ -17,6 +17,8 @@ public class CameraFollow : MonoBehaviour
     public float x;
     [HideInInspector]
     public float y;
+
+    private float angleY = 0;
 
     private void OnValidate()
     {
@@ -29,6 +31,14 @@ public class CameraFollow : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         ResetPosition();
+    }
+
+    private void Update()
+    {
+        x = 0;
+        if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
+        if (Input.GetKey(KeyCode.RightArrow)) x += 1;
+        y = Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
     }
 
     private void LateUpdate()
@@ -45,15 +55,24 @@ public class CameraFollow : MonoBehaviour
         cameraObject.localPosition = Vector3.Lerp(cameraObject.localPosition, newPosition, 0.35f);
 
         // Set camera rotation
-        Vector2 mouseAxis = new Vector2(-Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        if (mouseAxis.x != 0 || mouseAxis.y != 0)
-        {
-            currentRotation -= new Vector3(mouseAxis.y * mouseSensitivity, mouseAxis.x * mouseSensitivity, 0);
-            currentRotation.x = Mathf.Clamp(currentRotation.x, -50, 60);
 
-            Quaternion cameraQuaternion = Quaternion.Euler(currentRotation.x, currentRotation.y, 0);
-            transform.rotation = cameraQuaternion;
+        if (y == -1f)
+        {
+            angleY = 180;
         }
+        else
+        {
+            float speed = 750f;
+            if (x == 1f) angleY = Mathf.Clamp(angleY + speed * Time.deltaTime, 0f, 90f);
+            else if (x == -1f) angleY = Mathf.Clamp(angleY - speed * Time.deltaTime, -90f, 0f);
+            else if (Mathf.Abs(angleY) > 1f && angleY != 180)
+            {
+                angleY += speed * Time.deltaTime * Mathf.Sign(-angleY);
+            }
+            else angleY = 0;
+        }
+        Vector3 cameraRotation = new Vector3(angle, angleY + target.eulerAngles.y, 0);
+        transform.eulerAngles = cameraRotation;
 
         transform.position = target.position;
     }
