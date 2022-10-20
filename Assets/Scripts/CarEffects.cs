@@ -10,19 +10,24 @@ public class CarEffects : MonoBehaviour
 
     public TrailRenderer[] tireMarks;
 
-    private CarSound carSound;
+    private CarSound carSound = null;
 
     // Start is called before the first frame update
     void Start()
     {
         arcadeCar = GetComponent<ArcadeCar>();
-        carSound = GetComponent<CarSound>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (carSound == null) return;
         CheckDrift();
+    }
+
+    public void SetSound(CarSound carSound)
+    {
+        this.carSound = carSound;
     }
 
     private void CheckDrift()

@@ -238,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 579008040}
   - component: {fileID: 579008039}
+  - component: {fileID: 579008041}
   m_Layer: 0
   m_Name: AudioListener
   m_TagString: Untagged
@@ -261,13 +262,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579008038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 27.6, z: 0}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &579008041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579008038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1ee065353a61b4d98d318d3d81126b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundObjectPrefab: {fileID: 4728587571497198553, guid: 07516224a1fbf2849bfd80815703bbf7, type: 3}
+  carContainer: {fileID: 1964843263}
 --- !u!1 &585739366
 GameObject:
   m_ObjectHideFlags: 0
