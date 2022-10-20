@@ -32,6 +32,33 @@ public class SpawnSystem : MonoBehaviour
                 playersSpawned++;
                 cameraBrain.LookAt = car.transform;
                 cameraBrain.Follow = car.transform;
+
+                HUD hud = FindObjectOfType<HUD>();
+                CarHealth carHealth = car.GetComponent<CarHealth>();
+                carHealth.healthBars.Add(hud.bars);
+                carHealth.healthTexts.Add(hud.hpText);
+
+                car.GetComponent<AbilityController>().hud = hud;
+
+                foreach (Vitals vital in carHealth.vitals)
+                {
+                    switch (vital.vitalType)
+                    {
+                        case HitLocation.FRONT:
+                            vital.image = hud.front;
+                            break;
+                        case HitLocation.LEFT:
+                            vital.image = hud.left;
+                            break;
+                        case HitLocation.RIGHT:
+                            vital.image = hud.right;
+                            break;
+                        case HitLocation.BACK:
+                            vital.image = hud.back;
+                            break;
+                    }
+                }
+
                 continue;
             }
             if(botsSpawned < botAmount)
