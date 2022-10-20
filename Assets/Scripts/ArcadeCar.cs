@@ -151,6 +151,7 @@ public class ArcadeCar : MonoBehaviour
     //Input controls
     private InputAction movement;
     private InputAction roll;
+    private InputAction aerialRoll;
     private InputAction handbrakeInput;
     [SerializeField]
     private InputActionAsset inputAsset;
@@ -208,6 +209,7 @@ public class ArcadeCar : MonoBehaviour
     {
         movement = player.FindAction("Movement");
         roll = player.FindAction("Roll");
+        aerialRoll = player.FindAction("AerialMovement");
         handbrakeInput = player.FindAction("Handbrake");
         //reset = player.FindAction("Reset");
         //handbrake = player.FindAction("Handbrake");
@@ -461,6 +463,7 @@ public class ArcadeCar : MonoBehaviour
 
         if (!isTouchingGround && wheelsInAir == 4 && controllable)
         {
+            v = aerialRoll.ReadValue<float>();
             HandleAirMovement();
         }
 

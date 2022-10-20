@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AerialMovement",
+                    "type": "PassThrough",
+                    "id": "6d45e36a-fe4b-4d5b-80a7-c5bef89b1ea7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -284,7 +293,7 @@
                 {
                     "name": "negative",
                     "id": "005101d2-f19d-4103-9220-5a008aa2688c",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -295,7 +304,7 @@
                 {
                     "name": "positive",
                     "id": "e9ef27d4-f6fa-444d-b22d-24f74392a09d",
-                    "path": "<Gamepad>/leftStick/up",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -324,6 +333,39 @@
                     "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "0d1ed75d-e45d-49ff-8db3-6fe60792327c",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AerialMovement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "224656ef-a9b4-47b1-ae4f-1ea2b4aa0281",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AerialMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "004640f6-4889-4abc-9e25-5ab7d6a10a52",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AerialMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

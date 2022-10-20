@@ -80,6 +80,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AerialMovement"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""6d45e36a-fe4b-4d5b-80a7-c5bef89b1ea7"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -306,7 +315,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""005101d2-f19d-4103-9220-5a008aa2688c"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -317,7 +326,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""e9ef27d4-f6fa-444d-b22d-24f74392a09d"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -346,6 +355,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""0d1ed75d-e45d-49ff-8db3-6fe60792327c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AerialMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""224656ef-a9b4-47b1-ae4f-1ea2b4aa0281"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AerialMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""004640f6-4889-4abc-9e25-5ab7d6a10a52"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AerialMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -383,6 +425,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         m_Player_Join = m_Player.FindAction("Join", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
+        m_Player_AerialMovement = m_Player.FindAction("AerialMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -448,6 +491,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reset;
     private readonly InputAction m_Player_Join;
     private readonly InputAction m_Player_Ability;
+    private readonly InputAction m_Player_AerialMovement;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -458,6 +502,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputAction @Join => m_Wrapper.m_Player_Join;
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
+        public InputAction @AerialMovement => m_Wrapper.m_Player_AerialMovement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -485,6 +530,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @AerialMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAerialMovement;
+                @AerialMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAerialMovement;
+                @AerialMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAerialMovement;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -507,6 +555,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Ability.started += instance.OnAbility;
                 @Ability.performed += instance.OnAbility;
                 @Ability.canceled += instance.OnAbility;
+                @AerialMovement.started += instance.OnAerialMovement;
+                @AerialMovement.performed += instance.OnAerialMovement;
+                @AerialMovement.canceled += instance.OnAerialMovement;
             }
         }
     }
@@ -537,5 +588,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnJoin(InputAction.CallbackContext context);
         void OnAbility(InputAction.CallbackContext context);
+        void OnAerialMovement(InputAction.CallbackContext context);
     }
 }

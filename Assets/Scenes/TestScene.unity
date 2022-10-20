@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2761,7 +2761,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1854516152}
+      - m_Target: {fileID: 1854516154}
         m_TargetAssemblyTypeName: GameMaster, Assembly-CSharp
         m_MethodName: InitializeScene
         m_Mode: 3
@@ -3652,7 +3652,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1854516152}
+      - m_Target: {fileID: 1854516154}
         m_TargetAssemblyTypeName: GameMaster, Assembly-CSharp
         m_MethodName: InitializeScene
         m_Mode: 3
@@ -4829,7 +4829,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1854516152}
+      - m_Target: {fileID: 1854516154}
         m_TargetAssemblyTypeName: GameMaster, Assembly-CSharp
         m_MethodName: InitializeScene
         m_Mode: 3
@@ -5449,7 +5449,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1854516152}
+      - m_Target: {fileID: 1854516154}
         m_TargetAssemblyTypeName: GameMaster, Assembly-CSharp
         m_MethodName: InitializeScene
         m_Mode: 3
@@ -5839,7 +5839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1854516153}
-  - component: {fileID: 1854516152}
+  - component: {fileID: 1854516154}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -5847,27 +5847,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1854516152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854516151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e684c301d0aa1b147a5732061fe26905, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overlay: {fileID: 2034520953}
-  cameraPrefab: {fileID: 8694673886877027324, guid: bca8d41f941ffe446a2be18c1b72a2cd, type: 3}
-  carCanvasPrefab: {fileID: 3701029060393789116, guid: 7e981d432fce61640a1f636d85f40f11, type: 3}
-  playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
-  carPrefab: {fileID: 3931561997790069067, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
-  playerParentTransform: {fileID: 1964843263}
-  cameraParentTransform: {fileID: 621888627}
-  hudParentTransform: {fileID: 1194303702}
-  spectatorCamera: 0
 --- !u!4 &1854516153
 Transform:
   m_ObjectHideFlags: 0
@@ -5883,6 +5862,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1854516154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854516151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ecb0780a0f4624baeb784febae0f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlay: {fileID: 2034520953}
+  cameraPrefab: {fileID: 8694673886877027324, guid: bca8d41f941ffe446a2be18c1b72a2cd, type: 3}
+  carCanvasPrefab: {fileID: 3701029060393789116, guid: 7e981d432fce61640a1f636d85f40f11, type: 3}
+  playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
+  carPrefab: {fileID: 3931561997790069067, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+  playerParentTransform: {fileID: 1964843263}
+  cameraParentTransform: {fileID: 621888627}
+  hudParentTransform: {fileID: 1194303702}
+  spectatorCamera: 1
+  wheelContainer: {fileID: 675639830}
 --- !u!1 &1862632595
 GameObject:
   m_ObjectHideFlags: 0

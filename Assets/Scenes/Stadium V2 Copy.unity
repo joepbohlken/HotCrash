@@ -1222,7 +1222,7 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 1024
   playerAmount: 2
-  playerInputManager: {fileID: 0}
+  playerInputManager: {fileID: 1033784433}
 --- !u!4 &1033784432
 Transform:
   m_ObjectHideFlags: 0
