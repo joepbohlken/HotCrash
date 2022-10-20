@@ -6,33 +6,33 @@ using UnityEngine;
 
 public class CarSound : MonoBehaviour
 {
-    // Car Start Audio Variables
-    private AudioSource carStartSource;
-    public AudioClip carStartClip;
+    [Header("--- Audio Clips ---")]
+    [SerializeField] private AudioClip carStartClip;
+    [SerializeField] private AudioClip driftingClip;
+    [SerializeField] private List<AudioClip> gearShiftSFX = new List<AudioClip>();
 
+    [Header("--- Gears ---")]
+    [SerializeField] private List<Gear> gears = new List<Gear>();
 
-    // Engine Audio Variables
-    private AudioSource engineAudioSource;
+    [Header("--- Volumes ---")]
     [Range(0, 1)]
-    public float engineVolume;
-    private float pitchRate;
-    [Header("Sounds")]
+    [SerializeField] private float engineStartVolume;
+    [Range(0, 1)]
+    [SerializeField] private float engineVolume;
+    [Range(0, 1)]
+    [SerializeField] private float gearShiftVolume;
+    [Range(0, 1)]
+    [SerializeField] private float driftVolume;
+
+    [Header("--- Pitch ---")]
     [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
-    public AnimationCurve pitchCurve;
+    [SerializeField] private AnimationCurve pitchCurve;
 
-    // Gear Audio Variables
-    public List<Gear> gears = new List<Gear>();
-    [Range(0, 1)]
-    public float gearShiftVolume;
-    public int currentGear = 1;
-    public List<AudioClip> gearShiftSFX = new List<AudioClip>();
-    private AudioSource gearShiftSource;
-
-    // Drfiting Audio Variables
+    private AudioSource engineAudioSource;
     private AudioSource driftSource;
-    public AudioClip driftingClip;
-    [Range(0, 1)]
-    public float driftVolume;
+
+    private int currentGear = 1;
+    private float pitchRate;
     private bool isDrifting = false;
 
     private ArcadeCar arcadeCar;
@@ -56,24 +56,21 @@ public class CarSound : MonoBehaviour
     {
         arcadeCar = GetComponent<ArcadeCar>();
 
-        // Car start sound
-        carStartSource = gameObject.AddComponent<AudioSource>();
-        carStartSource.clip = carStartClip;
-        carStartSource.volume = engineVolume;
-        carStartSource.Play();
-
         // Engine sound
         engineAudioSource = gameObject.AddComponent<AudioSource>();
         engineAudioSource.volume = engineVolume;
-
-        // Shifting Sound
-        gearShiftSource = gameObject.AddComponent<AudioSource>();
-        gearShiftSource.volume = gearShiftVolume;
+        engineAudioSource.loop = true;
+        engineAudioSource.spatialBlend = 1f;
+        engineAudioSource.maxDistance = 50;
 
         // Drifting Sound
         driftSource = gameObject.AddComponent<AudioSource>();
         driftSource.clip = driftingClip;
         driftSource.loop = true;
+        driftSource.spatialBlend = 1f;
+        driftSource.maxDistance = 50;
+
+        engineAudioSource.PlayOneShot(carStartClip, engineStartVolume);
     }
 
     void Update()
@@ -105,8 +102,7 @@ public class CarSound : MonoBehaviour
                 {
                     currentGear = temp;
                     // Plays Gearshift sfx
-                    gearShiftSource.clip = gearShiftSFX[Random.Range(0 ,gearShiftSFX.Count)];
-                    gearShiftSource.Play();
+                    engineAudioSource.PlayOneShot(gearShiftSFX[Random.Range(0, gearShiftSFX.Count)], gearShiftVolume);
 
                     // Changes Engine Gear Sound
                     engineAudioSource.clip = gear.audioClip;

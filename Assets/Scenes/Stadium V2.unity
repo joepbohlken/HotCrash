@@ -749,14 +749,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e684c301d0aa1b147a5732061fe26905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalPlayers: 12
   overlay: {fileID: 0}
   cameraPrefab: {fileID: 0}
   carCanvasPrefab: {fileID: 0}
   playerHudPrefab: {fileID: 0}
   carPrefab: {fileID: 0}
-  playerParentTransform: {fileID: 0}
+  carParentTransform: {fileID: 0}
   cameraParentTransform: {fileID: 0}
   hudParentTransform: {fileID: 0}
+  spawnPointsTransform: {fileID: 0}
   spectatorCamera: 1
   wheelContainer: {fileID: 1397485813}
 --- !u!4 &1033784432
