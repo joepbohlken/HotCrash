@@ -35,7 +35,7 @@ public class CarEffects : MonoBehaviour
             carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed<= 25f)
+        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed <= 25f)
         {
             isDrifting = false;
             carSound.StopDriftSound();
