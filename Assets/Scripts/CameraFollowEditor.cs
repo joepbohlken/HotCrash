@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(CameraFollow))]
+[CustomEditor(typeof(CameraController))]
 [CanEditMultipleObjects]
 public class CameraFollowEditor : Editor
 {
@@ -11,7 +11,7 @@ public class CameraFollowEditor : Editor
     {
         DrawDefaultInspector();
 
-        CameraFollow script = (CameraFollow)target;
+        CameraController script = (CameraController)target;
         if (GUILayout.Button("Align camera"))
         {
             script.ResetPosition();

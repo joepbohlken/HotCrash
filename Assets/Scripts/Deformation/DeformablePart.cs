@@ -100,7 +100,7 @@ public class DeformablePart : MonoBehaviour
         HitLocation opponentImpactedSide = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).otherCollider);
 
         Vitals opponentVital = null;
-        if (opponentImpactedSide != HitLocation.BOTTOM && opponentImpactedSide != HitLocation.TOP && opponentImpactedSide != HitLocation.NONE)
+        if (opponentImpactedSide != HitLocation.BOTTOM && opponentImpactedSide != HitLocation.TOP && opponentImpactedSide != HitLocation.NONE && !collision.GetContact(i).otherCollider.CompareTag("Ground"))
         {
             opponentVital = collision.GetContact(i).otherCollider.transform.GetComponentInParent<CarHealth>().vitals.Find(v => v.vitalType == opponentImpactedSide);
         }

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public AbilityController abilityController;
     [HideInInspector]
-    public CameraFollow cameraFollow;
+    public CameraController cameraFollow;
 
     private PlayerInput input;
 
