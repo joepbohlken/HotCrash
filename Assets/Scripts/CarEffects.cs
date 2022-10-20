@@ -29,13 +29,13 @@ public class CarEffects : MonoBehaviour
     {
         float actualSpeed = arcadeCar.speed * 3.6f;
 
-        if (arcadeCar.isHandBrakeNow && !isDrifting && actualSpeed >= 50f)
+        if (arcadeCar.isHandBrakeNow && !isDrifting && actualSpeed >= 25f)
         {
             isDrifting = true;
             carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed<= 50f)
+        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed<= 25f)
         {
             isDrifting = false;
             carSound.StopDriftSound();
