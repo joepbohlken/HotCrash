@@ -23,7 +23,7 @@ public class GameMaster : MonoBehaviour
     public GameObject playerHudPrefab;
     public GameObject carPrefab;
 
-   
+
     private Transform carParentTransform;
     private Transform cameraParentTransform;
     private Transform hudParentTransform;
@@ -35,11 +35,13 @@ public class GameMaster : MonoBehaviour
     private List<Transform> spawnPoints = new List<Transform>();
     [HideInInspector]
     public List<PlayerInput> players = new List<PlayerInput>();
+    [HideInInspector]
     public List<GameObject> cars = new List<GameObject>();
 
     private string sceneLoaded = "";
     private bool isLoading = false;
     private bool gameStarted = false;
+    private bool gameEnded = false;
 
     private void OnEnable()
     {
@@ -86,6 +88,16 @@ public class GameMaster : MonoBehaviour
 
             InitializeGame();
         }
+
+        if (sceneLoaded == "TestScene" && gameStarted)
+        {
+            bool allPlayersDead = !cars.Any(car => !car.GetComponent<ArcadeCar>().isBot);
+            if ((allPlayersDead || cars.Count == 1) && !gameEnded)
+            {
+                gameEnded = true;
+                StartCoroutine(EndGame());
+            }
+        }
     }
 
     public void OnPlayerJoin(PlayerInput input)
@@ -111,7 +123,7 @@ public class GameMaster : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        if(!isLoading)
+        if (!isLoading)
         {
             isLoading = true;
             StartCoroutine(LoadSceneAsync(sceneName));
@@ -126,6 +138,24 @@ public class GameMaster : MonoBehaviour
 
         isLoading = false;
         sceneLoaded = sceneName;
+    }
+
+    private IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(3);
+
+        LoadScene("End");
+    }
+
+    public void OnCarDied(GameObject car, GameObject killer)
+    {
+        cars.Remove(car);
+
+        GameObject killerCar = cars.FirstOrDefault(car => car == killer);
+        if (killerCar != null)
+        {
+            killerCar.GetComponent<ArcadeCar>().killCount++;
+        }
     }
 
     public void InitializeGame()
@@ -283,7 +313,7 @@ public class GameMaster : MonoBehaviour
             // Add player hud
             Canvas carHUD = Instantiate(playerHudPrefab, hudParentTransform).GetComponent<Canvas>();
             carHUD.worldCamera = cameraUI;
-            carHUD.GetComponent<HUD>().car = car.gameObject;
+            carHUD.GetComponent<HUD>().car = car;
 
             // Adjust hud scaling
             if (playerCount >= 3)

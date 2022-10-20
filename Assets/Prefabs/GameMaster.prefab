@@ -45,18 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e684c301d0aa1b147a5732061fe26905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onCarsInitialized:
+    m_PersistentCalls:
+      m_Calls: []
   totalPlayers: 12
-  overlay: {fileID: 0}
+  spectatorCamera: 0
   cameraPrefab: {fileID: 8694673886877027324, guid: bca8d41f941ffe446a2be18c1b72a2cd, type: 3}
   carCanvasPrefab: {fileID: 3701029060393789116, guid: 7e981d432fce61640a1f636d85f40f11, type: 3}
   playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
   carPrefab: {fileID: 3931561997790069067, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
-  carParentTransform: {fileID: 0}
-  cameraParentTransform: {fileID: 0}
-  hudParentTransform: {fileID: 0}
-  spawnPointsTransform: {fileID: 0}
-  spectatorCamera: 0
   wheelContainer: {fileID: 0}
+  players: []
+  cars: []
 --- !u!114 &7698284326626340112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 3
   m_MaxPlayerCount: 4
-  m_AllowJoining: 1
+  m_AllowJoining: 0
   m_JoinBehavior: 1
   m_PlayerJoinedEvent:
     m_PersistentCalls:

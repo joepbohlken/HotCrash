@@ -162,11 +162,11 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector]
     public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
+    public int killCount = 0;
     private Rigidbody rb = null;
     private CarHealth carHealth;
     private CarAI carAI;
     private ParticleSystem ps;
-    private AudioSource audioSource;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -189,6 +189,7 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector]
     public bool isHandBrakeNow;
 
+
     private void OnValidate()
     {
         if (rb == null)
@@ -205,7 +206,6 @@ public class ArcadeCar : MonoBehaviour
         style.normal.textColor = Color.red;
 
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
         carHealth = GetComponent<CarHealth>();
         ps = GetComponentInChildren<ParticleSystem>();
 

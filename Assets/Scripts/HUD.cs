@@ -29,13 +29,19 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     [HideInInspector]
-    public GameObject car;
+    public ArcadeCar car;
 
     private void Start()
     {
         abilityName.enabled = false;
         abilityIcon.enabled = false;
         timerProgress.fillAmount = 0;
+    }
+
+    private void Update()
+    {
+        UpdateKillCount();
+        UpdateOpponentCount();
     }
 
     public void SetInfo(Ability ability)
@@ -68,5 +74,15 @@ public class HUD : MonoBehaviour
         timerText.enabled = false;
         abilityIcon.enabled = true;
         abilityName.enabled = true;
+    }
+
+    private void UpdateOpponentCount()
+    {
+        opponentsText.text = (GameMaster.main.cars.Count - 1).ToString();
+    }
+
+    private void UpdateKillCount()
+    {
+        killsText.text = car.killCount.ToString();
     }
 }

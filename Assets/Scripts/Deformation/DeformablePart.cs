@@ -106,7 +106,8 @@ public class DeformablePart : MonoBehaviour
         }
 
         // Update the car vitals on the UI
-        if (carHealth) carHealth.AddCarDamage(hitLocation, opponentVital, damage, isAttacker);
+        GameObject otherColliderCar = collision.GetContact(i).otherCollider.CompareTag("Ground") ? null : collision.GetContact(i).otherCollider.transform.parent.gameObject;
+        if (carHealth) carHealth.AddCarDamage(otherColliderCar, hitLocation, opponentVital, damage, isAttacker);
 
         // Update hinge health
         if (isHinge) currentHealth -= damage;

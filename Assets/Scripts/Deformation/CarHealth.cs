@@ -56,7 +56,7 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
-    public void AddCarDamage(HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
+    public void AddCarDamage(GameObject carCollider, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
         if (hitLocation == HitLocation.NONE) return;
 
@@ -81,7 +81,7 @@ public class CarHealth : MonoBehaviour
         float actualDmg = damage * vitalDmgMultiplier;
         currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
-        CheckHealth();
+        CheckHealth(carCollider);
 
         // Update health bar
         if (healthTexts.Count != 0 && bars.Count != 0)
@@ -171,13 +171,21 @@ public class CarHealth : MonoBehaviour
         return Color.Lerp(Color.white, new Color(0.9058824f, 0.2980392f, 0.2352941f, 1), progress);
     }
 
-    private void CheckHealth()
+    private void CheckHealth(GameObject carCollider)
     {
         if (currentHealth <= 0 && !isDestroyed)
         {
             isDestroyed = true;
             arcadeCar.GetComponent<Rigidbody>().centerOfMass = arcadeCar.originalCenterOfMass;
             arcadeCar.DestroyCar();
+
+            GameMaster.main.OnCarDied(gameObject, carCollider);
+
+            Transform canvasContainer = gameObject.transform.Find("UI");
+            for (int i = 0; i < canvasContainer.childCount; i++)
+            {
+                Destroy(canvasContainer.GetChild(i).gameObject);
+            }
         }
     }
 }
