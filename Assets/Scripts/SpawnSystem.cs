@@ -17,6 +17,7 @@ public class SpawnSystem : MonoBehaviour
 
     public GameObject[] CarPrefabs;
 
+    /*
     void Start()
     {
         int playersSpawned = 0;
@@ -79,4 +80,6 @@ public class SpawnSystem : MonoBehaviour
             }
         }
     }
+    */
+
 }

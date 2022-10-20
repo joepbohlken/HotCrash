@@ -22,17 +22,23 @@ public class AbilityController : MonoBehaviour
     public HUD hud;
     private bool used;
 
+    [HideInInspector]
+    public bool useAbility = false;
+
     private void Start()
     {
         carHealth = GetComponent<CarHealth>();
         carController = GetComponent<ArcadeCar>();
 
-        StartCoroutine(GiveAbility());
+        if(!carController.isBot)
+        {
+            StartCoroutine(GiveAbility());
+        }
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && used == false && carController.controllable && !carHealth.isDestroyed)
+        if (useAbility && used == false && !carController.isBot && !carHealth.isDestroyed)
         {
             ability.Use();
             used = true;

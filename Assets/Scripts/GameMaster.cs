@@ -31,11 +31,32 @@ public class GameMaster : MonoBehaviour
     [Header("Global References")]
     public Transform wheelContainer;
 
+    private PlayerInputManager playerInputManager;
     private List<Transform> spawnPoints = new List<Transform>();
-    private int playerCount;
+    private List<PlayerInput> players = new List<PlayerInput>();
+
+    private float currentTime = 5;
+    private bool isStarted = false;
+
+    private void OnEnable()
+    {
+        playerInputManager.onPlayerJoined += OnPlayerJoin;
+        playerInputManager.onPlayerLeft += OnPlayerLeave;
+    }
+
+    private void OnDisable()
+    {
+        playerInputManager.onPlayerJoined -= OnPlayerJoin;
+        playerInputManager.onPlayerLeft += OnPlayerLeave;
+    }
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
+        playerInputManager = GetComponent<PlayerInputManager>();
+        //playerInputManager.DisableJoining();
+
         if (main != null) Destroy(this);
         main = this;
 
@@ -48,20 +69,59 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    public void InitializeScene(int playerCount = 0)
+    private void Update()
     {
-        this.playerCount = playerCount;
-        if (playerCount <= 0)
+        currentTime -= Time.deltaTime;
+
+        if (currentTime <= 0 && !isStarted)
+        {
+            isStarted = true;
+            DisablePlayerJoining();
+            InitializeGame();
+        }
+    }
+
+    public void OnPlayerJoin(PlayerInput input)
+    {
+        players.Add(input);
+    }
+
+    public void OnPlayerLeave(PlayerInput input)
+    {
+        players.Remove(input);
+        Destroy(input.gameObject);
+    }
+
+    public void EnablePlayerJoining()
+    {
+        playerInputManager.EnableJoining();
+    }
+
+    public void DisablePlayerJoining()
+    {
+        playerInputManager.DisableJoining();
+    }
+
+    public void InitializeGame()
+    {
+        if (players.Count <= 0)
         {
             return;
         }
 
+        int playerCount = players.Count;
         Destroy(overlay.gameObject);
 
-        for (int i = 0; i < totalPlayers; i++)
+        // Spawn players
+        foreach (var (input, i) in players.Select((value, i) => (value, i)))
         {
-            bool isPlayer = i < playerCount;
-            SpawnCar(isPlayer, i);
+            SpawnCar(i, input);
+        }
+
+        // Spawn bots
+        for (int i = 0; i < totalPlayers - playerCount; i++)
+        {
+            SpawnCar(i);
         }
 
         // Set camera to follow 
@@ -107,7 +167,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    private void SpawnCar(bool isPlayer, int i)
+    private void SpawnCar(int i, PlayerInput input = null)
     {
         // Get random spawn position
         // Stop when there no more spawn positions
@@ -117,6 +177,9 @@ public class GameMaster : MonoBehaviour
             return;
         }
 
+        int playerCount = players.Count;
+        bool isPlayer = input != null;
+
         int spawnIndex = Random.Range(0, spawnPoints.Count - 1);
         Vector3 spawnPos = spawnPoints[spawnIndex].position;
 
@@ -125,8 +188,8 @@ public class GameMaster : MonoBehaviour
 
         // Add car
         ArcadeCar car = Instantiate(carPrefab, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
-        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot " + (i + 1);
-        car.controllable = i == 0;
+        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot";
+        car.isBot = !isPlayer;
 
         CarHealth carHealth = car.GetComponent<CarHealth>();
 
@@ -186,7 +249,6 @@ public class GameMaster : MonoBehaviour
                 }
             }).ToArray();
 
-            Debug.Log(layersToIgnore.LastOrDefault());
             camera.cullingMask = ~LayerMask.GetMask(layersToIgnore);
 
             // Add player hud
@@ -205,7 +267,8 @@ public class GameMaster : MonoBehaviour
             carHealth.healthBars.Add(hud.bars);
             carHealth.healthTexts.Add(hud.hpText);
 
-            car.GetComponent<AbilityController>().hud = hud;
+            AbilityController abilityController = car.GetComponent<AbilityController>();
+            abilityController.hud = hud;
 
             // Set correct image per vital
             foreach (Vitals vital in carHealth.vitals)
@@ -226,12 +289,17 @@ public class GameMaster : MonoBehaviour
                         break;
                 }
             }
+
+            // Add corresponding scripts to the player controller
+            input.GetComponent<PlayerController>().car = car;
+            input.GetComponent<PlayerController>().cameraFollow = cameraFollow;
+            input.GetComponent<PlayerController>().abilityController = abilityController;
         }
 
         // Add car canvases
         for (int j = 0; j < playerCount; j++)
         {
-            if (j != i)
+            if ((j != i && isPlayer) || !isPlayer)
             {
                 CarCanvas carCanvas = Instantiate(carCanvasPrefab, car.transform.Find("UI")).GetComponentInChildren<CarCanvas>();
                 carCanvas.transform.parent.gameObject.layer = LayerMask.NameToLayer("Player " + (j + 1));
