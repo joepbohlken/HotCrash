@@ -10,10 +10,13 @@ public class CarEffects : MonoBehaviour
 
     public TrailRenderer[] tireMarks;
 
+    private CarSound carSound;
+
     // Start is called before the first frame update
     void Start()
     {
         arcadeCar = GetComponent<ArcadeCar>();
+        carSound = GetComponent<CarSound>();
     }
 
     // Update is called once per frame
@@ -24,15 +27,18 @@ public class CarEffects : MonoBehaviour
 
     private void CheckDrift()
     {
-        if (arcadeCar.isHandBrakeNow && !isDrifting)
+        float actualSpeed = arcadeCar.speed * 3.6f;
+
+        if (arcadeCar.isHandBrakeNow && !isDrifting && actualSpeed >= 50f)
         {
-            Debug.Log("dikke poep");
             isDrifting = true;
+            carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if (!arcadeCar.isHandBrakeNow && isDrifting)
+        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed<= 50f)
         {
             isDrifting = false;
+            carSound.StopDriftSound();
             StopEmitter();
         }
     }

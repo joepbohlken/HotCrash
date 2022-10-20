@@ -156,6 +156,8 @@ public class ArcadeCar : MonoBehaviour
     private bool isBrake = false;
     private bool isHandBrake = false;
     [HideInInspector]
+    public float speed;
+    [HideInInspector]
     public bool isAcceleration = false;
     [HideInInspector]
     public bool isReverseAcceleration = false;
@@ -406,7 +408,7 @@ public class ArcadeCar : MonoBehaviour
             h = Input.GetAxis("Horizontal");
             qe = Input.GetAxis("Roll");
             rightMouse = Input.GetButtonDown("Flip");
-            handbrake = Input.GetButtonDown("Drift");
+            handbrake = Input.GetButton("Drift");
         }
 
         int wheelsInAir = 4;
@@ -483,9 +485,9 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        bool isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
+        isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
 
-        float speed = GetSpeed();
+        speed = GetSpeed();
         isAcceleration = false;
         isReverseAcceleration = false;
         if (v > 0.4f)

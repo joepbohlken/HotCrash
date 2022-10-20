@@ -79,7 +79,6 @@ public class CarSound : MonoBehaviour
     void Update()
     {
         SetEngineSound();
-        PlayDriftSound();
     }
 
     public void SetEngineSound()
@@ -119,14 +118,18 @@ public class CarSound : MonoBehaviour
 
     public void PlayDriftSound()
     {
-        if (arcadeCar.isHandBrakeNow && !isDrifting)
+        if (!isDrifting)
         {
             isDrifting = true;
             driftSource.volume = driftVolume;
             driftSource.Play();
             StopAllCoroutines();
         }
-        else if (!arcadeCar.isHandBrakeNow && isDrifting)
+    }
+
+    public void StopDriftSound()
+    {
+        if (isDrifting)
         {
             isDrifting = false;
             StartCoroutine(LerpVolume());
