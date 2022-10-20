@@ -31,6 +31,10 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += AddPlayer;
+        if (playerAmount < players.Count)
+        {
+
+        }
     }
 
     private void OnDisable()
