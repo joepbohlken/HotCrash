@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Pursuing : Observant
 {
-    private Transform target;
+    private Rigidbody targetRb;
     private Transform whitelistedTarget;
     private float targetTime = 0f;
 
@@ -48,27 +48,34 @@ public class Pursuing : Observant
             }
         }
 
-        if (newTarget == target && newTarget != null)
+        if (newTarget == targetRb && newTarget != null)
         {
             targetTime += Time.deltaTime;
 
             if (targetTime >= 10f)
             {
-                whitelistedTarget = target;
-                target = null;
+                whitelistedTarget = targetRb.transform;
+                targetRb = null;
             }
         }
         else
         {
-            target = newTarget;
+            if (newTarget == null)
+            {
+                targetRb = null;
+            }
+            else if (targetRb == null || newTarget != targetRb.transform)
+            {
+                targetRb = newTarget.GetComponent<Rigidbody>();
+            }
             targetTime = 0f;
         }
 
         // Set steering direction
-        if (target != null)
+        if (targetRb != null)
         {
-            float predictValue = Mathf.Clamp(carAI.mainRb.velocity.magnitude / 3f, 0f, (target.position - carAI.transform.position).magnitude);
-            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (target.position + target.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
+            float predictValue = Mathf.Clamp(targetRb.velocity.magnitude / 3f, 0f, (targetRb.transform.position - carAI.transform.position).magnitude);
+            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
             if (Mathf.Abs(playerSideLR) > 5f)
             {
                 controller.h = Mathf.Sign(playerSideLR);
