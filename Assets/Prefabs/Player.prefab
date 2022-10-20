@@ -138,6 +138,42 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ef7258cf-7193-458d-9490-a49ced6616a8
     m_ActionName: Player/Camera[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStartGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e7aa252a-226a-41e6-a8b7-f78e26082afd
+    m_ActionName: Player/Join[/Keyboard/space,/DualSenseGamepadHID/leftShoulder,/DualSenseGamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDisconnect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 97ae99a5-a9f3-4eed-8c0a-869b5a44cbba
+    m_ActionName: Player/Disconnect[/DualSenseGamepadHID/select,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 651529d5-9fe4-4f1e-8f35-10ac3046480b
+    m_ActionName: Player/StartGame[/Keyboard/space,/DualSenseGamepadHID/leftShoulder,/DualSenseGamepadHID/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -155,3 +191,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaee69eab1e451b48aa47fb7a46147de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disconnect: 0
+  startGame: 0
+  isReady: 0
+  car: {fileID: 0}
+  abilityController: {fileID: 0}
+  cameraFollow: {fileID: 0}

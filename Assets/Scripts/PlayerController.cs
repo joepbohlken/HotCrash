@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     private bool abilityInput = false;
     private bool driftingInput = false;
     private bool flipInput = false;
+    [HideInInspector]
+    public bool disconnect = false;
+    [HideInInspector]
+    public bool startGame = false;
 
     [HideInInspector]
     public bool isReady = false;
@@ -92,8 +96,13 @@ public class PlayerController : MonoBehaviour
         flipInput = ctx.ReadValue<float>() > 0.1f;
     }
 
-    public void OnAbility(InputAction.CallbackContext ctx)
+    public void OnDisconnect(InputAction.CallbackContext ctx)
     {
-        abilityInput = ctx.ReadValue<float>() > 0.1f;
+        disconnect = ctx.ReadValue<float>() > 0.1f;
+    }
+
+    public void OnStartGame(InputAction.CallbackContext ctx)
+    {
+        startGame = ctx.ReadValue<float>() > 0.1f;
     }
 }

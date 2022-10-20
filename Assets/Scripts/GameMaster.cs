@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
@@ -13,30 +14,29 @@ public class GameMaster : MonoBehaviour
 
     [Header("Global settings")]
     public int totalPlayers = 12;
+    public bool spectatorCamera = true;
 
-    [Header("Spawning References")]
-    public Canvas overlay;
+    [Header("Prefabs")]
     public GameObject cameraPrefab;
     public GameObject carCanvasPrefab;
     public GameObject playerHudPrefab;
     public GameObject carPrefab;
 
-    public Transform carParentTransform;
-    public Transform cameraParentTransform;
-    public Transform hudParentTransform;
-    public Transform spawnPointsTransform;
-
-    public bool spectatorCamera = true;
-
-    [Header("Global References")]
+   
+    private Transform carParentTransform;
+    private Transform cameraParentTransform;
+    private Transform hudParentTransform;
+    private Transform spawnPointsTransform;
+    [HideInInspector]
     public Transform wheelContainer;
 
     private PlayerInputManager playerInputManager;
     private List<Transform> spawnPoints = new List<Transform>();
-    private List<PlayerInput> players = new List<PlayerInput>();
-
-    private float currentTime = 5;
-    private bool isStarted = false;
+    [HideInInspector]
+    public List<PlayerInput> players = new List<PlayerInput>();
+    private string sceneLoaded = "";
+    private bool isLoading = false;
+    private bool gameStarted = false;
 
     private void OnEnable()
     {
@@ -59,24 +59,28 @@ public class GameMaster : MonoBehaviour
 
         if (main != null) Destroy(this);
         main = this;
-
-        if (spawnPointsTransform != null)
-        {
-            for (int i = 0; i < spawnPointsTransform.childCount; i++)
-            {
-                spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
-            }
-        }
     }
 
     private void Update()
     {
-        currentTime -= Time.deltaTime;
-
-        if (currentTime <= 0 && !isStarted)
+        if (sceneLoaded == "TestScene" && !gameStarted)
         {
-            isStarted = true;
-            DisablePlayerJoining();
+            gameStarted = true;
+
+            carParentTransform = GameObject.Find("Cars").transform;
+            cameraParentTransform = GameObject.Find("Cameras").transform;
+            hudParentTransform = GameObject.Find("HUDs").transform;
+            spawnPointsTransform = GameObject.Find("SpawnPoints").transform;
+            wheelContainer = GameObject.Find("WheelContainer").transform;
+
+            if (spawnPointsTransform != null)
+            {
+                for (int i = 0; i < spawnPointsTransform.childCount; i++)
+                {
+                    spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
+                }
+            }
+
             InitializeGame();
         }
     }
@@ -102,6 +106,25 @@ public class GameMaster : MonoBehaviour
         playerInputManager.DisableJoining();
     }
 
+    public void LoadScene(string sceneName)
+    {
+        if(!isLoading)
+        {
+            isLoading = true;
+            StartCoroutine(LoadSceneAsync(sceneName));
+        }
+    }
+
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        sceneLoaded = "";
+
+        yield return SceneManager.LoadSceneAsync(sceneName);
+
+        isLoading = false;
+        sceneLoaded = sceneName;
+    }
+
     public void InitializeGame()
     {
         if (players.Count <= 0)
@@ -110,7 +133,6 @@ public class GameMaster : MonoBehaviour
         }
 
         int playerCount = players.Count;
-        Destroy(overlay.gameObject);
 
         // Spawn players
         foreach (var (input, i) in players.Select((value, i) => (value, i)))
