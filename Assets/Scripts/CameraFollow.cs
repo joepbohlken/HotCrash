@@ -13,6 +13,11 @@ public class CameraFollow : MonoBehaviour
 
     private Vector3 currentRotation = Vector3.zero;
 
+    [HideInInspector]
+    public float x;
+    [HideInInspector]
+    public float y;
+
     private void OnValidate()
     {
         ResetPosition();

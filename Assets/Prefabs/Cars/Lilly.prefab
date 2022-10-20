@@ -5670,6 +5670,9 @@ MonoBehaviour:
   isReverseAcceleration: 0
   v: 0
   h: 0
+  qe: 0
+  flip: 0
+  handbrake: 0
   isHandBrakeNow: 0
 --- !u!114 &4450794903244610549
 MonoBehaviour:
@@ -5784,6 +5787,7 @@ MonoBehaviour:
   consumableAbilities: 0
   ability: {fileID: 0}
   hud: {fileID: 0}
+  useAbility: 0
 --- !u!114 &5865151714339448891
 MonoBehaviour:
   m_ObjectHideFlags: 0

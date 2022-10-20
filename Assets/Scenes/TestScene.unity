@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ed1387202b1349540a5d6464f0f27488, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.11478237, g: 0.28003007, b: 0.3356672, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1715,62 +1715,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 376}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1854516151
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1854516153}
-  - component: {fileID: 1854516152}
-  m_Layer: 0
-  m_Name: GameMaster
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1854516152
+--- !u!114 &1854516152 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+  m_PrefabInstance: {fileID: 7698284325913790122}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854516151}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e684c301d0aa1b147a5732061fe26905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalPlayers: 12
-  overlay: {fileID: 2034520953}
-  cameraPrefab: {fileID: 8694673886877027324, guid: bca8d41f941ffe446a2be18c1b72a2cd, type: 3}
-  carCanvasPrefab: {fileID: 3701029060393789116, guid: 7e981d432fce61640a1f636d85f40f11, type: 3}
-  playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
-  carPrefab: {fileID: 3931561997790069067, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
-  carParentTransform: {fileID: 1964843263}
-  cameraParentTransform: {fileID: 621888627}
-  hudParentTransform: {fileID: 1194303702}
-  spawnPointsTransform: {fileID: 561636816}
-  spectatorCamera: 0
-  wheelContainer: {fileID: 2054845470}
---- !u!4 &1854516153
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854516151}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887417907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,3 +2149,100 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &7698284325913790122
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7698284326626340112, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_PlayerLeftEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340112, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[0].m_Id
+      value: ead1680a-6f4f-48ac-a0f1-c2727b84fe56
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340112, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Join
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340112, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_PlayerLeftEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: overlay
+      value: 
+      objectReference: {fileID: 2034520953}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: wheelContainer
+      value: 
+      objectReference: {fileID: 2054845470}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: carParentTransform
+      value: 
+      objectReference: {fileID: 1964843263}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: hudParentTransform
+      value: 
+      objectReference: {fileID: 1194303702}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: spawnPointsTransform
+      value: 
+      objectReference: {fileID: 561636816}
+    - target: {fileID: 7698284326626340114, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: cameraParentTransform
+      value: 
+      objectReference: {fileID: 621888627}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340115, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698284326626340125, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}
+      propertyPath: m_Name
+      value: GameMaster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19eafb8e5062df14abc0767f9897f4b1, type: 3}

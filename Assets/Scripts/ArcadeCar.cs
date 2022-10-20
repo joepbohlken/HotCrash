@@ -131,7 +131,7 @@ public class ArcadeCar : MonoBehaviour
     [Header("Other")]
     [Tooltip("Hand brake slippery time in seconds")]
     public float handBrakeSlipperyTime = 2.2f;
-    public bool controllable = true;
+    public bool isBot = true;
     [Tooltip("Y - Downforce (percentage 0%..100%). X - Vehicle speed (km/h)")]
     public AnimationCurve downForceCurve = AnimationCurve.Linear(0.0f, 0.0f, 200.0f, 100.0f);
     [Tooltip("Downforce")]
@@ -164,6 +164,7 @@ public class ArcadeCar : MonoBehaviour
     private float accelerationForceMagnitude = 0.0f;
     private Rigidbody rb = null;
     private CarHealth carHealth;
+    private CarAI carAI;
     private ParticleSystem ps;
     private AudioSource audioSource;
 
@@ -178,9 +179,12 @@ public class ArcadeCar : MonoBehaviour
     public float v = 0f;
     [HideInInspector]
     public float h = 0f;
-    private float qe = 0f;
-    private bool rightMouse = false;
-    private bool handbrake = false;
+    [HideInInspector]
+    public float qe = 0f;
+    [HideInInspector]
+    public bool flip = false;
+    [HideInInspector]
+    public bool handbrake = false;
 
     [HideInInspector]
     public bool isHandBrakeNow;
@@ -204,6 +208,14 @@ public class ArcadeCar : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         carHealth = GetComponent<CarHealth>();
         ps = GetComponentInChildren<ParticleSystem>();
+
+        if (isBot)
+        {
+            carAI = gameObject.AddComponent<CarAI>();
+            carAI.boxSize = new Vector3(2, 0.4f, 5);
+            carAI.InitializeAI();
+        }
+
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
     }
@@ -225,7 +237,6 @@ public class ArcadeCar : MonoBehaviour
         UpdateInput();
 
         ApplyVisual();
-
     }
 
     private void FixedUpdate()
@@ -401,16 +412,6 @@ public class ArcadeCar : MonoBehaviour
 
     private void UpdateInput()
     {
-        //Debug.Log (string.Format ("H = {0}", h));
-        if (controllable)
-        {
-            v = Input.GetAxis("Vertical");
-            h = Input.GetAxis("Horizontal");
-            qe = Input.GetAxis("Roll");
-            rightMouse = Input.GetButtonDown("Flip");
-            handbrake = Input.GetButton("Drift");
-        }
-
         int wheelsInAir = 4;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
@@ -425,17 +426,17 @@ public class ArcadeCar : MonoBehaviour
             }
         }
 
-        if (!isTouchingGround && wheelsInAir == 4 && controllable)
+        if (!isTouchingGround && wheelsInAir == 4 && !isBot)
         {
             HandleAirMovement();
         }
 
-        if (isTouchingGround && carAngle > .85f && rightMouse && controllable)
+        if (isTouchingGround && carAngle > .85f && flip && !isBot)
         {
             StartCoroutine(FlipCar());
         }
 
-        if (Input.GetKey(KeyCode.R) && controllable && debugMode)
+        if (Input.GetKey(KeyCode.R) && !isBot && debugMode)
         {
             Debug.Log("Reset pressed");
             Ray resetRay = new Ray();
@@ -485,7 +486,7 @@ public class ArcadeCar : MonoBehaviour
 
 
         bool isBrakeNow = false;
-        isHandBrakeNow = handbrake && controllable && wheelsInAir == 0;
+        isHandBrakeNow = handbrake && !isBot && wheelsInAir == 0;
 
         speed = GetSpeed();
         isAcceleration = false;
@@ -1169,7 +1170,7 @@ public class ArcadeCar : MonoBehaviour
 
     private void OnGUI()
     {
-        if (!controllable || !debugMode)
+        if (isBot || !debugMode)
         {
             return;
         }
