@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: d5731e43de838c84b8c1da3950a7eab2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - grapplingHook: {instanceID: 0}
+  - carPos: {fileID: 3663098822042570447, guid: 0056ca4756b750d4ea1a18ae0502f2d4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
