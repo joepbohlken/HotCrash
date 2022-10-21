@@ -62,6 +62,9 @@ public class GameMaster : MonoBehaviour
 
         if (main != null) Destroy(this);
         main = this;
+
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
     }
 
     private void Update()
