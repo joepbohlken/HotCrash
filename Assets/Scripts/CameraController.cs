@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
             float speed = 750f;
             if (x == 1f) angleY = Mathf.Clamp(angleY + speed * Time.deltaTime, 0f, 90f);
             else if (x == -1f) angleY = Mathf.Clamp(angleY - speed * Time.deltaTime, -90f, 0f);
-            else if (Mathf.Abs(angleY) > 1f && angleY != 180)
+            else if (Mathf.Abs(angleY) > 5f && angleY != 180)
             {
                 angleY += speed * Time.deltaTime * Mathf.Sign(-angleY);
             }
