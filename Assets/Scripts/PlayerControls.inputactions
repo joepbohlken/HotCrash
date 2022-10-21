@@ -362,7 +362,7 @@
                     "path": "<Gamepad>/rightStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -373,7 +373,7 @@
                     "path": "<Gamepad>/rightStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -384,7 +384,7 @@
                     "path": "<Gamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -395,7 +395,7 @@
                     "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true

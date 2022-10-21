@@ -33,14 +33,6 @@ public class CameraController : MonoBehaviour
         ResetPosition();
     }
 
-    private void Update()
-    {
-        x = 0;
-        if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
-        if (Input.GetKey(KeyCode.RightArrow)) x += 1;
-        y = Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
-    }
-
     private void LateUpdate()
     {
         Vector3 newPosition = offset;

@@ -22,8 +22,7 @@ public class GameMaster : MonoBehaviour
     public GameObject carCanvasPrefab;
     public GameObject playerHudPrefab;
     public GameObject carPrefab;
-
-
+    
     private Transform carParentTransform;
     private Transform cameraParentTransform;
     private Transform hudParentTransform;
@@ -60,7 +59,6 @@ public class GameMaster : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerInputManager = GetComponent<PlayerInputManager>();
-        //playerInputManager.DisableJoining();
 
         if (main != null) Destroy(this);
         main = this;
