@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Disconnect",
-                    "type": "Button",
-                    "id": "97ae99a5-a9f3-4eed-8c0a-869b5a44cbba",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -83,11 +74,22 @@
                 },
                 {
                     "name": "",
-                    "id": "4bec617d-9876-4fb1-86c3-80ac6a510bf4",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "d26e139e-1653-49e4-8622-f5bdc789d8fc",
+                    "path": "<DualShockGamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
+                    "action": "Drift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e71aa566-3b9e-4110-bab4-8163474d152a",
+                    "path": "<XInputController>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
                     "action": "Drift",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -95,7 +97,7 @@
                 {
                     "name": "",
                     "id": "3b51bbb8-0fa0-4cf0-86c4-fefb2f72b69c",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -105,11 +107,22 @@
                 },
                 {
                     "name": "",
-                    "id": "593db082-0349-4c91-b695-3e10a2f506c8",
-                    "path": "<Gamepad>/buttonWest",
+                    "id": "62b5084b-38b8-4f31-848b-b36078bc988c",
+                    "path": "<DualShockGamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42af4bfb-4fba-40c9-9cf7-0aba0527e529",
+                    "path": "<XInputController>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
                     "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -127,11 +140,22 @@
                 },
                 {
                     "name": "",
-                    "id": "bc314baf-f9ff-4c5f-a966-54abc6616775",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "71639622-43d4-4512-bb97-ea233a745833",
+                    "path": "<DualShockGamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
+                    "action": "Flip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b151b02e-1a22-46cd-bccd-06d24a941b92",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
                     "action": "Flip",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -214,8 +238,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Gamepad",
-                    "id": "8f540196-5f24-4136-91b7-5c38bbd47bbd",
+                    "name": "Playstation",
+                    "id": "e2a42dd5-9d9a-4dd5-a317-bf1a91877fda",
                     "path": "3DVector",
                     "interactions": "",
                     "processors": "",
@@ -226,72 +250,149 @@
                 },
                 {
                     "name": "up",
-                    "id": "d53dc5d2-11c8-4b24-82e5-b771ca23c78e",
-                    "path": "<Gamepad>/rightTrigger",
+                    "id": "3ee82eb2-1b07-4419-8acf-5e9960426cfd",
+                    "path": "<DualShockGamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "2b51f0a5-ffa5-4715-9018-4a94891b4352",
-                    "path": "<Gamepad>/leftTrigger",
+                    "id": "361f72bc-a7d2-4cb8-bea0-d56fee229409",
+                    "path": "<DualShockGamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "55e6ea98-b4d6-4143-8a9c-e839bcd6c68c",
-                    "path": "<Gamepad>/leftStick/left",
+                    "id": "2491b433-4ac5-4d12-a071-0b737dac43a0",
+                    "path": "<DualShockGamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "e909bf80-b676-437f-9987-cc9a5334e84e",
-                    "path": "<Gamepad>/leftStick/right",
+                    "id": "bd03cc09-28fb-4ecc-8c5e-790c424f2025",
+                    "path": "<DualShockGamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "forward",
-                    "id": "ddcb93aa-e475-4273-b1b9-6299c4cdf32b",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "b319eaaf-89c9-4357-9ea8-3816ac3ac37c",
+                    "path": "<DualShockGamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "backward",
-                    "id": "fff0e245-9547-42e3-b75c-cb7f2cd073ed",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "bd7f71c9-78c1-4e3f-b470-e97c43509eef",
+                    "path": "<DualShockGamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Arrows",
+                    "name": "Xbox",
+                    "id": "43e6df6c-d3dd-4ebd-9c0e-cfae80b14a01",
+                    "path": "3DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "d6d52c7e-ec43-42ea-a14a-59b88b8c2aaa",
+                    "path": "<XInputController>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "54f50e61-3893-4b1e-9252-04895771dfde",
+                    "path": "<XInputController>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "3858c553-0c48-4013-8f62-21a6376ce324",
+                    "path": "<XInputController>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "012b01f2-12a1-4168-8e98-ae85ba306234",
+                    "path": "<XInputController>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "forward",
+                    "id": "69f19e4c-f191-4a81-bd39-ae78cbacacea",
+                    "path": "<XInputController>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "backward",
+                    "id": "6b47ebaf-5b14-4053-a241-6f1e9975c85a",
+                    "path": "<XInputController>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Keyboard",
                     "id": "73b752f0-75e7-4045-bdf5-e73863d0b8e2",
                     "path": "2DVector",
                     "interactions": "",
@@ -346,8 +447,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Right Stick",
-                    "id": "da4a1ea9-e1e3-40d0-a881-c90c85eb9bac",
+                    "name": "Playstation",
+                    "id": "579bc0b2-00ab-46ce-adf3-4565aed59eb6",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -358,44 +459,99 @@
                 },
                 {
                     "name": "up",
-                    "id": "60219541-d4a4-48af-bf65-94e31b94af3d",
-                    "path": "<Gamepad>/rightStick/up",
+                    "id": "e7d2dfd0-c00f-447f-9d22-8a0775c3a696",
+                    "path": "<DualShockGamepad>/rightStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "b3758499-bf85-49e7-bbc1-773054c30895",
-                    "path": "<Gamepad>/rightStick/down",
+                    "id": "c78e5c10-b183-43c8-8f80-a7e5b97b5e7f",
+                    "path": "<DualShockGamepad>/rightStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "c3905ee7-87c2-4608-8428-87efcc16f561",
-                    "path": "<Gamepad>/rightStick/left",
+                    "id": "079ccd1f-08a7-4b46-a2fe-89cd1606be4c",
+                    "path": "<DualShockGamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "3fb7fe40-3a8b-4c58-a4ae-c041d3f4ffc3",
-                    "path": "<Gamepad>/rightStick/right",
+                    "id": "77a59cff-90df-42cb-b8d2-cea39f383460",
+                    "path": "<DualShockGamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Xbox",
+                    "id": "8c210685-df10-4f68-8ebf-b859b8175171",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "e7c44150-a3e6-4fe7-ba24-9ff526ae38fa",
+                    "path": "<XInputController>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "987569c0-3f6d-4126-84dd-a10794f7f570",
+                    "path": "<XInputController>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "0a89acdd-23e3-4829-a8bc-2b67b9b3799f",
+                    "path": "<XInputController>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "ce0b3f8f-31a9-4479-92d1-0555909eae1c",
+                    "path": "<XInputController>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox Controller",
                     "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -413,45 +569,23 @@
                 },
                 {
                     "name": "",
-                    "id": "c92bd6f9-fed9-457a-a434-f7f30f86e8f7",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "de841edc-7bb3-484e-bc8f-61e38a9cfddb",
+                    "path": "<DualShockGamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Playstation Controller",
                     "action": "Join",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a2edb32b-3fcf-4c92-8cd9-a2746d34883c",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "c711b0cc-0d33-409a-adb1-441e8f59dba9",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "Xbox Controller",
                     "action": "Join",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "59844f97-6685-4556-a6c9-0cccab9eadb2",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Disconnect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5d7f6f6f-bab3-4d1d-ad05-65be15ecf22a",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Disconnect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -471,11 +605,22 @@
             ]
         },
         {
-            "name": "Controller",
-            "bindingGroup": "Controller",
+            "name": "Playstation Controller",
+            "bindingGroup": "Playstation Controller",
             "devices": [
                 {
-                    "devicePath": "<Gamepad>",
+                    "devicePath": "<DualShockGamepad>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Xbox Controller",
+            "bindingGroup": "Xbox Controller",
+            "devices": [
+                {
+                    "devicePath": "<XInputController>",
                     "isOptional": true,
                     "isOR": false
                 }
