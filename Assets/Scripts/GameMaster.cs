@@ -30,7 +30,6 @@ public class GameMaster : MonoBehaviour
     [HideInInspector]
     public Transform wheelContainer;
 
-    private PlayerInputManager playerInputManager;
     private List<Transform> spawnPoints = new List<Transform>();
     [HideInInspector]
     public List<PlayerInput> players = new List<PlayerInput>();
@@ -42,23 +41,9 @@ public class GameMaster : MonoBehaviour
     private bool gameStarted = false;
     private bool gameEnded = false;
 
-    private void OnEnable()
-    {
-        playerInputManager.onPlayerJoined += OnPlayerJoin;
-        playerInputManager.onPlayerLeft += OnPlayerLeave;
-    }
-
-    private void OnDisable()
-    {
-        playerInputManager.onPlayerJoined -= OnPlayerJoin;
-        playerInputManager.onPlayerLeft += OnPlayerLeave;
-    }
-
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-
-        playerInputManager = GetComponent<PlayerInputManager>();
 
         if (main != null) Destroy(this);
         main = this;
@@ -99,27 +84,6 @@ public class GameMaster : MonoBehaviour
                 StartCoroutine(EndGame());
             }
         }
-    }
-
-    public void OnPlayerJoin(PlayerInput input)
-    {
-        players.Add(input);
-    }
-
-    public void OnPlayerLeave(PlayerInput input)
-    {
-        players.Remove(input);
-        Destroy(input.gameObject);
-    }
-
-    public void EnablePlayerJoining()
-    {
-        playerInputManager.EnableJoining();
-    }
-
-    public void DisablePlayerJoining()
-    {
-        playerInputManager.DisableJoining();
     }
 
     public void LoadScene(string sceneName)

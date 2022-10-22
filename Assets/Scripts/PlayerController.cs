@@ -8,16 +8,14 @@ public class PlayerController : MonoBehaviour
     // Player input controls
     private Vector3 movementInput = Vector3.zero;
     private Vector2 cameraInput = Vector2.zero;
-    private bool abilityInput = false;
     private bool driftingInput = false;
     private bool flipInput = false;
-    [HideInInspector]
-    public bool disconnect = false;
-    [HideInInspector]
-    public bool startGame = false;
+    private bool abilityInput = false;
 
     [HideInInspector]
-    public bool isReady = false;
+    public PlayerInput input;
+    [HideInInspector]
+    public PlayerManager playerManager;
 
     [HideInInspector]
     public ArcadeCar car;
@@ -25,22 +23,23 @@ public class PlayerController : MonoBehaviour
     public AbilityController abilityController;
     [HideInInspector]
     public CameraController cameraFollow;
-
-    private PlayerInput input;
+    [HideInInspector]
+    public int playerIndex;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        input = GetComponent<PlayerInput>();
+        input.actions = null;
     }
+
 
     private void Update()
     {
-        isReady = car && cameraFollow && abilityController;
+        bool isReady = car && cameraFollow && abilityController;
         if (!isReady)
         {
             return;
@@ -49,11 +48,6 @@ public class PlayerController : MonoBehaviour
         UpdateCarInputs();
         UpdateAbilityInputs();
         UpdateCameraInputs();
-    }
-
-    private void OnDisable()
-    {
-        input.actions = null;
     }
 
     private void UpdateCarInputs()
@@ -88,21 +82,30 @@ public class PlayerController : MonoBehaviour
 
     public void OnDrift(InputAction.CallbackContext ctx)
     {
-        driftingInput = ctx.ReadValue<float>() > 0.1f;
+        driftingInput = ctx.ReadValue<float>() > 0.5f;
     }
 
     public void OnFlip(InputAction.CallbackContext ctx)
     {
-        flipInput = ctx.ReadValue<float>() > 0.1f;
+        flipInput = ctx.ReadValue<float>() > 0.5f;
     }
 
-    public void OnDisconnect(InputAction.CallbackContext ctx)
+    public void OnAbility(InputAction.CallbackContext ctx)
     {
-        disconnect = ctx.ReadValue<float>() > 0.1f;
+        abilityInput = ctx.ReadValue<float>() > 0.5f;
     }
 
-    public void OnStartGame(InputAction.CallbackContext ctx)
+    public void OnReady(InputAction.CallbackContext ctx)
     {
-        startGame = ctx.ReadValue<float>() > 0.1f;
+        if (ctx.ReadValue<float>() > 0.5f)
+        {
+            playerManager.Ready();
+        }
+    }
+
+    public void OnDeviceLost()
+    {
+        Debug.Log("Device lost!");
+        playerManager.DeviceLost(this);
     }
 }
