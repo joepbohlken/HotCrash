@@ -73,12 +73,12 @@ public class PlayerManager : MonoBehaviour
 
         int currentPlayerCount = GetCurrentPlayerCount();
 
+        // Only show required amount of player slots (i.e. 3 players = only 3 slots shown)s
+        UpdateVisibleSlots();
+
         // If number of players isn't matching show menu 
         if (playerCount != currentPlayerCount && !menuOpen)
         {
-            // Only show required amount of player slots (i.e. 3 players = only 3 slots shown)s
-            UpdateVisibleSlots();
-
             ShowMenu(true);
         }
     }
@@ -215,12 +215,6 @@ public class PlayerManager : MonoBehaviour
             playerInputManager.DisableJoining();
     }
 
-    // Animate player menu
-    private IEnumerator FadeMenu(bool fadeIn)
-    {
-        return null;
-    }
-
     // Disconnect all players
     private void DisconnectAll()
     {
@@ -235,7 +229,10 @@ public class PlayerManager : MonoBehaviour
 
     public void Ready()
     {
-        ShowMenu(false);
+        if (GetCurrentPlayerCount() == playerCount)
+        {
+            ShowMenu(false);
+        }
     }
 
     // Remove player on device lost
