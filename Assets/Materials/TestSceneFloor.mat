@@ -27,9 +27,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Glossiness: 0
-    - _Metallic: 0.75
+    - _Metallic: 0
     - _UvScale: 1
     m_Colors:
-    - _Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+    - _Color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
     - _GridColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 0}
   m_BuildTextureStacks: []

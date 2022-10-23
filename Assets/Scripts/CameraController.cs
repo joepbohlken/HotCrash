@@ -79,7 +79,7 @@ public class CameraController : MonoBehaviour
         cameraObject.localPosition = offset;
 
         transform.position = target.position;
-        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent != null ? target.parent.localEulerAngles.y : 0f, 0);
-        transform.rotation = cameraQuaternion;
+        Vector3 cameraRotation = new Vector3(angle, angleY + target.eulerAngles.y, 0);
+        transform.eulerAngles = cameraRotation;
     }
 }

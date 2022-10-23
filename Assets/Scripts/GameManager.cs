@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    MAINMENU,
+    ASSIGNINGPLAYERS,
+    PAUSE,
+    GAMESTART,
+    GAMESTOP
+}
+
+public class PlayerVehicleSelection
+{
+    public PlayerSlot player;
+
+    public GameObject carPrefab;
+    public Color carColor;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager main;

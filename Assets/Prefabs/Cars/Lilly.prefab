@@ -5667,6 +5667,7 @@ MonoBehaviour:
   speed: 0
   isAcceleration: 0
   isReverseAcceleration: 0
+  killCount: 0
   v: 0
   h: 0
   qe: 0
@@ -5687,7 +5688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minVelocity: 4
   deformRadius: 1
-  deformStrength: 0.1
+  deformStrength: 0.2
   maxTotalDeformDistance: {x: 0.1, y: 0.3, z: 0.3}
   collisionDebounce: 0.1
   maxCollisionPoints: 10

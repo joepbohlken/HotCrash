@@ -412,6 +412,15 @@ public class ArcadeCar : MonoBehaviour
 
     private void UpdateInput()
     {
+        if (debugMode)
+        {
+            h = Input.GetAxis("Horizontal");
+            v = Input.GetAxis("Vertical");
+            qe = Input.GetAxis("Roll");
+            handbrake = Input.GetButton("Drift");
+            flip = Input.GetButtonDown("Flip");
+        }
+
         int wheelsInAir = 4;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
