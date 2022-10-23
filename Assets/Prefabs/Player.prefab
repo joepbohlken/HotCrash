@@ -180,8 +180,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 45803e0d-67c1-4ff0-8f1a-e8b08ba07034
-    m_ActionName: Player/Disconnect[/Keyboard/downArrow,/XInputControllerWindows/dpad/down]
+    m_ActionId: ab0f693b-db9b-43d5-ae3c-f51394f2aef8
+    m_ActionName: Player/Disconnect[/Keyboard/downArrow,/XInputControllerWindows/rightStickPress]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaee69eab1e451b48aa47fb7a46147de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 0}
   playerManager: {fileID: 0}
   car: {fileID: 0}
   abilityController: {fileID: 0}

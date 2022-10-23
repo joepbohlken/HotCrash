@@ -19,7 +19,8 @@ public class PlayerSlot
     public TextMeshProUGUI unusedPlayerNr;
     public Image device;
     public Image deviceOutline;
-    public GameObject corner;
+    public GameObject bottom;
+    public Image disconnectBtn;
 }
 
 [Serializable]
@@ -28,6 +29,7 @@ public class PlayerDevice
     public string name;
     public Sprite sprite;
     public Sprite outline;
+    public Sprite disconnectBtn;
 }
 
 public class PlayerManager : MonoBehaviour
@@ -160,21 +162,23 @@ public class PlayerManager : MonoBehaviour
         slot.device.gameObject.SetActive(joined);
         slot.deviceOutline.gameObject.SetActive(joined);
 
+        // Activate/deactivate corner piece
+        slot.bottom.gameObject.SetActive(joined);
+
         if (joined)
         {
             PlayerDevice device = playerDevices.FirstOrDefault(device => device.name == input.currentControlScheme);
-
             slot.device.sprite = device.sprite;
             slot.deviceOutline.sprite = device.outline;
+
+            slot.disconnectBtn.sprite = device.disconnectBtn;
         }
 
-        // Activate/deactivate corner piece
-        slot.corner.gameObject.SetActive(joined);
     }
 
     private void UpdateVisibleSlots()
     {
-        if(playerCount < 1)
+        if (playerCount < 1)
         {
             return;
         }
@@ -215,6 +219,15 @@ public class PlayerManager : MonoBehaviour
             playerInputManager.DisableJoining();
     }
 
+    // Remove player from device lost
+    public void DisconnectPlayer(PlayerController player)
+    {
+        if (menuOpen)
+        {
+            Destroy(player.gameObject);
+        }
+    }
+
     // Disconnect all players
     private void DisconnectAll()
     {
@@ -235,7 +248,8 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    // Remove player on device lost
+
+    // Remove player from device lost
     public void DeviceLost(PlayerController player)
     {
         Destroy(player.gameObject);

@@ -102,6 +102,13 @@ public class PlayerController : MonoBehaviour
             playerManager.Ready();
         }
     }
+    public void OnDisconnect(InputAction.CallbackContext ctx)
+    {
+        if (ctx.ReadValue<float>() > 0.5f)
+        {
+            playerManager.DisconnectPlayer(this);
+        }
+    }
 
     public void OnDeviceLost()
     {
