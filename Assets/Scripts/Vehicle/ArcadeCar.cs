@@ -595,7 +595,7 @@ public class ArcadeCar : MonoBehaviour
         float dt = Time.fixedDeltaTime;
 
         float rollRotation = qe * torqueCurve.Evaluate(rb.angularVelocity.z) * dt;
-        float pitchRotation = h * torqueCurve.Evaluate(rb.angularVelocity.x) * dt;
+        float pitchRotation = h * torqueCurve.Evaluate(rb.angularVelocity.x)/2 * dt;
         float yawRotation = v * torqueCurve.Evaluate(rb.angularVelocity.y) * dt;
 
 
