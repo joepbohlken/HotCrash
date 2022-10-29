@@ -36,7 +36,7 @@ public class Pursuing : Observant
         for (int i = 0; i < carAI.transform.parent.childCount; i++)
         {
             Transform car = carAI.transform.parent.GetChild(i);
-            if (car == carAI.transform || !car.gameObject.activeSelf || car == whitelistedTarget) continue;
+            if (car == carAI.transform || !car.gameObject.activeSelf || car == whitelistedTarget || car.GetComponent<CarHealth>().isDestroyed) continue;
 
             bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.position - carAI.transform.position).normalized) <= 45f;
 
