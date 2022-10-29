@@ -31,16 +31,15 @@ public class Pursuing : Observant
 
         // Assign target
         float closestCar = 999f;
-        Transform newTarget = null;
+        ArcadeCar newTarget = null;
 
-        for (int i = 0; i < carAI.transform.parent.childCount; i++)
+        foreach (ArcadeCar car in carAI.cars)
         {
-            Transform car = carAI.transform.parent.GetChild(i);
-            if (car == carAI.transform || !car.gameObject.activeSelf || car == whitelistedTarget || car.GetComponent<CarHealth>().isDestroyed) continue;
+            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.carHealth.isDestroyed) continue;
 
-            bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.position - carAI.transform.position).normalized) <= 45f;
+            bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.transform.position - carAI.transform.position).normalized) <= 45f;
 
-            float distance = (car.position - carAI.transform.position).magnitude;
+            float distance = (car.transform.position - carAI.transform.position).magnitude;
             if (isWithinView && distance < closestCar)
             {
                 closestCar = distance;
@@ -48,7 +47,7 @@ public class Pursuing : Observant
             }
         }
 
-        if (newTarget == targetRb && newTarget != null)
+        if (newTarget != null && newTarget.rb == targetRb)
         {
             targetTime += Time.deltaTime;
 
@@ -64,9 +63,9 @@ public class Pursuing : Observant
             {
                 targetRb = null;
             }
-            else if (targetRb == null || newTarget != targetRb.transform)
+            else if (targetRb == null || newTarget.transform != targetRb.transform)
             {
-                targetRb = newTarget.GetComponent<Rigidbody>();
+                targetRb = newTarget.rb;
             }
             targetTime = 0f;
         }

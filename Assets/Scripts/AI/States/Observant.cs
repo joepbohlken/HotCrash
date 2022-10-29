@@ -23,6 +23,8 @@ public class Observant : BaseState
     {
         base.Enter();
 
+        if (detectRays != null && detectRays.Count > 0) return;
+
         // Set up detect rays
         Vector3 boxSize = carAI.boxSize;
         detectRays = new List<DetectRay>()
@@ -40,14 +42,6 @@ public class Observant : BaseState
     {
         base.LogicUpdate();
 
-        // Handle unflip
-        flipDebounce -= Time.deltaTime;
-        if (flipDebounce <= 0f && controller.isTouchingGround && carAI.mainRb.velocity.magnitude < 1f)
-        {
-            flipDebounce = 5f;
-            controller.flip = true;
-        }
-
         // Handle aerial movement
         if (controller.allWheelIsOnAir)
         {
@@ -61,6 +55,14 @@ public class Observant : BaseState
                 controller.qe = Mathf.Abs(crossDifference.z) > 0.15f ? Mathf.Sign(crossDifference.z) : 0f;
                 return;
             }
+        }
+
+        // Handle unflip
+        flipDebounce -= Time.deltaTime;
+        if (flipDebounce <= 0f && controller.isTouchingGround && carAI.mainRb.velocity.magnitude < 1f)
+        {
+            flipDebounce = 5f;
+            controller.flip = true;
         }
 
         // Initialize detect rays

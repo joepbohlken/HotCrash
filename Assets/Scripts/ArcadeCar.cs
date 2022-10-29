@@ -163,8 +163,8 @@ public class ArcadeCar : MonoBehaviour
     public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
     public int killCount = 0;
-    private Rigidbody rb = null;
-    private CarHealth carHealth;
+    [HideInInspector] public Rigidbody rb = null;
+    [HideInInspector] public CarHealth carHealth;
     private CarAI carAI;
     private ParticleSystem ps;
     [HideInInspector] public bool allWheelIsOnAir;

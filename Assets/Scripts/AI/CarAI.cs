@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,6 +14,7 @@ public class CarAI : StateMachine
     [Tooltip("This box is used to shoot the detection rays from. X and Z are used for size, Y is used for height placement.")]
     public Vector3 boxSize;
     [HideInInspector] public Rigidbody mainRb;
+    [HideInInspector] public List<ArcadeCar> cars = new List<ArcadeCar>();
 
     // AI Atrributes
     [Header("Attributes")]
@@ -43,6 +45,11 @@ public class CarAI : StateMachine
         avoiding = new Avoiding(controller, this);
         reversing = new Reversing(controller, this);
         idle = new Idle(controller, this);
+
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            cars.Add(transform.parent.GetChild(i).GetComponent<ArcadeCar>());
+        }
 
         int rndmStateNmbr = Random.Range(1, 4);
         if (rndmStateNmbr == 3)
