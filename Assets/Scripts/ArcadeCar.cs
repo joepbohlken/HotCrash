@@ -149,7 +149,7 @@ public class ArcadeCar : MonoBehaviour
 
     private float pitchRate;
     private float carAngle;
-    private bool isTouchingGround = false;
+    [HideInInspector] public bool isTouchingGround = false;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
     private float handBrakeSlipperyTiresTime = 0.0f;
@@ -432,8 +432,9 @@ public class ArcadeCar : MonoBehaviour
             HandleAirMovement();
         }
 
-        if (isTouchingGround && carAngle > .85f && flip && !isBot)
+        if (isTouchingGround && carAngle > .85f && flip)
         {
+            flip = false;
             StartCoroutine(FlipCar());
         }
 

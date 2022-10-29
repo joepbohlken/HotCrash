@@ -15,6 +15,7 @@ public class Observant : BaseState
     protected DetectResult currentDetectResult = DetectResult.None;
 
     private List<DetectRay> detectRays;
+    private float flipDebounce = 5f;
 
     public Observant(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
 
@@ -38,6 +39,14 @@ public class Observant : BaseState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        // Handle unflip
+        flipDebounce -= Time.deltaTime;
+        if (flipDebounce <= 0f && controller.isTouchingGround && carAI.mainRb.velocity.magnitude < 1f)
+        {
+            flipDebounce = 5f;
+            controller.flip = true;
+        }
 
         // Handle aerial movement
         if (controller.allWheelIsOnAir)
