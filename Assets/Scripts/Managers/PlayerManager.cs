@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -35,6 +36,11 @@ public class PlayerDevice
 
 public class PlayerManager : MonoBehaviour
 {
+    [HideInInspector]
+    public UnityEvent onReady;
+    [HideInInspector]
+    public UnityEvent onCancel;
+
     public static PlayerManager main;
 
     public PlayerSlot[] playerSlots = new PlayerSlot[4];
@@ -45,7 +51,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject mainPanel;
 
     private PlayerInputManager playerInputManager;
-    private bool menuOpen = false;
+    [HideInInspector]
+    public bool menuOpen = false;
     private int playerCount = 0;
 
     private void OnEnable()
@@ -173,6 +180,9 @@ public class PlayerManager : MonoBehaviour
             slot.deviceOutline.sprite = device.outline;
 
             slot.disconnectBtn.sprite = device.disconnectBtn;
+            bool isKeyboard = input.currentControlScheme == "Keyboard";
+            slot.disconnectBtn.rectTransform.localScale = new Vector3(isKeyboard ? 1.2f : 1f, isKeyboard ? .6f : 1f, 1f);
+            slot.disconnectBtn.rectTransform.anchoredPosition = new Vector2(isKeyboard ? -30f : -25f, 0f);
         }
     }
 
@@ -205,7 +215,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Open/close the player menu
-    private void ShowMenu(bool show)
+    public void ShowMenu(bool show)
     {
         menuOpen = show;
 
@@ -224,6 +234,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (menuOpen)
         {
+            player.input.actions = null;
             Destroy(player.gameObject);
         }
     }
@@ -245,7 +256,14 @@ public class PlayerManager : MonoBehaviour
         if (GetCurrentPlayerCount() == playerCount)
         {
             ShowMenu(false);
+            onReady.Invoke();
         }
+    }
+
+    public void Cancel()
+    {
+        ShowMenu(false);
+        onCancel.Invoke();
     }
 
 

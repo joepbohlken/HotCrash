@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,12 +12,18 @@ public class PlayerController : MonoBehaviour
     private bool driftingInput = false;
     private bool flipInput = false;
     private bool abilityInput = false;
+    private bool readyInput = false;
+    private bool cancelInput = false;
+    private bool disconnectInput = false;
+    private bool changeColor = false;
 
     [HideInInspector]
     public PlayerInput input;
     [HideInInspector]
     public PlayerManager playerManager;
 
+    [HideInInspector]
+    public CarSelectionSlot carSelectionSlot;
     [HideInInspector]
     public ArcadeCar car;
     [HideInInspector]
@@ -31,23 +38,38 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void OnDisable()
-    {
-        input.actions = null;
-    }
-
-
     private void Update()
     {
-        bool isReady = car && cameraFollow && abilityController;
-        if (!isReady)
+        if (playerManager.menuOpen)
         {
-            return;
+            if (readyInput)
+            {
+                readyInput = false;
+                playerManager.Ready();
+            }
+            if (cancelInput && playerIndex == 0)
+            {
+                cancelInput = false;
+                playerManager.Cancel();
+            }
+            if (disconnectInput)
+            {
+                disconnectInput = false;
+                playerManager.DisconnectPlayer(this);
+            }
         }
 
-        UpdateCarInputs();
-        UpdateAbilityInputs();
-        UpdateCameraInputs();
+        if (car)
+            UpdateCarInputs();
+
+        if (abilityController)
+            UpdateAbilityInputs();
+
+        if (cameraFollow)
+            UpdateCameraInputs();
+
+        if (carSelectionSlot && carSelectionSlot.interactable)
+            UpdateCarSelection();
     }
 
     private void UpdateCarInputs()
@@ -68,6 +90,27 @@ public class PlayerController : MonoBehaviour
     {
         cameraFollow.x = cameraInput.x;
         cameraFollow.y = cameraInput.y;
+    }
+
+    private void UpdateCarSelection()
+    {
+        if (movementInput.x > 0.8f)
+        {
+            carSelectionSlot.NextCarLeft();
+        }
+
+        if (movementInput.x < -0.8f)
+        {
+            carSelectionSlot.NextCarRight();
+        }
+
+        if (changeColor)
+        {
+            carSelectionSlot.ChangeColor();
+            changeColor = false;
+        }
+
+        carSelectionSlot.h = cameraInput.x;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -94,19 +137,35 @@ public class PlayerController : MonoBehaviour
     {
         abilityInput = ctx.ReadValue<float>() > 0.5f;
     }
+    public void OnChangeColor(InputAction.CallbackContext ctx)
+    {
+        if (ctx.interaction is PressInteraction)
+        {
+            changeColor = ctx.performed;
+        }
+    }
 
     public void OnReady(InputAction.CallbackContext ctx)
     {
-        if (ctx.ReadValue<float>() > 0.5f)
+        if (ctx.interaction is PressInteraction)
         {
-            playerManager.Ready();
+            readyInput = ctx.performed;
         }
     }
+
+    public void OnCancel(InputAction.CallbackContext ctx)
+    {
+        if (ctx.interaction is PressInteraction)
+        {
+            cancelInput = ctx.performed;
+        }
+    }
+
     public void OnDisconnect(InputAction.CallbackContext ctx)
     {
-        if (ctx.ReadValue<float>() > 0.5f)
+        if (ctx.interaction is PressInteraction)
         {
-            playerManager.DisconnectPlayer(this);
+            disconnectInput = ctx.performed;
         }
     }
 

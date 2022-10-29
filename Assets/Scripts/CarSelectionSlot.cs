@@ -9,6 +9,7 @@ public class CarSelectionSlot : MonoBehaviour
     public Transform carParent;
     public TextMeshProUGUI carNameText;
     public Image changeColorKey;
+    public float rotationSpeed = 100f;
 
     [HideInInspector]
     public MainMenu menu = null;
@@ -18,6 +19,8 @@ public class CarSelectionSlot : MonoBehaviour
     private int currentCar = 0;
     private int actualColor = 0;
 
+    [HideInInspector]
+    public bool interactable = false;
     [HideInInspector]
     public float h = 0f;
     [HideInInspector]
@@ -32,20 +35,7 @@ public class CarSelectionSlot : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            NextCarLeft();
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            NextCarRight();
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            ChangeColor();
-        }
+        RotateCar();
     }
 
     public void PlayParticleSystem()
@@ -53,7 +43,7 @@ public class CarSelectionSlot : MonoBehaviour
         dustParticleSystem.Play();
     }
 
-    private void NextCarLeft()
+    public void NextCarLeft()
     {
         // Return if animation is still playing
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("CarSelector_ChangeCar"))
@@ -69,7 +59,7 @@ public class CarSelectionSlot : MonoBehaviour
 
         if (currentCar == 0)
         {
-            currentCar = menu.availableCars.Length;
+            currentCar = menu.availableCars.Length - 1;
         }
         else
         {
@@ -84,7 +74,7 @@ public class CarSelectionSlot : MonoBehaviour
 
     }
 
-    private void NextCarRight()
+    public void NextCarRight()
     {
         // Return if animation is still playing
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("CarSelector_ChangeCar"))
@@ -98,7 +88,7 @@ public class CarSelectionSlot : MonoBehaviour
             Destroy(carParent.GetChild(0).gameObject);
         }
 
-        if (currentCar == menu.availableCars.Length)
+        if (currentCar == menu.availableCars.Length - 1)
         {
             currentCar = 0;
         }
@@ -117,13 +107,13 @@ public class CarSelectionSlot : MonoBehaviour
 
     private void RotateCar()
     {
-
+        carParent.transform.localEulerAngles += Vector3.up * Time.deltaTime * h * rotationSpeed;
     }
 
-    private void ChangeColor()
+    public void ChangeColor()
     {
 
-        if (actualColor == 4)
+        if (actualColor == menu.availableColors.Length - 1)
         {
             actualColor = 0;
         }

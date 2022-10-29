@@ -51,7 +51,9 @@ MonoBehaviour:
   carParent: {fileID: 1552509421498934038}
   carNameText: {fileID: 4311035414508933606}
   changeColorKey: {fileID: 4626032050725095269}
+  rotationSpeed: 100
   menu: {fileID: 0}
+  interactable: 0
   h: 0
   ready: 0
 --- !u!95 &5601957837246241138

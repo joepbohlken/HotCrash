@@ -182,6 +182,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ab0f693b-db9b-43d5-ae3c-f51394f2aef8
     m_ActionName: Player/Disconnect[/Keyboard/downArrow,/XInputControllerWindows/rightStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnChangeColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 95215098-06ad-484f-869c-6d6f014fefcb
+    m_ActionName: Player/ChangeColor[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnCancel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 38e18484-de83-42d6-bbf6-cd543cb8090b
+    m_ActionName: Player/Cancel[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -201,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 0}
   playerManager: {fileID: 0}
+  carSelectionSlot: {fileID: 0}
   car: {fileID: 0}
   abilityController: {fileID: 0}
   cameraFollow: {fileID: 0}

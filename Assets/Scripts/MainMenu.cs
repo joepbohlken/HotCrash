@@ -23,6 +23,19 @@ public class MainMenu : MonoBehaviour
     private bool multiplayerMenuOpen = false;
     private int playerCount = 1;
 
+
+    private void OnEnable()
+    {
+        PlayerManager.main.onReady.AddListener(OnPlayersReady);
+        PlayerManager.main.onCancel.AddListener(OnPlayersCancel);
+    }
+
+    private void OnDisable()
+    {
+        PlayerManager.main.onReady.RemoveListener(OnPlayersReady);
+        PlayerManager.main.onCancel.RemoveListener(OnPlayersCancel);
+    }
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -60,6 +73,36 @@ public class MainMenu : MonoBehaviour
 
     }
 
+    private void OnPlayersReady()
+    {
+        // Assign Players to slots
+        foreach (var (playerSlot, i) in PlayerManager.main.playerSlots.Select((value, i) => (value, i)))
+        {
+            if (playerSlot.player != null)
+            {
+                playerSlot.player.carSelectionSlot = carSlots[i];
+            }
+        }
+
+        foreach (var (slot, i) in carSlots.Select((value, i) => (value, i)))
+        {
+            if (i < playerCount)
+            {
+                slot.interactable = true;
+            }
+            else
+            {
+                slot.interactable = false;
+            }
+        }
+    }
+
+    private void OnPlayersCancel()
+    {
+        GoBackToHome();
+    }
+
+
     public void StartParticleSystem()
     {
         particleSystem.Play();
@@ -68,7 +111,6 @@ public class MainMenu : MonoBehaviour
     public void PauseParticleSystem()
     {
         particleSystem.Pause(true);
-        Debug.Log(particleSystem.time);
     }
 
     public void StartGame(int playerCount)
@@ -93,6 +135,16 @@ public class MainMenu : MonoBehaviour
             multiplayerMenuOpen = false;
             canvasAnimator.Play("HideMultiplayerSelect");
         }
+    }
+
+    private void GoBackToHome()
+    {
+        foreach (CarSelectionSlot slot in carSlots)
+        {
+            slot.interactable = false;
+        }
+
+        animator.Play("HideCarSelection");
     }
 
     public void ShowSettings()
@@ -121,14 +173,22 @@ public class MainMenu : MonoBehaviour
                 // Position and rotate each slot corectly depending on player count
                 Vector3 direction = Quaternion.AngleAxis(initalSpawnAngle + (angleOffset * i), Vector3.up) * carSlotParent.forward;
 
-                Vector3 newPosition = carSlotParent.position + (direction * spawnDistance) + (carSlotParent.up * .32f);
+                Vector3 newPosition = carSlotParent.position + (direction * spawnDistance) + (carSlotParent.up * .38f);
                 slot.transform.position = newPosition;
-                slot.transform.rotation = Quaternion.LookRotation((carSlotParent.position - newPosition), Vector3.up);
+                slot.transform.rotation = Quaternion.LookRotation((carSlotParent.position - new Vector3(newPosition.x, carSlotParent.position.y, newPosition.z)), Vector3.up);
+
             }
             else
             {
                 slot.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void UpdatePlayers()
+    {
+        GameManager.main.playersCount = playerCount;
+
+        PlayerManager.main.ShowMenu(true);
     }
 }
