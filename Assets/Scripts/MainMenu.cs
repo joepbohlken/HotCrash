@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -7,8 +8,17 @@ public class MainMenu : MonoBehaviour
     public bool showStartAnim = true;
     public Animator canvasAnimator;
 
+    [Header("Car Selection")]
+    public Transform carSlotParent;
+    public GameObject[] availableCars;
+    public Material[] availableColors;
+
+    private float maxSpawnAngle = 100f;
+    private float maxSpawnRadius = 15f;
+
     private Animator animator;
     private ParticleSystem particleSystem;
+    private CarSelectionSlot[] carSlots;
 
     private bool multiplayerMenuOpen = false;
     private int playerCount = 1;
@@ -18,6 +28,15 @@ public class MainMenu : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         particleSystem = GetComponentInChildren<ParticleSystem>();
+
+        // Add all the car slots
+        carSlots = carSlotParent.GetComponentsInChildren<CarSelectionSlot>();
+
+        foreach (CarSelectionSlot slot in carSlots)
+        {
+            slot.menu = this;
+            slot.gameObject.SetActive(false);
+        }
     }
 
     private void Start()
@@ -38,7 +57,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+
     }
 
     public void StartParticleSystem()
@@ -56,7 +75,7 @@ public class MainMenu : MonoBehaviour
     {
         this.playerCount = playerCount;
 
-        ShowCarSelectionScreen(playerCount);
+        ShowCarSelectionScreen();
     }
 
     public void ShowMultiplayerSelection()
@@ -81,8 +100,35 @@ public class MainMenu : MonoBehaviour
         HideMultiplayerSelection();
     }
 
-    private void ShowCarSelectionScreen(int players = 1)
+    private void ShowCarSelectionScreen()
     {
         animator.Play("ShowCarSelection");
+
+        float actualSpawnAngle = maxSpawnAngle - (10f * (playerCount - 1));
+        float angleOffset = actualSpawnAngle / 3;
+        float initalSpawnAngle = (-angleOffset / 2) * (playerCount - 1);
+        float spawnDistance = maxSpawnRadius - (2 * (4 - playerCount));
+
+        foreach (var (slot, i) in carSlots.Select((value, i) => (value, i)))
+        {
+            if (i < playerCount)
+            {
+                slot.gameObject.SetActive(true);
+
+                // Reset car and color
+                slot.ResetSlot();
+
+                // Position and rotate each slot corectly depending on player count
+                Vector3 direction = Quaternion.AngleAxis(initalSpawnAngle + (angleOffset * i), Vector3.up) * carSlotParent.forward;
+
+                Vector3 newPosition = carSlotParent.position + (direction * spawnDistance) + (carSlotParent.up * .32f);
+                slot.transform.position = newPosition;
+                slot.transform.rotation = Quaternion.LookRotation((carSlotParent.position - newPosition), Vector3.up);
+            }
+            else
+            {
+                slot.gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ public class PlayerDevice
     public string name;
     public Sprite sprite;
     public Sprite outline;
+    public Sprite changeColorBtn;
     public Sprite disconnectBtn;
 }
 
@@ -173,7 +174,6 @@ public class PlayerManager : MonoBehaviour
 
             slot.disconnectBtn.sprite = device.disconnectBtn;
         }
-
     }
 
     private void UpdateVisibleSlots()

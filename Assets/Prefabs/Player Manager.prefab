@@ -83,14 +83,17 @@ MonoBehaviour:
   - name: Keyboard
     sprite: {fileID: 21300000, guid: faa29d99faf88724993a4d1bde3773a1, type: 3}
     outline: {fileID: 21300000, guid: 58b3123e86863284db7e3fb35efbec9e, type: 3}
+    changeColorBtn: {fileID: 21300000, guid: b35ce1035e9c45c42a56c557b33aed6c, type: 3}
     disconnectBtn: {fileID: 21300000, guid: 0cd1b7ff728ca2c4c8997aded36aa81d, type: 3}
   - name: Playstation Controller
     sprite: {fileID: 21300000, guid: 20055506c520abd40b6812fc2aec7777, type: 3}
     outline: {fileID: 21300000, guid: 3c98f31f1a9fdc24cb6387dec60aa092, type: 3}
+    changeColorBtn: {fileID: 21300000, guid: 9b02c706de143fc478d1f9bea0319c4a, type: 3}
     disconnectBtn: {fileID: 21300000, guid: ee697708c6c67424a814743b68b24398, type: 3}
   - name: Xbox Controller
     sprite: {fileID: 21300000, guid: b5ec6a051de11324d949179f88946359, type: 3}
     outline: {fileID: 21300000, guid: 0c6eb1878f7bc8b44b3ca49b235a7110, type: 3}
+    changeColorBtn: {fileID: 21300000, guid: d81f38ef247fc654ab731ea7fa8301db, type: 3}
     disconnectBtn: {fileID: 21300000, guid: ee697708c6c67424a814743b68b24398, type: 3}
   colors:
   - {r: 0.7607843, g: 0.21176471, b: 0.08627451, a: 1}
