@@ -50,7 +50,8 @@ public class Observant : BaseState
             RaycastHit hit;
             if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f))
             {
-                if (hit.distance < closestHit)
+                float hitSurfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
+                if (hit.distance < closestHit && hitSurfaceAngle > 30f)
                 {
                     closestHit = hit.distance;
                     currentDetectResult = detectRay.side;
