@@ -39,6 +39,21 @@ public class Observant : BaseState
     {
         base.LogicUpdate();
 
+        // Handle aerial movement
+        if (controller.allWheelIsOnAir)
+        {
+            Vector3 direction = (Vector3.down + carAI.mainRb.velocity.normalized).normalized;
+            RaycastHit hit;
+            if (Physics.Raycast(carAI.transform.position, direction, out hit, 100f))
+            {
+                Vector3 crossDifference = Vector3.Cross(hit.normal, carAI.transform.up);
+                controller.v = Mathf.Abs(crossDifference.x) > 0.15f ? Mathf.Sign(crossDifference.x) : 0f;
+                // Might need to be changed to 'controller.h' in the future
+                controller.qe = Mathf.Abs(crossDifference.z) > 0.15f ? Mathf.Sign(crossDifference.z) : 0f;
+                return;
+            }
+        }
+
         // Initialize detect rays
         float currentSpeed = Mathf.Clamp(Vector3.Dot(carAI.transform.forward, carAI.mainRb.velocity), 10f, 999f);
 

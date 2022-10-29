@@ -20,11 +20,17 @@ public class Idle : Observant
     {
         base.LogicUpdate();
 
+        if (carAI.currentState != this) return;
+
         // Smooth random number between -1 and 1 using Perlin noise
         float steerValue = Mathf.PerlinNoise(Time.time + randomOffset, 0f) * 2f - 1f;
 
-        // Set steering direction
-        controller.h = Mathf.Abs(steerValue) > 0.3f ? Mathf.Sign(steerValue) : 0f;
+        // Set acceleration & steering direction
+        if (!controller.allWheelIsOnAir)
+        {
+            controller.v = 1f;
+            controller.h = Mathf.Abs(steerValue) > 0.3f ? Mathf.Sign(steerValue) : 0f;
+        }
 
         carAI.idleTime -= Time.deltaTime;
         if (carAI.idleTime <= 0f) carAI.currentDrivingMode = CarAI.DrivingMode.Pursue;

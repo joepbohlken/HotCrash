@@ -71,8 +71,11 @@ public class Pursuing : Observant
             targetTime = 0f;
         }
 
+        // Set acceleration direction
+        if (!controller.allWheelIsOnAir) controller.v = 1f;
+
         // Set steering direction
-        if (targetRb != null)
+        if (targetRb != null && !controller.allWheelIsOnAir)
         {
             float predictValue = Mathf.Clamp(targetRb.velocity.magnitude / 3f, 0f, (targetRb.transform.position - carAI.transform.position).magnitude);
             float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);

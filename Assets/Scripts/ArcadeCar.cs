@@ -167,6 +167,7 @@ public class ArcadeCar : MonoBehaviour
     private CarHealth carHealth;
     private CarAI carAI;
     private ParticleSystem ps;
+    [HideInInspector] public bool allWheelIsOnAir;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -270,7 +271,7 @@ public class ArcadeCar : MonoBehaviour
             CalculateAxleForces(axles[axleIndex], totalWheelsCount, numberOfPoweredWheels);
         }
 
-        bool allWheelIsOnAir = true;
+        allWheelIsOnAir = true;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
             if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
