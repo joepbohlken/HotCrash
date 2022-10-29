@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CarSelectionSlot : MonoBehaviour
 {
+    public Animator canvasAnimator;
     public Transform carParent;
     public TextMeshProUGUI carNameText;
     public Image changeColorKey;
@@ -124,6 +125,20 @@ public class CarSelectionSlot : MonoBehaviour
 
 
         carParent.GetChild(0).gameObject.transform.Find("Body").gameObject.GetComponent<Renderer>().material = menu.availableColors[actualColor];
+    }
+
+    public void Ready()
+    {
+        canvasAnimator.Play("ReadyPlayer");
+        ready = true;
+        interactable = false;
+    }
+
+    public void UnReady()
+    {
+        canvasAnimator.Play("UnreadyPlayer");
+        ready = false;
+        interactable = true;
     }
 
     public void ResetSlot()

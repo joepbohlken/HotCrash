@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3820203862898030523}
   - component: {fileID: 3820203862898030524}
   - component: {fileID: 3820203862898030522}
+  - component: {fileID: 6063752001059828416}
   m_Layer: 0
   m_Name: Player Manager
   m_TagString: Untagged
@@ -166,6 +167,26 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!95 &6063752001059828416
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3820203862898030521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 170a330b2145cb949b3fd11eb05ba6ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &5985546672790991024
 PrefabInstance:
   m_ObjectHideFlags: 0

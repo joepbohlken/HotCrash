@@ -51,9 +51,13 @@ public class PlayerManager : MonoBehaviour
     public GameObject mainPanel;
 
     private PlayerInputManager playerInputManager;
+    private Animator animator;
     [HideInInspector]
     public bool menuOpen = false;
     private int playerCount = 0;
+
+    private bool ready = false;
+    private bool cancelled = false;
 
     private void OnEnable()
     {
@@ -75,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerInputManager = GetComponent<PlayerInputManager>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -219,14 +224,29 @@ public class PlayerManager : MonoBehaviour
     {
         menuOpen = show;
 
-        backgroundBlur.SetActive(show);
-        mainPanel.SetActive(show);
+        animator.Play(show ? "ShowPlayerMenu" : "HidePlayerMenu");
 
         // Enable/disable player joining
-        if (show)
-            playerInputManager.EnableJoining();
-        else
+        if (!show)
             playerInputManager.DisableJoining();
+    }
+
+    public void FinishedOpening()
+    {
+        playerInputManager.EnableJoining();
+    }
+
+    public void FinishedClosing()
+    {
+        if (cancelled)
+        {
+            onCancel.Invoke();
+        }
+
+        if(ready)
+        {
+            onReady.Invoke();
+        }
     }
 
     // Remove player from device lost
@@ -234,8 +254,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (menuOpen)
         {
-            player.input.actions = null;
-            Destroy(player.gameObject);
+            RemovePlayer(player);
         }
     }
 
@@ -247,7 +266,7 @@ public class PlayerManager : MonoBehaviour
             PlayerController player = slot.player;
             slot.player = null;
 
-            Destroy(player.gameObject);
+            RemovePlayer(player);
         }
     }
 
@@ -256,20 +275,26 @@ public class PlayerManager : MonoBehaviour
         if (GetCurrentPlayerCount() == playerCount)
         {
             ShowMenu(false);
-            onReady.Invoke();
+            ready = true;
         }
     }
 
     public void Cancel()
     {
         ShowMenu(false);
-        onCancel.Invoke();
+        cancelled = true;
     }
 
 
     // Remove player from device lost
     public void DeviceLost(PlayerController player)
     {
+        RemovePlayer(player);
+    }
+
+    private void RemovePlayer(PlayerController player)
+    {
+        player.input.actions = null;
         Destroy(player.gameObject);
     }
-}
+ }

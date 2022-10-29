@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         if (cameraFollow)
             UpdateCameraInputs();
 
-        if (carSelectionSlot && carSelectionSlot.interactable)
+        if (carSelectionSlot)
             UpdateCarSelection();
     }
 
@@ -94,23 +94,43 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateCarSelection()
     {
-        if (movementInput.x > 0.8f)
+        if (carSelectionSlot.interactable || carSelectionSlot.ready)
+            carSelectionSlot.h = cameraInput.x;
+
+        if (cancelInput)
         {
-            carSelectionSlot.NextCarLeft();
+            cancelInput = false;
+
+            if (carSelectionSlot.ready)
+                carSelectionSlot.UnReady();
+            else if(carSelectionSlot.interactable)
+                carSelectionSlot.menu.GoBackToHome();
         }
 
-        if (movementInput.x < -0.8f)
+        if (carSelectionSlot.interactable)
         {
-            carSelectionSlot.NextCarRight();
-        }
+            if (movementInput.x > 0.8f)
+            {
+                carSelectionSlot.NextCarLeft();
+            }
 
-        if (changeColor)
-        {
-            carSelectionSlot.ChangeColor();
-            changeColor = false;
-        }
+            if (movementInput.x < -0.8f)
+            {
+                carSelectionSlot.NextCarRight();
+            }
 
-        carSelectionSlot.h = cameraInput.x;
+            if (changeColor)
+            {
+                carSelectionSlot.ChangeColor();
+                changeColor = false;
+            }
+
+            if (readyInput)
+            {
+                readyInput = false;
+                carSelectionSlot.Ready();
+            }
+        }
     }
 
     public void OnMove(InputAction.CallbackContext ctx)

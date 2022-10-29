@@ -137,7 +137,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void GoBackToHome()
+    public void GoBackToHome()
     {
         foreach (CarSelectionSlot slot in carSlots)
         {
