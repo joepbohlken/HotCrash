@@ -51,6 +51,7 @@ MonoBehaviour:
   canvasAnimator: {fileID: 5536674982648074117}
   carParent: {fileID: 1552509421498934038}
   carNameText: {fileID: 4311035414508933606}
+  changeColor: {fileID: 6079626461987032180}
   changeColorKey: {fileID: 4626032050725095269}
   rotationSpeed: 100
   menu: {fileID: 0}
@@ -297,5 +298,10 @@ MonoBehaviour:
 --- !u!95 &5536674982648074117 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4349230618042770256, guid: e0dd8ebffb4292446a03f0dc625d8428, type: 3}
+  m_PrefabInstance: {fileID: 8110326227777547477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6079626461987032180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2653331244753592481, guid: e0dd8ebffb4292446a03f0dc625d8428, type: 3}
   m_PrefabInstance: {fileID: 8110326227777547477}
   m_PrefabAsset: {fileID: 0}

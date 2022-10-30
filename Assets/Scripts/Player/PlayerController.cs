@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int playerIndex;
 
+    private bool justJoined = true;
+    private float time = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -40,12 +43,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        time += Time.deltaTime;
+        if (time > .25f)
+        {
+            justJoined = false;
+        }
+
         if (playerManager.menuOpen)
         {
             if (readyInput)
             {
                 readyInput = false;
-                playerManager.Ready();
+                playerManager.Ready(justJoined);
             }
             if (cancelInput && playerIndex == 0)
             {
@@ -103,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
             if (carSelectionSlot.ready)
                 carSelectionSlot.UnReady();
-            else if(carSelectionSlot.interactable)
+            else if (carSelectionSlot.interactable)
                 carSelectionSlot.menu.GoBackToHome();
         }
 

@@ -9,6 +9,7 @@ public class CarSelectionSlot : MonoBehaviour
     public Animator canvasAnimator;
     public Transform carParent;
     public TextMeshProUGUI carNameText;
+    public GameObject changeColor;
     public Image changeColorKey;
     public float rotationSpeed = 100f;
 
@@ -17,8 +18,16 @@ public class CarSelectionSlot : MonoBehaviour
     private Animator animator;
     private ParticleSystem dustParticleSystem;
 
+    [HideInInspector]
+    public PlayerController player;
+
     private int currentCar = 0;
     private int actualColor = 0;
+
+    [HideInInspector]
+    public string carName;
+    [HideInInspector]
+    public Material carColor;
 
     [HideInInspector]
     public bool interactable = false;
@@ -70,6 +79,8 @@ public class CarSelectionSlot : MonoBehaviour
         GameObject car = menu.availableCars[currentCar];
         Instantiate(car, carParent);
 
+        carName = car.name;
+
         animator.Play("CarSelector_ChangeCar");
         carNameText.text = car.name;
 
@@ -101,6 +112,8 @@ public class CarSelectionSlot : MonoBehaviour
         GameObject car = menu.availableCars[currentCar];
         Instantiate(car, carParent);
 
+        carName = car.name;
+
         animator.Play("CarSelector_ChangeCar");
         carNameText.text = car.name;
 
@@ -123,8 +136,10 @@ public class CarSelectionSlot : MonoBehaviour
             actualColor++;
         }
 
+        Material newColor = menu.availableColors[actualColor];
 
-        carParent.GetChild(0).gameObject.transform.Find("Body").gameObject.GetComponent<Renderer>().material = menu.availableColors[actualColor];
+        carParent.GetChild(0).gameObject.transform.Find("Body").gameObject.GetComponent<Renderer>().material = newColor;
+        carColor = newColor;
     }
 
     public void Ready()
@@ -132,6 +147,8 @@ public class CarSelectionSlot : MonoBehaviour
         canvasAnimator.Play("ReadyPlayer");
         ready = true;
         interactable = false;
+
+        menu.CheckStartGame();
     }
 
     public void UnReady()
@@ -143,6 +160,11 @@ public class CarSelectionSlot : MonoBehaviour
 
     public void ResetSlot()
     {
+        ready = false;
+        interactable = false;
+
+        canvasAnimator.CrossFade("UnreadyPlayer", 0, 0, 1);
+
         currentCar = 0;
         actualColor = 0;
 
@@ -153,5 +175,9 @@ public class CarSelectionSlot : MonoBehaviour
 
         GameObject car = menu.availableCars[currentCar];
         Instantiate(car, carParent);
+
+        carName = car.name;
+        carNameText.text = carName;
+        carColor = menu.availableColors[actualColor];
     }
 }

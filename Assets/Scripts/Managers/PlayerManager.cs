@@ -52,6 +52,8 @@ public class PlayerManager : MonoBehaviour
 
     private PlayerInputManager playerInputManager;
     private Animator animator;
+
+    private List<PlayerController> players = new List<PlayerController>();
     [HideInInspector]
     public bool menuOpen = false;
     private int playerCount = 0;
@@ -126,12 +128,13 @@ public class PlayerManager : MonoBehaviour
 
         // Add player to correct slot
         playerSlots[playerIndex].player = player;
+        players.Add(player);
 
-        // Disable player joining on max players reached
-        if (playerCount == GetCurrentPlayerCount())
+        // Disable player joining on max players reached or first player joined on startup
+        if (playerCount == GetCurrentPlayerCount() || (playerIndex == 0 && !menuOpen))
         {
-            Debug.Log("Max players reached!");
             playerInputManager.DisableJoining();
+            GameManager.main.playersCount = GetCurrentPlayerCount();
         }
 
         // Update UI
@@ -146,7 +149,8 @@ public class PlayerManager : MonoBehaviour
         PlayerController player = input.GetComponent<PlayerController>();
 
         // Remove player from correct slot
-        playerSlots[input.playerIndex].player = player;
+        playerSlots[input.playerIndex].player = null;
+        players.Remove(player);
 
         // Enable player joining on max players reached and menu already open
         if (playerCount == GetCurrentPlayerCount() && menuOpen)
@@ -233,7 +237,26 @@ public class PlayerManager : MonoBehaviour
 
     public void FinishedOpening()
     {
-        playerInputManager.EnableJoining();
+        ready = false;
+        cancelled = false;
+
+        int currentPlayerCount = GetCurrentPlayerCount();
+
+        if (currentPlayerCount < GameManager.main.playersCount)
+        {
+            playerInputManager.EnableJoining();
+        }
+        else
+        {
+            // Disonnect excess players
+            for (int i = 0; i < players.Count; i++) 
+            {
+                if(i >= GameManager.main.playersCount)
+                {
+                    RemovePlayer(players[i]);
+                }
+            }
+        }
     }
 
     public void FinishedClosing()
@@ -270,9 +293,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Ready()
+    public void Ready(bool justJoined = false)
     {
-        if (GetCurrentPlayerCount() == playerCount)
+        if (GetCurrentPlayerCount() == playerCount && !justJoined)
         {
             ShowMenu(false);
             ready = true;

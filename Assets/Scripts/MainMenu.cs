@@ -49,6 +49,7 @@ public class MainMenu : MonoBehaviour
         {
             slot.menu = this;
             slot.gameObject.SetActive(false);
+            slot.changeColor.SetActive(false);
         }
     }
 
@@ -67,19 +68,53 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    private void Update()
+    public void CheckStartGame()
     {
+        bool everyoneReady = CheckEveryoneReady();
 
+        if (everyoneReady)
+        {
+            GameManager.main.StartGame(carSlots);
+        }
+    }
+
+    private bool CheckEveryoneReady()
+    {
+        bool result = true;
+        int players = 0;
+
+        foreach (CarSelectionSlot slot in carSlots)
+        {
+            if (!slot.ready && slot.player != null)
+            {
+                result = false;
+            }
+
+            if (slot.player != null)
+            {
+                players++;
+            }
+        }
+
+        // Set ready = false when there are no players
+        if (players == 0)
+        {
+            result = false;
+        }
+
+        return result;
     }
 
     private void OnPlayersReady()
     {
+        PlayerManager playerManager = PlayerManager.main;
+
         // Assign Players to slots
-        foreach (var (playerSlot, i) in PlayerManager.main.playerSlots.Select((value, i) => (value, i)))
+        foreach (var (playerSlot, i) in playerManager.playerSlots.Select((value, i) => (value, i)))
         {
             if (playerSlot.player != null)
             {
+                carSlots[i].player = playerSlot.player;
                 playerSlot.player.carSelectionSlot = carSlots[i];
             }
         }
@@ -88,11 +123,16 @@ public class MainMenu : MonoBehaviour
         {
             if (i < playerCount)
             {
+                PlayerDevice device = playerManager.playerDevices.FirstOrDefault(device => device.name == playerManager.playerSlots[i].player.input.currentControlScheme);
+
                 slot.interactable = true;
+                slot.changeColor.SetActive(true);
+                slot.changeColorKey.sprite = device.changeColorBtn;
             }
             else
             {
                 slot.interactable = false;
+                slot.changeColor.SetActive(false);
             }
         }
     }
@@ -142,6 +182,7 @@ public class MainMenu : MonoBehaviour
         foreach (CarSelectionSlot slot in carSlots)
         {
             slot.interactable = false;
+            slot.ready = false;
         }
 
         animator.Play("HideCarSelection");
@@ -154,7 +195,7 @@ public class MainMenu : MonoBehaviour
 
     private void ShowCarSelectionScreen()
     {
-        animator.Play("ShowCarSelection");
+        HideMultiplayerSelection();
 
         float actualSpawnAngle = maxSpawnAngle - (10f * (playerCount - 1));
         float angleOffset = actualSpawnAngle / 3;
@@ -176,13 +217,14 @@ public class MainMenu : MonoBehaviour
                 Vector3 newPosition = carSlotParent.position + (direction * spawnDistance) + (carSlotParent.up * .38f);
                 slot.transform.position = newPosition;
                 slot.transform.rotation = Quaternion.LookRotation((carSlotParent.position - new Vector3(newPosition.x, carSlotParent.position.y, newPosition.z)), Vector3.up);
-
             }
             else
             {
                 slot.gameObject.SetActive(false);
             }
         }
+
+        animator.Play("ShowCarSelection");
     }
 
     public void UpdatePlayers()
