@@ -2,140 +2,112 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
-public class GameMaster : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    [HideInInspector]
-    public static GameMaster main;
     [HideInInspector]
     public UnityEvent onCarsInitialized;
 
     [Header("Global settings")]
     public int totalPlayers = 12;
-    public bool spectatorCamera = true;
+    public bool spectatorCamera = false;
 
     [Header("Prefabs")]
     public GameObject cameraPrefab;
     public GameObject carCanvasPrefab;
     public GameObject playerHudPrefab;
-    public GameObject carPrefab;
-    
-    private Transform carParentTransform;
-    private Transform cameraParentTransform;
-    private Transform hudParentTransform;
-    private Transform spawnPointsTransform;
-    [HideInInspector]
+    public GameObject[] carPrefabs;
+    public Material[] carColors;
+    public GameObject playerManagerPrefab;
+
+    [Header("Containers")]
+    public Transform carParentTransform;
+    public Transform cameraParentTransform;
+    public Transform hudParentTransform;
+    public Transform spawnPointsTransform;
     public Transform wheelContainer;
 
+    [Header("Debugging")]
+    public bool initializePlayerManager = false;
+
     private List<Transform> spawnPoints = new List<Transform>();
-    [HideInInspector]
-    public List<PlayerInput> players = new List<PlayerInput>();
-    [HideInInspector]
-    public List<GameObject> cars = new List<GameObject>();
 
-    private string sceneLoaded = "";
-    private bool isLoading = false;
-    private bool gameStarted = false;
-    private bool gameEnded = false;
-
-    private void Awake()
+    private void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
+        if (PlayerManager.main == null && initializePlayerManager)
+        {
+            PlayerManager pm = Instantiate(playerManagerPrefab).GetComponent<PlayerManager>();
+            pm.onReady.AddListener(OnPlayersReady);
 
-        if (main != null) Destroy(this);
-        main = this;
-
-        QualitySettings.vSyncCount = 1;
-        Application.targetFrameRate = 60;
+            pm.canCancel = false;
+        }
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (sceneLoaded == "TestScene" && !gameStarted)
+        if (PlayerManager.main != null && initializePlayerManager)
+            PlayerManager.main.onReady.RemoveListener(OnPlayersReady);
+    }
+
+
+    private void Start()
+    {
+        if (spawnPointsTransform != null)
         {
-            gameStarted = true;
-
-            carParentTransform = GameObject.Find("Cars").transform;
-            cameraParentTransform = GameObject.Find("Cameras").transform;
-            hudParentTransform = GameObject.Find("HUDs").transform;
-            spawnPointsTransform = GameObject.Find("SpawnPoints").transform;
-            wheelContainer = GameObject.Find("WheelContainer").transform;
-
-            if (spawnPointsTransform != null)
+            for (int i = 0; i < spawnPointsTransform.childCount; i++)
             {
-                for (int i = 0; i < spawnPointsTransform.childCount; i++)
-                {
-                    spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
-                }
+                spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
             }
+        }
 
+        if (!initializePlayerManager)
+        {
             InitializeGame();
         }
-
-        if (sceneLoaded == "TestScene" && gameStarted)
+        else
         {
-            bool allPlayersDead = !cars.Any(car => !car.GetComponent<ArcadeCar>().isBot);
-            if ((allPlayersDead || cars.Count == 1) && !gameEnded)
+            PlayerManager.main.ShowMenu(true);
+        }
+    }
+
+    private void OnPlayersReady()
+    {
+        List<PlayerVehicleSelection> selections = new List<PlayerVehicleSelection>();
+
+        foreach (PlayerController player in PlayerManager.main.players)
+        {
+            PlayerVehicleSelection selection = new PlayerVehicleSelection()
             {
-                gameEnded = true;
-                StartCoroutine(EndGame());
-            }
+                player = player,
+            };
+
+            selections.Add(selection);
         }
+
+        InitializeGame(selections);
     }
 
-    public void LoadScene(string sceneName)
+    public void InitializeGame(List<PlayerVehicleSelection> playerSelections = null)
     {
-        if (!isLoading)
+        bool hasGameManager = GameManager.main != null;
+
+        int playerCount = 0;
+        if (PlayerManager.main != null)
         {
-            isLoading = true;
-            StartCoroutine(LoadSceneAsync(sceneName));
-        }
-    }
-
-    private IEnumerator LoadSceneAsync(string sceneName)
-    {
-        sceneLoaded = "";
-
-        yield return SceneManager.LoadSceneAsync(sceneName);
-
-        isLoading = false;
-        sceneLoaded = sceneName;
-    }
-
-    private IEnumerator EndGame()
-    {
-        yield return new WaitForSeconds(3);
-
-        LoadScene("End");
-    }
-
-    public void OnCarDied(GameObject car, GameObject killer)
-    {
-        cars.Remove(car);
-
-        GameObject killerCar = cars.FirstOrDefault(car => car == killer);
-        if (killerCar != null)
-        {
-            killerCar.GetComponent<ArcadeCar>().killCount++;
-        }
-    }
-
-    public void InitializeGame()
-    {
-        if (players.Count <= 0)
-        {
-            return;
+            playerCount = PlayerManager.main.playerCount;
         }
 
-        int playerCount = players.Count;
+        List<PlayerVehicleSelection> selections = hasGameManager ? GameManager.main.playerSelections : playerSelections;
 
         // Spawn players
-        foreach (var (input, i) in players.Select((value, i) => (value, i)))
+        if (playerCount > 0 && selections != null)
         {
-            SpawnCar(i, input);
+            foreach (var (selection, i) in selections.Select((value, i) => (value, i)))
+            {
+                SpawnCar(i, selection);
+            }
         }
 
         // Spawn bots
@@ -144,9 +116,10 @@ public class GameMaster : MonoBehaviour
             SpawnCar(i);
         }
 
-        if (cars.Count == totalPlayers)
+        if (hasGameManager && GameManager.main.cars.Count == totalPlayers)
         {
             onCarsInitialized.Invoke();
+            GameManager.main.carsLeftAlive = totalPlayers;
         }
 
         // Set camera to follow 
@@ -191,7 +164,7 @@ public class GameMaster : MonoBehaviour
         }
     }
 
-    private void SpawnCar(int i, PlayerInput input = null)
+    private void SpawnCar(int i, PlayerVehicleSelection selection = null)
     {
         // Get random spawn position
         // Stop when there no more spawn positions
@@ -201,20 +174,62 @@ public class GameMaster : MonoBehaviour
             return;
         }
 
-        int playerCount = players.Count;
-        bool isPlayer = input != null;
+        int playerCount = 0;
+        bool isPlayer = selection != null;
 
-        int spawnIndex = Random.Range(0, spawnPoints.Count - 1);
+        int spawnIndex = Random.Range(0, spawnPoints.Count);
         Vector3 spawnPos = spawnPoints[spawnIndex].position;
 
         // Remove the used spawn point
         spawnPoints.RemoveAt(spawnIndex);
 
         // Add car
-        ArcadeCar car = Instantiate(carPrefab, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
+
+        // Get random car
+        int carIndex = Random.Range(0, carPrefabs.Length);
+        GameObject selectedCar = carPrefabs[carIndex];
+
+        // Overwrite car choice when player and contains valid choice
+        if (selection != null)
+        {
+            GameObject carSelection = carPrefabs.FirstOrDefault(c => c.name == selection.carName);
+
+            if (carSelection != null)
+            {
+                selectedCar = carSelection;
+            }
+        }
+
+        ArcadeCar car = Instantiate(selectedCar, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
         car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot";
+
+        // Set random color
+        int colorIndex = Random.Range(0, carColors.Length);
+        Material selectedColor = carColors[colorIndex];
+
+        // Overwrite car choice when player and contains valid choice
+        if (selection != null)
+        {
+            Material colorSelection = carColors.FirstOrDefault(c => c == selection.carColor);
+
+            if (colorSelection != null)
+            {
+                selectedColor = colorSelection;
+            }
+        }
+
+        car.transform.Find("Body").gameObject.GetComponent<Renderer>().material = selectedColor;
         car.isBot = !isPlayer;
-        cars.Add(car.gameObject);
+
+        if (GameManager.main != null)
+        {
+            GameManager.main.cars.Add(car.gameObject);
+        }
+
+        if (PlayerManager.main != null)
+        {
+            playerCount = PlayerManager.main.playerCount;
+        }
 
         CarHealth carHealth = car.GetComponent<CarHealth>();
 
@@ -315,9 +330,9 @@ public class GameMaster : MonoBehaviour
             }
 
             // Add corresponding scripts to the player controller
-            input.GetComponent<PlayerController>().car = car;
-            input.GetComponent<PlayerController>().cameraFollow = cameraFollow;
-            input.GetComponent<PlayerController>().abilityController = abilityController;
+            selection.player.car = car;
+            selection.player.cameraFollow = cameraFollow;
+            selection.player.abilityController = abilityController;
         }
 
         // Add car canvases

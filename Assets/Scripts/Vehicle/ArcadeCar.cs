@@ -147,7 +147,6 @@ public class ArcadeCar : MonoBehaviour
     [Header("Debug")]
     public bool debugMode = false;
 
-    private float pitchRate;
     private float carAngle;
     private bool isTouchingGround = false;
     private float afterFlightSlipperyTiresTime = 0.0f;
@@ -162,11 +161,11 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector]
     public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
-    public int killCount = 0;
     private Rigidbody rb = null;
     private CarHealth carHealth;
     private CarAI carAI;
     private ParticleSystem ps;
+    private LevelManager levelManager;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -208,6 +207,7 @@ public class ArcadeCar : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         carHealth = GetComponent<CarHealth>();
         ps = GetComponentInChildren<ParticleSystem>();
+        levelManager = FindObjectOfType<LevelManager>();
 
         if (isBot)
         {
@@ -641,7 +641,7 @@ public class ArcadeCar : MonoBehaviour
 
     private void PopOffWheel(GameObject wheel)
     {
-        wheel.transform.SetParent(GameMaster.main.wheelContainer);
+        wheel.transform.SetParent(levelManager.wheelContainer);
 
         Rigidbody wheelRb = wheel.AddComponent<Rigidbody>();
         MeshCollider wheelMesh = wheel.AddComponent<MeshCollider>();

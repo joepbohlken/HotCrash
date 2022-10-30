@@ -260,6 +260,9 @@ MonoBehaviour:
   cameraObject: {fileID: 8694673886836267242}
   angle: 12
   offset: {x: 0, y: 3, z: -8}
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 4096
   target: {fileID: 0}
   x: 0
   y: 0

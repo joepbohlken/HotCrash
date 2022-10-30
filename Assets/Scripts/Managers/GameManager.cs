@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour
     public List<PlayerVehicleSelection> playerSelections = new List<PlayerVehicleSelection>();
     [HideInInspector]
     public int playersCount = 0;
+    [HideInInspector]
+    public List<GameObject> cars = new List<GameObject>();
+    [HideInInspector]
+    public int carsLeftAlive;
 
     private Animator animator;
     private bool initialLoad = false;
@@ -47,6 +52,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         animator = GetComponentInChildren<Animator>();
+
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
     }
 
     private void Update()
@@ -90,6 +98,18 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(LoadLevel(2));
+    }
+
+    public void EndGame()
+    {
+
+    }
+
+    public void OnCarDeath(GameObject car, GameObject killer)
+    {
+        cars.Remove(car);
+
+        GameObject killerCar = cars.FirstOrDefault(car => car == killer);
     }
 
     private IEnumerator LoadLevel(int levelIndex)

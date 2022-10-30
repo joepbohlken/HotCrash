@@ -78,11 +78,14 @@ public class HUD : MonoBehaviour
 
     private void UpdateOpponentCount()
     {
-        opponentsText.text = (GameMaster.main.cars.Count - 1).ToString();
+        if (GameManager.main != null)
+        {
+            opponentsText.text = (GameManager.main.carsLeftAlive - 1).ToString();
+        }
     }
 
     private void UpdateKillCount()
     {
-        killsText.text = car.killCount.ToString();
+        //killsText.text = car.killCount.ToString();
     }
 }

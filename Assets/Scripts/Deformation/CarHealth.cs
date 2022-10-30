@@ -179,7 +179,10 @@ public class CarHealth : MonoBehaviour
             arcadeCar.GetComponent<Rigidbody>().centerOfMass = arcadeCar.originalCenterOfMass;
             arcadeCar.DestroyCar();
 
-            GameMaster.main.OnCarDied(gameObject, carCollider);
+            if (GameManager.main != null)
+            {
+                GameManager.main.OnCarDeath(gameObject, carCollider);
+            }
 
             Transform canvasContainer = gameObject.transform.Find("UI");
             for (int i = 0; i < canvasContainer.childCount; i++)

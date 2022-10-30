@@ -53,13 +53,20 @@ public class PlayerManager : MonoBehaviour
     private PlayerInputManager playerInputManager;
     private Animator animator;
 
-    private List<PlayerController> players = new List<PlayerController>();
+    [HideInInspector]
+    public List<PlayerController> players = new List<PlayerController>();
     [HideInInspector]
     public bool menuOpen = false;
-    private int playerCount = 0;
+    [HideInInspector]
+    public int playerCount = 0;
 
     private bool ready = false;
     private bool cancelled = false;
+
+    [HideInInspector]
+    public bool canCancel = true;
+
+    private bool gameManagerAvailable = false;
 
     private void OnEnable()
     {
@@ -86,9 +93,13 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        playerCount = GameManager.main.playersCount;
-
+        gameManagerAvailable = GameManager.main != null;
         int currentPlayerCount = GetCurrentPlayerCount();
+
+        if (gameManagerAvailable)
+        {
+            playerCount = GameManager.main.playersCount;
+        }
 
         // Only show required amount of player slots (i.e. 3 players = only 3 slots shown)s
         UpdateVisibleSlots();
@@ -134,7 +145,11 @@ public class PlayerManager : MonoBehaviour
         if (playerCount == GetCurrentPlayerCount() || (playerIndex == 0 && !menuOpen))
         {
             playerInputManager.DisableJoining();
-            GameManager.main.playersCount = GetCurrentPlayerCount();
+
+            if (gameManagerAvailable)
+            {
+                GameManager.main.playersCount = GetCurrentPlayerCount();
+            }
         }
 
         // Update UI
@@ -242,6 +257,12 @@ public class PlayerManager : MonoBehaviour
 
         int currentPlayerCount = GetCurrentPlayerCount();
 
+        if (!gameManagerAvailable)
+        {
+            playerInputManager.EnableJoining();
+            return;
+        }
+
         if (currentPlayerCount < GameManager.main.playersCount)
         {
             playerInputManager.EnableJoining();
@@ -249,9 +270,9 @@ public class PlayerManager : MonoBehaviour
         else
         {
             // Disonnect excess players
-            for (int i = 0; i < players.Count; i++) 
+            for (int i = 0; i < players.Count; i++)
             {
-                if(i >= GameManager.main.playersCount)
+                if (i >= GameManager.main.playersCount)
                 {
                     RemovePlayer(players[i]);
                 }
@@ -266,7 +287,7 @@ public class PlayerManager : MonoBehaviour
             onCancel.Invoke();
         }
 
-        if(ready)
+        if (ready)
         {
             onReady.Invoke();
         }
@@ -295,17 +316,22 @@ public class PlayerManager : MonoBehaviour
 
     public void Ready(bool justJoined = false)
     {
-        if (GetCurrentPlayerCount() == playerCount && !justJoined)
+        if ((!gameManagerAvailable || GetCurrentPlayerCount() == playerCount) && !justJoined)
         {
             ShowMenu(false);
             ready = true;
+
+            playerCount = GetCurrentPlayerCount();
         }
     }
 
     public void Cancel()
     {
-        ShowMenu(false);
-        cancelled = true;
+        if (canCancel)
+        {
+            ShowMenu(false);
+            cancelled = true;
+        }
     }
 
 
@@ -320,4 +346,4 @@ public class PlayerManager : MonoBehaviour
         player.input.actions = null;
         Destroy(player.gameObject);
     }
- }
+}
