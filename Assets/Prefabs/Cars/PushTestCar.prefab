@@ -5377,7 +5377,7 @@ GameObject:
   - component: {fileID: 8915069003306764829}
   - component: {fileID: 8776043073672286}
   m_Layer: 2
-  m_Name: Lilly
+  m_Name: PushTestCar
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5399,7 +5399,6 @@ Transform:
   - {fileID: 795878443874962897}
   - {fileID: 3624614007502779555}
   - {fileID: 1255777688881511375}
-  - {fileID: 981197442673760503}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -5665,14 +5664,9 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugMode: 0
-  isTouchingGround: 0
   speed: 0
   isAcceleration: 0
   isReverseAcceleration: 0
-  killCount: 0
-  rb: {fileID: 4450794903244610550}
-  carHealth: {fileID: 0}
-  allWheelIsOnAir: 0
   v: 0
   h: 0
   qe: 0
@@ -5922,37 +5916,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7233928132002929982
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 981197442673760503}
-  m_Layer: 0
-  m_Name: Guntip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &981197442673760503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7233928132002929982}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.031, y: 0.12030423, z: 2.505}
-  m_LocalScale: {x: 0.99999976, y: 1, z: 0.99999976}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4450794903244610545}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8483588572720922577
 GameObject:
   m_ObjectHideFlags: 0

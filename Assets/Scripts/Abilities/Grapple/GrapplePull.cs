@@ -193,7 +193,7 @@ public class GrapplePull : MonoBehaviour
                 {
                     if (dstToTarget <= range)
                     {
-                        targetIndicator.targets.Add(cTarget);
+                        //targetIndicator.targets.Add(cTarget);
                     }
                 }
             }
