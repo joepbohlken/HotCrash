@@ -12,7 +12,6 @@ public class AbilityController : MonoBehaviour
     [HideInInspector] public HUD hud;
     private Ability currentAbility;
     private float currentCooldown;
-    private bool abilityActivated = true;
     private bool handledDestroyed = false;
 
     private void Start()
@@ -50,7 +49,6 @@ public class AbilityController : MonoBehaviour
                 currentAbility = Instantiate(availableAbilities[Random.Range(0, availableAbilities.Count)]);
                 currentAbility.Initialize(this, carController);
                 currentAbility.Obtained();
-                abilityActivated = false;
 
                 if (!carController.isBot && hud) hud.SetInfo(currentAbility);
             }
@@ -59,9 +57,8 @@ public class AbilityController : MonoBehaviour
 
     public void UseAbility()
     {
-        if (currentAbility && !carController.carHealth.isDestroyed && !abilityActivated)
+        if (currentAbility && !carController.carHealth.isDestroyed)
         {
-            abilityActivated = true;
             currentAbility.Activated();
         }
     }

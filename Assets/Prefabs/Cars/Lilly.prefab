@@ -5800,6 +5800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityCooldown: 5
   availableAbilities:
+  - {fileID: 11400000, guid: b153d246838bdee4a920869605d74ab8, type: 2}
   - {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
   hud: {fileID: 0}
 --- !u!1 &4158976086258160209

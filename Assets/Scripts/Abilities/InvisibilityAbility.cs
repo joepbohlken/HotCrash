@@ -16,6 +16,7 @@ public class InvisibilityAbility : Ability
     private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
     private float durationLeft;
     private bool abilityEnded = false;
+    private bool isSelfActivated = false;
 
     public override void Obtained()
     {
@@ -43,6 +44,9 @@ public class InvisibilityAbility : Ability
     public override void Activated()
     {
         base.Activated();
+
+        if (isSelfActivated) return;
+        isSelfActivated = true;
 
         originalValues = new();
 
@@ -75,7 +79,11 @@ public class InvisibilityAbility : Ability
     {
         base.CarDestroyed();
 
-        AbilityEnded(true);
+        if (!abilityEnded && isSelfActivated)
+        {
+            abilityEnded = true;
+            AbilityEnded(true);
+        }
     }
 
     private void AbilityEnded(bool isDestroyed)
