@@ -8,8 +8,9 @@ public class CarEffects : MonoBehaviour
     private ArcadeCar arcadeCar;
     private bool isDrifting = false;
     private bool tireMarksFlag;
+    public TrailRenderer rearLeftRenderer;
+    public TrailRenderer rearRightRenderer;
 
-    public TrailRenderer[] tireMarks;
 
     private CarSound carSound = null;
 
@@ -30,6 +31,11 @@ public class CarEffects : MonoBehaviour
     public void SetSound(CarSound carSound)
     {
         this.carSound = carSound;
+    }
+    public void UpdateTrailPosition(Vector3 locationLeft, Vector3 locationRight)
+    {
+        rearLeftRenderer.transform.position = locationLeft;
+        rearRightRenderer.transform.position = locationRight;
     }
 
     private void CheckDrift()
@@ -57,10 +63,8 @@ public class CarEffects : MonoBehaviour
             return;
         }
 
-        foreach (TrailRenderer T in tireMarks)
-        {
-            T.emitting = true;
-        }
+        rearLeftRenderer.emitting = true;
+        rearRightRenderer.emitting = true;
 
         tireMarksFlag = true;
     }
@@ -71,10 +75,9 @@ public class CarEffects : MonoBehaviour
         {
             return;
         }
-        foreach(TrailRenderer T in tireMarks)
-        {
-            T.emitting = false;
-        }
+
+        rearLeftRenderer.emitting = false;
+        rearRightRenderer.emitting = false;
 
         tireMarksFlag = false;
     }
