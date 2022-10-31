@@ -4,8 +4,9 @@ using System;
 using System.Linq;
 
 [CreateAssetMenu(menuName = "Abilities/Transparent")]
-public class TransparentAbility : Ability
+public class InvisibilityAbility : Ability
 {
+    /*
     private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
     private List<Renderer> CarRenderers;
     [SerializeField]
@@ -58,4 +59,5 @@ public class TransparentAbility : Ability
             rendValuesPair.Key.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
     }
+    */
 }
