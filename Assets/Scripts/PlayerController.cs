@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAbilityInputs()
     {
-        abilityController.useAbility = abilityInput;
+        abilityController.UseAbility();
     }
 
     private void UpdateCameraInputs()

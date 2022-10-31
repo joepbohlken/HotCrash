@@ -1,53 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ability : ScriptableObject
 {
-    protected GameObject Car;
+    public string abilityName;
+    public Sprite abilityIcon;
 
-    [SerializeField]
-    protected float Duration;
-    [SerializeField]
-    protected float Cooldown;
+    protected AbilityController abilityController;
+    protected ArcadeCar carController;
+    protected bool isActivated { get; private set; } = false;
+    protected bool isCarDestroyed { get; private set; } = false;
 
-    public Sprite AbilityImage;
-    public string a_Name;
-    public virtual void Use()
+    public void Obtained(AbilityController abilityController, ArcadeCar carController)
     {
-        Debug.Log("Ability not implemented OR No ability active");
+        this.abilityController = abilityController;
+        this.carController = carController;
     }
 
-    public virtual void OnObtained()
+    public virtual void LogicUpdate() { }
+
+    ///<summary>Call 'abilityController.AbilityEnded()' if the ability has ended, this will destroy the ability instance.</summary>
+    public virtual void Activated()
     {
-    }
-    public virtual void OnAbilityEnded()
-    {
+        isActivated = true;
     }
 
-    public void Obtained(GameObject player)
+    public virtual void CarDestroyed()
     {
-        SetCar(player);
-        OnObtained();
-    }
-
-    private void SetCar(GameObject player)
-    {
-        Car = player;
-    }
-
-    public float AbilityCooldown
-    {
-        get
-        {
-            return Cooldown;
-        }
-    }
-    public float AbilityDuration
-    {
-        get
-        {
-            return Duration;
-        }
+        isCarDestroyed = true;
     }
 }

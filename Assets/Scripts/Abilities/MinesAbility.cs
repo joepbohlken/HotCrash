@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Abilities/Mines")]
 public class MinesAbility : Ability
 {
+    /*
     [SerializeField]
     private GameObject MineObject;
     [SerializeField]
@@ -28,4 +29,5 @@ public class MinesAbility : Ability
         Vector3 minePosition = Car.transform.position + Vector3.up + Car.transform.forward.normalized * -2;
         Instantiate(MineObject, minePosition, Quaternion.identity);
     }
+    */
 }

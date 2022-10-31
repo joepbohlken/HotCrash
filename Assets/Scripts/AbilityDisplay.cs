@@ -23,8 +23,8 @@ public class AbilityDisplay : MonoBehaviour
 
     public void SetInfo(Ability ability)
     {
-        AbilityImage.sprite = ability.AbilityImage;
-        AbilityName.text = ability.a_Name;
+        AbilityImage.sprite = ability.abilityIcon;
+        AbilityName.text = ability.abilityName;
     }
 
     public void StartCountdown(float cooldown)
