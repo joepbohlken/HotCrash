@@ -20,7 +20,7 @@ public class StartMenu : MonoBehaviour
         {
             if (player.GetComponent<PlayerController>().startGame)
             {
-                gameMaster.LoadScene("TestScene");
+                gameMaster.LoadScene("MapV3");
             }
         }
 

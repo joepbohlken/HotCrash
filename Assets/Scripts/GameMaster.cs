@@ -69,7 +69,7 @@ public class GameMaster : MonoBehaviour
 
     private void Update()
     {
-        if (sceneLoaded == "TestScene" && !gameStarted)
+        if (sceneLoaded == "MapV3" && !gameStarted)
         {
             gameStarted = true;
 
@@ -90,7 +90,7 @@ public class GameMaster : MonoBehaviour
             InitializeGame();
         }
 
-        if (sceneLoaded == "TestScene" && gameStarted)
+        if (sceneLoaded == "MapV3" && gameStarted)
         {
             bool allPlayersDead = !cars.Any(car => !car.GetComponent<ArcadeCar>().isBot);
             if ((allPlayersDead || cars.Count == 1) && !gameEnded)
