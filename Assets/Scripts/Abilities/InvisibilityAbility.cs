@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 [CreateAssetMenu(menuName = "Abilities/Transparent")]
-public class TransparentAbility : Ability
+public class InvisibilityAbility : Ability
 {
     /*
     private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;

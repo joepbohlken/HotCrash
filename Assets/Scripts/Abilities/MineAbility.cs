@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Mines")]
-public class MinesAbility : Ability
+public class MineAbility : Ability
 {
     /*
     [SerializeField]
