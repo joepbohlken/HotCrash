@@ -10,7 +10,7 @@ public abstract class Ability : ScriptableObject
     protected bool isActivated { get; private set; } = false;
     protected bool isCarDestroyed { get; private set; } = false;
 
-    public void Obtained(AbilityController abilityController, ArcadeCar carController)
+    public virtual void Obtained(AbilityController abilityController, ArcadeCar carController)
     {
         this.abilityController = abilityController;
         this.carController = carController;
