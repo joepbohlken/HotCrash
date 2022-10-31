@@ -48,8 +48,8 @@ public class Minimap : MonoBehaviour
             Transform tf = pair.Key;
 
             rt.localPosition = new Vector3(
-            /* X */    Mathf.Lerp(-80, 80, Mathf.Sign(tf.position.x / 166) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.x / 166) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.x / 166))),
-            /* Y */    Mathf.Lerp(-123, 123, Mathf.Sign(tf.position.z / 245) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.z / 245) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.z / 245))));
+            /* X */    Mathf.Lerp(-86, 86, Mathf.Sign(tf.position.x / 166) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.x / 166) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.x / 166))),
+            /* Y */    Mathf.Lerp(-130, 130, Mathf.Sign(tf.position.z / 245) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.z / 245) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.z / 245))));
 
             if(tf.name.Contains("Player")) Debug.Log(tf.rotation.y);
             rt.localRotation = Quaternion.Euler(0, 0, -tf.rotation.eulerAngles.y + 90);
