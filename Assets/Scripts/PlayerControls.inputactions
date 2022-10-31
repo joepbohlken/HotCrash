@@ -95,7 +95,7 @@
                 {
                     "name": "",
                     "id": "3b51bbb8-0fa0-4cf0-86c4-fefb2f72b69c",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
