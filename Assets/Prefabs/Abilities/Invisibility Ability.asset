@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f86679a5806a8a4084a132ae5c40b60, type: 3}
-  m_Name: Mines Ability
+  m_Script: {fileID: 11500000, guid: fa3914c1993cec84fba57edef4d6e5a9, type: 3}
+  m_Name: Invisibility Ability
   m_EditorClassIdentifier: 
-  Duration: 0
-  Cooldown: 0
-  AbilityImage: {fileID: 0}
-  a_Name: Mine
-  MineObject: {fileID: 728907566336860761, guid: f6e261a34e693414b8c85278a717d581, type: 3}
-  amountOfMines: 5
+  abilityName: Invisibility
+  abilityIcon: {fileID: 21300000, guid: 630a648a13b27ea4abdb9cd255c4c36c, type: 3}
+  duration: 2
+  opacity: 0.25

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa3914c1993cec84fba57edef4d6e5a9, type: 3}
-  m_Name: Transparent Ability
+  m_Script: {fileID: 11500000, guid: 0f86679a5806a8a4084a132ae5c40b60, type: 3}
+  m_Name: Mine Ability
   m_EditorClassIdentifier: 
-  Duration: 5
-  Cooldown: 15
-  opacity: 0.2
+  abilityName: Mine
+  abilityIcon: {fileID: 21300000, guid: 380eb1ac4e91dfc4a807e2cb04990fa2, type: 3}

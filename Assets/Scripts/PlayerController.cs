@@ -67,7 +67,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAbilityInputs()
     {
-        abilityController.UseAbility();
+        if (abilityInput)
+            abilityController.UseAbility();
     }
 
     private void UpdateCameraInputs()
@@ -89,6 +90,11 @@ public class PlayerController : MonoBehaviour
     public void OnDrift(InputAction.CallbackContext ctx)
     {
         driftingInput = ctx.ReadValue<float>() > 0.1f;
+    }
+
+    public void OnAbility(InputAction.CallbackContext ctx)
+    {
+        abilityInput = ctx.ReadValue<float>() > 0.1f;
     }
 
     public void OnFlip(InputAction.CallbackContext ctx)

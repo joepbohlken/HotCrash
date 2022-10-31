@@ -6,23 +6,47 @@ using System.Linq;
 [CreateAssetMenu(menuName = "Abilities/Transparent")]
 public class InvisibilityAbility : Ability
 {
-    /*
-    private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
-    private List<Renderer> CarRenderers;
-    [SerializeField]
-    private float opacity;
+    [Space(12)]
+    [Tooltip("Duration in seconds of the invisibility.")]
+    [SerializeField] private float duration = 2f;
+    [Tooltip("Determines how opaque the car becomes.")]
+    [SerializeField] private float opacity = 0.25f;
 
-    public override void OnObtained()
+    private List<Renderer> carRenderers;
+    private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
+    private float durationLeft;
+    private bool abilityEnded = false;
+
+    public override void Obtained()
     {
-        base.OnObtained();
-        CarRenderers = Car.GetComponentsInChildren<Renderer>().ToList();
+        base.Obtained();
+
+        carRenderers = carController.GetComponentsInChildren<Renderer>().ToList();
+        durationLeft = duration;
     }
 
-    public override void Use()
+    public override void LogicUpdate()
     {
+        base.LogicUpdate();
+
+        if (isActivated)
+        {
+            durationLeft -= Time.deltaTime;
+            if (durationLeft <= 0 && !abilityEnded)
+            {
+                abilityEnded = true;
+                AbilityEnded(false);
+            }
+        }
+    }
+
+    public override void Activated()
+    {
+        base.Activated();
+
         originalValues = new();
 
-        foreach (Renderer rend in CarRenderers)
+        foreach (Renderer rend in carRenderers)
         {
             originalValues.Add(rend, new List<Tuple<Color, int>>());
             foreach (Material mat in rend.materials)
@@ -47,7 +71,14 @@ public class InvisibilityAbility : Ability
         }
     }
 
-    public override void OnAbilityEnded()
+    public override void CarDestroyed()
+    {
+        base.CarDestroyed();
+
+        AbilityEnded(true);
+    }
+
+    private void AbilityEnded(bool isDestroyed)
     {
         foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> rendValuesPair in originalValues)
         {
@@ -58,6 +89,7 @@ public class InvisibilityAbility : Ability
             }
             rendValuesPair.Key.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
+
+        if (!isDestroyed) abilityController.AbilityEnded();
     }
-    */
 }

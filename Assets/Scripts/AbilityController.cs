@@ -4,7 +4,7 @@ using UnityEngine;
 public class AbilityController : MonoBehaviour
 {
     [Tooltip("The time in seconds before the player gets a new ability after having used the previous one.")]
-    [SerializeField] private float abilityCooldown;
+    [SerializeField] private float abilityCooldown = 5f;
     [Tooltip("The list of abilities of which a random one will be given to the player everytime the cooldown ends.")]
     [SerializeField] private List<Ability> availableAbilities;
 
