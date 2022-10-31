@@ -48,7 +48,8 @@ public class AbilityController : MonoBehaviour
 
                 // Give new random ability
                 currentAbility = Instantiate(availableAbilities[Random.Range(0, availableAbilities.Count)]);
-                currentAbility.Obtained(this, carController);
+                currentAbility.Initialize(this, carController);
+                currentAbility.Obtained();
                 abilityActivated = false;
 
                 if (!carController.isBot && hud) hud.SetInfo(currentAbility);
