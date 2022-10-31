@@ -48,7 +48,7 @@ public class Observant : BaseState
         foreach (DetectRay detectRay in detectRays)
         {
             RaycastHit hit;
-            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f))
+            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f, controller.raycastLayerMask))
             {
                 if (hit.distance < closestHit)
                 {

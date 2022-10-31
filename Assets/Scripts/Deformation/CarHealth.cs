@@ -56,9 +56,9 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
-    public void AddCarDamage(GameObject carCollider, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
+    public void AddCarDamage(ArcadeCar carOpponent, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
-        if (hitLocation == HitLocation.NONE) return;
+        if (hitLocation == HitLocation.NONE || carOpponent.GetComponent<CarHealth>().isDestroyed) return;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
@@ -81,7 +81,12 @@ public class CarHealth : MonoBehaviour
         float actualDmg = damage * vitalDmgMultiplier;
         currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
-        CheckHealth(carCollider);
+        if (GameManager.main != null)
+        {
+            GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
+        }
+
+        CheckHealth(carOpponent.gameObject);
 
         // Update health bar
         if (healthTexts.Count != 0 && bars.Count != 0)

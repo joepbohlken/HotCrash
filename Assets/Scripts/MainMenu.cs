@@ -74,7 +74,7 @@ public class MainMenu : MonoBehaviour
 
         if (everyoneReady)
         {
-            GameManager.main.StartGame(carSlots);
+            GameManager.main.OnStartGame(carSlots);
         }
     }
 

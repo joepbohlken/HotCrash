@@ -138,7 +138,7 @@ public class ArcadeCar : MonoBehaviour
     public float downForce = 5.0f;
     [Tooltip("Car flipping duration")]
     public float flipDuration = .8f;
-
+    public LayerMask raycastLayerMask;
 
 
     [Header("Axles")]
@@ -166,6 +166,9 @@ public class ArcadeCar : MonoBehaviour
     private CarAI carAI;
     private ParticleSystem ps;
     private LevelManager levelManager;
+
+    [HideInInspector]
+    public bool isReady = true;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -370,7 +373,7 @@ public class ArcadeCar : MonoBehaviour
 
     private bool RayCast(Ray ray, float maxDistance, ref RaycastHit nearestHit)
     {
-        int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance);
+        int numHits = Physics.RaycastNonAlloc(wheelRay, wheelRayHits, maxDistance, raycastLayerMask);
 
         if (numHits == 0)
         {
@@ -951,7 +954,7 @@ public class ArcadeCar : MonoBehaviour
           Calculate engine force
           ######################
         */
-        if (!isBrake && axle.isPowered && Mathf.Abs(accelerationForceMagnitude) > 0.01f)
+        if (!isBrake && axle.isPowered && Mathf.Abs(accelerationForceMagnitude) > 0.01f && isReady)
         {
             Vector3 accForcePoint = wheelData.touchPoint.point - (wsDownDirection * 0.2f);
             Vector3 engineForce = c_fwd * accelerationForceMagnitude / (float)numberOfPoweredWheels / dt;

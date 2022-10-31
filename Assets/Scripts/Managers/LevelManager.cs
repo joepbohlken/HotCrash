@@ -36,6 +36,11 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
+        if (initializePlayerManager && PlayerManager.main != null)
+        {
+            initializePlayerManager = false;
+        }
+
         if (PlayerManager.main == null && initializePlayerManager)
         {
             PlayerManager pm = Instantiate(playerManagerPrefab).GetComponent<PlayerManager>();
@@ -52,7 +57,7 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    private void Start()
+    private void Awake()
     {
         if (spawnPointsTransform != null)
         {
@@ -65,6 +70,8 @@ public class LevelManager : MonoBehaviour
         if (!initializePlayerManager)
         {
             InitializeGame();
+
+            GameManager.main.OnStartGame();
         }
         else
         {
@@ -116,10 +123,11 @@ public class LevelManager : MonoBehaviour
             SpawnCar(i);
         }
 
-        if (hasGameManager && GameManager.main.cars.Count == totalPlayers)
+        if (hasGameManager && GameManager.main.scoreboard.Count == totalPlayers)
         {
             onCarsInitialized.Invoke();
             GameManager.main.carsLeftAlive = totalPlayers;
+            GameManager.main.OnStartGame();
         }
 
         // Set camera to follow 
@@ -175,6 +183,12 @@ public class LevelManager : MonoBehaviour
         }
 
         int playerCount = 0;
+
+        if (PlayerManager.main != null)
+        {
+            playerCount = PlayerManager.main.playerCount;
+        }
+
         bool isPlayer = selection != null;
 
         int spawnIndex = Random.Range(0, spawnPoints.Count);
@@ -184,7 +198,6 @@ public class LevelManager : MonoBehaviour
         spawnPoints.RemoveAt(spawnIndex);
 
         // Add car
-
         // Get random car
         int carIndex = Random.Range(0, carPrefabs.Length);
         GameObject selectedCar = carPrefabs[carIndex];
@@ -201,7 +214,7 @@ public class LevelManager : MonoBehaviour
         }
 
         ArcadeCar car = Instantiate(selectedCar, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
-        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot";
+        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot " + (i - playerCount + 1);
 
         // Set random color
         int colorIndex = Random.Range(0, carColors.Length);
@@ -219,16 +232,17 @@ public class LevelManager : MonoBehaviour
         }
 
         car.transform.Find("Body").gameObject.GetComponent<Renderer>().material = selectedColor;
+        car.isReady = false;
         car.isBot = !isPlayer;
 
         if (GameManager.main != null)
         {
-            GameManager.main.cars.Add(car.gameObject);
-        }
+            CarScore score = new CarScore()
+            {
+                car = car.gameObject
+            };
 
-        if (PlayerManager.main != null)
-        {
-            playerCount = PlayerManager.main.playerCount;
+            GameManager.main.scoreboard.Add(score);
         }
 
         CarHealth carHealth = car.GetComponent<CarHealth>();

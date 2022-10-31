@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [Header("Camera Properties")]
     [SerializeField] private float angle = 10f;
     [SerializeField] private Vector3 offset;
+    public LayerMask raycastLayerMask;
     public Transform target;
 
     private Vector3 currentRotation = Vector3.zero;
@@ -39,7 +40,7 @@ public class CameraController : MonoBehaviour
 
         // Handle camera collision
         RaycastHit hit;
-        if (Physics.Linecast(transform.position, transform.TransformPoint(newPosition), out hit))
+        if (Physics.Linecast(transform.position, transform.TransformPoint(newPosition), out hit, raycastLayerMask))
         {
             newPosition.z = -hit.distance;
         }

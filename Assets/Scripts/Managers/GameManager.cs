@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,23 +15,39 @@ public class PlayerVehicleSelection
     public Material carColor;
 }
 
+[Serializable]
+public class CarScore
+{
+    public GameObject car;
+
+    public int killCount = 0;
+    public float damageDealt = 0;
+    public float damageTaken = 0;
+    public float timeSurvived = 0;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager main;
 
     public float sceneTransitionTime = 1f;
+    public float countDownTime = 3f;
+    public GameObject countDown;
+    public TextMeshProUGUI countDownText;
 
     [HideInInspector]
     public List<PlayerVehicleSelection> playerSelections = new List<PlayerVehicleSelection>();
     [HideInInspector]
     public int playersCount = 0;
-    [HideInInspector]
-    public List<GameObject> cars = new List<GameObject>();
+    public List<CarScore> scoreboard = new List<CarScore>();
     [HideInInspector]
     public int carsLeftAlive;
 
     private Animator animator;
     private bool initialLoad = false;
+
+    private bool gameStarted = false;
+    private float currentGameTime = 0;
 
     private void OnEnable()
     {
@@ -59,7 +76,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        if (gameStarted)
+        {
+            currentGameTime += Time.deltaTime;
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -74,7 +94,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartGame(CarSelectionSlot[] slots)
+    public void OnStartGame()
+    {
+        StartCoroutine(StartCountDown());
+    }
+
+    private IEnumerator StartCountDown()
+    {
+        countDown.SetActive(true);
+
+        float timeLeft = countDownTime;
+
+        while (timeLeft > 0)
+        {
+            countDownText.text = timeLeft.ToString();
+
+            yield return new WaitForSeconds(1f);
+
+            timeLeft--;
+        }
+
+        countDownText.text = "GO!";
+
+        foreach (CarScore score in scoreboard)
+        {
+            score.car.GetComponent<ArcadeCar>().isReady = true;
+        }
+
+        yield return new WaitForSeconds(.5f);
+
+        countDown.SetActive(false);
+    }
+
+    public void OnStartGame(CarSelectionSlot[] slots)
     {
         // Clear previous selections
         playerSelections.Clear();
@@ -97,19 +149,41 @@ public class GameManager : MonoBehaviour
             playerSelections.Add(selection);
         }
 
-        StartCoroutine(LoadLevel(2));
+        StartCoroutine(LoadLevel(1));
     }
 
-    public void EndGame()
+    public void OnGameEnd()
     {
 
     }
 
-    public void OnCarDeath(GameObject car, GameObject killer)
+    public void OnUpdateScore(GameObject car, GameObject opponent, float damage = 0)
     {
-        cars.Remove(car);
+        CarScore carScore = scoreboard.FirstOrDefault(score => score.car == car);
+        CarScore opponentScore = scoreboard.FirstOrDefault(score => score.car == opponent);
 
-        GameObject killerCar = cars.FirstOrDefault(car => car == killer);
+        opponentScore.damageDealt += damage;
+        carScore.damageTaken += damage;
+    }
+
+    public void OnCarDeath(GameObject car, GameObject carDestroyer)
+    {
+        CarScore destroyedCarScore = scoreboard.FirstOrDefault(score => score.car == car);
+        CarScore carDestroyerScore = scoreboard.FirstOrDefault(score => score.car == carDestroyer);
+
+        // Update the car destroyers score
+        carDestroyerScore.killCount++;
+
+        // Set time alive on car death
+        destroyedCarScore.timeSurvived = currentGameTime;
+        carsLeftAlive--;
+
+        if (carsLeftAlive < 2)
+        {
+            carDestroyerScore.timeSurvived = currentGameTime;
+
+            OnGameEnd();
+        }
     }
 
     private IEnumerator LoadLevel(int levelIndex)
