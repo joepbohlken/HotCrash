@@ -28,6 +28,7 @@ public class CarConfig
     [Header("Steer Settings")]
     public float maxSteerAngle = 35;
     public float steerAngleChangeSpeed = 240;
+    public AnimationCurve steerAngleLimiter = AnimationCurve.Linear(0.0f, 1f, 200.0f, 0.3f);
     [Tooltip("0 is raw physics , 1 the car will grip in the direction it is facing")]
     [Range(0, 1)]
     public float steerHelper = 0.65f;
@@ -41,6 +42,7 @@ public class CarConfig
     public float reverseTorque = 1000;
     public SpeedType speedType = SpeedType.KPH;
     public float topSpeed = 200;
+    public float topReverseSpeed = 70;
     public int nrOfGears = 5;
     public float revRangeBoundary = 1f;
 
@@ -53,6 +55,7 @@ public class CarConfig
 
     [Header("Aerial Settings")]
     public AnimationCurve torqueCurve = AnimationCurve.Linear(0.0f, 0.0f, 5.0f, 1.0f);
+    public AnimationCurve aerialDragCurve = AnimationCurve.Linear(0.0f, 0.0f, 5.0f, 1.0f);
 
     [Header("Other Settings")]
     public float downForce = 5f;
@@ -83,7 +86,7 @@ public class CarController : MonoBehaviour
     public bool targetable { get; set; }
     public bool isDestroyed { get; set; } = false;
     public float currentSpeed { get; private set; } // magnitude of vehicle
-    public float speedInHour { get { return currentSpeed * C.KPHMult; } }
+    public float convertedCurrentSpeed { get { return currentSpeed * (carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult); } }
     public bool isGrounded { get; private set; } = false;
 
     // ---------------
@@ -102,6 +105,7 @@ public class CarController : MonoBehaviour
     private float revs;
     private Vector3 originalCenterOfMass;
     private float oldRotation;
+    private float oldDrag;
     private float oldExtremumSlip;
     private float carAngle;
 
@@ -136,6 +140,8 @@ public class CarController : MonoBehaviour
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = COM.localPosition;
 
+        oldDrag = rb.drag;
+
         //Copy wheels in public property
         wheels = new Wheel[4] {
             frontLeftWheel,
@@ -166,7 +172,7 @@ public class CarController : MonoBehaviour
             ai.InitializeAI();
         }
 
-        if(PlayerManager.main != null)
+        if (PlayerManager.main != null)
         {
             useSinglePlayerInputs = false;
         }
@@ -184,12 +190,6 @@ public class CarController : MonoBehaviour
             return;
         }
 
-        float targetSteerAngle = horizontalInput * carConfig.maxSteerAngle;
-        currentSteerAngle = Mathf.MoveTowards(currentSteerAngle, targetSteerAngle, Time.deltaTime * carConfig.steerAngleChangeSpeed);
-
-
-        carAngle = Vector3.Dot(transform.up, Vector3.down);
-
         for (int i = 0; i < wheels.Length; i++)
         {
             wheels[i].UpdateVisual();
@@ -205,6 +205,13 @@ public class CarController : MonoBehaviour
 
             UpdateControls(horizontal, vertical, roll, handBrake, unflip);
         }
+
+        float targetSteerAngle = horizontalInput * carConfig.maxSteerAngle;
+        float steerAngleMultiplier = carConfig.steerAngleLimiter.Evaluate(convertedCurrentSpeed / 100f);
+
+        currentSteerAngle = Mathf.MoveTowards(currentSteerAngle, steerAngleMultiplier * targetSteerAngle, Time.deltaTime * carConfig.steerAngleChangeSpeed);
+
+        carAngle = Vector3.Dot(transform.up, Vector3.down);
     }
 
     private void FixedUpdate()
@@ -240,7 +247,7 @@ public class CarController : MonoBehaviour
 
     private void GearChanging()
     {
-        float f = Mathf.Abs((currentSpeed * (carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult)) / carConfig.topSpeed);
+        float f = Mathf.Abs(convertedCurrentSpeed / carConfig.topSpeed);
         float upgearlimit = (1 / (float)carConfig.nrOfGears) * (currentGear + 1);
         float downgearlimit = (1 / (float)carConfig.nrOfGears) * currentGear;
 
@@ -273,7 +280,7 @@ public class CarController : MonoBehaviour
         float f = (1 / (float)carConfig.nrOfGears);
         // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
         // We smooth towards the 'target' gear factor, so that revs don't instantly snap up or down when changing gear.
-        var targetGearFactor = Mathf.InverseLerp(f * currentGear, f * (currentGear + 1), Mathf.Abs((currentSpeed * (carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult)) / carConfig.topSpeed));
+        var targetGearFactor = Mathf.InverseLerp(f * currentGear, f * (currentGear + 1), Mathf.Abs(convertedCurrentSpeed / carConfig.topSpeed));
         currentGearFactor = Mathf.Lerp(currentGearFactor, targetGearFactor, Time.deltaTime * 5f);
     }
 
@@ -299,6 +306,11 @@ public class CarController : MonoBehaviour
         if (!isGrounded)
         {
             ApplyAerialMovement();
+            rb.drag = carConfig.aerialDragCurve.Evaluate(convertedCurrentSpeed / 100f);
+        }
+        else
+        {
+            rb.drag = oldDrag;
         }
 
         if (!isGrounded && carAngle > .85f && unflipCarInput)
@@ -377,7 +389,9 @@ public class CarController : MonoBehaviour
 
     private void PopOffWheel(Wheel wheel)
     {
-        wheel.wheelView.SetParent(levelManager.wheelContainer);
+        Transform wheelContainer = levelManager != null ? levelManager.wheelContainer : null;
+
+        wheel.wheelView.SetParent(wheelContainer);
         wheel.wheelCollider.gameObject.SetActive(false);
 
         Rigidbody wheelRb = wheel.wheelView.gameObject.AddComponent<Rigidbody>();
@@ -399,13 +413,25 @@ public class CarController : MonoBehaviour
                 speed *= C.MPHMult;
                 if (speed > carConfig.topSpeed)
                     rb.velocity = (carConfig.topSpeed / C.MPHMult) * rb.velocity.normalized;
+                //if (speed > -carConfig.topSpeed)
+                //    rb.velocity = (carConfig.topSpeed / C.MPHMult) * rb.velocity.normalized;
                 break;
 
             case SpeedType.KPH:
                 speed *= C.KPHMult;
                 if (speed > carConfig.topSpeed)
                     rb.velocity = (carConfig.topSpeed / C.KPHMult) * rb.velocity.normalized;
+                //if (speed < -carConfig.topReverseSpeed)
+                //   rb.velocity = (carConfig.topReverseSpeed / C.KPHMult) * rb.velocity.normalized;
                 break;
+        }
+    }
+
+    private void ApplyBrake()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            wheels[i].wheelCollider.brakeTorque = carConfig.brakeTorque * Mathf.Abs(verticalInput);
         }
     }
 
@@ -413,65 +439,76 @@ public class CarController : MonoBehaviour
     {
         bool isAccel = verticalInput > 0;
         bool isReverse = verticalInput < 0;
+        bool velocityIsForwards = Vector3.Angle(transform.forward, rb.velocity) < 50f;
 
-        float thrustTorque;
-        switch (carConfig.carDriveType)
+        if (isAccel)
         {
-            case CarDriveType.FourWheelDrive:
-                thrustTorque = (isAccel ? verticalInput : 0) * (currentTorque / 4f);
-                for (int i = 0; i < 4; i++)
-                {
-                    wheels[i].wheelCollider.motorTorque = thrustTorque;
-                }
-                break;
-
-            case CarDriveType.FrontWheelDrive:
-                thrustTorque = (isAccel ? verticalInput : 0) * (currentTorque / 2f);
-                wheels[0].wheelCollider.motorTorque = wheels[1].wheelCollider.motorTorque = thrustTorque;
-                break;
-
-            case CarDriveType.RearWheelDrive:
-                thrustTorque = (isAccel ? verticalInput : 0) * (currentTorque / 2f);
-                wheels[2].wheelCollider.motorTorque = wheels[3].wheelCollider.motorTorque = thrustTorque;
-                break;
-
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (isReverse)
+            if (convertedCurrentSpeed > 2 && !velocityIsForwards)
             {
-                if ((currentSpeed * (carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult)) > 2 && Vector3.Angle(transform.forward, rb.velocity) < 50f)
-                {
-                    wheels[i].wheelCollider.brakeTorque = -carConfig.brakeTorque * (isReverse ? verticalInput : 0);
-                }
-                else
-                {
-                    wheels[i].wheelCollider.brakeTorque = 0f;
-                    wheels[i].wheelCollider.motorTorque = carConfig.reverseTorque * (isReverse ? verticalInput : 0);
-                }
+                // Apply braking torque to slow down
+                ApplyBrake();
             }
             else
             {
-                wheels[i].wheelCollider.brakeTorque = 0f;
+                float thrustTorque = carConfig.carDriveType == CarDriveType.FourWheelDrive ? verticalInput * (currentTorque / 4f) : verticalInput * (currentTorque / 2f);
 
-                // Reset negative motor torque from wheels that have no drive output
-                if (carConfig.carDriveType == CarDriveType.FrontWheelDrive)
+                // Apply motor torque and remove brake torque
+                for (int i = 0; i < 4; i++)
                 {
-                    wheels[2].wheelCollider.motorTorque = wheels[3].wheelCollider.motorTorque = 0f;
-                }
+                    wheels[i].wheelCollider.brakeTorque = 0f;
 
-                if (carConfig.carDriveType == CarDriveType.RearWheelDrive)
-                {
-                    wheels[0].wheelCollider.motorTorque = wheels[1].wheelCollider.motorTorque = 0f;
+                    switch (carConfig.carDriveType)
+                    {
+                        case CarDriveType.FourWheelDrive:
+                            wheels[i].wheelCollider.motorTorque = thrustTorque;
+                            break;
+
+                        case CarDriveType.FrontWheelDrive:
+                            if (0 <= i || i <= 1)
+                                wheels[i].wheelCollider.motorTorque = thrustTorque;
+                            else
+                                wheels[i].wheelCollider.motorTorque = 0f;
+                            break;
+
+                        case CarDriveType.RearWheelDrive:
+                            if (2 <= i || i <= 3)
+                                wheels[i].wheelCollider.motorTorque = thrustTorque;
+                            else
+                                wheels[i].wheelCollider.motorTorque = 0f;
+                            break;
+                    }
                 }
+            }
+        }
+        else if (isReverse)
+        {
+            if (convertedCurrentSpeed > 2 && velocityIsForwards)
+            {
+                // Apply braking torque to slow down
+                ApplyBrake();
+            }
+            else
+            {
+                // Apply reverse acceleration
+                for (int i = 0; i < 4; i++)
+                {
+                    wheels[i].wheelCollider.brakeTorque = 0f;
+                    wheels[i].wheelCollider.motorTorque = -carConfig.reverseTorque * Mathf.Abs(verticalInput);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                wheels[i].wheelCollider.brakeTorque = carConfig.brakeTorque * .05f;
+                wheels[i].wheelCollider.motorTorque = 0;
             }
         }
     }
 
     private void ApplySteer()
     {
-        currentSteerAngle = horizontalInput * carConfig.maxSteerAngle;
         wheels[0].wheelCollider.steerAngle = currentSteerAngle;
         wheels[1].wheelCollider.steerAngle = currentSteerAngle;
 
