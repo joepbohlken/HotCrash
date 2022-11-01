@@ -258,8 +258,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 8694673886836267242}
-  angle: 12
-  offset: {x: 0, y: 3, z: -8}
+  startAngle: 15
+  startOffset: {x: 0, y: 2, z: -8}
+  fullSpeedAngle: 10
+  fullSpeedOffset: {x: 0, y: 3, z: -10}
+  fullSpeedThreshold: 40
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 4096

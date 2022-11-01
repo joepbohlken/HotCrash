@@ -7,19 +7,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform cameraObject;
 
     [Header("Camera Properties")]
-    [SerializeField] private float angle = 10f;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private float startAngle = 10f;
+    [SerializeField] private Vector3 startOffset;
+    [SerializeField] private float fullSpeedAngle = 10f;
+    [SerializeField] private Vector3 fullSpeedOffset;
+    [SerializeField] private float fullSpeedThreshold = 40f;
+    [SerializeField] private bool useVelocityInAir = false;
+
+    [Space(12)]
     public LayerMask raycastLayerMask;
     public Transform target;
-
-    private Vector3 currentRotation = Vector3.zero;
 
     [HideInInspector]
     public float x;
     [HideInInspector]
     public float y;
 
-    private float angleY = 0;
+    private CarController carController;
+    private float angleY = 0f;
 
     private void OnValidate()
     {
@@ -28,7 +33,6 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        currentRotation = transform.localEulerAngles;
         Cursor.lockState = CursorLockMode.Locked;
 
         ResetPosition();
@@ -36,7 +40,12 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 newPosition = offset;
+        if (!carController || !target) return;
+
+        float currentAngle = Mathf.Lerp(startAngle, fullSpeedAngle, 1f / fullSpeedThreshold * carController.currentSpeed);
+        Vector3 currentOffset = Vector3.Lerp(startOffset, fullSpeedOffset, 1f / fullSpeedThreshold * carController.currentSpeed);
+
+        Vector3 newPosition = currentOffset;
 
         // Handle camera collision
         RaycastHit hit;
@@ -46,8 +55,6 @@ public class CameraController : MonoBehaviour
         }
 
         cameraObject.localPosition = Vector3.Lerp(cameraObject.localPosition, newPosition, 0.35f);
-
-        // Set camera rotation
 
         if (y == -1f)
         {
@@ -64,7 +71,11 @@ public class CameraController : MonoBehaviour
             }
             else angleY = 0;
         }
-        Vector3 cameraRotation = new Vector3(angle, angleY + target.eulerAngles.y, 0);
+
+        float newAngle;
+        if (carController.isGrounded || carController.isDestroyed || !useVelocityInAir) newAngle = angleY + target.eulerAngles.y;
+        else newAngle = angleY + Quaternion.LookRotation(carController.rb.velocity.normalized, Vector3.up).eulerAngles.y;
+        Vector3 cameraRotation = new Vector3(currentAngle, newAngle, 0);
         transform.eulerAngles = cameraRotation;
 
         transform.position = target.position;
@@ -77,10 +88,15 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        cameraObject.localPosition = offset;
+        cameraObject.localPosition = startOffset;
 
         transform.position = target.position;
-        Vector3 cameraRotation = new Vector3(angle, angleY + target.eulerAngles.y, 0);
+        Vector3 cameraRotation = new Vector3(startAngle, angleY + target.eulerAngles.y, 0);
         transform.eulerAngles = cameraRotation;
+    }
+
+    public void SetCar(CarController carController)
+    {
+        this.carController = carController;
     }
 }

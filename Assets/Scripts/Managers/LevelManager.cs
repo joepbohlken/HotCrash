@@ -264,6 +264,7 @@ public class LevelManager : MonoBehaviour
             CameraController cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraController>();
             cameraFollow.gameObject.name = "Camera Player " + (i + 1);
             cameraFollow.target = car.transform.Find("Body");
+            cameraFollow.SetCar(car);
 
             // Calculate camera size
             float dividerOffset = playerCount != 1 ? 0.001f : 0;
