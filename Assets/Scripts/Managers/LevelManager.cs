@@ -218,7 +218,7 @@ public class LevelManager : MonoBehaviour
         }
 
         CarController car = Instantiate(selectedCar, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<CarController>();
-        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot " + (i - playerCount + 1);
+        car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot " + (i + 1);
 
         // Set random color
         int colorIndex = Random.Range(0, carColors.Length);
