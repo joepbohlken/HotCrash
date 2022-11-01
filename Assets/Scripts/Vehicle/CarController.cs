@@ -113,6 +113,10 @@ public class CarController : MonoBehaviour
     public bool handBrakeInput { get; set; }
     public bool unflipCarInput { get; set; }
 
+    // ---------------
+    // Ability variables
+    public bool isTargetable { get; set; } = true;
+
 
     // Update control variables
     public void UpdateControls(float horizontal, float vertical, float roll, bool handBrake, bool unflip)

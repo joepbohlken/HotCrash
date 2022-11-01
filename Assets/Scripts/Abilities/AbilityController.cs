@@ -13,13 +13,12 @@ public class AbilityController : MonoBehaviour
     private Ability currentAbility;
     private float currentCooldown;
     private bool handledDestroyed = false;
+    private bool carBecameDriveable = false;
 
     private void Start()
     {
         carController = GetComponent<CarController>();
         currentCooldown = abilityCooldown;
-
-        if (!carController.isBot && hud) hud.StartCountdown(currentCooldown);
     }
 
     private void Update()
@@ -34,11 +33,17 @@ public class AbilityController : MonoBehaviour
             return;
         }
 
+        if (carController.driveable && !carBecameDriveable)
+        {
+            carBecameDriveable = true;
+            if (!carController.isBot && hud) hud.StartCountdown(currentCooldown);
+        }
+
         if (currentAbility)
         {
             currentAbility.LogicUpdate();
         }
-        else if (availableAbilities.Count > 0)
+        else if (availableAbilities.Count > 0 && carController.driveable)
         {
             currentCooldown -= Time.deltaTime;
             if (currentCooldown <= 0)

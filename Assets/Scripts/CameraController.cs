@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -25,6 +23,7 @@ public class CameraController : MonoBehaviour
 
     private CarController carController;
     private float angleY = 0f;
+    private bool hasCarTouchedGroundAtLeastOnce = false;
 
     private void OnValidate()
     {
@@ -41,6 +40,7 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         if (!carController || !target) return;
+        if (carController.isGrounded) hasCarTouchedGroundAtLeastOnce = true;
 
         float currentAngle = Mathf.Lerp(startAngle, fullSpeedAngle, 1f / fullSpeedThreshold * carController.currentSpeed);
         Vector3 currentOffset = Vector3.Lerp(startOffset, fullSpeedOffset, 1f / fullSpeedThreshold * carController.currentSpeed);
@@ -73,7 +73,7 @@ public class CameraController : MonoBehaviour
         }
 
         float newAngle;
-        if (carController.isGrounded || carController.isDestroyed || !useVelocityInAir) newAngle = angleY + target.eulerAngles.y;
+        if ((carController.isGrounded || !hasCarTouchedGroundAtLeastOnce) || carController.isDestroyed || !useVelocityInAir) newAngle = angleY + target.eulerAngles.y;
         else newAngle = angleY + Quaternion.LookRotation(carController.rb.velocity.normalized, Vector3.up).eulerAngles.y;
         Vector3 cameraRotation = new Vector3(currentAngle, newAngle, 0);
         transform.eulerAngles = cameraRotation;

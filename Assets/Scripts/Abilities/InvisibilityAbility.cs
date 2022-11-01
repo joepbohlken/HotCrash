@@ -11,6 +11,9 @@ public class InvisibilityAbility : Ability
     [SerializeField] private float duration = 2f;
     [Tooltip("Determines how opaque the car becomes.")]
     [SerializeField] private float opacity = 0.25f;
+    [Range(0, 1)]
+    [Tooltip("0 = 0% damage reduction, 0.5 = 50% damage reduction, 1 = 100% damage reduction.")]
+    [SerializeField] private float damageReduction = 0.5f;
 
     private List<Renderer> carRenderers;
     private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
@@ -74,7 +77,8 @@ public class InvisibilityAbility : Ability
             }
         }
 
-        carController.health.damageModifier = 0.5f;
+        carController.health.damageModifier = damageReduction;
+        carController.isTargetable = false;
     }
 
     public override void CarDestroyed()
@@ -91,6 +95,7 @@ public class InvisibilityAbility : Ability
     private void AbilityEnded(bool isDestroyed)
     {
         carController.health.damageModifier = 1f;
+        carController.isTargetable = true;
 
         foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> rendValuesPair in originalValues)
         {
