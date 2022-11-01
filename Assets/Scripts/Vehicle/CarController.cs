@@ -79,6 +79,8 @@ public class CarController : MonoBehaviour
     // ---------------
     // Public variables
     public PlayerController player { get; set; }
+    public Rigidbody rb { get; private set; }
+    public CarHealth health { get; private set; }
     public bool driveable { get; set; } = true;
     public bool targetable { get; set; }
     public bool isDestroyed { get; set; } = false;
@@ -88,8 +90,6 @@ public class CarController : MonoBehaviour
 
     // ---------------
     // Private variables
-    private Rigidbody rb;
-    private CarHealth health;
     private CarAI ai;
     private ParticleSystem ps;
     private LevelManager levelManager;

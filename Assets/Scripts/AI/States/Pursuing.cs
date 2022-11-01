@@ -31,11 +31,11 @@ public class Pursuing : Observant
 
         // Assign target
         float closestCar = 999f;
-        ArcadeCar newTarget = null;
+        CarController newTarget = null;
 
-        foreach (ArcadeCar car in carAI.cars)
+        foreach (CarController car in carAI.cars)
         {
-            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.carHealth.isDestroyed) continue;
+            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.isDestroyed) continue;
 
             bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.transform.position - carAI.transform.position).normalized) <= 45f;
 
@@ -71,10 +71,10 @@ public class Pursuing : Observant
         }
 
         // Set acceleration direction
-        if (!controller.allWheelIsOnAir) controller.v = 1f;
+        if (controller.isGrounded) controller.verticalInput = 1f;
 
         // Set steering direction
-        if (targetRb != null && !controller.allWheelIsOnAir)
+        if (targetRb != null && controller.isGrounded)
         {
             float predictValue = Mathf.Clamp(targetRb.velocity.magnitude / 3f, 0f, (targetRb.transform.position - carAI.transform.position).magnitude);
             float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);

@@ -74,7 +74,7 @@ public class InvisibilityAbility : Ability
             }
         }
 
-        carController.carHealth.damageModifier = 0.5f;
+        carController.health.damageModifier = 0.5f;
     }
 
     public override void CarDestroyed()
@@ -90,7 +90,7 @@ public class InvisibilityAbility : Ability
 
     private void AbilityEnded(bool isDestroyed)
     {
-        carController.carHealth.damageModifier = 1f;
+        carController.health.damageModifier = 1f;
 
         foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> rendValuesPair in originalValues)
         {

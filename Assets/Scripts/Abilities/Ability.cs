@@ -6,11 +6,11 @@ public abstract class Ability : ScriptableObject
     public Sprite abilityIcon;
 
     protected AbilityController abilityController;
-    protected ArcadeCar carController;
+    protected CarController carController;
     protected bool isActivated { get; private set; } = false;
     protected bool isCarDestroyed { get; private set; } = false;
 
-    public void Initialize(AbilityController abilityController, ArcadeCar carController)
+    public void Initialize(AbilityController abilityController, CarController carController)
     {
         this.abilityController = abilityController;
         this.carController = carController;

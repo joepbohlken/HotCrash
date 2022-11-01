@@ -8,7 +8,7 @@ public class AbilityController : MonoBehaviour
     [Tooltip("The list of abilities of which a random one will be given to the player everytime the cooldown ends.")]
     [SerializeField] private List<Ability> availableAbilities;
 
-    private carController carController;
+    private CarController carController;
     [HideInInspector] public HUD hud;
     private Ability currentAbility;
     private float currentCooldown;
@@ -16,7 +16,7 @@ public class AbilityController : MonoBehaviour
 
     private void Start()
     {
-        carController = GetComponent<carController>();
+        carController = GetComponent<CarController>();
         currentCooldown = abilityCooldown;
 
         if (!carController.isBot && hud) hud.StartCountdown(currentCooldown);
@@ -24,7 +24,7 @@ public class AbilityController : MonoBehaviour
 
     private void Update()
     {
-        if (carController.carHealth.isDestroyed)
+        if (carController.isDestroyed)
         {
             if (!handledDestroyed)
             {
@@ -38,7 +38,7 @@ public class AbilityController : MonoBehaviour
         {
             currentAbility.LogicUpdate();
         }
-        else
+        else if (availableAbilities.Count > 0)
         {
             currentCooldown -= Time.deltaTime;
             if (currentCooldown <= 0)
@@ -57,7 +57,7 @@ public class AbilityController : MonoBehaviour
 
     public void UseAbility()
     {
-        if (currentAbility && !carController.carHealth.isDestroyed)
+        if (currentAbility && !carController.isDestroyed)
         {
             currentAbility.Activated();
         }
