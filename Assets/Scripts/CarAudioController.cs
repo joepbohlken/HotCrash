@@ -32,7 +32,7 @@ public class CarAudioController : MonoBehaviour
             CarEffects effects = car.GetComponent<CarEffects>();
 
             CarSound soundObject = Instantiate(soundObjectPrefab, transform).GetComponent<CarSound>();
-            soundObject.SetUpSources(car);
+            soundObject.SetUpSources(car, car.GetComponent<CarDeformation>());
             effects.SetSound(soundObject);
 
             if (car.isBot) bots.Add(Tuple.Create(car.gameObject, soundObject));

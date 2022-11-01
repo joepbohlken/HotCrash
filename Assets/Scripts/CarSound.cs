@@ -10,6 +10,7 @@ public class CarSound : MonoBehaviour
     [SerializeField] private AudioClip carStartClip;
     [SerializeField] private AudioClip driftingClip;
     [SerializeField] private List<AudioClip> gearShiftSFX = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> crashingSFX = new List<AudioClip>();
 
     [Header("--- Gears ---")]
     [SerializeField] private List<Gear> gears = new List<Gear>();
@@ -23,6 +24,9 @@ public class CarSound : MonoBehaviour
     [SerializeField] private float gearShiftVolume;
     [Range(0, 1)]
     [SerializeField] private float driftVolume;
+    [Range(0, 1)]
+    [SerializeField] private float crashVolume;
+
 
     [Header("--- Pitch ---")]
     [Tooltip("Y - Pitch. X - Vehicle speed (km/h)")]
@@ -54,7 +58,7 @@ public class CarSound : MonoBehaviour
         public float maxAudioPitch;
     }
 
-    public void SetUpSources(ArcadeCar car)
+    public void SetUpSources(ArcadeCar car, CarDeformation carDeformation)
     {
         arcadeCar = car;
         isBot = arcadeCar.isBot;
@@ -74,6 +78,9 @@ public class CarSound : MonoBehaviour
         driftSource.spatialBlend = 1f;
         engineAudioSource.minDistance = 15;
         driftSource.maxDistance = 50;
+
+        // Crash sound
+        carDeformation.onCrash.AddListener(PlayCrashSound);
     }
 
     public void StartSounds()
@@ -123,6 +130,11 @@ public class CarSound : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PlayCrashSound()
+    {
+        engineAudioSource.PlayOneShot(crashingSFX[Random.Range(0, crashingSFX.Count)], crashVolume);
     }
 
     public void PlayDriftSound()

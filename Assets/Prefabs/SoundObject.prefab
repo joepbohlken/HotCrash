@@ -50,6 +50,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 576b30cd33c11b74589e7cf4eb403af3, type: 3}
   - {fileID: 8300000, guid: bc5da5a5e50e82e46ae238813ab4e879, type: 3}
   - {fileID: 8300000, guid: 6fb85b603e3105946b5df2af39ddc277, type: 3}
+  crashingSFX:
+  - {fileID: 8300000, guid: 9c279c62f1ee1874bb615a560efe9cbc, type: 3}
   gears:
   - name: Reverse
     audioClip: {fileID: 8300000, guid: 714f55ba27bf2c8498d77b11c2e9b715, type: 3}
@@ -79,6 +81,7 @@ MonoBehaviour:
   engineVolume: 1
   gearShiftVolume: 0.035
   driftVolume: 0.25
+  crashVolume: 0.05
   pitchCurve:
     serializedVersion: 2
     m_Curve:

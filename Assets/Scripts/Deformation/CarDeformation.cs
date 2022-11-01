@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CarDeformation : MonoBehaviour
@@ -32,6 +33,8 @@ public class CarDeformation : MonoBehaviour
     private Vector3 hitOrigin;
     private Vector3 hitDirection;
 
+    [HideInInspector] public UnityEvent onCrash;
+
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
@@ -43,10 +46,12 @@ public class CarDeformation : MonoBehaviour
         currentDebounce = Mathf.Max(0, currentDebounce - Time.fixedDeltaTime);
     }
 
+
     public void OnCollision(Collision collision)
     {
         if (collision.relativeVelocity.magnitude >= minVelocity)
         {
+
             bool deformedMesh = false;
 
             // Debounce between deformations to improve performance
@@ -69,18 +74,26 @@ public class CarDeformation : MonoBehaviour
                 }
 
                 currentCollisionAngle = Vector3.Dot(collision.GetContact(i).normal, transform.up);
+                bool isAttacker = CheckAttacker(collision.GetContact(i));
 
+  
                 // Check if the hit object can be deformed (does it contain the DeformablePart script)
                 DeformablePart hitPart = collision.GetContact(i).thisCollider.GetComponent<DeformablePart>();
                 if (hitPart != null)
                 {
                     bool hitBottom = currentCollisionAngle > 0.7f;
 
+                    // Play car and ground collision sound
+                    if (isAttacker && i == 0 ||collision.gameObject.CompareTag("Ground") && !hitBottom)
+                    {
+                        onCrash.Invoke();
+                    }
+
                     bool partDestroyed = false;
                     if ((collision.gameObject.CompareTag("Ground") && !hitBottom) || collision.gameObject.CompareTag("Car"))
                     {
                         // Apply damage and only deform if the part has not been destroyed
-                        partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, myRigidbody);
+                        partDestroyed = hitPart.ApplyDamage(i, collision, minVelocity, myRigidbody, isAttacker);
                     }
 
                     if (!partDestroyed && canDeform && !hitBottom)
@@ -99,6 +112,17 @@ public class CarDeformation : MonoBehaviour
                 Debug.DrawRay(hitOrigin, hitDirection * .5f, Color.cyan, 10);
             }
         }
+    }
+    private bool CheckAttacker(ContactPoint contactPoint)
+    {
+        float angle = Vector3.Dot(contactPoint.thisCollider.transform.forward, contactPoint.normal);
+        if (angle < -.95f)
+        {
+
+            return true;
+        }
+
+        return false;
     }
 
     private void OnCollisionEnter(Collision collision)
