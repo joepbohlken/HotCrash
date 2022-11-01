@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [Header("Camera Properties")]
     [SerializeField] private float angle = 10f;
     [SerializeField] private Vector3 offset;
+    public LayerMask raycastLayerMask;
     public Transform target;
 
     private Vector3 currentRotation = Vector3.zero;
@@ -39,7 +40,7 @@ public class CameraController : MonoBehaviour
 
         // Handle camera collision
         RaycastHit hit;
-        if (Physics.Linecast(transform.position, transform.TransformPoint(newPosition), out hit))
+        if (Physics.Linecast(transform.position, transform.TransformPoint(newPosition), out hit, raycastLayerMask))
         {
             newPosition.z = -hit.distance;
         }
@@ -79,7 +80,7 @@ public class CameraController : MonoBehaviour
         cameraObject.localPosition = offset;
 
         transform.position = target.position;
-        Quaternion cameraQuaternion = Quaternion.Euler(0, target.parent != null ? target.parent.localEulerAngles.y : 0f, 0);
-        transform.rotation = cameraQuaternion;
+        Vector3 cameraRotation = new Vector3(angle, angleY + target.eulerAngles.y, 0);
+        transform.eulerAngles = cameraRotation;
     }
 }
