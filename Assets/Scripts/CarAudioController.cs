@@ -28,7 +28,7 @@ public class CarAudioController : MonoBehaviour
 
         for (int i = 0; i < carContainer.childCount; i++)
         {
-            ArcadeCar car = carContainer.GetChild(i).GetComponent<ArcadeCar>();
+            CarController car = carContainer.GetChild(i).GetComponent<CarController>();
             CarEffects effects = car.GetComponent<CarEffects>();
 
             CarSound soundObject = Instantiate(soundObjectPrefab, transform).GetComponent<CarSound>();

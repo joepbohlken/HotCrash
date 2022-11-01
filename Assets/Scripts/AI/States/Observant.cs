@@ -17,7 +17,7 @@ public class Observant : BaseState
     private List<DetectRay> detectRays;
     private float flipDebounce = 5f;
 
-    public Observant(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Observant(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -74,7 +74,7 @@ public class Observant : BaseState
         foreach (DetectRay detectRay in detectRays)
         {
             RaycastHit hit;
-            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f, controller.raycastLayerMask))
+            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f))
             {
                 float hitSurfaceAngle = Vector3.Angle(hit.normal, Vector3.up);
                 if (hit.distance < closestHit && hitSurfaceAngle > 30f)

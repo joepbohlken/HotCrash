@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-[RequireComponent(typeof(ArcadeCar))]
 public class CarAI : StateMachine
 {
     public enum DrivingMode { Pursue, Idle }
@@ -40,7 +39,7 @@ public class CarAI : StateMachine
     {
         mainRb = GetComponent<Rigidbody>();
 
-        ArcadeCar controller = GetComponent<ArcadeCar>();
+        CarController controller = GetComponent<CarController>();
         pursuing = new Pursuing(controller, this);
         avoiding = new Avoiding(controller, this);
         reversing = new Reversing(controller, this);

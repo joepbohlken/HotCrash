@@ -16,7 +16,7 @@ public enum HitLocation
     NONE
 }
 
-[RequireComponent(typeof(MeshCollider), typeof(MeshFilter))]
+[RequireComponent(typeof(MeshFilter))]
 public class DeformablePart : MonoBehaviour
 {
     [Tooltip("The side which is affected when impacted. Set to NONE in case it handles multiple sides like the body.")]
@@ -106,7 +106,7 @@ public class DeformablePart : MonoBehaviour
         }
 
         // Update the car vitals on the UI
-        ArcadeCar carOpponent = collision.GetContact(i).otherCollider.CompareTag("Ground") ? null : collision.GetContact(i).otherCollider.GetComponentInParent<ArcadeCar>();
+        CarController carOpponent = collision.GetContact(i).otherCollider.CompareTag("Ground") ? null : collision.GetContact(i).otherCollider.GetComponentInParent<CarController>();
         if (carHealth) carHealth.AddCarDamage(carOpponent, hitLocation, opponentVital, damage, isAttacker);
 
         // Update hinge health

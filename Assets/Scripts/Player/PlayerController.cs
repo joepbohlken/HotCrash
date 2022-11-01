@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public CarSelectionSlot carSelectionSlot;
     [HideInInspector]
-    public ArcadeCar car;
+    public CarController car;
     [HideInInspector]
     public AbilityController abilityController;
     [HideInInspector]
@@ -83,11 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateCarInputs()
     {
-        car.v = movementInput.y;
-        car.h = movementInput.x;
-        car.qe = movementInput.z;
-        car.flip = flipInput;
-        car.handbrake = driftingInput;
+        car.UpdateControls(movementInput.x, movementInput.y, movementInput.z, driftingInput, flipInput);
     }
 
     private void UpdateAbilityInputs()

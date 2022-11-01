@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         foreach (CarScore score in scoreboard)
         {
-            score.car.GetComponent<ArcadeCar>().isReady = true;
+            score.car.GetComponent<CarController>().driveable = true;
         }
 
         yield return new WaitForSeconds(.5f);

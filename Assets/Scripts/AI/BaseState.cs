@@ -1,9 +1,9 @@
 public class BaseState
 {
-    protected ArcadeCar controller;
+    protected CarController controller;
     protected CarAI carAI;
 
-    public BaseState(ArcadeCar controller, CarAI carAI)
+    public BaseState(CarController controller, CarAI carAI)
     {
         this.controller = controller;
         this.carAI = carAI;
