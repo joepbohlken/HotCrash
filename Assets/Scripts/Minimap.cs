@@ -7,10 +7,15 @@ public class Minimap : MonoBehaviour
 {
     private Dictionary<Transform, GameObject> carsAndIndicators = new Dictionary<Transform, GameObject>();
 
+    private int minimapSizeX = 84;
+    private int minimapSizeY = 138;
+
     [SerializeField]
     private Color[] indicatorColors;
     [SerializeField]
     private GameObject carIndicatorPrefab;
+    [SerializeField]
+    private int mapMinX, mapMaxX, mapMinZ, mapMaxZ;
 
     public GameObject carsParent;
 
@@ -37,14 +42,14 @@ public class Minimap : MonoBehaviour
     {
         foreach (KeyValuePair<Transform, GameObject> pair in carsAndIndicators)
         {
-            RectTransform rt = pair.Value.GetComponent<RectTransform>();
-            Transform tf = pair.Key;
+            RectTransform imageRectTransform = pair.Value.GetComponent<RectTransform>();
+            Transform carTransform = pair.Key;
 
-            rt.localPosition = new Vector3(
-            /* X */    Mathf.Lerp(-86, 86, Mathf.Sign(tf.position.x / 166) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.x / 166) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.x / 166))),
-            /* Y */    Mathf.Lerp(-130, 130, Mathf.Sign(tf.position.z / 245) == 1 ? Mathf.Lerp(0.5f, 1, tf.position.z / 245) : Mathf.Lerp(0.5f, 0f, Mathf.Abs(tf.position.z / 245))));
+            imageRectTransform.localPosition = new Vector3(
+            /* X */    Mathf.Lerp(-minimapSizeX, minimapSizeX, Mathf.Sign(carTransform.position.x) == 1 ? Mathf.Lerp(0.5f, 1, carTransform.position.x / mapMaxX) : Mathf.Lerp(0.5f, 0f, carTransform.position.x / mapMinX)),
+            /* Y */    Mathf.Lerp(-minimapSizeY, minimapSizeY, Mathf.Sign(carTransform.position.z) == 1 ? Mathf.Lerp(0.5f, 1, carTransform.position.z / mapMaxZ) : Mathf.Lerp(0.5f, 0f, carTransform.position.z / mapMinZ)));
 
-            rt.localRotation = Quaternion.Euler(0, 0, -tf.rotation.eulerAngles.y + 90);
+            imageRectTransform.localRotation = Quaternion.Euler(0, 0, -carTransform.rotation.eulerAngles.y + 90);
         }
     }
 }
