@@ -15,7 +15,7 @@ public class AbilityController : MonoBehaviour
     private bool consumableAbilities;
 
     private CarHealth carHealth;
-    private ArcadeCar carController;
+    private CarController carController;
     [HideInInspector]
     public Ability ability;
     [HideInInspector]
@@ -28,7 +28,7 @@ public class AbilityController : MonoBehaviour
     private void Start()
     {
         carHealth = GetComponent<CarHealth>();
-        carController = GetComponent<ArcadeCar>();
+        carController = GetComponent<CarController>();
 
         if(!carController.isBot)
         {

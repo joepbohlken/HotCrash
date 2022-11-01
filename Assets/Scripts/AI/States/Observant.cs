@@ -16,7 +16,7 @@ public class Observant : BaseState
 
     private List<DetectRay> detectRays;
 
-    public Observant(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Observant(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -48,7 +48,7 @@ public class Observant : BaseState
         foreach (DetectRay detectRay in detectRays)
         {
             RaycastHit hit;
-            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f, controller.raycastLayerMask))
+            if (Physics.Raycast(carAI.transform.TransformPoint(detectRay.start), detectRay.direction * carAI.transform.forward, out hit, currentSpeed / 2f))
             {
                 if (hit.distance < closestHit)
                 {

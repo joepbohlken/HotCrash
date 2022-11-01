@@ -6,7 +6,7 @@ public class Pursuing : Observant
     private Transform whitelistedTarget;
     private float targetTime = 0f;
 
-    public Pursuing(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Pursuing(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -17,10 +17,10 @@ public class Pursuing : Observant
 
         // Set acceleration direction
         //float playerSideFB = Vector3.Dot(transform.forward, (target.position - transform.position).normalized);
-        controller.v = 1f;
+        controller.verticalInput = 1f;
 
         // Set steering direction
-        controller.h = 0f;
+        controller.horizontalInput = 0f;
     }
 
     public override void LogicUpdate()
@@ -78,11 +78,11 @@ public class Pursuing : Observant
             float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
             if (Mathf.Abs(playerSideLR) > 5f)
             {
-                controller.h = Mathf.Sign(playerSideLR);
+                controller.horizontalInput = Mathf.Sign(playerSideLR);
             }
             else
             {
-                controller.h = 0f;
+                controller.horizontalInput = 0f;
             }
         }
 

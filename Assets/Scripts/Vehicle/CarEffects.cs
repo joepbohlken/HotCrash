@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarEffects : MonoBehaviour
 {
-    private ArcadeCar arcadeCar;
+    private CarController car;
     private bool isDrifting = false;
     private bool tireMarksFlag;
 
@@ -15,7 +15,7 @@ public class CarEffects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        arcadeCar = GetComponent<ArcadeCar>();
+        car = GetComponent<CarController>();
     }
 
     // Update is called once per frame
@@ -32,15 +32,15 @@ public class CarEffects : MonoBehaviour
 
     private void CheckDrift()
     {
-        float actualSpeed = arcadeCar.speed * 3.6f;
+        float actualSpeed = car.currentSpeed * (car.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
 
-        if (arcadeCar.isHandBrakeNow && !isDrifting && actualSpeed >= 25f)
+        if (car.handBrakeInput && !isDrifting && actualSpeed >= 25f)
         {
             isDrifting = true;
             carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if ((!arcadeCar.isHandBrakeNow && isDrifting) || actualSpeed <= 25f)
+        else if ((!car.handBrakeInput && isDrifting) || actualSpeed <= 25f)
         {
             isDrifting = false;
             carSound.StopDriftSound();
@@ -69,7 +69,7 @@ public class CarEffects : MonoBehaviour
         {
             return;
         }
-        foreach(TrailRenderer T in tireMarks)
+        foreach (TrailRenderer T in tireMarks)
         {
             T.emitting = false;
         }

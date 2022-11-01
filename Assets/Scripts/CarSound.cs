@@ -36,7 +36,7 @@ public class CarSound : MonoBehaviour
     private bool isDrifting = false;
     private bool isSetUp = false;
 
-    private ArcadeCar arcadeCar;
+    private CarController carController;
 
     [Serializable]
     public class Gear
@@ -53,9 +53,9 @@ public class CarSound : MonoBehaviour
         public float maxAudioPitch;
     }
 
-    public void SetUpSources(ArcadeCar car)
+    public void SetUpSources(CarController car)
     {
-        arcadeCar = car;
+        carController = car;
 
         // Engine source
         engineAudioSource = gameObject.AddComponent<AudioSource>();
@@ -88,9 +88,12 @@ public class CarSound : MonoBehaviour
 
     public void SetEngineSound()
     {
-        float speed =  arcadeCar.GetSpeed() * 3.6f;
+        // TODO FIX FOR NEW CAR CONTROLLER
 
-        if (arcadeCar.isAcceleration || arcadeCar.isReverseAcceleration)
+        /*
+        float speed = carController.currentSpeed * (carController.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
+
+        if (carController.isAcceleration || carController.isReverseAcceleration)
         {
             pitchRate = 0;
             engineAudioSource.pitch = pitchCurve.Evaluate(speed) / 100;
@@ -118,6 +121,7 @@ public class CarSound : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     public void PlayDriftSound()

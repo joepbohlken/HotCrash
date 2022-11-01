@@ -66,7 +66,10 @@ public class LevelManager : MonoBehaviour
                 spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
             }
         }
+    }
 
+    private void Start()
+    {
         if (!initializePlayerManager)
         {
             InitializeGame();
@@ -77,6 +80,7 @@ public class LevelManager : MonoBehaviour
         {
             PlayerManager.main.ShowMenu(true);
         }
+
     }
 
     private void OnPlayersReady()
@@ -213,7 +217,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        ArcadeCar car = Instantiate(selectedCar, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<ArcadeCar>();
+        CarController car = Instantiate(selectedCar, spawnPos, Quaternion.LookRotation((Vector3.zero - spawnPos), transform.up), carParentTransform).GetComponent<CarController>();
         car.gameObject.name = isPlayer ? "Player " + (i + 1) : "Bot " + (i - playerCount + 1);
 
         // Set random color
@@ -232,8 +236,13 @@ public class LevelManager : MonoBehaviour
         }
 
         car.transform.Find("Body").gameObject.GetComponent<Renderer>().material = selectedColor;
-        car.isReady = false;
         car.isBot = !isPlayer;
+
+        if (GameManager.main != null)
+        {
+            car.driveable = false;
+        }
+
 
         if (GameManager.main != null)
         {
@@ -249,6 +258,8 @@ public class LevelManager : MonoBehaviour
 
         if (isPlayer)
         {
+            car.player = selection.player;
+
             // Add camera
             CameraController cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraController>();
             cameraFollow.gameObject.name = "Camera Player " + (i + 1);

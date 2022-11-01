@@ -29,7 +29,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     [HideInInspector]
-    public ArcadeCar car;
+    public CarController car;
 
     private void Start()
     {
