@@ -35,6 +35,7 @@ public class CarSound : MonoBehaviour
     private float pitchRate;
     private bool isDrifting = false;
     private bool isSetUp = false;
+    private bool isBot = true;
 
     private ArcadeCar arcadeCar;
 
@@ -56,6 +57,7 @@ public class CarSound : MonoBehaviour
     public void SetUpSources(ArcadeCar car)
     {
         arcadeCar = car;
+        isBot = arcadeCar.isBot;
 
         // Engine source
         engineAudioSource = gameObject.AddComponent<AudioSource>();
@@ -110,7 +112,10 @@ public class CarSound : MonoBehaviour
                 {
                     currentGear = temp;
                     // Plays Gearshift sfx
-                    engineAudioSource.PlayOneShot(gearShiftSFX[Random.Range(0, gearShiftSFX.Count)], gearShiftVolume);
+                    if (!isBot)
+                    {
+                        engineAudioSource.PlayOneShot(gearShiftSFX[Random.Range(0, gearShiftSFX.Count)], gearShiftVolume);
+                    }
 
                     // Changes Engine Gear Sound
                     engineAudioSource.clip = gear.audioClip;

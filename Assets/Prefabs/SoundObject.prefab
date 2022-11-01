@@ -77,7 +77,7 @@ MonoBehaviour:
     maxAudioPitch: 1.5
   engineStartVolume: 0.5
   engineVolume: 1
-  gearShiftVolume: 0.1
+  gearShiftVolume: 0.035
   driftVolume: 0.25
   pitchCurve:
     serializedVersion: 2
