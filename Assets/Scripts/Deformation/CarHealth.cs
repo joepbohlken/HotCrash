@@ -34,6 +34,9 @@ public class CarHealth : MonoBehaviour
     [HideInInspector]
     public bool isDestroyed = false;
 
+    // Invisibility Variable
+    [HideInInspector] public float damageModifier = 1f;
+
     private void Start()
     {
         arcadeCar = GetComponent<ArcadeCar>();
@@ -59,6 +62,9 @@ public class CarHealth : MonoBehaviour
     public void AddCarDamage(ArcadeCar carOpponent, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
         if (hitLocation == HitLocation.NONE || carOpponent.GetComponent<CarHealth>().isDestroyed) return;
+
+        // Apply ability effect
+        damage *= damageModifier;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
