@@ -66,7 +66,10 @@ public class LevelManager : MonoBehaviour
                 spawnPoints.Add(spawnPointsTransform.GetChild(i).GetComponent<Transform>());
             }
         }
+    }
 
+    private void Start()
+    {
         if (!initializePlayerManager)
         {
             InitializeGame();
