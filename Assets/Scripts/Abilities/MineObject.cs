@@ -50,6 +50,7 @@ public class MineObject : MonoBehaviour
     private IEnumerator Explosion()
     {
         GameObject explosion = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        highlight.enabled = false;
 
         yield return new WaitForSeconds(2f);
         Destroy(explosion);
