@@ -63,7 +63,7 @@ MonoBehaviour:
   highlight: {fileID: 2668208783748568261}
   explosionEffectPrefab: {fileID: 5202976511654483060, guid: b0373880d58c04a4d9da6b85656b491c, type: 3}
   explosionRadius: 10
-  explosionStrength: 30000
+  explosionStrength: 20000
 --- !u!1 &3658880446489761847
 GameObject:
   m_ObjectHideFlags: 0

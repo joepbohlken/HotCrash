@@ -64,6 +64,9 @@ public class Observant : BaseState
             controller.unflipCarInput = true;
         }
 
+        // Handle abilities
+        abilityController.UseAbility();
+
         // Initialize detect rays
         float currentSpeed = Mathf.Clamp(Vector3.Dot(carAI.transform.forward, carAI.mainRb.velocity), 10f, 999f);
 
