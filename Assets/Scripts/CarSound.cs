@@ -33,7 +33,8 @@ public class CarSound : MonoBehaviour
     [SerializeField] private AnimationCurve pitchCurve;
 
     private AudioSource engineAudioSource;
-    private AudioSource driftSource;
+    private AudioSource driftAudioSource;
+    private AudioSource crashAudioSource;
 
     private int currentGear = 1;
     private float pitchRate;
@@ -72,14 +73,22 @@ public class CarSound : MonoBehaviour
         engineAudioSource.maxDistance = 50;
 
         // Drifting source
-        driftSource = gameObject.AddComponent<AudioSource>();
-        driftSource.clip = driftingClip;
-        driftSource.loop = true;
-        driftSource.spatialBlend = 1f;
+        driftAudioSource = gameObject.AddComponent<AudioSource>();
+        driftAudioSource.clip = driftingClip;
+        driftAudioSource.loop = true;
+        driftAudioSource.spatialBlend = 1f;
         engineAudioSource.minDistance = 15;
-        driftSource.maxDistance = 50;
+        driftAudioSource.maxDistance = 50;
 
         // Crash sound
+        crashAudioSource = gameObject.AddComponent<AudioSource>();
+        crashAudioSource.playOnAwake = false;
+        crashAudioSource.loop = false;
+        crashAudioSource.volume = crashVolume;
+        crashAudioSource.spatialBlend = 1f;
+        crashAudioSource.minDistance = 15;
+        crashAudioSource.maxDistance = 50;
+
         carDeformation.onCrash.AddListener(PlayCrashSound);
     }
 
@@ -134,7 +143,10 @@ public class CarSound : MonoBehaviour
 
     public void PlayCrashSound()
     {
-        engineAudioSource.PlayOneShot(crashingSFX[Random.Range(0, crashingSFX.Count)], crashVolume);
+        crashAudioSource.clip = crashingSFX[Random.Range(0, crashingSFX.Count)];
+        crashAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        crashAudioSource.Play();
+        //engineAudioSource.PlayOneShot(crashingSFX[Random.Range(0, crashingSFX.Count)], crashVolume);
     }
 
     public void PlayDriftSound()
@@ -142,8 +154,8 @@ public class CarSound : MonoBehaviour
         if (!isDrifting && isSetUp)
         {
             isDrifting = true;
-            driftSource.volume = driftVolume;
-            driftSource.Play();
+            driftAudioSource.volume = driftVolume;
+            driftAudioSource.Play();
             StopAllCoroutines();
         }
     }
@@ -162,8 +174,8 @@ public class CarSound : MonoBehaviour
         for (float i = 0f; i < 1f; i+= 0.1f)
         {
             yield return new WaitForSeconds(0.05f);
-            driftSource.volume = Mathf.Lerp(driftVolume, 0, i);
+            driftAudioSource.volume = Mathf.Lerp(driftVolume, 0, i);
         }
-            driftSource.Stop();
+            driftAudioSource.Stop();
     }
 }
