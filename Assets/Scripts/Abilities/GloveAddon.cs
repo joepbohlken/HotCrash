@@ -32,7 +32,7 @@ public class GloveAddon : MonoBehaviour
 
         //Check bounds
         CapsuleCollider capsuleCollider = transform.GetComponent<CapsuleCollider>();
-        MeshCollider meshCollider = target.GetComponent<MeshCollider>();
+        MeshCollider meshCollider = target.GetComponentInChildren<MeshCollider>();
 
         if(capsuleCollider.bounds.Intersects(meshCollider.bounds))
         {

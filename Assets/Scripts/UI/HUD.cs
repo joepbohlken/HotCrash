@@ -33,6 +33,7 @@ public class HUD : MonoBehaviour
     public Image bottomLeftBorder;
     public Image topRightBorder;
     public Image bottomRightBorder;
+    public TextMeshProUGUI targetText;
     public Camera carCamera;
 
     [HideInInspector]
@@ -96,6 +97,17 @@ public class HUD : MonoBehaviour
         //killsText.text = car.killCount.ToString();
     }
 
+    public void TargetingTextEnable()
+    {
+        targetText.enabled = true;
+    }
+
+    public void TargetingTextDisable()
+    {
+        targetText.enabled = false;
+    }
+
+    /*
     public void TargetingReticle(MeshCollider targetCollider)
     {
         if (carCamera == null) return;
@@ -182,4 +194,5 @@ public class HUD : MonoBehaviour
         bottomLeftBorder.enabled = false;
         bottomRightBorder.enabled = false;
     }
+    */
 }
