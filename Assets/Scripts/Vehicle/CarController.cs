@@ -34,7 +34,7 @@ public class CarConfig
     public float steerHelper = 0.65f;
     [Tooltip("0 is no traction control, 1 is full interference")]
     [Range(0, 1)]
-    public float tractionControl = 1;
+    public float tractionControl = 0;
 
     [Header("Drive Settings")]
     public CarDriveType carDriveType = CarDriveType.RearWheelDrive;
@@ -107,7 +107,9 @@ public class CarController : MonoBehaviour
     private float oldRotation;
     private float oldDrag;
     private float oldExtremumSlip;
+    private float oldStiffness;
     private float carAngle;
+    private float driftReleased;
 
     // ---------------
     // Input variables & update method
@@ -152,6 +154,7 @@ public class CarController : MonoBehaviour
 
         currentTorque = carConfig.fullTorqueOverAllWheels - (carConfig.tractionControl * carConfig.fullTorqueOverAllWheels);
         oldExtremumSlip = wheels[2].wheelCollider.sidewaysFriction.extremumSlip;
+        oldStiffness = wheels[2].wheelCollider.sidewaysFriction.stiffness;
 
         if (health)
             health.onDestroyed.AddListener(OnDestroyed);
@@ -537,6 +540,7 @@ public class CarController : MonoBehaviour
 
         if (handBrakeInput)
         {
+            driftReleased = 0;
             var hbTorque = (handBrakeInput ? 1 : 0) * carConfig.maxHandbrakeTorque;
             wheels[2].wheelCollider.brakeTorque = hbTorque;
             wheels[3].wheelCollider.brakeTorque = hbTorque;
@@ -546,8 +550,20 @@ public class CarController : MonoBehaviour
         }
         else
         {
+            driftReleased += Time.fixedDeltaTime;
             leftWheelCurve.extremumSlip = oldExtremumSlip;
             rightWheelCurve.extremumSlip = oldExtremumSlip;
+
+            if (driftReleased < .25f)
+            {
+                leftWheelCurve.stiffness = 2;
+                rightWheelCurve.stiffness = 2;
+            }
+            else
+            {
+                leftWheelCurve.stiffness = oldStiffness;
+                rightWheelCurve.stiffness = oldStiffness;
+            }
         }
 
         wheels[2].wheelCollider.sidewaysFriction = leftWheelCurve;

@@ -951,6 +951,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2607312972178439992, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
+      propertyPath: sceneTransitionTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2607312972178439993, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
       propertyPath: m_RootOrder
       value: 1

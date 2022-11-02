@@ -53,8 +53,7 @@ MonoBehaviour:
   carCanvasPrefab: {fileID: 3701029060393789116, guid: 7e981d432fce61640a1f636d85f40f11, type: 3}
   playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
   carPrefabs:
-  - {fileID: 3931561997790069067, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
-  - {fileID: 4511810204214783198, guid: e6a489bfea63b0749bb52089d471f5b8, type: 3}
+  - {fileID: 6776267300940187485, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
   carColors:
   - {fileID: 2100000, guid: 7e3c3f2ab3031134f8c873d67e957aef, type: 2}
   - {fileID: 2100000, guid: 890539686d445f740b4358856e216304, type: 2}
@@ -67,4 +66,4 @@ MonoBehaviour:
   hudParentTransform: {fileID: 0}
   spawnPointsTransform: {fileID: 0}
   wheelContainer: {fileID: 0}
-  debugMode: 0
+  initializePlayerManager: 0

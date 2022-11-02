@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4153712051654171643}
   - component: {fileID: 5770735611136325129}
   - component: {fileID: 7902393412606474656}
+  - component: {fileID: 8437086784514539474}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -89,6 +90,26 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &8437086784514539474
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843518002458612534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2783d87517771ca42bd95252f70ddb96, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2607312972178439994
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +349,6 @@ GameObject:
   - component: {fileID: 4597265641094523312}
   - component: {fileID: 4555938947493591097}
   - component: {fileID: 5658833698807305868}
-  - component: {fileID: 469591017237725470}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -420,26 +440,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!95 &469591017237725470
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8968132011877846705}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2783d87517771ca42bd95252f70ddb96, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6624286908765841594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -447,6 +447,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3682231517994044479}
     m_Modifications:
+    - target: {fileID: 558754269722737058, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446894923173463194, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 514.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3446894923173463194, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -187.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4080639649382470256, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -477,7 +489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4080639649382470256, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -399.99994
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4080639649382470256, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
       propertyPath: m_SizeDelta.y
@@ -513,7 +525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4080639649382470256, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200.00003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4080639649382470256, guid: e62471517dbfd3040b1ecceb52488295, type: 3}
       propertyPath: m_AnchoredPosition.y

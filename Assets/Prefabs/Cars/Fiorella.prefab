@@ -11005,7 +11005,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     steerHelper: 0.65
-    tractionControl: 1
+    tractionControl: 0
     carDriveType: 1
     fullTorqueOverAllWheels: 8000
     reverseTorque: 1500

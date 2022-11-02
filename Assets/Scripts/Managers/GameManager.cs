@@ -20,6 +20,7 @@ public class CarScore
 {
     public GameObject car;
 
+    public int placement = 0;
     public int killCount = 0;
     public float damageDealt = 0;
     public float damageTaken = 0;
@@ -48,8 +49,9 @@ public class GameManager : MonoBehaviour
     private Animator animator;
     private bool initialLoad = false;
 
-    private bool gameStarted = false;
     private float currentGameTime = 0;
+    public bool gameStarted { get; set; } = false;
+    public int playersLeft { get; private set; }
 
     private void OnEnable()
     {
@@ -81,6 +83,15 @@ public class GameManager : MonoBehaviour
         if (gameStarted)
         {
             currentGameTime += Time.deltaTime;
+
+            for (int i = 0; i < scoreboard.Count; i++)
+            {
+                CarController car = scoreboard[i].car.GetComponent<CarController>();
+                if (!car.isDestroyed)
+                {
+                    scoreboard[i].timeSurvived = currentGameTime;
+                }
+            }
         }
     }
 
@@ -117,6 +128,8 @@ public class GameManager : MonoBehaviour
         }
 
         countDownText.text = "GO!";
+        gameStarted = true;
+        playersLeft = playersCount;
 
         foreach (CarScore score in scoreboard)
         {
@@ -156,7 +169,36 @@ public class GameManager : MonoBehaviour
 
     public void OnGameEnd()
     {
+        // Fade out to end camera
+        StartCoroutine(TransitionToLeaderboard());
+    }
 
+    public void CleanUpLevelScene()
+    {
+        Transform cameraParent = FindObjectOfType<LevelManager>().cameraParentTransform;
+        Transform hudParent = FindObjectOfType<LevelManager>().hudParentTransform;
+
+        // Delete player cameras
+        for (int i = 0; i < playersCount; i++)
+        {
+            GameObject camera = cameraParent.GetChild(i).gameObject;
+            GameObject hud = hudParent.GetChild(i).gameObject;
+
+            if (camera != null)
+                Destroy(camera);
+
+            if (hud != null)
+                Destroy(hud);
+        }
+
+        // Todo instatiate spectator camera
+    }
+
+    private IEnumerator TransitionToLeaderboard()
+    {
+        yield return new WaitForSeconds(3f);
+
+        leaderboard.gameObject.SetActive(true);
     }
 
     public void OnUpdateScore(GameObject car, float damage = 0, bool taken = false)
@@ -167,6 +209,16 @@ public class GameManager : MonoBehaviour
             carScore.damageTaken += damage;
         else
             carScore.damageDealt += damage;
+
+
+        // Order by longest alive, then highest kills, highest dmg done and finally dmg taken
+        scoreboard = scoreboard.OrderByDescending(a => a.timeSurvived).ThenByDescending(a => a.killCount).ThenByDescending(a => a.damageDealt).ThenByDescending(a => a.damageTaken).ToList();
+
+        // Update the placement
+        for (int i = 0; i < scoreboard.Count; i++)
+        {
+            scoreboard[i].placement = (i + 1);
+        }
     }
 
     public void OnCarDeath(GameObject car, GameObject carDestroyer)
@@ -176,12 +228,15 @@ public class GameManager : MonoBehaviour
 
         // Update the car destroyers score
         carDestroyerScore.killCount++;
-
-        // Set time alive on car death
-        destroyedCarScore.timeSurvived = currentGameTime;
         carsLeftAlive--;
 
-        if (carsLeftAlive < 2)
+        if (car.GetComponent<CarController>().player != null)
+        {
+            playersLeft--;
+        }
+
+        // End game if 1 player left or no players left
+        if (carsLeftAlive < 2 || playersLeft < 1)
         {
             carDestroyerScore.timeSurvived = currentGameTime;
 
@@ -191,6 +246,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator LoadLevel(int levelIndex)
     {
+        yield return new WaitForSeconds(1.5f);
+
         animator.Play("Crossfade_Start");
 
         yield return new WaitForSeconds(sceneTransitionTime);

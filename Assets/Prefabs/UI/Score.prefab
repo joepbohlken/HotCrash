@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 4889642211882996052}
   - component: {fileID: 2839171309708754400}
   - component: {fileID: 4978914023944887552}
+  - component: {fileID: -4533363307910549705}
   - component: {fileID: 722995609072021695}
   m_Layer: 0
   m_Name: Score
@@ -893,7 +894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000043362, y: -17.5}
+  m_AnchoredPosition: {x: 0.000043362, y: -12.5}
   m_SizeDelta: {x: 338.8569, y: 25}
   m_Pivot: {x: 0.5000001, y: 0.5}
 --- !u!222 &2839171309708754400
@@ -934,6 +935,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &-4533363307910549705
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6927088056696869830}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &722995609072021695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -951,6 +964,13 @@ MonoBehaviour:
   killCount: {fileID: 1558320352643209311}
   damageDealt: {fileID: 7210024958242723695}
   damageTaken: {fileID: 5118344498101485234}
+  score:
+    car: {fileID: 0}
+    placement: 0
+    killCount: 0
+    damageDealt: 0
+    damageTaken: 0
+    timeSurvived: 0
 --- !u!1 &7301934754703726686
 GameObject:
   m_ObjectHideFlags: 0
