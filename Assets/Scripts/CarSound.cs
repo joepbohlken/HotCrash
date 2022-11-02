@@ -85,7 +85,7 @@ public class CarSound : MonoBehaviour
         driftAudioSource.clip = driftingClip;
         driftAudioSource.loop = true;
         driftAudioSource.spatialBlend = 1f;
-        engineAudioSource.minDistance = 15;
+        driftAudioSource.minDistance = 15;
         driftAudioSource.maxDistance = 50;
 
         // Crash sound

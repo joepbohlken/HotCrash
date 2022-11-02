@@ -1001,7 +1001,6 @@ public class ArcadeCar : MonoBehaviour
 
         }
 
-        carEffects.UpdateTrailPosition(axle.wheelDataL.touchPoint.point, axle.wheelDataR.touchPoint.point);
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
