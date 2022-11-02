@@ -24,7 +24,7 @@ public class CarEffects : MonoBehaviour
     {
         if (carSound == null) return;
         CheckDrift();
-        UpdateTrailPosition();
+        //UpdateTrailPosition();
     }
 
     public void SetSound(CarSound carSound)
