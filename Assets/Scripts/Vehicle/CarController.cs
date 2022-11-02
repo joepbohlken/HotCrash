@@ -193,6 +193,12 @@ public class CarController : MonoBehaviour
             return;
         }
 
+        if (gameObject.transform.position.y < -10f)
+        {
+            isDestroyed = true;
+            OnDestroyed();
+        }
+
         for (int i = 0; i < wheels.Length; i++)
         {
             wheels[i].UpdateVisual();

@@ -47,11 +47,12 @@ public class GameManager : MonoBehaviour
     public int carsLeftAlive;
 
     private Animator animator;
-    private bool initialLoad = false;
-
     private float currentGameTime = 0;
+
+    public bool initialLoad { get; private set; } = false;
     public bool gameStarted { get; set; } = false;
     public int playersLeft { get; private set; }
+    public bool leaderboardOpen { get; private set; } = false;
 
     private void OnEnable()
     {
@@ -171,6 +172,8 @@ public class GameManager : MonoBehaviour
     {
         // Fade out to end camera
         StartCoroutine(TransitionToLeaderboard());
+
+        leaderboardOpen = true;
     }
 
     public void CleanUpLevelScene()
@@ -221,13 +224,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ReturnToMainMenu()
+    {
+        gameStarted = false;
+        StartCoroutine(LoadLevel(0));
+    }
+
     public void OnCarDeath(GameObject car, GameObject carDestroyer)
     {
+        bool carDestroyNotNull = carDestroyer != null;
+
         CarScore destroyedCarScore = scoreboard.FirstOrDefault(score => score.car == car);
         CarScore carDestroyerScore = scoreboard.FirstOrDefault(score => score.car == carDestroyer);
 
         // Update the car destroyers score
-        carDestroyerScore.killCount++;
+        if (carDestroyNotNull)
+            carDestroyerScore.killCount++;
+
         carsLeftAlive--;
 
         if (car.GetComponent<CarController>().player != null)
@@ -235,22 +248,34 @@ public class GameManager : MonoBehaviour
             playersLeft--;
         }
 
+        // Order by longest alive, then highest kills, highest dmg done and finally dmg taken
+        scoreboard = scoreboard.OrderByDescending(a => a.timeSurvived).ThenByDescending(a => a.killCount).ThenByDescending(a => a.damageDealt).ThenByDescending(a => a.damageTaken).ToList();
+
         // End game if 1 player left or no players left
         if (carsLeftAlive < 2 || playersLeft < 1)
         {
-            carDestroyerScore.timeSurvived = currentGameTime;
+            if (carDestroyNotNull)
+                carDestroyerScore.timeSurvived = currentGameTime;
 
             OnGameEnd();
         }
     }
 
+    private void ResetCanvas()
+    {
+        countDown.SetActive(false);
+        leaderboard.gameObject.SetActive(false);
+    }
+
     private IEnumerator LoadLevel(int levelIndex)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         animator.Play("Crossfade_Start");
 
         yield return new WaitForSeconds(sceneTransitionTime);
+
+        ResetCanvas();
 
         SceneManager.LoadScene(levelIndex);
     }

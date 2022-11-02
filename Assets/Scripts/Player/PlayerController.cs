@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     public int playerIndex { get; set; }
     public Color playerColor { get; set; }
 
-
     private bool justJoined = true;
     private float time = 0;
 
@@ -74,6 +73,13 @@ public class PlayerController : MonoBehaviour
 
         if (carSelectionSlot)
             UpdateCarSelection();
+
+        // Confirm return to main menu
+        if (GameManager.main != null && GameManager.main.leaderboardOpen && playerIndex == 0 && readyInput)
+        {
+            readyInput = false;
+            GameManager.main.ReturnToMainMenu();
+        }
     }
 
     private void UpdateCarInputs()

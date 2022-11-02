@@ -29,7 +29,6 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         currentRotation = transform.localEulerAngles;
-        Cursor.lockState = CursorLockMode.Locked;
 
         ResetPosition();
     }

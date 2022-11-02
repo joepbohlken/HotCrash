@@ -21,17 +21,15 @@ public class Leaderboard : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-
     private void Update()
     {
-        if (GameManager.main.playersLeft == 0 && GameManager.main.gameStarted)
+        if (GameManager.main.playersLeft == 0 && GameManager.main.gameStarted && isReady)
         {
             List<CarScore> scoreboard = GameManager.main.scoreboard;
 
             UpdateScoreboard(scoreboard);
         }
     }
-
 
     private void UpdateScoreboard(List<CarScore> scoreboard)
     {

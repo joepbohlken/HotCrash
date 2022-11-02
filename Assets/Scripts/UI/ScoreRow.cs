@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreRow : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ScoreRow : MonoBehaviour
     public TextMeshProUGUI killCount;
     public TextMeshProUGUI damageDealt;
     public TextMeshProUGUI damageTaken;
+
+    public GameObject skullIcon;
 
     public CarScore score;
 
@@ -25,5 +28,10 @@ public class ScoreRow : MonoBehaviour
         killCount.text = score.killCount.ToString();
         damageDealt.text = Mathf.RoundToInt(score.damageDealt).ToString();
         damageTaken.text = Mathf.RoundToInt(score.damageTaken).ToString();
+
+        if(score.car.GetComponent<CarController>().isDestroyed)
+        {
+            skullIcon.SetActive(true);
+        }
     }
 }

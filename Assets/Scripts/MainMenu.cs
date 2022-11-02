@@ -23,6 +23,8 @@ public class MainMenu : MonoBehaviour
     private bool multiplayerMenuOpen = false;
     private int playerCount = 1;
 
+    private bool firstTimeLoad = false;
+
 
     private void OnEnable()
     {
@@ -51,11 +53,13 @@ public class MainMenu : MonoBehaviour
             slot.gameObject.SetActive(false);
             slot.changeColor.SetActive(false);
         }
+
+        firstTimeLoad = GameManager.main.initialLoad;
     }
 
     private void Start()
     {
-        if (showStartAnim)
+        if (showStartAnim && firstTimeLoad)
         {
             animator.Play("MainMenuStart");
         }

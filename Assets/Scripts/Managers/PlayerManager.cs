@@ -84,8 +84,15 @@ public class PlayerManager : MonoBehaviour
 
     private void OnDisable()
     {
-        playerInputManager.onPlayerJoined -= OnPlayerJoin;
-        playerInputManager.onPlayerLeft -= OnPlayerLeave;
+        try
+        {
+            playerInputManager.onPlayerJoined -= OnPlayerJoin;
+            playerInputManager.onPlayerLeft -= OnPlayerLeave;
+        }
+        catch
+        {
+            Debug.Log("No listeners were added yet!");
+        }
     }
 
     private void Awake()

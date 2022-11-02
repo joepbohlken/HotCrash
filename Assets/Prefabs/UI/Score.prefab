@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 44.1, y: 0}
-  m_SizeDelta: {x: 50, y: 240}
+  m_SizeDelta: {x: 50, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3250670851234661937
 CanvasRenderer:
@@ -211,6 +211,82 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1065068621197750691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8522500355001947668}
+  - component: {fileID: 282609483083107108}
+  - component: {fileID: 2257510393303684341}
+  m_Layer: 0
+  m_Name: Death Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &8522500355001947668
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065068621197750691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4889642211882996052}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 184.6, y: 0.0000024438}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.4999996, y: 0.5}
+--- !u!222 &282609483083107108
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065068621197750691}
+  m_CullTransparentMesh: 1
+--- !u!114 &2257510393303684341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065068621197750691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9098039, g: 0.25490198, b: 0.09411765, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: e5c048c9f7d53ef46b7b06999884c890, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1083417355422158015
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +323,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 106.6, y: 0}
-  m_SizeDelta: {x: 50, y: 240}
+  m_SizeDelta: {x: 50, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7336127149840238686
 CanvasRenderer:
@@ -732,7 +808,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -135.7, y: 0}
-  m_SizeDelta: {x: 50, y: 240}
+  m_SizeDelta: {x: 50, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4826014481636479356
 CanvasRenderer:
@@ -808,7 +884,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 8.6, y: 0}
-  m_SizeDelta: {x: 50, y: 240}
+  m_SizeDelta: {x: 50, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &187426185042726040
 CanvasRenderer:
@@ -889,6 +965,7 @@ RectTransform:
   - {fileID: 7068731370868735039}
   - {fileID: 87137819144635662}
   - {fileID: 2525866399422190766}
+  - {fileID: 8522500355001947668}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -964,6 +1041,7 @@ MonoBehaviour:
   killCount: {fileID: 1558320352643209311}
   damageDealt: {fileID: 7210024958242723695}
   damageTaken: {fileID: 5118344498101485234}
+  skullIcon: {fileID: 1065068621197750691}
   score:
     car: {fileID: 0}
     placement: 0
