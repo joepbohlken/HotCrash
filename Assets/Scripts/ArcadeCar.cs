@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class WheelData
 {
@@ -191,6 +192,10 @@ public class ArcadeCar : MonoBehaviour
 
     [HideInInspector]
     public bool isHandBrakeNow;
+
+    [HideInInspector]
+    public UnityEvent onDeath;
+
 
 
     private void OnValidate()
@@ -628,6 +633,8 @@ public class ArcadeCar : MonoBehaviour
     public void DestroyCar()
     {
         ps.Play();
+
+        onDeath.Invoke();
 
         foreach (Axle axle in axles)
         {

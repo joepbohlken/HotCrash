@@ -11,6 +11,7 @@ public class CarSound : MonoBehaviour
     [SerializeField] private AudioClip driftingClip;
     [SerializeField] private List<AudioClip> gearShiftSFX = new List<AudioClip>();
     [SerializeField] private List<AudioClip> crashingSFX = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> deathSFX = new List<AudioClip>();
 
     [Header("--- Gears ---")]
     [SerializeField] private List<Gear> gears = new List<Gear>();
@@ -26,6 +27,10 @@ public class CarSound : MonoBehaviour
     [SerializeField] private float driftVolume;
     [Range(0, 1)]
     [SerializeField] private float crashVolume;
+    [Range(0, 1)]
+    [SerializeField] private float deathVolume;
+    [Range(0, 1)]
+    [SerializeField] private float mineVolume;
 
 
     [Header("--- Pitch ---")]
@@ -35,6 +40,8 @@ public class CarSound : MonoBehaviour
     private AudioSource engineAudioSource;
     private AudioSource driftAudioSource;
     private AudioSource crashAudioSource;
+    private AudioSource deathAudioSource;
+    private AudioSource mineAudioSource;
 
     private int currentGear = 1;
     private float pitchRate;
@@ -88,8 +95,19 @@ public class CarSound : MonoBehaviour
         crashAudioSource.spatialBlend = 1f;
         crashAudioSource.minDistance = 15;
         crashAudioSource.maxDistance = 50;
-
         carDeformation.onCrash.AddListener(PlayCrashSound);
+
+        // Death sound
+        deathAudioSource = gameObject.AddComponent<AudioSource>();
+        deathAudioSource.playOnAwake = false;
+        deathAudioSource.loop = false;
+        deathAudioSource.volume = deathVolume;
+        deathAudioSource.spatialBlend = 1f;
+        deathAudioSource.minDistance = 15;
+        deathAudioSource.maxDistance = 50;
+        car.onDeath.AddListener(PlayDeathSound);
+
+        // Mine sound
     }
 
     public void StartSounds()
@@ -141,12 +159,23 @@ public class CarSound : MonoBehaviour
         }
     }
 
+    public void PlayDeathSound()
+    {
+        deathAudioSource.clip = deathSFX[Random.Range(0, deathSFX.Count)];
+        deathAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        deathAudioSource.Play();
+    }
+
+    public void PlayMineSound()
+    {
+
+    }
+
     public void PlayCrashSound()
     {
         crashAudioSource.clip = crashingSFX[Random.Range(0, crashingSFX.Count)];
         crashAudioSource.pitch = Random.Range(0.8f, 1.2f);
         crashAudioSource.Play();
-        //engineAudioSource.PlayOneShot(crashingSFX[Random.Range(0, crashingSFX.Count)], crashVolume);
     }
 
     public void PlayDriftSound()

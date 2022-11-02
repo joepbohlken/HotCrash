@@ -55,6 +55,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0b3413ebacace8242a5c8e498c9423ce, type: 3}
   - {fileID: 8300000, guid: 9309156bdb8adf640a3913a9dbfacfa4, type: 3}
   - {fileID: 8300000, guid: 581763964ab174b428a42c157171e262, type: 3}
+  deathSFX:
+  - {fileID: 8300000, guid: 81881d2d4971afe42b7e2c4de049e8a2, type: 3}
+  - {fileID: 8300000, guid: a71349489b8fbff488f5d6efd866fbec, type: 3}
+  - {fileID: 8300000, guid: 29108f301c4b8fc408a478833b56533c, type: 3}
+  - {fileID: 8300000, guid: 8502efb4b3cdd084b8a7afcc1503890c, type: 3}
+  - {fileID: 8300000, guid: f0af676ffc7e87346868fa82d7d8420e, type: 3}
+  - {fileID: 8300000, guid: c2e5af0bc0439674aa061dbd80aef1ac, type: 3}
   gears:
   - name: Reverse
     audioClip: {fileID: 8300000, guid: 714f55ba27bf2c8498d77b11c2e9b715, type: 3}
@@ -85,6 +92,8 @@ MonoBehaviour:
   gearShiftVolume: 0.035
   driftVolume: 0.25
   crashVolume: 0.5
+  deathVolume: 1
+  mineVolume: 1
   pitchCurve:
     serializedVersion: 2
     m_Curve:
