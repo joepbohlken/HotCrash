@@ -38,7 +38,7 @@ public class AbilityController : MonoBehaviour
 
     void Update()
     {
-        if (useAbility && used == false && !carController.isBot && !carHealth.isDestroyed)
+        if (useAbility && used == false && !carController.isBot && !carController.isDestroyed)
         {
             ability.Use();
             used = true;

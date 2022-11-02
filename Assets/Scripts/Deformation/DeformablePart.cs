@@ -16,10 +16,8 @@ public enum HitLocation
     NONE
 }
 
-[RequireComponent(typeof(MeshFilter))]
 public class DeformablePart : MonoBehaviour
 {
-    public MeshCollider meshCollider;
     [Tooltip("The side which is affected when impacted. Set to NONE in case it handles multiple sides like the body.")]
     public HitLocation carSide = HitLocation.NONE;
 
@@ -37,6 +35,7 @@ public class DeformablePart : MonoBehaviour
     [HideInInspector] public float hingeMaxLimit;
     private bool justCreatedHinge = false;
 
+    private MeshCollider meshCollider;
     private MeshFilter meshFilter;
     private HingeJoint hinge;
     private CarDeformation carDeformation;
@@ -53,6 +52,7 @@ public class DeformablePart : MonoBehaviour
     private void Start()
     {
         meshFilter = GetComponent<MeshFilter>();
+
         // Instantiate a 'clone' of the mesh, so it does not affect all other objects using the same mesh
         meshFilter.mesh = (Mesh)Instantiate(meshFilter.sharedMesh);
         meshFilter.mesh.MarkDynamic();

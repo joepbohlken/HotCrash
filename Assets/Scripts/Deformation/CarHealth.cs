@@ -34,9 +34,9 @@ public class CarHealth : MonoBehaviour
 
     private List<Image[]> bars = new List<Image[]>();
     private float currentHealth;
-    [HideInInspector]
-    public bool isDestroyed = false;
     public GameObject lastCollider { get; private set; }
+
+    private bool isDestroyed = false;
 
     private void Start()
     {
