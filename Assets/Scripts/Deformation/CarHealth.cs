@@ -62,6 +62,9 @@ public class CarHealth : MonoBehaviour
 
     public void AddCarDamage(GameObject attacker, HitLocation hitLocation, float damage)
     {
+        // Apply ability effect
+        damage *= damageModifier;
+
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
         float vitalHealthMultiplier = 1;
 

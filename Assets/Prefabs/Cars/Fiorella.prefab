@@ -11093,7 +11093,7 @@ MonoBehaviour:
   onDestroyed:
     m_PersistentCalls:
       m_Calls: []
-  health: 10
+  health: 100
   healthBars: []
   healthTexts: []
   damageMultiplierCurve:
@@ -11174,6 +11174,9 @@ MonoBehaviour:
   collisionDebounce: 0.1
   maxCollisionPoints: 10
   debugMode: 0
+  onCrash:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6776267300940187457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11186,9 +11189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71aff88e6fdd3f45ac6748a8acaedde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tireMarks:
-  - {fileID: 125942051535633451}
-  - {fileID: 125942051468116518}
+  rearLeftRenderer: {fileID: 0}
+  rearRightRenderer: {fileID: 0}
 --- !u!114 &6776267300940187456
 MonoBehaviour:
   m_ObjectHideFlags: 0

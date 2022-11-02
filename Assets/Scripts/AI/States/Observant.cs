@@ -16,6 +16,7 @@ public class Observant : BaseState
 
     private List<DetectRay> detectRays;
     private float flipDebounce = 5f;
+    private LayerMask detectLayers;
 
     public Observant(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
@@ -36,6 +37,9 @@ public class Observant : BaseState
             new DetectRay() { start = new Vector3(boxSize.x / 2f - 0.1f, boxSize.y, boxSize.z / 2f - 0.1f), direction = Quaternion.AngleAxis(0f, Vector3.up), side = DetectResult.Right },
             new DetectRay() { start = new Vector3(boxSize.x / 2f - 0.1f, boxSize.y, boxSize.z / 2f - 0.1f), direction = Quaternion.AngleAxis(45f, Vector3.up), side = DetectResult.Right }
         };
+
+        detectLayers = LayerMask.NameToLayer("CarBox") | LayerMask.NameToLayer("CarMesh");
+        detectLayers = ~detectLayers;
     }
 
     public override void LogicUpdate()
@@ -65,7 +69,12 @@ public class Observant : BaseState
         }
 
         // Handle abilities
-        abilityController.UseAbility();
+        carAI.useAbilityCooldown -= Time.deltaTime;
+        if (carAI.useAbilityCooldown <= 0f)
+        {
+            carAI.useAbilityCooldown = Random.Range(3f, 10f);
+            abilityController.UseAbility();
+        }
 
         // Initialize detect rays
         float currentSpeed = Mathf.Clamp(Vector3.Dot(carAI.transform.forward, carAI.mainRb.velocity), 10f, 999f);
