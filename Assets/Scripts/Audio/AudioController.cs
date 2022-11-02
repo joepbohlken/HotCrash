@@ -22,7 +22,6 @@ public class AudioController : MonoBehaviour
 
     private void Awake()
     {
-        if (main) Destroy(gameObject);
         main = this;
 
         levelManager = FindObjectOfType<LevelManager>();
