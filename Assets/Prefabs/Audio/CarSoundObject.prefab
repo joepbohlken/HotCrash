@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4728587571497198553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4728587571497198551}
+  - component: {fileID: 4728587571497198552}
+  m_Layer: 0
+  m_Name: CarSoundObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4728587571497198551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728587571497198553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -418.71118, y: -231.61667, z: 147.9592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4728587571497198552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728587571497198553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301d8e6a756d51d409cf9599689cb318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carStartClip: {fileID: 8300000, guid: 37cab69e2cedad347ae569e9d4139459, type: 3}
+  driftingClip: {fileID: 8300000, guid: c2728e5539257c241b15ab5ae5008b0b, type: 3}
+  gearShiftSFX:
+  - {fileID: 8300000, guid: 576b30cd33c11b74589e7cf4eb403af3, type: 3}
+  - {fileID: 8300000, guid: bc5da5a5e50e82e46ae238813ab4e879, type: 3}
+  - {fileID: 8300000, guid: 6fb85b603e3105946b5df2af39ddc277, type: 3}
+  crashingSFX:
+  - {fileID: 8300000, guid: f584f40ce479fdc419b25d0e8eb47c02, type: 3}
+  - {fileID: 8300000, guid: 0b3413ebacace8242a5c8e498c9423ce, type: 3}
+  - {fileID: 8300000, guid: 9309156bdb8adf640a3913a9dbfacfa4, type: 3}
+  - {fileID: 8300000, guid: 581763964ab174b428a42c157171e262, type: 3}
+  deathSFX:
+  - {fileID: 8300000, guid: 81881d2d4971afe42b7e2c4de049e8a2, type: 3}
+  - {fileID: 8300000, guid: a71349489b8fbff488f5d6efd866fbec, type: 3}
+  - {fileID: 8300000, guid: 29108f301c4b8fc408a478833b56533c, type: 3}
+  - {fileID: 8300000, guid: 8502efb4b3cdd084b8a7afcc1503890c, type: 3}
+  - {fileID: 8300000, guid: f0af676ffc7e87346868fa82d7d8420e, type: 3}
+  - {fileID: 8300000, guid: c2e5af0bc0439674aa061dbd80aef1ac, type: 3}
+  gears:
+  - name: Reverse
+    audioClip: {fileID: 8300000, guid: 714f55ba27bf2c8498d77b11c2e9b715, type: 3}
+    minSpeed: -100
+    maxSpeed: 0
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear1
+    audioClip: {fileID: 8300000, guid: 714f55ba27bf2c8498d77b11c2e9b715, type: 3}
+    minSpeed: 0.1
+    maxSpeed: 75
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear2
+    audioClip: {fileID: 8300000, guid: 9078427bba737294b8cce5e56165a903, type: 3}
+    minSpeed: 75.1
+    maxSpeed: 150
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  - name: Gear3
+    audioClip: {fileID: 8300000, guid: 18350e1d311d161439b5ceef54046f68, type: 3}
+    minSpeed: 150.1
+    maxSpeed: 200
+    minAudioPitch: 1
+    maxAudioPitch: 1.5
+  engineStartVolume: 0.5
+  engineVolume: 1
+  gearShiftVolume: 0.035
+  driftVolume: 0.25
+  crashVolume: 0.5
+  deathVolume: 1
+  mineVolume: 1
+  pitchCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -100
+      value: 150
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 75
+      value: 150
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 75.1
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 150
+      value: 150
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 150.1
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 200
+      value: 150
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 200.1
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 250
+      value: 150
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
