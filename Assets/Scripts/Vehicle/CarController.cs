@@ -236,13 +236,13 @@ public class CarController : MonoBehaviour
 
     private bool CheckIfGrounded()
     {
-        bool result = false;
+        bool result = true;
 
         foreach (Wheel wheel in wheels)
         {
-            if (wheel.isGrounded)
+            if (!wheel.isGrounded)
             {
-                result = true;
+                result = false;
                 break;
             }
         }

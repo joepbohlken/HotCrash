@@ -39,8 +39,8 @@ public class CarEffects : MonoBehaviour
         car.rearLeftWheel.wheelCollider.GetGroundHit(out leftHit);
         car.rearRightWheel.wheelCollider.GetGroundHit(out rightHit);
 
-        rearLeftRenderer.transform.position = leftHit.point;
-        rearRightRenderer.transform.position = rightHit.point;
+        if (leftHit.point != Vector3.zero) rearLeftRenderer.transform.position = leftHit.point;
+        if (rightHit.point != Vector3.zero) rearRightRenderer.transform.position = rightHit.point;
     }
 
     private void CheckDrift()

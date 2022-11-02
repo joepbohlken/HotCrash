@@ -79,6 +79,7 @@ public class CarSound : MonoBehaviour
         engineAudioSource.spatialBlend = 1f;
         engineAudioSource.minDistance = 15;
         engineAudioSource.maxDistance = 50;
+        engineAudioSource.Play();
 
         // Drifting source
         driftAudioSource = gameObject.AddComponent<AudioSource>();
@@ -125,12 +126,7 @@ public class CarSound : MonoBehaviour
 
     public void SetEngineSound()
     {
-        // TODO FIX FOR NEW CAR CONTROLLER
-
-        //float speed = carController.currentSpeed * (carController.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
-
-        Debug.Log(engineAudioSource.pitch);
-        
+        //float speed = carController.currentSpeed * (carController.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);        
 
         if (carController.convertedCurrentSpeed >= 0)
         {
