@@ -1,91 +1,71 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
-    [Tooltip("The time in seconds before the player gets a new ability after having used the previous one.")]
-    [SerializeField] private float abilityCooldown = 5f;
-    [Tooltip("The list of abilities of which a random one will be given to the player everytime the cooldown ends.")]
-    [SerializeField] private List<Ability> availableAbilities;
+    private UnityEvent OnAbilityComplete = new UnityEvent();
 
+    [SerializeField]
+    private List<Ability> availableAbilities;
+    [SerializeField]
+    private float cooldownBetweenAbilities;
+    [SerializeField]
+    private bool consumableAbilities;
+
+    private CarHealth carHealth;
     private CarController carController;
-    [HideInInspector] public HUD hud;
-    [HideInInspector] public Camera playerCamera;
-    [HideInInspector] public Transform abilityContainer;
-    private Ability currentAbility;
-    private float currentCooldown;
-    private bool handledDestroyed = false;
-    private bool carBecameDriveable = false;
+    [HideInInspector]
+    public Ability ability;
+    [HideInInspector]
+    public HUD hud;
+    private bool used;
 
-    public int playerIndex
-    {
-        get { return carController.player.playerIndex; }
-    }
-
-    public Color playerColor
-    {
-        get { return carController.player.playerColor; }
-    }
+    [HideInInspector]
+    public bool useAbility = false;
 
     private void Start()
     {
+        carHealth = GetComponent<CarHealth>();
         carController = GetComponent<CarController>();
-        abilityContainer = GameObject.Find("AbilityContainer").transform;
-        currentCooldown = abilityCooldown;
-    }
 
-    private void Update()
-    {
-        if (carController.isDestroyed)
+        if(!carController.isBot)
         {
-            if (!handledDestroyed)
-            {
-                handledDestroyed = true;
-                if (currentAbility) currentAbility.CarDestroyed();
-            }
-            return;
-        }
-
-        if (carController.driveable && !carBecameDriveable)
-        {
-            carBecameDriveable = true;
-            if (!carController.isBot && hud) hud.StartCountdown(currentCooldown);
-        }
-
-        if (currentAbility)
-        {
-            currentAbility.LogicUpdate();
-        }
-        else if (availableAbilities.Count > 0 && carController.driveable)
-        {
-            currentCooldown -= Time.deltaTime;
-            if (currentCooldown <= 0)
-            {
-                currentCooldown = abilityCooldown;
-
-                // Give new random ability
-                currentAbility = Instantiate(availableAbilities[Random.Range(0, availableAbilities.Count)]);
-                currentAbility.Initialize(this, carController);
-                currentAbility.Obtained();
-
-                if (!carController.isBot && hud) hud.SetInfo(currentAbility);
-            }
+            StartCoroutine(GiveAbility());
         }
     }
 
-    public void UseAbility()
+    void Update()
     {
-        if (currentAbility && !carController.isDestroyed)
+        if (useAbility && used == false && !carController.isBot && !carController.isDestroyed)
         {
-            currentAbility.Activated();
+            ability.Use();
+            used = true;
+            StartCoroutine(ActivateAfterDelay(ability.AbilityDuration));
         }
     }
 
-    public void AbilityEnded()
+    IEnumerator ActivateAfterDelay(float delay)
     {
-        Destroy(currentAbility);
-        currentAbility = null;
+        yield return new WaitForSeconds(delay);
+        OnAbilityComplete.Invoke();
+        StartCoroutine(GiveAbility());
+    }
 
-        if (!carController.isBot && hud) hud.StartCountdown(currentCooldown);
+    IEnumerator GiveAbility()
+    {
+        hud.StartCountdown(cooldownBetweenAbilities);
+        yield return new WaitForSeconds(cooldownBetweenAbilities);
+        GenerateAbility();
+        hud.SetInfo(ability);
+    }
+
+    private void GenerateAbility()
+    {
+        ability = availableAbilities[Random.Range(0, availableAbilities.Count)];
+        OnAbilityComplete.AddListener(ability.OnAbilityEnded);
+        ability.Obtained(gameObject);
+        used = false;
     }
 }

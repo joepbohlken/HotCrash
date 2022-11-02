@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Pursuing : Observant
 {
-    private CarController currentTarget;
+    private Rigidbody targetRb;
     private Transform whitelistedTarget;
     private float targetTime = 0f;
 
@@ -31,16 +31,16 @@ public class Pursuing : Observant
 
         // Assign target
         float closestCar = 999f;
-        CarController newTarget = null;
+        Transform newTarget = null;
 
-        if (currentTarget != null && (!currentTarget.isTargetable || currentTarget.isDestroyed)) currentTarget = null;
-        foreach (CarController car in carAI.cars)
+        for (int i = 0; i < carAI.transform.parent.childCount; i++)
         {
-            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.isDestroyed || !car.isTargetable) continue;
+            Transform car = carAI.transform.parent.GetChild(i);
+            if (car == carAI.transform || !car.gameObject.activeSelf || car == whitelistedTarget) continue;
 
-            bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.transform.position - carAI.transform.position).normalized) <= 45f;
+            bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.position - carAI.transform.position).normalized) <= 45f;
 
-            float distance = (car.transform.position - carAI.transform.position).magnitude;
+            float distance = (car.position - carAI.transform.position).magnitude;
             if (isWithinView && distance < closestCar)
             {
                 closestCar = distance;
@@ -48,37 +48,34 @@ public class Pursuing : Observant
             }
         }
 
-        if (newTarget != null && newTarget.rb == currentTarget)
+        if (newTarget == targetRb && newTarget != null)
         {
             targetTime += Time.deltaTime;
 
             if (targetTime >= 10f)
             {
-                whitelistedTarget = currentTarget.transform;
-                currentTarget = null;
+                whitelistedTarget = targetRb.transform;
+                targetRb = null;
             }
         }
         else
         {
             if (newTarget == null)
             {
-                currentTarget = null;
+                targetRb = null;
             }
-            else if (currentTarget == null || newTarget.transform != currentTarget.transform)
+            else if (targetRb == null || newTarget != targetRb.transform)
             {
-                currentTarget = newTarget;
+                targetRb = newTarget.GetComponent<Rigidbody>();
             }
             targetTime = 0f;
         }
 
-        // Set acceleration direction
-        if (controller.isGrounded) controller.verticalInput = 1f;
-
         // Set steering direction
-        if (currentTarget != null && controller.isGrounded)
+        if (targetRb != null)
         {
-            float predictValue = Mathf.Clamp(currentTarget.rb.velocity.magnitude / 3f, 0f, (currentTarget.transform.position - carAI.transform.position).magnitude);
-            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (currentTarget.transform.position + currentTarget.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
+            float predictValue = Mathf.Clamp(targetRb.velocity.magnitude / 3f, 0f, (targetRb.transform.position - carAI.transform.position).magnitude);
+            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
             if (Mathf.Abs(playerSideLR) > 5f)
             {
                 controller.horizontalInput = Mathf.Sign(playerSideLR);

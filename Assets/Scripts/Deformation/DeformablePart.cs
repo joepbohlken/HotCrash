@@ -85,7 +85,7 @@ public class DeformablePart : MonoBehaviour
 
     ///<summary>Applies damage to the part based on the given parameters.
     ///Return true if the part has been detached or already destroyed, else returns false.</summary>
-    public bool ApplyDamage(int i, Collision collision, float minVelocity, Rigidbody body, bool isAttacker)
+    public bool ApplyDamage(int i, Collision collision, float minVelocity, Rigidbody body)
     {
         if (isDestroyed) return true;
 
@@ -95,6 +95,7 @@ public class DeformablePart : MonoBehaviour
         if (carSide == HitLocation.NONE)
             hitLocation = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).thisCollider);
 
+        bool isAttacker = CheckAttacker(collision.GetContact(i));
         float damage = (collision.relativeVelocity.magnitude - minVelocity) / collision.contactCount;
         HitLocation opponentImpactedSide = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).otherCollider);
 
@@ -230,7 +231,16 @@ public class DeformablePart : MonoBehaviour
         hinge.limits = limits;
     }
 
+    private bool CheckAttacker(ContactPoint contactPoint)
+    {
+        float angle = Vector3.Dot(contactPoint.thisCollider.transform.forward, contactPoint.normal);
+        if (angle < -.95f)
+        {
+            return true;
+        }
 
+        return false;
+    }
 
     private HitLocation CheckImpactLocation(Vector3 collisionNormal, Collider collider)
     {

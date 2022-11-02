@@ -62,8 +62,8 @@ public class HUD : MonoBehaviour
 
     public void SetInfo(Ability ability)
     {
-        abilityIcon.sprite = ability.abilityIcon;
-        abilityName.text = ability.abilityName;
+        abilityIcon.sprite = ability.AbilityImage;
+        abilityName.text = ability.a_Name;
     }
 
     public void StartCountdown(float cooldown)

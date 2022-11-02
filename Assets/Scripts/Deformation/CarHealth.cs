@@ -35,10 +35,8 @@ public class CarHealth : MonoBehaviour
     private List<Image[]> bars = new List<Image[]>();
     private float currentHealth;
     public GameObject lastCollider { get; private set; }
-    private bool isDestroyed = false;
 
-    // Invisibility Variable
-    [HideInInspector] public float damageModifier = 1f;
+    private bool isDestroyed = false;
 
     private void Start()
     {
@@ -60,46 +58,9 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
-    public void AddCarDamage(GameObject attacker, HitLocation hitLocation, float damage)
-    {
-        // Apply ability effect
-        damage *= damageModifier;
-
-        Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
-        float vitalHealthMultiplier = 1;
-
-        if (vital != null)
-        {
-            vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.health);
-
-            if (vital.image != null)
-            {
-                vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
-            }
-
-            vitalHealthMultiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
-        }
-
-        damage = Mathf.Clamp(damage, 0f, currentHealth);
-        currentHealth = Mathf.Clamp(currentHealth - (damage * vitalHealthMultiplier), 0, health);
-
-        lastCollider = attacker;
-
-        if (GameManager.main != null)
-        {
-            GameManager.main.OnUpdateScore(gameObject, damage, true);
-            GameManager.main.OnUpdateScore(attacker, damage);
-        }
-
-        UpdateHealth();
-    }
-
     public void AddCarDamage(CarController carOpponent, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
         if (hitLocation == HitLocation.NONE || (carOpponent != null && carOpponent.isDestroyed)) return;
-
-        // Apply ability effect
-        damage *= damageModifier;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
@@ -119,7 +80,7 @@ public class CarHealth : MonoBehaviour
 
         float vitalDmgMultiplier = CalculateDamageMultiplier(vital, opponentVital);
 
-        float actualDmg = Mathf.Clamp(damage * vitalDmgMultiplier, 0f, currentHealth);
+        float actualDmg = damage * vitalDmgMultiplier;
         currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
         if(carOpponent != null)
@@ -133,11 +94,6 @@ public class CarHealth : MonoBehaviour
             GameManager.main.OnUpdateScore(carOpponent.gameObject, actualDmg);
         }
 
-        UpdateHealth();
-    }
-
-    private void UpdateHealth()
-    {
         CheckHealth();
 
         // Update health bar

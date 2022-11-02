@@ -264,7 +264,6 @@ public class LevelManager : MonoBehaviour
             CameraController cameraFollow = Instantiate(cameraPrefab, cameraParentTransform).GetComponent<CameraController>();
             cameraFollow.gameObject.name = "Camera Player " + (i + 1);
             cameraFollow.target = car.transform.Find("Body");
-            cameraFollow.SetCar(car);
 
             // Calculate camera size
             float dividerOffset = playerCount != 1 ? 0 : 0;
@@ -332,10 +331,8 @@ public class LevelManager : MonoBehaviour
             carHealth.healthBars.Add(hud.bars);
             carHealth.healthTexts.Add(hud.hpText);
 
-            // Set ability controller references
             AbilityController abilityController = car.GetComponent<AbilityController>();
             abilityController.hud = hud;
-            abilityController.playerCamera = cameraFollow.cameraObject.GetComponent<Camera>();
 
             // Set correct image per vital
             foreach (Vitals vital in carHealth.vitals)
@@ -373,8 +370,6 @@ public class LevelManager : MonoBehaviour
 
                 carHealth.healthBars.Add(carCanvas.bars);
                 carHealth.healthTexts.Add(carCanvas.hpText);
-
-                car.carCanvasRefs.Add(carCanvas);
             }
         }
     }

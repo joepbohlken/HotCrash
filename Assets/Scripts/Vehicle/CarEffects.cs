@@ -7,9 +7,8 @@ public class CarEffects : MonoBehaviour
     private CarController car;
     private bool isDrifting = false;
     private bool tireMarksFlag;
-    public TrailRenderer rearLeftRenderer;
-    public TrailRenderer rearRightRenderer;
 
+    public TrailRenderer[] tireMarks;
 
     private CarSound carSound = null;
 
@@ -24,36 +23,24 @@ public class CarEffects : MonoBehaviour
     {
         if (carSound == null) return;
         CheckDrift();
-        //UpdateTrailPosition();
     }
 
     public void SetSound(CarSound carSound)
     {
         this.carSound = carSound;
     }
-    public void UpdateTrailPosition()
-    {
-        WheelHit leftHit;
-        WheelHit rightHit;
-
-        car.rearLeftWheel.wheelCollider.GetGroundHit(out leftHit);
-        car.rearRightWheel.wheelCollider.GetGroundHit(out rightHit);
-
-        if (leftHit.point != Vector3.zero) rearLeftRenderer.transform.position = leftHit.point;
-        if (rightHit.point != Vector3.zero) rearRightRenderer.transform.position = rightHit.point;
-    }
 
     private void CheckDrift()
     {
         float actualSpeed = car.currentSpeed * (car.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
 
-        if (car.handBrakeInput && !isDrifting && actualSpeed >= 25f && !car.isDestroyed && car.isGrounded)
+        if (car.handBrakeInput && !isDrifting && actualSpeed >= 25f)
         {
             isDrifting = true;
             carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if ((!car.handBrakeInput && isDrifting) || actualSpeed <= 25f || car.isDestroyed || !car.isGrounded)
+        else if ((!car.handBrakeInput && isDrifting) || actualSpeed <= 25f)
         {
             isDrifting = false;
             carSound.StopDriftSound();
@@ -68,8 +55,10 @@ public class CarEffects : MonoBehaviour
             return;
         }
 
-        rearLeftRenderer.emitting = true;
-        rearRightRenderer.emitting = true;
+        foreach (TrailRenderer T in tireMarks)
+        {
+            T.emitting = true;
+        }
 
         tireMarksFlag = true;
     }
@@ -80,9 +69,10 @@ public class CarEffects : MonoBehaviour
         {
             return;
         }
-
-        rearLeftRenderer.emitting = false;
-        rearRightRenderer.emitting = false;
+        foreach (TrailRenderer T in tireMarks)
+        {
+            T.emitting = false;
+        }
 
         tireMarksFlag = false;
     }

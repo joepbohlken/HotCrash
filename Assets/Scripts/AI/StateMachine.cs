@@ -8,7 +8,7 @@ public class StateMachine : MonoBehaviour
 
     private void Update()
     {
-        if (currentState != null && !currentState.controller.isDestroyed)
+        if (currentState != null)
             currentState.LogicUpdate();
     }
 

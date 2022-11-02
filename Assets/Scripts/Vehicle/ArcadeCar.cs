@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
 
 public class WheelData
 {
@@ -149,7 +148,7 @@ public class ArcadeCar : MonoBehaviour
     public bool debugMode = false;
 
     private float carAngle;
-    [HideInInspector] public bool isTouchingGround = false;
+    private bool isTouchingGround = false;
     private float afterFlightSlipperyTiresTime = 0.0f;
     private float brakeSlipperyTiresTime = 0.0f;
     private float handBrakeSlipperyTiresTime = 0.0f;
@@ -162,17 +161,14 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector]
     public bool isReverseAcceleration = false;
     private float accelerationForceMagnitude = 0.0f;
-    [HideInInspector] public Rigidbody rb = null;
-    [HideInInspector] public CarHealth carHealth;
+    private Rigidbody rb = null;
+    private CarHealth carHealth;
     private CarAI carAI;
     private ParticleSystem ps;
     private LevelManager levelManager;
-    [HideInInspector] public bool allWheelIsOnAir;
-    
+
     [HideInInspector]
     public bool isReady = true;
-
-    private CarEffects carEffects;
 
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
@@ -194,10 +190,6 @@ public class ArcadeCar : MonoBehaviour
 
     [HideInInspector]
     public bool isHandBrakeNow;
-
-    [HideInInspector]
-    public UnityEvent onDeath;
-
 
 
     private void OnValidate()
@@ -229,8 +221,6 @@ public class ArcadeCar : MonoBehaviour
 
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
-
-        carEffects = GetComponent<CarEffects>();
     }
 
     private void Update()
@@ -283,7 +273,7 @@ public class ArcadeCar : MonoBehaviour
             CalculateAxleForces(axles[axleIndex], totalWheelsCount, numberOfPoweredWheels);
         }
 
-        allWheelIsOnAir = true;
+        bool allWheelIsOnAir = true;
         for (int axleIndex = 0; axleIndex < axles.Length; axleIndex++)
         {
             if (axles[axleIndex].wheelDataL.isOnGround || axles[axleIndex].wheelDataR.isOnGround)
@@ -453,9 +443,8 @@ public class ArcadeCar : MonoBehaviour
             HandleAirMovement();
         }
 
-        if (isTouchingGround && carAngle > .85f && flip)
+        if (isTouchingGround && carAngle > .85f && flip && !isBot)
         {
-            flip = false;
             StartCoroutine(FlipCar());
         }
 
@@ -645,8 +634,6 @@ public class ArcadeCar : MonoBehaviour
     public void DestroyCar()
     {
         ps.Play();
-
-        onDeath.Invoke();
 
         foreach (Axle axle in axles)
         {
@@ -998,9 +985,7 @@ public class ArcadeCar : MonoBehaviour
             Vector3 wsFrom = (wheelIndex == WHEEL_LEFT_INDEX) ? wsL : wsR;
 
             CalculateWheelForces(axle, wsDownDirection, wheelData, wsFrom, wheelIndex, totalWheelsCount, numberOfPoweredWheels);
-
         }
-
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
