@@ -11,6 +11,7 @@ public class AbilityController : MonoBehaviour
     private CarController carController;
     [HideInInspector] public HUD hud;
     [HideInInspector] public Camera playerCamera;
+    [HideInInspector] public Transform abilityContainer;
     private Ability currentAbility;
     private float currentCooldown;
     private bool handledDestroyed = false;
@@ -29,6 +30,7 @@ public class AbilityController : MonoBehaviour
     private void Start()
     {
         carController = GetComponent<CarController>();
+        abilityContainer = GameObject.Find("AbilityContainer").transform;
         currentCooldown = abilityCooldown;
     }
 

@@ -18,9 +18,10 @@ public class MineObject : MonoBehaviour
     private Transform cars;
     private bool isSetUp = false;
     private bool isTriggered = false;
+    private Transform container;
 
 
-    public void SetUpMine(Transform owner, Transform cars, bool isBot, AbilityController abilityController)
+    public void SetUpMine(Transform owner, Transform cars, bool isBot, AbilityController abilityController, Transform container)
     {
         this.owner = owner;
         this.cars = cars;
@@ -30,6 +31,7 @@ public class MineObject : MonoBehaviour
             highlight.gameObject.layer = LayerMask.NameToLayer("Player " + (abilityController.playerIndex + 1));
             highlight.material.SetColor("_EmissionColor", abilityController.playerColor);
         }
+        this.container = container;
         isSetUp = true;
     }
 
@@ -56,7 +58,7 @@ public class MineObject : MonoBehaviour
 
     private IEnumerator Explosion()
     {
-        GameObject explosion = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        GameObject explosion = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity, container);
         highlight.enabled = false;
 
         AudioController.main.PlayOneShot(gameObject.transform.position, explosionAudioClip, 1f,  explosionSoundVolume);

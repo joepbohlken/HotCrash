@@ -35,8 +35,8 @@ public class MineAbility : Ability
             {
                 placedMines++;
 
-                MineObject mine = Instantiate(minePrefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)).GetComponent<MineObject>();
-                mine.SetUpMine(carController.transform, carController.transform.parent, carController.isBot, abilityController);
+                MineObject mine = Instantiate(minePrefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal), abilityController.abilityContainer).GetComponent<MineObject>();
+                mine.SetUpMine(carController.transform, carController.transform.parent, carController.isBot, abilityController, abilityController.abilityContainer);
 
                 if (placedMines >= amount && !abilityEnded)
                 {
