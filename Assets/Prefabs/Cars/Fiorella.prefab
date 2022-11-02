@@ -11005,7 +11005,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     steerHelper: 0.65
-    tractionControl: 1
+    tractionControl: 0
     carDriveType: 1
     fullTorqueOverAllWheels: 8000
     reverseTorque: 1500
@@ -11093,7 +11093,7 @@ MonoBehaviour:
   onDestroyed:
     m_PersistentCalls:
       m_Calls: []
-  health: 100
+  health: 10
   healthBars: []
   healthTexts: []
   damageMultiplierCurve:
@@ -11189,8 +11189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71aff88e6fdd3f45ac6748a8acaedde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rearLeftRenderer: {fileID: 0}
-  rearRightRenderer: {fileID: 0}
+  rearLeftRenderer: {fileID: 125942051535633451}
+  rearRightRenderer: {fileID: 125942051468116518}
 --- !u!114 &6776267300940187456
 MonoBehaviour:
   m_ObjectHideFlags: 0

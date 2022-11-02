@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CarEffects : MonoBehaviour
 {
-    private CarHealth carHealth;
     private CarController car;
     private bool isDrifting = false;
     private bool tireMarksFlag;
@@ -18,7 +17,6 @@ public class CarEffects : MonoBehaviour
     void Start()
     {
         car = GetComponent<CarController>();
-        carHealth = GetComponent<CarHealth>();
     }
 
     // Update is called once per frame
@@ -26,29 +24,36 @@ public class CarEffects : MonoBehaviour
     {
         if (carSound == null) return;
         CheckDrift();
+        UpdateTrailPosition();
     }
 
     public void SetSound(CarSound carSound)
     {
         this.carSound = carSound;
     }
-    public void UpdateTrailPosition(Vector3 locationLeft, Vector3 locationRight)
+    public void UpdateTrailPosition()
     {
-        rearLeftRenderer.transform.position = locationLeft;
-        rearRightRenderer.transform.position = locationRight;
+        WheelHit leftHit;
+        WheelHit rightHit;
+
+        car.rearLeftWheel.wheelCollider.GetGroundHit(out leftHit);
+        car.rearRightWheel.wheelCollider.GetGroundHit(out rightHit);
+
+        rearLeftRenderer.transform.position = leftHit.point;
+        rearRightRenderer.transform.position = rightHit.point;
     }
 
     private void CheckDrift()
     {
         float actualSpeed = car.currentSpeed * (car.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
 
-        if (car.handBrakeInput && !isDrifting && actualSpeed >= 25f && !car.isDestroyed)
+        if (car.handBrakeInput && !isDrifting && actualSpeed >= 25f && !car.isDestroyed && car.isGrounded)
         {
             isDrifting = true;
             carSound.PlayDriftSound();
             StartEmitter();
         }
-        else if ((!car.handBrakeInput && isDrifting) || actualSpeed <= 25f || car.isDestroyed)
+        else if ((!car.handBrakeInput && isDrifting) || actualSpeed <= 25f || car.isDestroyed || !car.isGrounded)
         {
             isDrifting = false;
             carSound.StopDriftSound();
