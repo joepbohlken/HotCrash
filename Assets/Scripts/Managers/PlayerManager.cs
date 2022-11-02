@@ -134,6 +134,7 @@ public class PlayerManager : MonoBehaviour
 
         PlayerController player = input.GetComponent<PlayerController>();
         player.playerIndex = playerIndex;
+        player.playerColor = colors[playerIndex];
         player.input = input;
         player.playerManager = this;
 

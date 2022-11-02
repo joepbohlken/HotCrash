@@ -17,21 +17,16 @@ public class PlayerController : MonoBehaviour
     private bool disconnectInput = false;
     private bool changeColor = false;
 
-    [HideInInspector]
-    public PlayerInput input;
-    [HideInInspector]
-    public PlayerManager playerManager;
+    // Public variables
+    public PlayerInput input { get; set; }
+    public PlayerManager playerManager { get; set; }
+    public CarSelectionSlot carSelectionSlot { get; set; }
+    public CarController car { get; set; }
+    public AbilityController abilityController { get; set; }
+    public CameraController cameraFollow { get; set; }
+    public int playerIndex { get; set; }
+    public Color playerColor { get; set; }
 
-    [HideInInspector]
-    public CarSelectionSlot carSelectionSlot;
-    [HideInInspector]
-    public CarController car;
-    [HideInInspector]
-    public AbilityController abilityController;
-    [HideInInspector]
-    public CameraController cameraFollow;
-    [HideInInspector]
-    public int playerIndex;
 
     private bool justJoined = true;
     private float time = 0;
