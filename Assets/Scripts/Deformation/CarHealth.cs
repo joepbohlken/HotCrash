@@ -61,6 +61,36 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
+    public void AddCarDamage(GameObject attacker, HitLocation hitLocation, float damage)
+    {
+        Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
+        float vitalHealthMultiplier = 1;
+
+        if (vital != null)
+        {
+            vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.health);
+
+            if (vital.image != null)
+            {
+                vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
+            }
+
+            vitalHealthMultiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
+        }
+
+        currentHealth = Mathf.Clamp(currentHealth - (damage * vitalHealthMultiplier), 0, health);
+
+        lastCollider = attacker;
+
+        //TODO fix
+        //if (GameManager.main != null)
+        //{
+        //    GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
+        //}
+
+        UpdateHealth();
+    }
+
     public void AddCarDamage(CarController carOpponent, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
     {
         if (hitLocation == HitLocation.NONE || (carOpponent != null && carOpponent.isDestroyed)) return;
@@ -99,6 +129,11 @@ public class CarHealth : MonoBehaviour
             GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
         }
 
+        UpdateHealth();
+    }
+
+    private void UpdateHealth()
+    {
         CheckHealth();
 
         // Update health bar

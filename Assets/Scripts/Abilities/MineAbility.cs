@@ -9,6 +9,7 @@ public class MineAbility : Ability
     [SerializeField] private float maxPlaceDistance = 3f;
     [Tooltip("The amount of mines that can be placed.")]
     [SerializeField] private int amount = 3;
+    [SerializeField] private LayerMask ground;
 
     private int placedMines = 0;
     private bool abilityEnded = false;
@@ -30,12 +31,12 @@ public class MineAbility : Ability
         if (placedMines < amount)
         {
             RaycastHit hit;
-            if (Physics.Raycast(carController.transform.position, Vector3.down, out hit, maxPlaceDistance))
+            if (Physics.Raycast(carController.transform.position + Vector3.up, Vector3.down, out hit, maxPlaceDistance, ground))
             {
                 placedMines++;
 
                 MineObject mine = Instantiate(minePrefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)).GetComponent<MineObject>();
-                mine.SetUpMine(carController.transform, carController.transform.parent, carController.isBot, Color.red, 1);
+                mine.SetUpMine(carController.transform, carController.transform.parent, carController.isBot, abilityController);
 
                 if (placedMines >= amount && !abilityEnded)
                 {

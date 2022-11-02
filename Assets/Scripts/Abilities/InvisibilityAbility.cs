@@ -11,15 +11,22 @@ public class InvisibilityAbility : Ability
     [SerializeField] private float duration = 2f;
     [Tooltip("Determines how opaque the car becomes.")]
     [SerializeField] private float opacity = 0.25f;
+    [Tooltip("How fast the car switches from visible to invisible and vice versa.")]
+    [SerializeField] private float transitionSpeed = 2f;
     [Range(0, 1)]
     [Tooltip("0 = 0% damage reduction, 0.5 = 50% damage reduction, 1 = 100% damage reduction.")]
     [SerializeField] private float damageReduction = 0.5f;
 
     private List<Renderer> carRenderers;
     private Dictionary<Renderer, List<Tuple<Color, int>>> originalValues;
+    private Dictionary<Renderer, LayerMask> originalLayers = new();
     private float durationLeft;
     private bool abilityEnded = false;
+    private bool abilitySelfEnded = false;
     private bool isSelfActivated = false;
+
+    private float currentAlpha = 1f;
+    private List<(Material, float)> materials = new();
 
     public override void Obtained()
     {
@@ -33,13 +40,45 @@ public class InvisibilityAbility : Ability
     {
         base.LogicUpdate();
 
+        if (abilitySelfEnded) return;
+
         if (isActivated)
         {
             durationLeft -= Time.deltaTime;
             if (durationLeft <= 0 && !abilityEnded)
             {
                 abilityEnded = true;
+                currentAlpha = 0f;
+            }
+        }
+
+        if (abilityEnded)
+        {
+            currentAlpha += Time.deltaTime * transitionSpeed;
+
+            foreach (ValueTuple<Material, float> mat in materials)
+            {
+                Color tempColor = mat.Item1.color;
+                tempColor.a = Mathf.Clamp(currentAlpha, mat.Item2, 1f);
+                mat.Item1.color = tempColor;
+            }
+
+            if (currentAlpha >= 1f && !abilitySelfEnded)
+            {
+                abilitySelfEnded = true;
                 AbilityEnded(false);
+            }
+        }
+
+        if (!abilityEnded && isSelfActivated && currentAlpha > -0.1f)
+        {
+            currentAlpha -= Time.deltaTime * transitionSpeed;
+
+            foreach(ValueTuple<Material, float> mat in materials)
+            {
+                Color tempColor = mat.Item1.color;
+                tempColor.a = Mathf.Clamp(currentAlpha, mat.Item2, 1f);
+                mat.Item1.color = tempColor;
             }
         }
     }
@@ -55,6 +94,17 @@ public class InvisibilityAbility : Ability
 
         foreach (Renderer rend in carRenderers)
         {
+            if (!carController.isBot)
+            {
+                originalLayers.Add(rend, rend.gameObject.layer);
+                rend.gameObject.layer = LayerMask.NameToLayer("Player " + (abilityController.playerIndex + 1));
+            }
+            
+            foreach(CarCanvas carCanvas in carController.carCanvasRefs)
+            {
+                carCanvas.canvasGroup.alpha = 0f;
+            }
+
             originalValues.Add(rend, new List<Tuple<Color, int>>());
             foreach (Material mat in rend.materials)
             {
@@ -70,10 +120,8 @@ public class InvisibilityAbility : Ability
                 originalValues[rend].Add(new Tuple<Color, int>(originalColor, renderQueue));
 
                 rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                Color tempColor = mat.color;
-                tempColor.a = opacity;
-                mat.color = tempColor;
                 mat.renderQueue = 3000;
+                materials.Add((mat, carController.isBot ? 0f : opacity));
             }
         }
 
@@ -88,6 +136,7 @@ public class InvisibilityAbility : Ability
         if (!abilityEnded && isSelfActivated)
         {
             abilityEnded = true;
+            abilitySelfEnded = true;
             AbilityEnded(true);
         }
     }
@@ -99,6 +148,13 @@ public class InvisibilityAbility : Ability
 
         foreach (KeyValuePair<Renderer, List<Tuple<Color, int>>> rendValuesPair in originalValues)
         {
+            if (!carController.isBot) rendValuesPair.Key.gameObject.layer = originalLayers[rendValuesPair.Key];
+
+            foreach (CarCanvas carCanvas in carController.carCanvasRefs)
+            {
+                carCanvas.canvasGroup.alpha = 1f;
+            }
+
             for (int i = 0; i < rendValuesPair.Value.Count; i++)
             {
                 rendValuesPair.Key.materials[i].color = rendValuesPair.Value[i].Item1;

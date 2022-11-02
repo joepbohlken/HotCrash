@@ -94,8 +94,8 @@ public class CarController : MonoBehaviour
     // ---------------
     // Private variables
     private CarAI ai;
-    private ParticleSystem ps;
     private LevelManager levelManager;
+    private ParticleSystem ps;
     private Wheel[] wheels;
 
     private float currentTorque;
@@ -120,6 +120,7 @@ public class CarController : MonoBehaviour
     // ---------------
     // Ability variables
     public bool isTargetable { get; set; } = true;
+    public List<CarCanvas> carCanvasRefs { get; set; } = new();
 
 
     // Update control variables

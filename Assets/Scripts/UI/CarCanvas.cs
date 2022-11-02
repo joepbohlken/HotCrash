@@ -13,10 +13,12 @@ public class CarCanvas : MonoBehaviour
     public TextMeshProUGUI hpText;
 
     private Transform masterParent;
+    public CanvasGroup canvasGroup { get; set; }
 
     private void Start()
     {
         masterParent = transform.parent.parent;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     // Update is called once per frame

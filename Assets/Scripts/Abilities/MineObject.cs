@@ -9,28 +9,29 @@ public class MineObject : MonoBehaviour
     [Space(12)]
     [SerializeField] private float explosionRadius = 10;
     [SerializeField] private float explosionStrength = 10000f;
+    [SerializeField] private float explosionDamage = 50f;
 
     private Transform owner;
     private Transform cars;
     private bool isSetUp = false;
     private bool isTriggered = false;
 
-    public void SetUpMine(Transform owner, Transform cars, bool isBot, Color highlightColor, int playerIndex)
+    public void SetUpMine(Transform owner, Transform cars, bool isBot, AbilityController abilityController)
     {
         this.owner = owner;
         this.cars = cars;
         if (isBot) highlight.enabled = false;
         else
         {
-            highlight.gameObject.layer = LayerMask.NameToLayer("Player " + playerIndex);
-            highlight.material.SetColor("_EmissionColor", highlightColor);
+            highlight.gameObject.layer = LayerMask.NameToLayer("Player " + (abilityController.playerIndex + 1));
+            highlight.material.SetColor("_EmissionColor", abilityController.playerColor);
         }
         isSetUp = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isSetUp || other.transform.parent == owner || isTriggered) return;
+        if (!isSetUp || other.transform.parent.parent == owner || isTriggered) return;
         isTriggered = true;
 
         for (int i = 0; i < cars.childCount; i++)
@@ -41,6 +42,7 @@ public class MineObject : MonoBehaviour
             if (distance <= explosionRadius)
             {
                 car.GetComponent<Rigidbody>().AddExplosionForce(explosionStrength, transform.position, explosionRadius, 100f, ForceMode.Impulse);
+                car.GetComponent<CarHealth>().AddCarDamage(owner.gameObject, HitLocation.BOTTOM, explosionDamage);
             }
         }
 

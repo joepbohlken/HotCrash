@@ -16,6 +16,16 @@ public class AbilityController : MonoBehaviour
     private bool handledDestroyed = false;
     private bool carBecameDriveable = false;
 
+    public int playerIndex
+    {
+        get { return carController.player.playerIndex; }
+    }
+
+    public Color playerColor
+    {
+        get { return carController.player.playerColor; }
+    }
+
     private void Start()
     {
         carController = GetComponent<CarController>();

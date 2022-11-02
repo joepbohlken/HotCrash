@@ -64,6 +64,7 @@ MonoBehaviour:
   explosionEffectPrefab: {fileID: 5202976511654483060, guid: b0373880d58c04a4d9da6b85656b491c, type: 3}
   explosionRadius: 10
   explosionStrength: 20000
+  explosionDamage: 30
 --- !u!1 &3658880446489761847
 GameObject:
   m_ObjectHideFlags: 0

@@ -373,6 +373,8 @@ public class LevelManager : MonoBehaviour
 
                 carHealth.healthBars.Add(carCanvas.bars);
                 carHealth.healthTexts.Add(carCanvas.hpText);
+
+                car.carCanvasRefs.Add(carCanvas);
             }
         }
     }
