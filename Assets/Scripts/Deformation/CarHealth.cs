@@ -34,9 +34,8 @@ public class CarHealth : MonoBehaviour
 
     private List<Image[]> bars = new List<Image[]>();
     private float currentHealth;
-    [HideInInspector]
-    public bool isDestroyed = false;
     public GameObject lastCollider { get; private set; }
+    private bool isDestroyed = false;
 
     // Invisibility Variable
     [HideInInspector] public float damageModifier = 1f;
@@ -126,7 +125,8 @@ public class CarHealth : MonoBehaviour
 
         if (GameManager.main != null)
         {
-            GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
+            GameManager.main.OnUpdateScore(transform.gameObject, actualDmg, true);
+            GameManager.main.OnUpdateScore(carOpponent.gameObject, actualDmg);
         }
 
         UpdateHealth();

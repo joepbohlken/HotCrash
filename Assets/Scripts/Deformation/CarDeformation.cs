@@ -25,7 +25,7 @@ public class CarDeformation : MonoBehaviour
     public bool debugMode = true;
 
     private Rigidbody myRigidbody;
-    private CarHealth carHealth;
+    private CarController carController;
     private float currentDebounce = 0f;
     private float currentCollisionAngle;
 
@@ -35,7 +35,7 @@ public class CarDeformation : MonoBehaviour
     private void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
-        carHealth = GetComponent<CarHealth>();
+        carController = GetComponent<CarController>();
     }
 
     private void FixedUpdate()
@@ -86,7 +86,7 @@ public class CarDeformation : MonoBehaviour
                     if (!partDestroyed && canDeform && !hitBottom)
                     {
                         deformedMesh = true;
-                        hitPart.DeformPart(i, collision, deformRadius, carHealth.isDestroyed ? Vector3.one * 10 : maxTotalDeformDistance, deformStrength);
+                        hitPart.DeformPart(i, collision, deformRadius, carController.isDestroyed ? Vector3.one * 10 : maxTotalDeformDistance, deformStrength);
                     }
                 }
             }

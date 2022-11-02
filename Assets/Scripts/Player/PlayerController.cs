@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time > .25f)
+        time += Time.unscaledDeltaTime;
+        if (time > .1f)
         {
             justJoined = false;
         }

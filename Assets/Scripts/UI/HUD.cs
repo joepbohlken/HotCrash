@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public Image[] borders;
+
     [Header("Damage model")]
     public Image front;
     public Image left;
@@ -28,20 +30,34 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI abilityName;
     public TextMeshProUGUI timerText;
 
-    [HideInInspector]
-    public CarController car;
+    public PlayerController player { get; set; }
 
     private void Start()
     {
         abilityName.enabled = false;
         abilityIcon.enabled = false;
         timerProgress.fillAmount = 0;
+
+        foreach (Image border in borders)
+        {
+            border.color = player.playerColor;
+        }
+
+        if (GameManager.main == null)
+        {
+            opponentsText.transform.parent.gameObject.SetActive(false);
+            killsText.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
     {
-        UpdateKillCount();
-        UpdateOpponentCount();
+
+        if (GameManager.main != null)
+        {
+            UpdateKillCount();
+            UpdateOpponentCount();
+        }
     }
 
     public void SetInfo(Ability ability)
@@ -86,6 +102,15 @@ public class HUD : MonoBehaviour
 
     private void UpdateKillCount()
     {
-        //killsText.text = car.killCount.ToString();
+        if (GameManager.main != null)
+        {
+            foreach (CarScore score in GameManager.main.scoreboard)
+            {
+                if (score.car.GetComponent<CarController>().player == player)
+                {
+                    killsText.text = score.killCount.ToString();
+                }
+            }
+        }
     }
 }

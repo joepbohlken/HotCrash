@@ -231,10 +231,10 @@ public class ArcadeCar : MonoBehaviour
             ps.transform.localRotation = Quaternion.LookRotation(ps.transform.parent.InverseTransformDirection(Vector3.up), ps.transform.up);
         }
 
-        if (carHealth.isDestroyed)
-        {
-            return;
-        }
+        //if (carHealth.isDestroyed)
+        //{
+        //    return;
+        //}
 
         carAngle = Vector3.Dot(transform.up, Vector3.down);
 
@@ -245,10 +245,10 @@ public class ArcadeCar : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (carHealth.isDestroyed)
-        {
-            return;
-        }
+        //if (carHealth.isDestroyed)
+        //{
+        //    return;
+        //}
 
         accelerationForceMagnitude = CalcAccelerationForceMagnitude();
 
