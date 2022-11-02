@@ -70,9 +70,9 @@ public class PlayerManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        foreach (PlayerController player in players)
+        for(int i = 0; i < players.Count; i++)
         {
-            RemovePlayer(player);
+            RemovePlayer(players[i]);
         }
     }
 

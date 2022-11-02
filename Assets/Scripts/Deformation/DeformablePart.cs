@@ -52,6 +52,7 @@ public class DeformablePart : MonoBehaviour
     private void Start()
     {
         meshFilter = GetComponent<MeshFilter>();
+        meshCollider = GetComponent<MeshCollider>();
 
         // Instantiate a 'clone' of the mesh, so it does not affect all other objects using the same mesh
         meshFilter.mesh = (Mesh)Instantiate(meshFilter.sharedMesh);
