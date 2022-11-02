@@ -19,8 +19,9 @@ public class PushAbility : Ability
     public GameObject glove;
     public List<Transform> visibleTargets = new List<Transform>();
     public LayerMask playerMask;
+    public TargetIndicator indicator;
+    public List<MeshCollider> playerList;
 
-    public float throwForce;
     public float range = 30;
     public float angle = 60;
 
@@ -32,7 +33,9 @@ public class PushAbility : Ability
 
         readytoThrow = true;
         car = abilityController.transform;
-        gunTip = car.Find("Guntip");
+        gunTip = car.Find("GunTip");
+        indicator = car.GetComponent<TargetIndicator>();
+        indicator.targetCamera = abilityController.playerCamera;
     }
 
     public override void LogicUpdate()
@@ -67,8 +70,7 @@ public class PushAbility : Ability
     private void Throw()
     {
         readytoThrow = false;
-
-        if(closestTarget != null)
+        if (closestTarget != null)
         {
             Vector3 dirToTarget = (closestTarget.position + Vector3.up - gunTip.position).normalized;
 
@@ -76,16 +78,16 @@ public class PushAbility : Ability
 
             GameObject projectile = Instantiate(glove, gunTip.position, throwRotation);
 
-            GloveAddon projectileScript = projectile.GetComponent<GloveAddon>();
+            GloveAddon projectileScript = projectile.GetComponentInChildren<GloveAddon>();
             projectileScript.target = closestTarget;
         }
-
         AbilityEnded(false);
     }    
 
     public void targetBox()
     {
         visibleTargets.Clear();
+        closestTarget = null;
         FieldOfViewCheck();
         closestTarget = GetClosestPlayer();
     }
@@ -98,19 +100,28 @@ public class PushAbility : Ability
         {
             for (int i = 0; i < rangeChecks.Length; i++)
             {
-                Transform target = rangeChecks[i].transform;
-                Vector3 directionToTarget = (target.position - gunTip.position).normalized;
-
-                if (Vector3.Angle(gunTip.forward, directionToTarget) < angle / 2)
+                string tag = rangeChecks[i].GetComponentInParent<Transform>().parent.tag;
+                if (tag == "Car")
                 {
-                    float distanceToTarget = Vector3.Distance(gunTip.position, target.position);
+                    Transform target = rangeChecks[i].transform;
+                    Vector3 directionToTarget = (target.position - gunTip.position).normalized;
 
-                    if (!Physics.Raycast(gunTip.position, directionToTarget, distanceToTarget, LayerMask.NameToLayer("Default")))
+                    if (Vector3.Angle(gunTip.forward, directionToTarget) < angle / 2)
                     {
-                        visibleTargets.Add(target);
+                        float distanceToTarget = Vector3.Distance(gunTip.position, target.position);
+
+                        if (!Physics.Raycast(gunTip.position, directionToTarget, distanceToTarget, LayerMask.NameToLayer("Ground")))
+                        {
+                            indicator.target = rangeChecks[i];
+                            visibleTargets.Add(target);
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            indicator.target = null;
         }
     }
 

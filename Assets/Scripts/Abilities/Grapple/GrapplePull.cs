@@ -80,7 +80,7 @@ public class GrapplePull : MonoBehaviour
                 }
             }
         }
-        */
+        
     }
 
     public void Pull()
