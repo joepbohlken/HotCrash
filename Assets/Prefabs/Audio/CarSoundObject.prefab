@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4728587571497198551}
   - component: {fileID: 4728587571497198552}
   m_Layer: 0
-  m_Name: SoundObject
+  m_Name: CarSoundObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
