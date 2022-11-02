@@ -73,6 +73,7 @@ public class CarSound : MonoBehaviour
 
         // Engine source
         engineAudioSource = gameObject.AddComponent<AudioSource>();
+        engineAudioSource.clip = gears[1].audioClip;
         engineAudioSource.volume = engineVolume;
         engineAudioSource.loop = true;
         engineAudioSource.spatialBlend = 1f;
@@ -126,13 +127,15 @@ public class CarSound : MonoBehaviour
     {
         // TODO FIX FOR NEW CAR CONTROLLER
 
-        /*
-        float speed = carController.currentSpeed * (carController.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
+        //float speed = carController.currentSpeed * (carController.carConfig.speedType == SpeedType.KPH ? C.KPHMult : C.MPHMult);
 
-        if (carController.isAcceleration || carController.isReverseAcceleration)
+        Debug.Log(engineAudioSource.pitch);
+        
+
+        if (carController.convertedCurrentSpeed >= 0)
         {
             pitchRate = 0;
-            engineAudioSource.pitch = pitchCurve.Evaluate(speed) / 100;
+            engineAudioSource.pitch = pitchCurve.Evaluate(carController.convertedCurrentSpeed) / 100;
         }
         else if (engineAudioSource.pitch != 1)
         {
@@ -142,7 +145,7 @@ public class CarSound : MonoBehaviour
 
         foreach (var gear in gears)
         {
-            if (speed < gear.maxSpeed && speed > gear.minSpeed)
+            if (carController.convertedCurrentSpeed < gear.maxSpeed && carController.convertedCurrentSpeed > gear.minSpeed)
             {
                 int temp = gears.IndexOf(gear);
                 if (temp != currentGear)
@@ -160,7 +163,6 @@ public class CarSound : MonoBehaviour
                 }
             }
         }
-        */
     }
 
     public void PlayDeathSound()
