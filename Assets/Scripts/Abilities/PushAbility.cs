@@ -18,11 +18,12 @@ public class PushAbility : Ability
     public Transform closestTarget;
     public GameObject glove;
     public List<Transform> visibleTargets = new List<Transform>();
-    public LayerMask playerMask;
     public TargetIndicator indicator;
-    public List<MeshCollider> playerList;
+    public List<MeshCollider> carList;
+    public GameObject carContainer;
+    public LayerMask groundMask;
 
-    public float range = 30;
+    public float range;
     public float angle = 60;
 
     private bool readytoThrow;
@@ -36,6 +37,11 @@ public class PushAbility : Ability
         gunTip = car.Find("GunTip");
         indicator = car.GetComponent<TargetIndicator>();
         indicator.targetCamera = abilityController.playerCamera;
+        carContainer = GameObject.Find("Cars");
+        foreach(Transform t in carContainer.transform)
+        {
+            carList.Add(t.GetComponentInChildren<MeshCollider>());
+        }
     }
 
     public override void LogicUpdate()
@@ -89,40 +95,34 @@ public class PushAbility : Ability
         visibleTargets.Clear();
         closestTarget = null;
         FieldOfViewCheck();
-        closestTarget = GetClosestPlayer();
     }
 
     private void FieldOfViewCheck()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(gunTip.position, range, playerMask);
-
-        if (rangeChecks.Length != 0)
+        foreach(MeshCollider col in carList)
         {
-            for (int i = 0; i < rangeChecks.Length; i++)
+            Transform target = col.transform;
+            Vector3 directionToTarget = (target.position - gunTip.position).normalized;
+
+            if (Vector3.Angle(gunTip.forward, directionToTarget) < angle / 2)
             {
-                string tag = rangeChecks[i].GetComponentInParent<Transform>().parent.tag;
-                if (tag == "Car")
+                if (Physics.Raycast(gunTip.position, directionToTarget, range, groundMask))
                 {
-                    Transform target = rangeChecks[i].transform;
-                    Vector3 directionToTarget = (target.position - gunTip.position).normalized;
-
-                    if (Vector3.Angle(gunTip.forward, directionToTarget) < angle / 2)
-                    {
-                        float distanceToTarget = Vector3.Distance(gunTip.position, target.position);
-
-                        if (!Physics.Raycast(gunTip.position, directionToTarget, distanceToTarget, LayerMask.NameToLayer("Ground")))
-                        {
-                            indicator.target = rangeChecks[i];
-                            visibleTargets.Add(target);
-                        }
-                    }
+                    visibleTargets.Add(target);
                 }
             }
         }
-        else
+
+        closestTarget = GetClosestPlayer();
+        if (visibleTargets.Count() == 0)
         {
             indicator.target = null;
         }
+        else
+        {
+            indicator.target = closestTarget.GetComponentInChildren<MeshCollider>();
+        }
+
     }
 
     public Transform GetClosestPlayer()

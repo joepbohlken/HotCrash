@@ -11,7 +11,7 @@ public class TargetIndicator : MonoBehaviour
 
     public Camera targetCamera;
 
-    public Collider target;
+    public MeshCollider target;
 
     void OnGUI()
     {

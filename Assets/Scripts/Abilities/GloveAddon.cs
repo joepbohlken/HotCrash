@@ -24,20 +24,22 @@ public class GloveAddon : MonoBehaviour
         Vector3 correctedPos = target.position;
         correctedPos.y += 0.45f;
 
+        //tracking
         Vector3 targetDirection = (target.position - location.position);
         Vector3 newDirection = Vector3.RotateTowards(location.forward, targetDirection, 360, 0.0f);
         location.rotation = Quaternion.LookRotation(newDirection);
         location.position = Vector3.MoveTowards(location.position, correctedPos, Time.deltaTime * speed);
-    }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (armingTime <= 0)
+        //Check bounds
+        CapsuleCollider capsuleCollider = transform.GetComponent<CapsuleCollider>();
+        MeshCollider meshCollider = target.GetComponent<MeshCollider>();
+
+        if(capsuleCollider.bounds.Intersects(meshCollider.bounds))
         {
-            Rigidbody rb = collider.GetComponentInParent<Rigidbody>();
+            Rigidbody rb = meshCollider.GetComponentInParent<Rigidbody>();
             if (rb != null)
-            {              
-                Vector3 forceDirection = (collider.GetComponent<Collider>().transform.position - transform.position).normalized;
+            {
+                Vector3 forceDirection = (meshCollider.transform.position - transform.position).normalized;
 
                 rb.AddForceAtPosition(forceDirection * knockback + Vector3.up * knockback, transform.position + new Vector3(0, -0.5f, 0), ForceMode.Impulse);
 

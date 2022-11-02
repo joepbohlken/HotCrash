@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5714521172211366367}
   - component: {fileID: 7349980402234751128}
   - component: {fileID: 82277182360324589}
-  - component: {fileID: 1888250096412197074}
-  - component: {fileID: 1185604279745754945}
+  - component: {fileID: 1486486618077017717}
+  - component: {fileID: 5143010811350505499}
   m_Layer: 0
   m_Name: Boxing Glove
   m_TagString: Untagged
@@ -85,7 +85,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1888250096412197074
+--- !u!136 &1486486618077017717
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501156318837922870}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 4.3648787
+  m_Height: 12.188036
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.13063335, z: -0.009525299}
+--- !u!114 &5143010811350505499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,25 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb6824454aad9f49a8a591e73d598fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockback: 25000
+  knockback: 20000
   speed: 60
   armingTime: 0.1
   target: {fileID: 0}
   location: {fileID: 0}
---- !u!136 &1185604279745754945
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501156318837922870}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 3.8880775
-  m_Height: 10.371156
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8953757166976688201
 GameObject:
   m_ObjectHideFlags: 0
