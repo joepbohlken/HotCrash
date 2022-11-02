@@ -10,6 +10,7 @@ public class AbilityController : MonoBehaviour
 
     private CarController carController;
     [HideInInspector] public HUD hud;
+    [HideInInspector] public Camera playerCamera;
     private Ability currentAbility;
     private float currentCooldown;
     private bool handledDestroyed = false;

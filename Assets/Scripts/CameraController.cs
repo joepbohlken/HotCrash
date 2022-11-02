@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] Transform cameraObject;
+    public Transform cameraObject;
 
     [Header("Camera Properties")]
     [SerializeField] private float startAngle = 10f;

@@ -332,8 +332,10 @@ public class LevelManager : MonoBehaviour
             carHealth.healthBars.Add(hud.bars);
             carHealth.healthTexts.Add(hud.hpText);
 
+            // Set ability controller references
             AbilityController abilityController = car.GetComponent<AbilityController>();
             abilityController.hud = hud;
+            abilityController.playerCamera = cameraFollow.cameraObject.GetComponent<Camera>();
 
             // Set correct image per vital
             foreach (Vitals vital in carHealth.vitals)
