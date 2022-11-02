@@ -77,15 +77,16 @@ public class CarHealth : MonoBehaviour
             vitalHealthMultiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
         }
 
+        damage = Mathf.Clamp(damage, 0f, currentHealth);
         currentHealth = Mathf.Clamp(currentHealth - (damage * vitalHealthMultiplier), 0, health);
 
         lastCollider = attacker;
 
-        //TODO fix
-        //if (GameManager.main != null)
-        //{
-        //    GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
-        //}
+        if (GameManager.main != null)
+        {
+            GameManager.main.OnUpdateScore(gameObject, damage, true);
+            GameManager.main.OnUpdateScore(attacker, damage);
+        }
 
         UpdateHealth();
     }
@@ -115,7 +116,7 @@ public class CarHealth : MonoBehaviour
 
         float vitalDmgMultiplier = CalculateDamageMultiplier(vital, opponentVital);
 
-        float actualDmg = damage * vitalDmgMultiplier;
+        float actualDmg = Mathf.Clamp(damage * vitalDmgMultiplier, 0f, currentHealth);
         currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
         if(carOpponent != null)

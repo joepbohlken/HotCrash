@@ -31,7 +31,8 @@ public class MineObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isSetUp || other.transform.parent.parent == owner || isTriggered) return;
+        if (!isSetUp || other.transform.parent == owner || isTriggered) return;
+
         isTriggered = true;
 
         for (int i = 0; i < cars.childCount; i++)
