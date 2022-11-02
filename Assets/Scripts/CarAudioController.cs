@@ -7,7 +7,7 @@ public class CarAudioController : MonoBehaviour
     [SerializeField] private GameObject soundObjectPrefab;
     [SerializeField] private Transform carContainer;
 
-    private GameMaster gameMaster;
+    private LevelManager levelManager;
 
     ///<summary>Item1: car, Item2: sound</summary>
     private List<Tuple<GameObject, CarSound>> players = new List<Tuple<GameObject, CarSound>>();
@@ -18,17 +18,17 @@ public class CarAudioController : MonoBehaviour
 
     private void Awake()
     {
-        gameMaster = FindObjectOfType<GameMaster>();
-        gameMaster.onCarsInitialized.AddListener(InitializeSoundObjects);
+        levelManager = FindObjectOfType<LevelManager>();
+        levelManager.onCarsInitialized.AddListener(InitializeSoundObjects);
     }
 
     private void InitializeSoundObjects()
     {
-        gameMaster.onCarsInitialized.RemoveListener(InitializeSoundObjects);
+        levelManager.onCarsInitialized.RemoveListener(InitializeSoundObjects);
 
         for (int i = 0; i < carContainer.childCount; i++)
         {
-            ArcadeCar car = carContainer.GetChild(i).GetComponent<ArcadeCar>();
+            CarController car = carContainer.GetChild(i).GetComponent<CarController>();
             CarEffects effects = car.GetComponent<CarEffects>();
 
             CarSound soundObject = Instantiate(soundObjectPrefab, transform).GetComponent<CarSound>();

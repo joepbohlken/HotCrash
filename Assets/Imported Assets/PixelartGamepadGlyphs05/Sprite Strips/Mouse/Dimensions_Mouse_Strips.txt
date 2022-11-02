@@ -1,0 +1,36 @@
+
+- Dimensions of Mouse Images - 
+
+Image Size:
+Indicates the full width and height of a single image on strip in pixels. Import into projects at this size.
+
+mouse_click_left           64x64px   (4 images)
+
+mouse_click_middle         64x64px   (4 images)
+
+mouse_click_right          64x64px   (4 images)
+
+mouse_movement             64x64px   (2 images)
+
+mouse_scroll               64x64px   (4 images)
+
+mouse_scroll_down          64x64px   (4 images)
+
+mouse_scroll_up            64x64px   (4 images)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

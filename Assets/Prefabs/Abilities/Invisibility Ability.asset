@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Invisibility
   abilityIcon: {fileID: 21300000, guid: 630a648a13b27ea4abdb9cd255c4c36c, type: 3}
-  duration: 2
-  opacity: 0.25
+  duration: 5
+  opacity: 0.15

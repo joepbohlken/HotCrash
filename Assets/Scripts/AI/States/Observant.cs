@@ -17,7 +17,7 @@ public class Observant : BaseState
     private List<DetectRay> detectRays;
     private float flipDebounce = 5f;
 
-    public Observant(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Observant(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -43,27 +43,29 @@ public class Observant : BaseState
         base.LogicUpdate();
 
         // Handle aerial movement
-        if (controller.allWheelIsOnAir)
+        if (!controller.isGrounded)
         {
             Vector3 direction = (Vector3.down + carAI.mainRb.velocity.normalized).normalized;
             RaycastHit hit;
             if (Physics.Raycast(carAI.transform.position, direction, out hit, 100f))
             {
                 Vector3 crossDifference = Vector3.Cross(hit.normal, carAI.transform.up);
-                controller.v = Mathf.Abs(crossDifference.x) > 0.15f ? Mathf.Sign(crossDifference.x) : 0f;
-                // Might need to be changed to 'controller.h' in the future
-                controller.qe = Mathf.Abs(crossDifference.z) > 0.15f ? Mathf.Sign(crossDifference.z) : 0f;
+                controller.verticalInput = Mathf.Abs(crossDifference.x) > 0.15f ? Mathf.Sign(crossDifference.x) : 0f;
+                controller.rollInput = Mathf.Abs(crossDifference.z) > 0.15f ? Mathf.Sign(crossDifference.z) : 0f;
                 return;
             }
         }
 
         // Handle unflip
         flipDebounce -= Time.deltaTime;
-        if (flipDebounce <= 0f && controller.isTouchingGround && carAI.mainRb.velocity.magnitude < 1f)
+        if (flipDebounce <= 0f && !controller.isGrounded && carAI.mainRb.velocity.magnitude < 1f)
         {
             flipDebounce = 5f;
-            controller.flip = true;
+            controller.unflipCarInput = true;
         }
+
+        // Handle abilities
+        abilityController.UseAbility();
 
         // Initialize detect rays
         float currentSpeed = Mathf.Clamp(Vector3.Dot(carAI.transform.forward, carAI.mainRb.velocity), 10f, 999f);
