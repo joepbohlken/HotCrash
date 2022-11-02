@@ -68,6 +68,14 @@ public class PlayerManager : MonoBehaviour
 
     private bool gameManagerAvailable = false;
 
+    private void OnApplicationQuit()
+    {
+        foreach (PlayerController player in players)
+        {
+            RemovePlayer(player);
+        }
+    }
+
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += OnPlayerJoin;
