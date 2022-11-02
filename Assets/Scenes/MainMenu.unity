@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Post Processing
       objectReference: {fileID: 0}
+    - target: {fileID: 2519767466001420450, guid: 6f6e76774db00244891c798c106d6f0d, type: 3}
+      propertyPath: isGlobal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2519767466001420451, guid: 6f6e76774db00244891c798c106d6f0d, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -393,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc33b0404904c5d48bf08d33c4927c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showStartAnim: 0
+  showStartAnim: 1
   canvasAnimator: {fileID: 2123015055}
   carSlotParent: {fileID: 61214329}
   availableCars:
