@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using Cinemachine;
 
 public class GameMaster : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GameMaster : MonoBehaviour
     public GameObject carCanvasPrefab;
     public GameObject playerHudPrefab;
     public GameObject carPrefab;
+    public GameObject endGameCamera;
     
     private Transform carParentTransform;
     private Transform cameraParentTransform;
@@ -143,7 +145,15 @@ public class GameMaster : MonoBehaviour
 
     private IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(3);
+        foreach (Camera cam in cameraParentTransform.GetComponentsInChildren<Camera>())
+        {
+            cam.enabled = false;
+        }
+
+        GameObject endingCamera = Instantiate(endGameCamera);
+        endingCamera.GetComponentInChildren<CinemachineVirtualCamera>().LookAt = GameObject.Find("Arena").transform;
+
+        yield return new WaitForSeconds(13);
 
         LoadScene("End");
     }
