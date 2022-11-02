@@ -351,6 +351,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 125942050203167662, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 125942050203167662, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 6143459207935090151, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -398,14 +406,6 @@ PrefabInstance:
     - target: {fileID: 6776267300940187485, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
       propertyPath: m_Name
       value: Fiorella
-      objectReference: {fileID: 0}
-    - target: {fileID: 6776267300940187486, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
-      propertyPath: carConfig.reverseTorque
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 6776267300940187486, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
-      propertyPath: carConfig.fullTorqueOverAllWheels
-      value: 8000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
