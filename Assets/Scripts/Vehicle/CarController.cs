@@ -82,6 +82,8 @@ public class CarController : MonoBehaviour
     // ---------------
     // Public variables
     public PlayerController player { get; set; }
+    public Rigidbody rb { get; private set; }
+    public CarHealth health { get; private set; }
     public bool driveable { get; set; } = true;
     public bool targetable { get; set; }
     public bool isDestroyed { get; set; } = false;
@@ -91,11 +93,9 @@ public class CarController : MonoBehaviour
 
     // ---------------
     // Private variables
-    private Rigidbody rb;
-    private CarHealth health;
     private CarAI ai;
-    private ParticleSystem ps;
     private LevelManager levelManager;
+    private ParticleSystem ps;
     private Wheel[] wheels;
 
     private float currentTorque;
@@ -118,6 +118,11 @@ public class CarController : MonoBehaviour
     public float rollInput { get; set; }
     public bool handBrakeInput { get; set; }
     public bool unflipCarInput { get; set; }
+
+    // ---------------
+    // Ability variables
+    public bool isTargetable { get; set; } = true;
+    public List<CarCanvas> carCanvasRefs { get; set; } = new();
 
 
     // Update control variables
@@ -171,7 +176,7 @@ public class CarController : MonoBehaviour
         if (isBot)
         {
             ai = gameObject.AddComponent<CarAI>();
-            ai.boxSize = new Vector3(2, 0.4f, 5);
+            ai.boxSize = new Vector3(2, 1f, 5);
             ai.InitializeAI();
         }
 
@@ -240,13 +245,13 @@ public class CarController : MonoBehaviour
 
     private bool CheckIfGrounded()
     {
-        bool result = false;
+        bool result = true;
 
         foreach (Wheel wheel in wheels)
         {
-            if (wheel.isGrounded)
+            if (!wheel.isGrounded)
             {
-                result = true;
+                result = false;
                 break;
             }
         }

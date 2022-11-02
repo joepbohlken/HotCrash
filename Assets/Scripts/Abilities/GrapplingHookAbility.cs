@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 [CreateAssetMenu(menuName = "Abilities/GrapplingHook")]
 public class GrapplingHookAbility : Ability
 {
+    /*
     [SerializeField]
     private LayerMask grappleLayer;
     [SerializeField]
@@ -23,4 +24,5 @@ public class GrapplingHookAbility : Ability
     {
         GrapplePull.isGrappling = true;
     }
+    */
 }

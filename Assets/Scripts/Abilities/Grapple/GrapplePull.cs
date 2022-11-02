@@ -56,6 +56,7 @@ public class GrapplePull : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(abilityController.ability != null && abilityController.ability.a_Name == "Grapple")
         {
             targetBox();
@@ -78,6 +79,7 @@ public class GrapplePull : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     public void Pull()
