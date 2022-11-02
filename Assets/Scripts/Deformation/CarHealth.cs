@@ -90,7 +90,8 @@ public class CarHealth : MonoBehaviour
 
         if (GameManager.main != null)
         {
-            GameManager.main.OnUpdateScore(transform.gameObject, carOpponent.gameObject, actualDmg);
+            GameManager.main.OnUpdateScore(transform.gameObject, actualDmg, true);
+            GameManager.main.OnUpdateScore(carOpponent.gameObject, actualDmg);
         }
 
         CheckHealth();

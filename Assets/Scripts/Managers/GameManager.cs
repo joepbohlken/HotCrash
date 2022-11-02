@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public float countDownTime = 3f;
     public GameObject countDown;
     public TextMeshProUGUI countDownText;
+    public Canvas canvas;
+    public Leaderboard leaderboard;
 
     [HideInInspector]
     public List<PlayerVehicleSelection> playerSelections = new List<PlayerVehicleSelection>();
@@ -72,6 +74,8 @@ public class GameManager : MonoBehaviour
 
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
+
+        leaderboard.InitializeBoard();
     }
 
     private void Update()
@@ -157,13 +161,14 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void OnUpdateScore(GameObject car, GameObject opponent, float damage = 0)
+    public void OnUpdateScore(GameObject car, float damage = 0, bool taken = false)
     {
         CarScore carScore = scoreboard.FirstOrDefault(score => score.car == car);
-        CarScore opponentScore = scoreboard.FirstOrDefault(score => score.car == opponent);
 
-        opponentScore.damageDealt += damage;
-        carScore.damageTaken += damage;
+        if (taken)
+            carScore.damageTaken += damage;
+        else
+            carScore.damageDealt += damage;
     }
 
     public void OnCarDeath(GameObject car, GameObject carDestroyer)
