@@ -5,6 +5,9 @@ public class MineObject : MonoBehaviour
 {
     [SerializeField] private Renderer highlight;
     [SerializeField] private GameObject explosionEffectPrefab;
+    [SerializeField] private AudioClip explosionAudioClip;
+    [Range(0, 1)]
+    [SerializeField] private float explosionSoundVolume;
 
     [Space(12)]
     [SerializeField] private float explosionRadius = 10;
@@ -15,6 +18,7 @@ public class MineObject : MonoBehaviour
     private Transform cars;
     private bool isSetUp = false;
     private bool isTriggered = false;
+
 
     public void SetUpMine(Transform owner, Transform cars, bool isBot, AbilityController abilityController)
     {
@@ -54,6 +58,8 @@ public class MineObject : MonoBehaviour
     {
         GameObject explosion = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
         highlight.enabled = false;
+
+        AudioController.main.PlayOneShot(gameObject.transform.position, explosionAudioClip, 1f,  explosionSoundVolume);
 
         yield return new WaitForSeconds(2f);
         Destroy(explosion);
