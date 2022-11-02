@@ -775,6 +775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rowsWrapper: {fileID: 3429980996451459370}
+  rowPrefab: {fileID: 6927088056696869830, guid: e5bc9e8445acf46489de9b5464d978ba, type: 3}
 --- !u!1 &7094031832489321681
 GameObject:
   m_ObjectHideFlags: 0

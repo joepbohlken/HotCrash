@@ -999,18 +999,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8545638361122143481, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566016433963314275, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566016433963314275, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 490261870e529bc43a40b947fea6cd23, type: 3}
 --- !u!1 &2105189143

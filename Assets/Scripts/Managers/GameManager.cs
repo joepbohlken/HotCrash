@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
 
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
-
-        leaderboard.InitializeBoard();
     }
 
     private void Update()
