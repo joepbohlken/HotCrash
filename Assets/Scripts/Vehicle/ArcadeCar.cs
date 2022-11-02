@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class WheelData
 {
@@ -171,6 +172,8 @@ public class ArcadeCar : MonoBehaviour
     [HideInInspector]
     public bool isReady = true;
 
+    private CarEffects carEffects;
+
     // UI style for debug render
     private static GUIStyle style = new GUIStyle();
 
@@ -191,6 +194,10 @@ public class ArcadeCar : MonoBehaviour
 
     [HideInInspector]
     public bool isHandBrakeNow;
+
+    [HideInInspector]
+    public UnityEvent onDeath;
+
 
 
     private void OnValidate()
@@ -222,6 +229,8 @@ public class ArcadeCar : MonoBehaviour
 
         originalCenterOfMass = rb.centerOfMass;
         rb.centerOfMass = centerOfMass;
+
+        carEffects = GetComponent<CarEffects>();
     }
 
     private void Update()
@@ -637,6 +646,8 @@ public class ArcadeCar : MonoBehaviour
     {
         ps.Play();
 
+        onDeath.Invoke();
+
         foreach (Axle axle in axles)
         {
             PopOffWheel(axle.wheelVisualLeft);
@@ -987,7 +998,10 @@ public class ArcadeCar : MonoBehaviour
             Vector3 wsFrom = (wheelIndex == WHEEL_LEFT_INDEX) ? wsL : wsR;
 
             CalculateWheelForces(axle, wsDownDirection, wheelData, wsFrom, wheelIndex, totalWheelsCount, numberOfPoweredWheels);
+
         }
+
+        carEffects.UpdateTrailPosition(axle.wheelDataL.touchPoint.point, axle.wheelDataR.touchPoint.point);
 
         // http://projects.edy.es/trac/edy_vehicle-physics/wiki/TheStabilizerBars
         // Apply "stablizier bar" forces
