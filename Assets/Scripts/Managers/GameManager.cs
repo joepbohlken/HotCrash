@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     private Animator animator;
     private float currentGameTime = 0;
+    private bool loadingScene = false;
 
     public bool initialLoad { get; private set; } = false;
     public bool gameStarted { get; set; } = false;
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
         initialLoad = true;
 
         if (main != null) Destroy(gameObject);
-        main = this;
+        else main = this;
 
         DontDestroyOnLoad(gameObject);
 
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour
         {
             initialLoad = false;
         }
+
+        loadingScene = false;
     }
 
     public void OnStartGame()
@@ -165,7 +168,11 @@ public class GameManager : MonoBehaviour
             playerSelections.Add(selection);
         }
 
-        StartCoroutine(LoadLevel(1));
+        if(!loadingScene)
+        {
+            loadingScene = true;
+            StartCoroutine(LoadLevel(1));
+        }
     }
 
     public void OnGameEnd()
@@ -227,7 +234,13 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         gameStarted = false;
-        StartCoroutine(LoadLevel(0));
+        leaderboardOpen = false;
+
+        if (!loadingScene)
+        {
+            loadingScene = true;
+            StartCoroutine(LoadLevel(0));
+        }
     }
 
     public void OnCarDeath(GameObject car, GameObject carDestroyer)

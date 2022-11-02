@@ -5414,7 +5414,7 @@ Rigidbody:
   m_Mass: 1500
   m_Drag: 0
   m_AngularDrag: 0.4
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -5671,6 +5671,7 @@ MonoBehaviour:
   speed: 0
   isAcceleration: 0
   isReverseAcceleration: 0
+  isReady: 1
   v: 0
   h: 0
   qe: 0
@@ -5708,6 +5709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c41c8c50902ee4a8304666b5a6cda8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
   health: 200
   healthBars: []
   healthTexts: []
@@ -5769,7 +5773,6 @@ MonoBehaviour:
     offenseMultiplier: 0.9
     defenseMultiplier: 1.3
     currentHealth: 0
-  isDestroyed: 0
 --- !u!114 &8915069003306764829
 MonoBehaviour:
   m_ObjectHideFlags: 0

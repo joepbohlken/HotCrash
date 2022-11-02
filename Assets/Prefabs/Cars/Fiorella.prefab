@@ -11077,7 +11077,7 @@ MonoBehaviour:
     downForce: 100
     slipLimit: 0.3
     flipDuration: 0.8
-  useSinglePlayerInputs: 1
+  useSinglePlayerInputs: 0
 --- !u!114 &6776267300940187487
 MonoBehaviour:
   m_ObjectHideFlags: 0

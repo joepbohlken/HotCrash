@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5407779595742435778}
   - component: {fileID: 8976425963385432843}
   - component: {fileID: 5407779595742435779}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere.001
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3770122677274462578}
   - component: {fileID: 3770122677274462577}
   - component: {fileID: 3770122677274462576}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Arena
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4076676064711873214}
   - component: {fileID: 4076676064711873215}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TerrainGroup_1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 4076676064866235252}
   - component: {fileID: 4076676064866235254}
   - component: {fileID: 4076676064866235253}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Terrain_0_0_68aafd83-8ca9-48bc-abec-085668b18bb1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 7901969571327445111}
   - component: {fileID: 8489550688416470945}
   - component: {fileID: 5284492140297015123}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere.003
   m_TagString: Ground
   m_Icon: {fileID: 0}

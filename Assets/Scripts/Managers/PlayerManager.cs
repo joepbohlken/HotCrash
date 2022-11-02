@@ -98,7 +98,7 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         if (main != null) Destroy(gameObject);
-        main = this;
+        else  main = this;
 
         DontDestroyOnLoad(gameObject);
 
@@ -347,9 +347,10 @@ public class PlayerManager : MonoBehaviour
         {
             ShowMenu(false);
             cancelled = true;
+
+            GameManager.main.playersCount = GetCurrentPlayerCount();
         }
     }
-
 
     // Remove player from device lost
     public void DeviceLost(PlayerController player)
