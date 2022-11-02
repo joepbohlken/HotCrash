@@ -18,7 +18,7 @@ public class PushAbility : Ability
     public Transform closestTarget;
     public GameObject glove;
     public List<Transform> visibleTargets = new List<Transform>();
-    public TargetIndicator indicator;
+    public HUD indicator;
     public List<MeshCollider> carList;
     public GameObject carContainer;
     public LayerMask groundMask;
@@ -35,13 +35,13 @@ public class PushAbility : Ability
         readytoThrow = true;
         car = abilityController.transform;
         gunTip = car.Find("GunTip");
-        indicator = car.GetComponent<TargetIndicator>();
-        indicator.targetCamera = abilityController.playerCamera;
+        indicator = abilityController.hud;
         carContainer = GameObject.Find("Cars");
         foreach(Transform t in carContainer.transform)
         {
             carList.Add(t.GetComponentInChildren<MeshCollider>());
         }
+        indicator.carCamera = abilityController.playerCamera;
     }
 
     public override void LogicUpdate()
@@ -114,15 +114,17 @@ public class PushAbility : Ability
         }
 
         closestTarget = GetClosestPlayer();
-        if (visibleTargets.Count() == 0)
+        if(indicator != null)
         {
-            indicator.target = null;
+            if (visibleTargets.Count() == 0)
+            {
+                indicator.targetCollider = null;
+            }
+            else
+            {
+                indicator.targetCollider = closestTarget.GetComponentInChildren<MeshCollider>();
+            }
         }
-        else
-        {
-            indicator.target = closestTarget.GetComponentInChildren<MeshCollider>();
-        }
-
     }
 
     public Transform GetClosestPlayer()
