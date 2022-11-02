@@ -152,7 +152,8 @@ public class InvisibilityAbility : Ability
 
             foreach (CarCanvas carCanvas in carController.carCanvasRefs)
             {
-                carCanvas.canvasGroup.alpha = 1f;
+                if (carCanvas.canvasGroup)
+                    carCanvas.canvasGroup.alpha = 1f;
             }
 
             for (int i = 0; i < rendValuesPair.Value.Count; i++)

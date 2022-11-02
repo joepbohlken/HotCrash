@@ -105,7 +105,7 @@ public class CarSound : MonoBehaviour
         deathAudioSource.spatialBlend = 1f;
         deathAudioSource.minDistance = 15;
         deathAudioSource.maxDistance = 50;
-        car.onDeath.AddListener(PlayDeathSound);
+        car.health.onDestroyed.AddListener(PlayDeathSound);
 
         // Mine sound
     }
