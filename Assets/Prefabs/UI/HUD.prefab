@@ -1765,8 +1765,7 @@ MonoBehaviour:
   bottomLeftBorder: {fileID: 8479561239166791981}
   topRightBorder: {fileID: 519039343860624974}
   bottomRightBorder: {fileID: 4540307154589521626}
-  targetCollider: {fileID: 0}
-  uiCamera: {fileID: 0}
+  carCamera: {fileID: 0}
   car: {fileID: 0}
 --- !u!1 &7905057190700477434
 GameObject:

@@ -336,6 +336,8 @@ public class LevelManager : MonoBehaviour
             AbilityController abilityController = car.GetComponent<AbilityController>();
             abilityController.hud = hud;
             abilityController.playerCamera = cameraFollow.cameraObject.GetComponent<Camera>();
+            // ---
+            hud.carCamera = cameraUI;
 
             // Set correct image per vital
             foreach (Vitals vital in carHealth.vitals)

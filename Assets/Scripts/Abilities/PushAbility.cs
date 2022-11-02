@@ -18,7 +18,6 @@ public class PushAbility : Ability
     public Transform closestTarget;
     public GameObject glove;
     public List<Transform> visibleTargets = new List<Transform>();
-    public HUD indicator;
     public List<MeshCollider> carList;
     public GameObject carContainer;
     public LayerMask groundMask;
@@ -27,6 +26,7 @@ public class PushAbility : Ability
     public float angle = 60;
 
     private bool readytoThrow;
+    private MeshCollider targetCollider;
 
     public override void Obtained()
     {
@@ -35,13 +35,12 @@ public class PushAbility : Ability
         readytoThrow = true;
         car = abilityController.transform;
         gunTip = car.Find("GunTip");
-        indicator = abilityController.hud;
         carContainer = GameObject.Find("Cars");
         foreach(Transform t in carContainer.transform)
         {
             carList.Add(t.GetComponentInChildren<MeshCollider>());
         }
-        indicator.carCamera = abilityController.playerCamera;
+        //if (!carController.isBot) indicator.carCamera = abilityController.playerCamera;
     }
 
     public override void LogicUpdate()
@@ -49,6 +48,12 @@ public class PushAbility : Ability
         base.LogicUpdate();
 
         targetBox();
+
+        if (abilityController.hud)
+        {
+            if (targetCollider) abilityController.hud.TargetingReticle(targetCollider);
+            else abilityController.hud.DisableTargeting();
+        }
     }
 
     public override void Activated()
@@ -94,7 +99,12 @@ public class PushAbility : Ability
     {
         visibleTargets.Clear();
         closestTarget = null;
-        FieldOfViewCheck();
+        GameObject closestCar = GetClosestCar();
+        if (closestCar)
+        {
+            if (!carController.isBot) Debug.Log("Hey hallo!");
+            targetCollider = closestCar.transform.Find("Body").GetComponent<MeshCollider>();
+        }
     }
 
     private void FieldOfViewCheck()
@@ -114,15 +124,15 @@ public class PushAbility : Ability
         }
 
         closestTarget = GetClosestPlayer();
-        if(indicator != null)
+        if(abilityController.hud != null)
         {
             if (visibleTargets.Count() == 0)
             {
-                indicator.targetCollider = null;
+                targetCollider = null;
             }
             else
             {
-                indicator.targetCollider = closestTarget.GetComponentInChildren<MeshCollider>();
+                targetCollider = closestTarget.GetComponentInChildren<MeshCollider>();
             }
         }
     }
@@ -141,5 +151,32 @@ public class PushAbility : Ability
             }
         }
         return tMin;
+    }
+
+    private GameObject GetClosestCar()
+    {
+        GameObject closestCar = null;
+        float closestDistance = 999f;
+
+        for (int i = 0; i < carController.transform.parent.childCount; i++)
+        {
+            Transform car = carController.transform.parent.GetChild(i);
+            if (car == carController.transform) continue;
+
+            bool isWithinView = Vector3.Angle(carController.transform.forward, (car.transform.position - carController.transform.position).normalized) <= angle;
+
+            float distance = (car.transform.position - carController.transform.position).magnitude;
+            if (isWithinView && distance < closestDistance)
+            {
+                Vector3 direction = (carController.transform.position - car.transform.position).normalized;
+                if (Physics.Raycast(gunTip.position, direction, range, groundMask))
+                {
+                    closestDistance = distance;
+                    closestCar = car.gameObject;
+                }  
+            }
+        }
+
+        return closestCar;
     }
 }

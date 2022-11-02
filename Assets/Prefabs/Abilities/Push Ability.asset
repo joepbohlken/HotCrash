@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Push Ability
   m_EditorClassIdentifier: 
   abilityName: Push
-  abilityIcon: {fileID: 0}
+  abilityIcon: {fileID: 21300000, guid: 0d3a4c7f8e2edde43885f5532d7f7407, type: 3}
   car: {fileID: 0}
   gunTip: {fileID: 0}
   closestTarget: {fileID: 0}
-  glove: {fileID: 3447453259306166537, guid: 78f62d1b7caaf1d4996fde60c69d58d8, type: 3}
+  glove: {fileID: 8953757166976688201, guid: 56eae23ab622a5144a62aaf1559e61b0, type: 3}
   visibleTargets: []
-  playerMask:
+  carList: []
+  carContainer: {fileID: 0}
+  groundMask:
     serializedVersion: 2
-    m_Bits: 4
-  throwForce: 60
+    m_Bits: 4096
   range: 30
-  angle: 60
+  angle: 90
