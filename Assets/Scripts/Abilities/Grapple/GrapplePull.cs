@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class GrapplePull : MonoBehaviour
 {
+    /*
     [SerializeField] public Vector3 hookPoint;
     [SerializeField] public Transform grappleGun;
     private Transform gunTip;
@@ -232,4 +233,5 @@ public class GrapplePull : MonoBehaviour
         }
         return tMin;
     }
+    */
 }

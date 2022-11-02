@@ -1,20 +1,18 @@
-using Cinemachine.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using static Cinemachine.CinemachineTargetGroup;
+using static UnityEditor.Experimental.GraphView.Port;
 using static UnityEngine.GraphicsBuffer;
 
-public class FistPush : MonoBehaviour
+[CreateAssetMenu(menuName = "Abilities/PushOld")]
+public class PushAbilityOld : Ability
 {
-    /*
     [SerializeField] public Vector3 hookPoint;
-    //[NonSerialized] 
-    public Transform gunTip;
+    [NonSerialized] public Transform gunTip;
     [SerializeField] private Transform car;
-    [SerializeField] private AbilityController abilityController;
 
     public static bool fistShoot;
     private bool hookSet = false;
@@ -46,53 +44,67 @@ public class FistPush : MonoBehaviour
 
     public List<MeshCollider> targets;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void Obtained()
     {
-        car = gameObject.transform;
-        gunTip = car.Find("GunTip");
-        abilityController = car.GetComponent<AbilityController>();
+        base.Obtained();
+
+        car = abilityController.transform;
+        gunTip = car.Find("Guntip");
         players.AddRange(GameObject.FindGameObjectsWithTag("Car"));
         foreach (GameObject player in players)
         {
             playerCars.Add(player.transform);
         }
-        lr = GetComponent<LineRenderer>();
+        lr = car.GetComponent<LineRenderer>();
         spring = new Spring();
         spring.SetTarget(0);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void LogicUpdate()
     {
-        if(abilityController.Ability != null && abilityController.Ability.a_Name == "Fist")
+        base.LogicUpdate();
+
+        targetBox();
+        DrawRope();
+        if (fistShoot)
         {
-            targetBox();
-            if (fistShoot)
+            hookSetTime += Time.deltaTime;
+            if (!hookSet)
             {
-                hookSetTime += Time.deltaTime;
-                if (!hookSet)
+                ShootHook();
+                SetJoint();
+                hookSet = true;
+                hookSetTime = 0;
+            }
+            if (hookSet && hookSetTime > 0.25f)
+            {
+                if (hitPlayer != null)
                 {
-                    ShootHook();
-                    SetJoint();
-                    hookSet = true;
-                    hookSetTime = 0;
+                    CarPush();
                 }
-                if (hookSet && hookSetTime > 0.25f)
-                {
-                    if(hitPlayer != null)
-                    {
-                        CarPush();
-                    }
-                    FistHit();
-                }
+                FistHit();
+                
             }
         }
     }
 
-    private void LateUpdate()
+    public override void Activated()
     {
-        DrawRope();
+        base.Activated();
+
+        fistShoot = true;
+    }
+
+    public override void CarDestroyed()
+    {
+        base.CarDestroyed();
+
+        AbilityEnded(true);
+    }
+
+    private void AbilityEnded(bool isDestroyed)
+    {
+        if (!isDestroyed) abilityController.AbilityEnded();
     }
 
     public void CarPush()
@@ -112,6 +124,7 @@ public class FistPush : MonoBehaviour
         Destroy(joint);
         hookSet = false;
         hitPlayer = null;
+        AbilityEnded(false);
     }
 
     public void ShootHook()
@@ -152,7 +165,7 @@ public class FistPush : MonoBehaviour
                         visibleTargets.Add(target);
                     }
                 }
-                else if(Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, LayerMask.NameToLayer("Ignore Raycast")))
+                else if (Physics.Raycast(gunTip.position + Vector3.up, gunTip.TransformDirection(Vector3.forward), out hit, range, LayerMask.NameToLayer("Ignore Raycast")))
                 {
                     hookPoint = hit.point;
                     hitPlayer = GetClosestPlayer();
@@ -333,5 +346,4 @@ public class FistPush : MonoBehaviour
             lr.SetPosition(i, Vector3.Lerp(gunTipPosition, currentGrapplePosition, delta) + offset);
         }
     }
-    */
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b450370c9e3ec4b8c05eba619154a1, type: 3}
+  m_Name: Push Ability
+  m_EditorClassIdentifier: 
+  abilityName: Push
+  abilityIcon: {fileID: 0}
+  car: {fileID: 0}
+  gunTip: {fileID: 0}
+  closestTarget: {fileID: 0}
+  glove: {fileID: 3447453259306166537, guid: 78f62d1b7caaf1d4996fde60c69d58d8, type: 3}
+  visibleTargets: []
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 4
+  throwForce: 60
+  range: 30
+  angle: 60

@@ -13,14 +13,17 @@ public class GrapplingHookAbility : Ability
     [SerializeField]
     private float maxGrappleDistance;
 
+    /*
     public override void Use()
     {
         if(!GrapplePull.isGrappling)
         ShootHook();
     }
+    
 
     private void ShootHook()
     {
         GrapplePull.isGrappling = true;
     }
+    */
 }

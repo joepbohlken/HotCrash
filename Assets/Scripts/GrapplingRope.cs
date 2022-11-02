@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GrapplingRope : MonoBehaviour
 {
+    /*
     private Transform gunTip;
     public FistPush carFist;
 
@@ -17,4 +18,5 @@ public class GrapplingRope : MonoBehaviour
     {
         DrawRope();
     }
+    */
 }
