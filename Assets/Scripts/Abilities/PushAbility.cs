@@ -1,14 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static Cinemachine.CinemachineTargetGroup;
-using static UnityEditor.Experimental.GraphView.Port;
-using static UnityEngine.GraphicsBuffer;
 
 [CreateAssetMenu(menuName = "Abilities/Push")]
 public class PushAbility : Ability

@@ -449,7 +449,7 @@ MonoBehaviour:
   onDestroyed:
     m_PersistentCalls:
       m_Calls: []
-  health: 10
+  health: 300
   healthBars: []
   healthTexts: []
   damageMultiplierCurve:
@@ -488,7 +488,7 @@ MonoBehaviour:
   vitals:
   - vitalType: 0
     image: {fileID: 0}
-    health: 100
+    health: 200
     offenseMultiplier: 1.2
     defenseMultiplier: 1
     currentHealth: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
     currentHealth: 0
   - vitalType: 1
     image: {fileID: 0}
-    health: 100
+    health: 150
     offenseMultiplier: 0.9
     defenseMultiplier: 1.3
     currentHealth: 0

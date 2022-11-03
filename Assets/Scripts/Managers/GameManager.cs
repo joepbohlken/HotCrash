@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     public int playersLeft { get; private set; }
     public bool leaderboardOpen { get; private set; } = false;
 
+    public bool initialMainMenu = true;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -147,6 +149,8 @@ public class GameManager : MonoBehaviour
 
     public void OnStartGame(CarSelectionSlot[] slots)
     {
+        initialMainMenu = false;
+
         // Clear previous selections
         playerSelections.Clear();
 
