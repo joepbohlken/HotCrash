@@ -5664,9 +5664,14 @@ MonoBehaviour:
     brakeSlipperyK: 0.5
     handBrakeSlipperyK: 0.1
   debugMode: 0
+  isTouchingGround: 0
   speed: 0
   isAcceleration: 0
   isReverseAcceleration: 0
+  killCount: 0
+  rb: {fileID: 4450794903244610550}
+  carHealth: {fileID: 0}
+  allWheelIsOnAir: 0
   v: 0
   h: 0
   qe: 0
@@ -5799,9 +5804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a71aff88e6fdd3f45ac6748a8acaedde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tireMarks:
-  - {fileID: 9027889776103455278}
-  - {fileID: 7812938998609726875}
+  rearLeftRenderer: {fileID: 9027889776103455278}
+  rearRightRenderer: {fileID: 7812938998609726875}
 --- !u!1 &4158976086258160209
 GameObject:
   m_ObjectHideFlags: 0

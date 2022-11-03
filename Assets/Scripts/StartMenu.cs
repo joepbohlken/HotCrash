@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
+<<<<<<< HEAD
     public GameMaster gameMaster;
 
     public Sprite keyboardIcon;
@@ -62,4 +63,7 @@ public class StartMenu : MonoBehaviour
             slots[i].transform.GetChild(1).gameObject.SetActive(true);
         }
     }
+=======
+    
+>>>>>>> developer
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8994973092536570516}
   - component: {fileID: 8723974043712202613}
+  - component: {fileID: 1668664530527952992}
   m_Layer: 5
   m_Name: HP
   m_TagString: Untagged
@@ -54,6 +55,18 @@ MonoBehaviour:
   cameraToFollow: {fileID: 0}
   bars: {fileID: 657000580449972654}
   hpText: {fileID: 657000580804164464}
+--- !u!225 &1668664530527952992
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397154914530118811}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2293275475273371222
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +226,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5580977687126713624
 MonoBehaviour:
   m_ObjectHideFlags: 0
