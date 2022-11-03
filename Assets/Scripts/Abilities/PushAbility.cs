@@ -27,8 +27,13 @@ public class PushAbility : Ability
     {
         base.LogicUpdate();
 
-        targetFinder();
-        
+        closestCar = null;
+        closestCar = GetClosestCar();
+        if (closestCar)
+        {
+            targetCollider = closestCar.transform.Find("Body").GetComponent<MeshCollider>();
+        }
+
         if (abilityController.hud)
         {
             if (closestCar) abilityController.hud.TargetingTextEnable();
@@ -77,16 +82,6 @@ public class PushAbility : Ability
         AbilityEnded(false);
     }    
 
-    public void targetFinder()
-    {
-        closestCar = null;
-        closestCar = GetClosestCar();
-        if (closestCar)
-        {
-            targetCollider = closestCar.transform.Find("Body").GetComponent<MeshCollider>();
-        }
-    }
-
     private GameObject GetClosestCar()
     {
         GameObject closestCar = null;
@@ -100,16 +95,13 @@ public class PushAbility : Ability
             bool isWithinView = Vector3.Angle(carController.transform.forward, (car.transform.position - carController.transform.position).normalized) <= angle;
 
             float distance = (car.transform.position - carController.transform.position).magnitude;
-            if(distance <= range)
+            if (isWithinView && distance < closestDistance && distance < range)
             {
-                if (isWithinView && distance < closestDistance)
+                Vector3 direction = (car.transform.position - carController.transform.position).normalized;
+                if (!Physics.Raycast(carController.transform.position, direction, distance, groundMask))
                 {
-                    Vector3 direction = (carController.transform.position - car.transform.position).normalized;
-                    if (!Physics.Raycast(gunTip.position, direction, range, groundMask))
-                    {
-                        closestDistance = distance;
-                        closestCar = car.gameObject;
-                    }
+                    closestDistance = distance;
+                    closestCar = car.gameObject;
                 }
             }
         }
