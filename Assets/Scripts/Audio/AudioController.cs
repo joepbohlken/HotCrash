@@ -93,11 +93,13 @@ public class AudioController : MonoBehaviour
 
         foreach (Tuple<GameObject, CarSound> playerData in players)
         {
-            float distance = (playerData.Item1.transform.position - soundPosition).magnitude;
+            Vector3 playerPos = playerData.Item2.isSelfDestroyed ? new Vector3(0, 100f, 0) : playerData.Item1.transform.position;
+
+            float distance = (playerPos - soundPosition).magnitude;
             if (distance < closestDistance)
             {
                 closestDistance = distance;
-                direction = (soundPosition - playerData.Item1.transform.position).normalized;
+                direction = (soundPosition - playerPos).normalized;
             }
         }
 
@@ -117,6 +119,14 @@ public class AudioController : MonoBehaviour
         oneShots.Add((oneShotObject.gameObject, soundPosition));
 
         StartCoroutine(OneShotTimer(oneShotObject.gameObject, soundPosition, clip.length));
+    }
+
+    public void StopAllSounds()
+    {
+        foreach (Tuple<GameObject, CarSound> botData in bots)
+        {
+            if (!botData.Item2.isSelfDestroyed) botData.Item2.TurnOff();
+        }
     }
 
     private IEnumerator OneShotTimer(GameObject oneShotObject, Vector3 soundPosition, float clipLength)

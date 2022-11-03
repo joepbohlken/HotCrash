@@ -48,6 +48,7 @@ public class CarSound : MonoBehaviour
     private bool isDrifting = false;
     private bool isSetUp = false;
     private bool isBot = true;
+    [HideInInspector] public bool isSelfDestroyed = false;
 
     private CarController carController;
 
@@ -121,7 +122,22 @@ public class CarSound : MonoBehaviour
     void Update()
     {
         if (!isSetUp) return;
-        SetEngineSound();
+
+        if (carController.isDestroyed && !isSelfDestroyed)
+        {
+            isSelfDestroyed = true;
+            StopDriftSound();
+            StartCoroutine(TurnSoundsOff());
+        }
+
+        if (!isSelfDestroyed) SetEngineSound();
+    }
+
+    public void TurnOff()
+    {
+        isSelfDestroyed = true;
+        StopDriftSound();
+        StartCoroutine(TurnSoundsOff());
     }
 
     public void SetEngineSound()
@@ -168,11 +184,6 @@ public class CarSound : MonoBehaviour
         deathAudioSource.Play();
     }
 
-    public void PlayMineSound()
-    {
-
-    }
-
     public void PlayCrashSound()
     {
         crashAudioSource.clip = crashingSFX[Random.Range(0, crashingSFX.Count)];
@@ -182,7 +193,7 @@ public class CarSound : MonoBehaviour
 
     public void PlayDriftSound()
     {
-        if (!isDrifting && isSetUp)
+        if (!isDrifting && isSetUp && !isSelfDestroyed)
         {
             isDrifting = true;
             driftAudioSource.volume = driftVolume;
@@ -208,5 +219,18 @@ public class CarSound : MonoBehaviour
             driftAudioSource.volume = Mathf.Lerp(driftVolume, 0, i);
         }
             driftAudioSource.Stop();
+    }
+
+    private IEnumerator TurnSoundsOff()
+    {
+        float curEngVol = engineAudioSource.volume;
+
+        for (float i = 0f; i <= 1f; i += Time.deltaTime)
+        {
+            engineAudioSource.volume = Mathf.Lerp(curEngVol, 0f, i);
+            yield return null;
+        }
+
+        engineAudioSource.Stop();
     }
 }
