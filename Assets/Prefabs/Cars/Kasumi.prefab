@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 9210382037637359071}
   - component: {fileID: 9210382037637359070}
   - component: {fileID: 9210382037637359057}
+  - component: {fileID: 6339035864615611676}
   m_Layer: 0
   m_Name: Kasumi
   m_TagString: Car
@@ -580,6 +581,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rearLeftRenderer: {fileID: 6686832526180653852}
   rearRightRenderer: {fileID: 6686832526666783235}
+--- !u!114 &6339035864615611676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714538519709849228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCooldown: 5
+  availableAbilities:
+  - {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
+  - {fileID: 11400000, guid: b153d246838bdee4a920869605d74ab8, type: 2}
+  - {fileID: 11400000, guid: 4ea882d83839279459f5c9b241a3e99b, type: 2}
+  hud: {fileID: 0}
+  playerCamera: {fileID: 0}
+  abilityContainer: {fileID: 0}
 --- !u!1 &5007410309161668533
 GameObject:
   m_ObjectHideFlags: 0

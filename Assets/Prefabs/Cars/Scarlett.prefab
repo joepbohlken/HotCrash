@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 3661391221548840615}
   - component: {fileID: 3661391221548840614}
   - component: {fileID: 3661391221548840613}
+  - component: {fileID: 6980768898709335030}
   m_Layer: 0
   m_Name: Scarlett
   m_TagString: Car
@@ -608,6 +609,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rearLeftRenderer: {fileID: 6329080628594114563}
   rearRightRenderer: {fileID: 6329080626684054333}
+--- !u!114 &6980768898709335030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795332343238623926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCooldown: 5
+  availableAbilities:
+  - {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
+  - {fileID: 11400000, guid: b153d246838bdee4a920869605d74ab8, type: 2}
+  - {fileID: 11400000, guid: 4ea882d83839279459f5c9b241a3e99b, type: 2}
+  hud: {fileID: 0}
+  playerCamera: {fileID: 0}
+  abilityContainer: {fileID: 0}
 --- !u!1 &2088209707591555983
 GameObject:
   m_ObjectHideFlags: 0

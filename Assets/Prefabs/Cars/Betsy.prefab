@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 3813756199833581717}
   - component: {fileID: 3813756199833581718}
   - component: {fileID: 3813756199833581719}
+  - component: {fileID: 3448393836142989623}
   m_Layer: 0
   m_Name: Betsy
   m_TagString: Car
@@ -827,6 +828,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rearLeftRenderer: {fileID: 6779977877242962831}
   rearRightRenderer: {fileID: 6779977878353011639}
+--- !u!114 &3448393836142989623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4586634342405923363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca5690f755c35541b16fdcd87106e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCooldown: 5
+  availableAbilities:
+  - {fileID: 11400000, guid: 2cbd5294bf4a81547a492e898684ecd8, type: 2}
+  - {fileID: 11400000, guid: b153d246838bdee4a920869605d74ab8, type: 2}
+  - {fileID: 11400000, guid: 4ea882d83839279459f5c9b241a3e99b, type: 2}
+  hud: {fileID: 0}
+  playerCamera: {fileID: 0}
+  abilityContainer: {fileID: 0}
 --- !u!1 &6051344839995293984
 GameObject:
   m_ObjectHideFlags: 0

@@ -1243,17 +1243,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 621888627}
     - target: {fileID: 7429359871489202332, guid: cc7903f55d4e7d245b47cdebaa4daf14, type: 3}
-      propertyPath: carPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429359871489202332, guid: cc7903f55d4e7d245b47cdebaa4daf14, type: 3}
       propertyPath: initializePlayerManager
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7429359871489202332, guid: cc7903f55d4e7d245b47cdebaa4daf14, type: 3}
-      propertyPath: carPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 6776267300940187485, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
     - target: {fileID: 7429359871489202332, guid: cc7903f55d4e7d245b47cdebaa4daf14, type: 3}
       propertyPath: groundCollider.Array.size
       value: 3
