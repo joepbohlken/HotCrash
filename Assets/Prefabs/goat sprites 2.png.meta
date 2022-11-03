@@ -1,0 +1,1096 @@
+fileFormatVersion: 2
+guid: e00516b1d82b10d479b5b5bf01d357e2
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: goat sprites 2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f59954772b765814ba424d4732e88aa6
+      internalID: -506653267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7509bd860b43c3b41be03699e16e09c5
+      internalID: -38673208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ada8dc0b31174d24ca977c083ee4eb97
+      internalID: 459431118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 592d30f2644d6664788c2fc489fddae3
+      internalID: -951126556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_6
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36487bcd598610f4089de19f3e7b114d
+      internalID: 1190212225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_7
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f83be861b0eeb6b4fa83a9c572ed933d
+      internalID: 1613864828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_8
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5918e5df37f838d4c9b59995a6aa3a6a
+      internalID: -386765500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_9
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29ec50ff00326e14c8b6719e792b7594
+      internalID: -993956991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_10
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55ced87d71b965b449dc049c65171f87
+      internalID: 63046020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_11
+      rect:
+        serializedVersion: 2
+        x: 2090
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cea1f538cf89a7a4a8723a329dbfd65e
+      internalID: 2001304027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_12
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 870603e6447f86e49a7e7f05042d3521
+      internalID: 100492673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_13
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7dcd73bc40cdc44a0c2fcfcc6faf72
+      internalID: -296387561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_14
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 1153
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34ac489d7b8d6b8469e2723b07d3f85e
+      internalID: 61917118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d5eeba37410d294895216bd594228f8
+      internalID: 685922395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_17
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55c78246aaf4479438d847f9f9c57150
+      internalID: 747088019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_18
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf16d20ccb27222408682cc893c621c8
+      internalID: -894485943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_19
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2589cdcd2dec2d49b06291346a761f1
+      internalID: 437571501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_20
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d6ccda047483b48982dcdc00336a6c
+      internalID: 831190046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_21
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d42216e05fb0394286d98760825d131
+      internalID: 801275331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_22
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87c7517f3fefd084facd9a8ba9777dc1
+      internalID: -1924442534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_23
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b41482b3ea8317041b15988d7da9f629
+      internalID: -1544354693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_24
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 309d7f58afc21a24a9f2af69c705b842
+      internalID: 766612155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_25
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af2378d7fc3bac44fb6418823f66ad0a
+      internalID: 618376669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_26
+      rect:
+        serializedVersion: 2
+        x: 2090
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc760802b3f2d534193a8cdccbb82e1c
+      internalID: 1005407369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_27
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 640679875e61b4545b3a4ba167480f51
+      internalID: 1891208164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_28
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d477098a294ba7d47b4cb7a141e61072
+      internalID: -486423556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_29
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 922
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b06d5e47fa8f36a4b9c2246838801f26
+      internalID: 1741614204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73c2bbe70407a2d46af56af426c72714
+      internalID: 207081335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_32
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aadc6a61e361a0543a8c322deca69f08
+      internalID: 827199309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_33
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a094cfbac58c8e4b88e275a08099cc9
+      internalID: -2096287496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_34
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 309e9de115d44d447b3f40f6eac3ed58
+      internalID: -854704869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_35
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31046d930e348d4c932e348e02f0cb0
+      internalID: -1568073992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_36
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d33657b166a99f24d8ea9a61bdd80612
+      internalID: -1165454275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_37
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d85abca0c7f95f540af039627611df91
+      internalID: -124861478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_38
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b428b32363e8ada419855da3db1af4ea
+      internalID: -691571175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_39
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52d5fd0d11aef9a4da2ef3abf3ef23e9
+      internalID: 1428060614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_40
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cb023a1c2e00cc4c83b921093fc7f86
+      internalID: -947292638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_41
+      rect:
+        serializedVersion: 2
+        x: 2090
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a8abb02cdb5983479667e7a884ca4fa
+      internalID: 165775739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_42
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa7b1a10752acde42b3334b135c45d8f
+      internalID: 354014132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_43
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecd1df145ff22484aa7a24011ae424ce
+      internalID: -1254246136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_44
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 691
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8707b8069c86367498acf8efd1b9204c
+      internalID: -639241575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 460
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3fb58793ec4a7f47b214787277b5f34
+      internalID: 1293198701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 229
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f4e536060d71f246b94525d5a762330
+      internalID: -66981433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: goat sprites 2_47
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ded4ce96ae99e674a9480178b1838545
+      internalID: -150888734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c4b177629644bf34186bbd425aa7efab
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      goat sprites 2_11: 2001304027
+      goat sprites 2_39: 1428060614
+      goat sprites 2_44: -639241575
+      goat sprites 2_40: -947292638
+      goat sprites 2_24: 766612155
+      goat sprites 2_9: -993956991
+      goat sprites 2_10: 63046020
+      goat sprites 2_4: 459431118
+      goat sprites 2_16: 86319514
+      goat sprites 2_1: 1453300553
+      goat sprites 2_36: -1165454275
+      goat sprites 2_42: 354014132
+      goat sprites 2_46: -66981433
+      goat sprites 2_48: 1472284994
+      goat sprites 2_3: -38673208
+      goat sprites 2_19: 437571501
+      goat sprites 2_25: 618376669
+      goat sprites 2_41: 165775739
+      goat sprites 2_6: 1190212225
+      goat sprites 2_23: -1544354693
+      goat sprites 2_0: -506653267
+      goat sprites 2_18: -894485943
+      goat sprites 2_26: 1005407369
+      goat sprites 2_15: 685922395
+      goat sprites 2_43: -1254246136
+      goat sprites 2_8: -386765500
+      goat sprites 2_21: 801275331
+      goat sprites 2_22: -1924442534
+      goat sprites 2_17: 747088019
+      goat sprites 2_5: -951126556
+      goat sprites 2_34: -854704869
+      goat sprites 2_28: -486423556
+      goat sprites 2_20: 831190046
+      goat sprites 2_13: -296387561
+      goat sprites 2_27: 1891208164
+      goat sprites 2_35: -1568073992
+      goat sprites 2_29: 1741614204
+      goat sprites 2_47: -150888734
+      goat sprites 2_33: -2096287496
+      goat sprites 2_38: -691571175
+      goat sprites 2_2: -1989812495
+      goat sprites 2_32: 827199309
+      goat sprites 2_45: 1293198701
+      goat sprites 2_37: -124861478
+      goat sprites 2_14: 61917118
+      goat sprites 2_31: -184968074
+      goat sprites 2_30: 207081335
+      goat sprites 2_12: 100492673
+      goat sprites 2_7: 1613864828
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

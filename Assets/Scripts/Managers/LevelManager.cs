@@ -70,11 +70,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-<<<<<<< HEAD:Assets/Scripts/GameMaster.cs
-        if (sceneLoaded == "MapV3" && !gameStarted)
-=======
         if (!initializePlayerManager)
->>>>>>> developer:Assets/Scripts/Managers/LevelManager.cs
         {
             InitializeGame();
 
@@ -85,9 +81,6 @@ public class LevelManager : MonoBehaviour
             PlayerManager.main.ShowMenu(true);
         }
 
-<<<<<<< HEAD:Assets/Scripts/GameMaster.cs
-        if (sceneLoaded == "MapV3" && gameStarted)
-=======
     }
 
     private void OnPlayersReady()
@@ -95,7 +88,6 @@ public class LevelManager : MonoBehaviour
         List<PlayerVehicleSelection> selections = new List<PlayerVehicleSelection>();
 
         foreach (PlayerController player in PlayerManager.main.players)
->>>>>>> developer:Assets/Scripts/Managers/LevelManager.cs
         {
             PlayerVehicleSelection selection = new PlayerVehicleSelection()
             {
