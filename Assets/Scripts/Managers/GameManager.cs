@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
         if (carsLeftAlive < 2 || playersLeft < 1)
         {
             if (carDestroyNotNull)
-                carDestroyerScore.timeSurvived = currentGameTime;
+                carDestroyerScore.timeSurvived = currentGameTime + 1;
 
             OnGameEnd();
         }
