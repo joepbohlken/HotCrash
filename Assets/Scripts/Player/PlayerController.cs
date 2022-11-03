@@ -7,7 +7,9 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerController : MonoBehaviour
 {
     // Player input controls
-    private Vector3 movementInput = Vector3.zero;
+    private float movementInputX = 0;
+    private float movementInputY = 0;
+    private float movementInputZ = 0;
     private Vector2 cameraInput = Vector2.zero;
     private bool driftingInput = false;
     private bool flipInput = false;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public AbilityController abilityController { get; set; }
     public CameraController cameraFollow { get; set; }
     public int playerIndex { get; set; }
+    public string deviceType { get; set; }
     public Color playerColor { get; set; }
 
     private bool justJoined = true;
@@ -84,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateCarInputs()
     {
-        car.UpdateControls(movementInput.x, movementInput.y, movementInput.z, driftingInput, flipInput);
+        car.UpdateControls(movementInputX, movementInputY, movementInputZ, driftingInput, flipInput);
     }
 
     private void UpdateAbilityInputs()
@@ -116,12 +119,12 @@ public class PlayerController : MonoBehaviour
 
         if (carSelectionSlot.interactable)
         {
-            if (movementInput.x > 0.8f)
+            if (movementInputX > 0.8f)
             {
                 carSelectionSlot.NextCarLeft();
             }
 
-            if (movementInput.x < -0.8f)
+            if (movementInputX < -0.8f)
             {
                 carSelectionSlot.NextCarRight();
             }
@@ -140,9 +143,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext ctx)
+    public void OnMoveX(InputAction.CallbackContext ctx)
     {
-        movementInput = ctx.ReadValue<Vector3>();
+        movementInputX = ctx.ReadValue<float>();
+    }
+    public void OnMoveY(InputAction.CallbackContext ctx)
+    {
+        movementInputY = ctx.ReadValue<float>();
+    }
+    public void OnMoveZ(InputAction.CallbackContext ctx)
+    {
+        movementInputZ = ctx.ReadValue<float>();
     }
 
     public void OnCameraMove(InputAction.CallbackContext ctx)

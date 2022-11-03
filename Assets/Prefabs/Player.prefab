@@ -74,22 +74,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2955854905511124667}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ad58084a-482f-463c-83d8-294cdee486fc
-    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/q,/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2955854905511124667}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnDrift
         m_Mode: 0
         m_Arguments:
@@ -214,6 +198,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 38e18484-de83-42d6-bbf6-cd543cb8090b
     m_ActionName: Player/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMoveX
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 490660d4-5a37-4104-8220-1eb58b803846
+    m_ActionName: Player/X Axis Movement
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMoveY
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9ab6909d-0c1d-4e11-9c07-4ad31c20fa93
+    m_ActionName: Player/Y Axis Movement
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2955854905511124667}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMoveZ
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1e0c7233-8aeb-470e-87e5-b013a6bc9e24
+    m_ActionName: Player/Z Axis Movement
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
@@ -231,10 +263,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaee69eab1e451b48aa47fb7a46147de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  playerManager: {fileID: 0}
-  carSelectionSlot: {fileID: 0}
-  car: {fileID: 0}
-  abilityController: {fileID: 0}
-  cameraFollow: {fileID: 0}
-  playerIndex: 0
