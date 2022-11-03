@@ -63,7 +63,7 @@ public class HUD : MonoBehaviour
     private void Update()
     {
 
-        if (GameManager.main != null)
+        if (GameManager.main != null && GameManager.main.gameStarted)
         {
             UpdateKillCount();
             UpdateOpponentCount();

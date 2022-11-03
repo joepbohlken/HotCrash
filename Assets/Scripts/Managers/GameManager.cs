@@ -237,6 +237,8 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
         leaderboardOpen = false;
 
+        scoreboard.Clear();
+
         if (!loadingScene)
         {
             loadingScene = true;
