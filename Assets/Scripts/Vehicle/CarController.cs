@@ -130,7 +130,7 @@ public class CarController : MonoBehaviour
     {
         verticalInput = vertical;
         horizontalInput = horizontal;
-        rollInput = handBrake ? horizontal : roll;
+        rollInput = roll;
         handBrakeInput = handBrake;
         unflipCarInput = unflip;
     }
@@ -346,8 +346,8 @@ public class CarController : MonoBehaviour
         bool isKeyboard = player == null || player.deviceType == "Keyboard";
 
         float rollRotation = (isKeyboard ? rollInput : horizontalInput) * carConfig.torqueCurve.Evaluate(rb.angularVelocity.z) * dt;
-        float pitchRotation = (isKeyboard ? verticalInput : rollInput) * carConfig.torqueCurve.Evaluate(rb.angularVelocity.x) / 2 * dt;
-        float yawRotation = (isKeyboard ? horizontalInput : verticalInput) * carConfig.torqueCurve.Evaluate(rb.angularVelocity.y) * dt;
+        float pitchRotation = (isKeyboard ? horizontalInput : verticalInput) * carConfig.torqueCurve.Evaluate(rb.angularVelocity.x) / 2 * dt;
+        float yawRotation = (isKeyboard ? verticalInput : horizontalInput) * carConfig.torqueCurve.Evaluate(rb.angularVelocity.y) * dt;
 
 
         rb.AddTorque(transform.forward * rollRotation, ForceMode.VelocityChange);
