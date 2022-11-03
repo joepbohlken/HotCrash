@@ -17,21 +17,15 @@ public class PlayerController : MonoBehaviour
     private bool disconnectInput = false;
     private bool changeColor = false;
 
-    [HideInInspector]
-    public PlayerInput input;
-    [HideInInspector]
-    public PlayerManager playerManager;
-
-    [HideInInspector]
-    public CarSelectionSlot carSelectionSlot;
-    [HideInInspector]
-    public CarController car;
-    [HideInInspector]
-    public AbilityController abilityController;
-    [HideInInspector]
-    public CameraController cameraFollow;
-    [HideInInspector]
-    public int playerIndex;
+    // Public variables
+    public PlayerInput input { get; set; }
+    public PlayerManager playerManager { get; set; }
+    public CarSelectionSlot carSelectionSlot { get; set; }
+    public CarController car { get; set; }
+    public AbilityController abilityController { get; set; }
+    public CameraController cameraFollow { get; set; }
+    public int playerIndex { get; set; }
+    public Color playerColor { get; set; }
 
     private bool justJoined = true;
     private float time = 0;
@@ -43,8 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time > .25f)
+        time += Time.unscaledDeltaTime;
+        if (time > .1f)
         {
             justJoined = false;
         }
@@ -79,6 +73,13 @@ public class PlayerController : MonoBehaviour
 
         if (carSelectionSlot)
             UpdateCarSelection();
+
+        // Confirm return to main menu
+        if (GameManager.main != null && GameManager.main.leaderboardOpen && playerIndex == 0 && readyInput)
+        {
+            readyInput = false;
+            GameManager.main.ReturnToMainMenu();
+        }
     }
 
     private void UpdateCarInputs()

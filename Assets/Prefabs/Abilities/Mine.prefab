@@ -62,8 +62,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlight: {fileID: 2668208783748568261}
   explosionEffectPrefab: {fileID: 5202976511654483060, guid: b0373880d58c04a4d9da6b85656b491c, type: 3}
+  explosionAudioClip: {fileID: 8300000, guid: f9e7ad22f06c5dc47a550c99bd005a53, type: 3}
+  explosionSoundVolume: 1
   explosionRadius: 10
   explosionStrength: 20000
+  explosionDamage: 30
 --- !u!1 &3658880446489761847
 GameObject:
   m_ObjectHideFlags: 0

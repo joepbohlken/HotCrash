@@ -161,7 +161,7 @@ public class LevelManager : MonoBehaviour
             cameraFollow.gameObject.name = "Spectator Camera";
             cameraFollow.target = carParentTransform;
 
-            float dividerOffset = 0.001f;
+            float dividerOffset = 0f;
 
             // Set camera size and position
             Camera camera = cameraFollow.GetComponentInChildren<Camera>();
@@ -267,7 +267,7 @@ public class LevelManager : MonoBehaviour
             cameraFollow.SetCar(car);
 
             // Calculate camera size
-            float dividerOffset = playerCount != 1 ? 0.001f : 0;
+            float dividerOffset = playerCount != 1 ? 0 : 0;
             float sizeX = Mathf.Clamp(1 / playerCount, 0.5f, 1);
             float sizeY = playerCount <= 2 ? 1 : 0.5f;
             float posX = (i % 2) * 0.5f;
@@ -319,7 +319,7 @@ public class LevelManager : MonoBehaviour
             // Add player hud
             Canvas carHUD = Instantiate(playerHudPrefab, hudParentTransform).GetComponent<Canvas>();
             carHUD.worldCamera = cameraUI;
-            carHUD.GetComponent<HUD>().car = car;
+            carHUD.GetComponent<HUD>().player = selection.player;
 
             // Adjust hud scaling
             if (playerCount >= 3)
@@ -375,6 +375,8 @@ public class LevelManager : MonoBehaviour
 
                 carHealth.healthBars.Add(carCanvas.bars);
                 carHealth.healthTexts.Add(carCanvas.hpText);
+
+                car.carCanvasRefs.Add(carCanvas);
             }
         }
     }

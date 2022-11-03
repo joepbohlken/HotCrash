@@ -68,6 +68,14 @@ public class PlayerManager : MonoBehaviour
 
     private bool gameManagerAvailable = false;
 
+    private void OnApplicationQuit()
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            RemovePlayer(players[i]);
+        }
+    }
+
     private void OnEnable()
     {
         playerInputManager.onPlayerJoined += OnPlayerJoin;
@@ -76,14 +84,21 @@ public class PlayerManager : MonoBehaviour
 
     private void OnDisable()
     {
-        playerInputManager.onPlayerJoined -= OnPlayerJoin;
-        playerInputManager.onPlayerLeft -= OnPlayerLeave;
+        try
+        {
+            playerInputManager.onPlayerJoined -= OnPlayerJoin;
+            playerInputManager.onPlayerLeft -= OnPlayerLeave;
+        }
+        catch
+        {
+            Debug.Log("No listeners were added yet!");
+        }
     }
 
     private void Awake()
     {
         if (main != null) Destroy(gameObject);
-        main = this;
+        else  main = this;
 
         DontDestroyOnLoad(gameObject);
 
@@ -134,6 +149,7 @@ public class PlayerManager : MonoBehaviour
 
         PlayerController player = input.GetComponent<PlayerController>();
         player.playerIndex = playerIndex;
+        player.playerColor = colors[playerIndex];
         player.input = input;
         player.playerManager = this;
 
@@ -331,9 +347,10 @@ public class PlayerManager : MonoBehaviour
         {
             ShowMenu(false);
             cancelled = true;
+
+            GameManager.main.playersCount = GetCurrentPlayerCount();
         }
     }
-
 
     // Remove player from device lost
     public void DeviceLost(PlayerController player)

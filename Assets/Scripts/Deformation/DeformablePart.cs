@@ -16,7 +16,6 @@ public enum HitLocation
     NONE
 }
 
-[RequireComponent(typeof(MeshFilter))]
 public class DeformablePart : MonoBehaviour
 {
     [Tooltip("The side which is affected when impacted. Set to NONE in case it handles multiple sides like the body.")]
@@ -36,8 +35,8 @@ public class DeformablePart : MonoBehaviour
     [HideInInspector] public float hingeMaxLimit;
     private bool justCreatedHinge = false;
 
-    private MeshFilter meshFilter;
     private MeshCollider meshCollider;
+    private MeshFilter meshFilter;
     private HingeJoint hinge;
     private CarDeformation carDeformation;
     private CarHealth carHealth;
@@ -54,6 +53,7 @@ public class DeformablePart : MonoBehaviour
     {
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
+
         // Instantiate a 'clone' of the mesh, so it does not affect all other objects using the same mesh
         meshFilter.mesh = (Mesh)Instantiate(meshFilter.sharedMesh);
         meshFilter.mesh.MarkDynamic();
@@ -85,7 +85,7 @@ public class DeformablePart : MonoBehaviour
 
     ///<summary>Applies damage to the part based on the given parameters.
     ///Return true if the part has been detached or already destroyed, else returns false.</summary>
-    public bool ApplyDamage(int i, Collision collision, float minVelocity, Rigidbody body)
+    public bool ApplyDamage(int i, Collision collision, float minVelocity, Rigidbody body, bool isAttacker)
     {
         if (isDestroyed) return true;
 
@@ -95,7 +95,6 @@ public class DeformablePart : MonoBehaviour
         if (carSide == HitLocation.NONE)
             hitLocation = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).thisCollider);
 
-        bool isAttacker = CheckAttacker(collision.GetContact(i));
         float damage = (collision.relativeVelocity.magnitude - minVelocity) / collision.contactCount;
         HitLocation opponentImpactedSide = CheckImpactLocation(collision.GetContact(i).normal, collision.GetContact(i).otherCollider);
 
@@ -231,16 +230,7 @@ public class DeformablePart : MonoBehaviour
         hinge.limits = limits;
     }
 
-    private bool CheckAttacker(ContactPoint contactPoint)
-    {
-        float angle = Vector3.Dot(contactPoint.thisCollider.transform.forward, contactPoint.normal);
-        if (angle < -.95f)
-        {
-            return true;
-        }
 
-        return false;
-    }
 
     private HitLocation CheckImpactLocation(Vector3 collisionNormal, Collider collider)
     {

@@ -1,6 +1,6 @@
 public class BaseState
 {
-    protected CarController controller;
+    public CarController controller;
     protected CarAI carAI;
     protected AbilityController abilityController;
 

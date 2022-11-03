@@ -26,6 +26,7 @@ public class CarAI : StateMachine
     [HideInInspector] public bool hitOpponent = false;
     [HideInInspector] public bool gotHit = false;
     [HideInInspector] public float idleTime;
+    [HideInInspector] public float useAbilityCooldown;
 
     // States
     [HideInInspector] public BaseState pursuing;
@@ -49,6 +50,8 @@ public class CarAI : StateMachine
         {
             cars.Add(transform.parent.GetChild(i).GetComponent<CarController>());
         }
+
+        useAbilityCooldown = Random.Range(3f, 10f);
 
         int rndmStateNmbr = Random.Range(1, 4);
         if (rndmStateNmbr == 3)

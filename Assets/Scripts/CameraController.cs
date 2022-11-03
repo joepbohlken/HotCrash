@@ -73,7 +73,7 @@ public class CameraController : MonoBehaviour
         }
 
         float newAngle;
-        if ((carController.isGrounded || !hasCarTouchedGroundAtLeastOnce) || carController.isDestroyed || !useVelocityInAir) newAngle = angleY + target.eulerAngles.y;
+        if ((carController.isGrounded || !hasCarTouchedGroundAtLeastOnce) || carController.isDestroyed || !useVelocityInAir || carController.rb.velocity.magnitude < 1f) newAngle = angleY + target.eulerAngles.y;
         else newAngle = angleY + Quaternion.LookRotation(carController.rb.velocity.normalized, Vector3.up).eulerAngles.y;
         Vector3 cameraRotation = new Vector3(currentAngle, newAngle, 0);
         transform.eulerAngles = cameraRotation;

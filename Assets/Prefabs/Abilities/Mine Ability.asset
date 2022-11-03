@@ -17,3 +17,6 @@ MonoBehaviour:
   minePrefab: {fileID: 728907566336860761, guid: f6e261a34e693414b8c85278a717d581, type: 3}
   maxPlaceDistance: 3
   amount: 1
+  ground:
+    serializedVersion: 2
+    m_Bits: 4096
