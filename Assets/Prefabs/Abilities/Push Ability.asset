@@ -18,5 +18,5 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 4096
-  range: 100
-  angle: 90
+  range: 50
+  angle: 66

@@ -13,6 +13,7 @@ public class PushAbility : Ability
 
     private bool readytoThrow;
     private MeshCollider targetCollider;
+    private RaycastHit rh;
 
     public override void Obtained()
     {
@@ -92,17 +93,18 @@ public class PushAbility : Ability
             Transform car = carController.transform.parent.GetChild(i);
             if (car == carController.transform) continue;
 
-            bool isWithinView = Vector3.Angle(carController.transform.forward, (car.transform.position - carController.transform.position).normalized) <= angle;
+            Vector3 direction = (car.transform.position - carController.transform.position).normalized;
+            bool isWithinView = Vector3.Angle(carController.transform.forward, direction) <= angle;
 
-            float distance = (car.transform.position - carController.transform.position).magnitude;
+            float distance = Vector3.Distance(car.transform.position, carController.transform.position);
             if (isWithinView && distance < closestDistance && distance < range)
             {
-                Vector3 direction = (car.transform.position - carController.transform.position).normalized;
+                Physics.Raycast(carController.transform.position, direction, out rh,distance, groundMask);
                 if (!Physics.Raycast(carController.transform.position, direction, distance, groundMask))
                 {
                     closestDistance = distance;
                     closestCar = car.gameObject;
-                }
+                } 
             }
         }
 
