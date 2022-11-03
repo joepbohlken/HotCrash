@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         leaderboard.gameObject.SetActive(true);
+        AudioController.main.StopAllSounds();
     }
 
     public void OnUpdateScore(GameObject car, float damage = 0, bool taken = false)
