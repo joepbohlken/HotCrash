@@ -66,7 +66,7 @@ public class PushAbility : Ability
 
     private void AbilityEnded(bool isDestroyed)
     {
-        abilityController.hud.TargetingTextDisable();
+        if (abilityController.hud) abilityController.hud.TargetingTextDisable();
         if (!isDestroyed) abilityController.AbilityEnded();
     }
 
