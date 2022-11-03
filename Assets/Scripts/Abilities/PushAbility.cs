@@ -115,7 +115,7 @@ public class PushAbility : Ability
                 if (isWithinView && distance < closestDistance)
                 {
                     Vector3 direction = (carController.transform.position - car.transform.position).normalized;
-                    if (Physics.Raycast(gunTip.position, direction, range, groundMask))
+                    if (!Physics.Raycast(gunTip.position, direction, range, groundMask))
                     {
                         closestDistance = distance;
                         closestCar = car.gameObject;
