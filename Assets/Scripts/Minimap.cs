@@ -19,6 +19,11 @@ public class Minimap : MonoBehaviour
 
     public GameObject carsParent;
 
+    private void Start()
+    {
+        transform.localPosition = GameManager.main.playersCount <= 2 ? new Vector3(800, 0) : new Vector3(0, 0);
+    }
+    private bool firstTime = true;
     void Update()
     {
         if (carsAndIndicators.Count < 1)
@@ -33,12 +38,14 @@ public class Minimap : MonoBehaviour
                 indicator.GetComponent<Image>().color = indicatorColor;
 
                 carsAndIndicators.Add(tf, indicator);
+
+                tf.GetComponent<CarHealth>().onDestroyed.AddListener(delegate { ChangeIndicatorToDeadIndicator(indicator.GetComponent<Image>()); });
             }
         }
-        updateIndicatorPostitions();
+        UpdateIndicatorPostitions();
     }
 
-    private void updateIndicatorPostitions()
+    private void UpdateIndicatorPostitions()
     {
         foreach (KeyValuePair<Transform, GameObject> pair in carsAndIndicators)
         {
@@ -51,5 +58,10 @@ public class Minimap : MonoBehaviour
 
             imageRectTransform.localRotation = Quaternion.Euler(0, 0, -carTransform.rotation.eulerAngles.y + 90);
         }
+    }
+
+    private void ChangeIndicatorToDeadIndicator(Image indicator)
+    {
+        indicator.color = Color.grey;
     }
 }
