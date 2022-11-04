@@ -21,7 +21,7 @@ public class Minimap : MonoBehaviour
 
     private void Start()
     {
-        transform.localPosition = GameManager.main.playersCount <= 2 ? new Vector3(800, 0) : new Vector3(0, 0);
+        transform.localPosition = GameManager.main.playersCount <= 2 ? new Vector3(transform.parent.GetComponent<RectTransform>().rect.width/2 - GetComponent<RectTransform>().rect.width, 0) : new Vector3(0, 0);
         transform.localRotation = GameManager.main.playersCount <= 2 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 90);
     }
     private bool firstTime = true;
