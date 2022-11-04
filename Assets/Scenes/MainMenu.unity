@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 406031401}
   - component: {fileID: 406031402}
   - component: {fileID: 406031403}
+  - component: {fileID: 406031404}
   m_Layer: 0
   m_Name: Main Menu
   m_TagString: Untagged
@@ -414,6 +415,20 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1e0b838561d56b84ca10740f5ad052e6, type: 2}
   - {fileID: 2100000, guid: 778750512443f9d40afa9b0d5971b13a, type: 2}
   - {fileID: 2100000, guid: 55ba496fc6637944795a5e97bdf4f6e8, type: 2}
+--- !u!114 &406031404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406031400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8b1363cf3dc124d9d1bbfbf1c2f5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
+  volume: 0
 --- !u!1 &703027832
 GameObject:
   m_ObjectHideFlags: 0
