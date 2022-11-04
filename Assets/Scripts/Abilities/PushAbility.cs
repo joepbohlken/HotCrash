@@ -14,6 +14,7 @@ public class PushAbility : Ability
     private bool readytoThrow;
     private MeshCollider targetCollider;
     private RaycastHit rh;
+    CarCanvas canvas;
 
     public override void Obtained()
     {
@@ -37,8 +38,18 @@ public class PushAbility : Ability
 
         if (abilityController.hud)
         {
-            if (closestCar) abilityController.hud.TargetingTextEnable();
-            else abilityController.hud.TargetingTextDisable();
+
+            if (closestCar)
+            {
+                canvas = GetCarCanvas();
+                abilityController.hud.TargetingTextEnable();
+                canvas.EnableTargeting(targetCollider);
+            }
+            else
+            {
+                abilityController.hud.TargetingTextDisable();
+                if(canvas != null) canvas.DisableTargeting();
+            }
         }
         
     }
@@ -101,13 +112,23 @@ public class PushAbility : Ability
             {
                 Physics.Raycast(carController.transform.position, direction, out rh,distance, groundMask);
                 if (!Physics.Raycast(carController.transform.position, direction, distance, groundMask))
-                {
+                { 
                     closestDistance = distance;
                     closestCar = car.gameObject;
+                    if (closestCar.GetComponent<CarController>().carCanvasRefs == null) closestCar = null;
                 } 
             }
         }
 
         return closestCar;
+    }
+
+    private CarCanvas GetCarCanvas()
+    {
+        if (closestCar.GetComponent<CarController>().carCanvasRefs != null)
+        {
+            return closestCar.GetComponent<CarController>().carCanvasRefs[carController.player.playerIndex];
+        }
+        return null;
     }
 }

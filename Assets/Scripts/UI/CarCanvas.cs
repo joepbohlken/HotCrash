@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarCanvas : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class CarCanvas : MonoBehaviour
     [Header("HP bar")]
     public GameObject bars;
     public TextMeshProUGUI hpText;
+
+    [Header("TargetBox")]
+    public Image topLeftBorder;
+    public Image bottomLeftBorder;
+    public Image topRightBorder;
+    public Image bottomRightBorder;
 
     private Transform masterParent;
     public CanvasGroup canvasGroup { get; set; }
@@ -34,5 +41,28 @@ public class CarCanvas : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(transform.position - cameraToFollow.transform.position);
         }
+    }
+
+    public void EnableTargeting(MeshCollider targetCollider)
+    {
+        if (cameraToFollow == null) return;
+
+        topLeftBorder.GetComponent<RectTransform>().position = new Vector2(masterParent.localPosition.x, masterParent.localPosition.y);
+        topRightBorder.GetComponent<RectTransform>().position = new Vector2(masterParent.localPosition.x, masterParent.localPosition.y);
+        bottomLeftBorder.GetComponent<RectTransform>().position = new Vector2(masterParent.localPosition.x, masterParent.localPosition.y);
+        bottomRightBorder.GetComponent<RectTransform>().position = new Vector2(masterParent.localPosition.x, masterParent.localPosition.y);
+
+        topLeftBorder.enabled = true;
+        topRightBorder.enabled = true;
+        bottomLeftBorder.enabled = true;
+        bottomRightBorder.enabled = true;
+    }
+
+    public void DisableTargeting()
+    {
+        topLeftBorder.enabled = false;
+        topRightBorder.enabled = false;
+        bottomLeftBorder.enabled = false;
+        bottomRightBorder.enabled = false;
     }
 }
