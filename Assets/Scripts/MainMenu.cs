@@ -28,8 +28,8 @@ public class MainMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        //PlayerManager.main.onReady.AddListener(OnPlayersReady);
-        //PlayerManager.main.onCancel.AddListener(OnPlayersCancel);
+        PlayerManager.main.onReady.AddListener(OnPlayersReady);
+        PlayerManager.main.onCancel.AddListener(OnPlayersCancel);
     }
 
     private void OnDisable()
@@ -53,15 +53,12 @@ public class MainMenu : MonoBehaviour
             slot.gameObject.SetActive(false);
             slot.changeColor.SetActive(false);
         }
+
+        firstTimeLoad = GameManager.main.initialLoad;
     }
 
     private void Start()
     {
-        firstTimeLoad = GameManager.main.initialMainMenu;
-
-        PlayerManager.main.onReady.AddListener(OnPlayersReady);
-        PlayerManager.main.onCancel.AddListener(OnPlayersCancel);
-
         if (showStartAnim && firstTimeLoad)
         {
             animator.Play("MainMenuStart");

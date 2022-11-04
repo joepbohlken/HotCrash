@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour
     public int playersLeft { get; private set; }
     public bool leaderboardOpen { get; private set; } = false;
 
-    public bool initialMainMenu = true;
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -149,8 +147,6 @@ public class GameManager : MonoBehaviour
 
     public void OnStartGame(CarSelectionSlot[] slots)
     {
-        initialMainMenu = false;
-
         // Clear previous selections
         playerSelections.Clear();
 
@@ -241,8 +237,6 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
         leaderboardOpen = false;
 
-        scoreboard.Clear();
-
         if (!loadingScene)
         {
             loadingScene = true;
@@ -275,7 +269,7 @@ public class GameManager : MonoBehaviour
         if (carsLeftAlive < 2 || playersLeft < 1)
         {
             if (carDestroyNotNull)
-                carDestroyerScore.timeSurvived = currentGameTime + 1;
+                carDestroyerScore.timeSurvived = currentGameTime;
 
             OnGameEnd();
         }

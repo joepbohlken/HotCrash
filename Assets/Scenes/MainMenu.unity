@@ -401,13 +401,12 @@ MonoBehaviour:
   canvasAnimator: {fileID: 2123015055}
   carSlotParent: {fileID: 61214329}
   availableCars:
-  - {fileID: 6066595695625706640, guid: 340bedf42a5e1b143accfee2ec82eba6, type: 3}
+  - {fileID: 3780378005250558035, guid: 1e574ac7709e50e4484ce406c3fa7f9c, type: 3}
   - {fileID: 2707475024792843059, guid: 7950a233a2a768c48977a9bb8c77cb94, type: 3}
-  - {fileID: 6609532501391537564, guid: 7ada2f3b7dd7cc74dbed2b9912a24539, type: 3}
   - {fileID: 5302311686296211289, guid: f3e464e6371113849942b79b9ed67cd0, type: 3}
-  - {fileID: 3036994790167475227, guid: a552d930accf0e74cb1fc93f504e961f, type: 3}
-  - {fileID: 8659467412555546770, guid: efeba845ccdfbf64b984a47815a26c85, type: 3}
   - {fileID: 4520697462883677021, guid: fd2191b2aff130d4f8528bc61f19dcda, type: 3}
+  - {fileID: 4519032888920511240, guid: bd4f71b5e6cda4e448225690a3fd88ba, type: 3}
+  - {fileID: 8659467412555546770, guid: efeba845ccdfbf64b984a47815a26c85, type: 3}
   availableColors:
   - {fileID: 2100000, guid: 7e3c3f2ab3031134f8c873d67e957aef, type: 2}
   - {fileID: 2100000, guid: 890539686d445f740b4358856e216304, type: 2}
