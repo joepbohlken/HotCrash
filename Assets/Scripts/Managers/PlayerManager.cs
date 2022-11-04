@@ -152,6 +152,7 @@ public class PlayerManager : MonoBehaviour
         player.playerColor = colors[playerIndex];
         player.input = input;
         player.playerManager = this;
+        player.deviceType = input.currentControlScheme;
 
         // Add player to correct slot
         playerSlots[playerIndex].player = player;

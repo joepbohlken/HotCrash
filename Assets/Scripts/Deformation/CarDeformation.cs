@@ -51,7 +51,6 @@ public class CarDeformation : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude >= minVelocity)
         {
-
             bool deformedMesh = false;
 
             // Debounce between deformations to improve performance

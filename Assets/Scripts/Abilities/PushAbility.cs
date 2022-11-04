@@ -1,14 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static Cinemachine.CinemachineTargetGroup;
-using static UnityEditor.Experimental.GraphView.Port;
-using static UnityEngine.GraphicsBuffer;
 
 [CreateAssetMenu(menuName = "Abilities/Push")]
 public class PushAbility : Ability
@@ -23,6 +13,7 @@ public class PushAbility : Ability
 
     private bool readytoThrow;
     private MeshCollider targetCollider;
+    private RaycastHit rh;
 
     public override void Obtained()
     {
@@ -30,15 +21,20 @@ public class PushAbility : Ability
 
         readytoThrow = true;
         gunTip = abilityController.transform.Find("GunTip");
-        //if (!carController.isBot) indicator.carCamera = abilityController.playerCamera;
+        //if (!carController.isBot) abilityController.hud.carCameraArena = abilityController.playerCamera;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        targetFinder();
-        
+        closestCar = null;
+        closestCar = GetClosestCar();
+        if (closestCar)
+        {
+            targetCollider = closestCar.transform.Find("Body").GetComponent<MeshCollider>();
+        }
+
         if (abilityController.hud)
         {
             if (closestCar) abilityController.hud.TargetingTextEnable();
@@ -87,16 +83,6 @@ public class PushAbility : Ability
         AbilityEnded(false);
     }    
 
-    public void targetFinder()
-    {
-        closestCar = null;
-        closestCar = GetClosestCar();
-        if (closestCar)
-        {
-            targetCollider = closestCar.transform.Find("Body").GetComponent<MeshCollider>();
-        }
-    }
-
     private GameObject GetClosestCar()
     {
         GameObject closestCar = null;
@@ -107,20 +93,18 @@ public class PushAbility : Ability
             Transform car = carController.transform.parent.GetChild(i);
             if (car == carController.transform) continue;
 
-            bool isWithinView = Vector3.Angle(carController.transform.forward, (car.transform.position - carController.transform.position).normalized) <= angle;
+            Vector3 direction = (car.transform.position - carController.transform.position).normalized;
+            bool isWithinView = Vector3.Angle(carController.transform.forward, direction) <= angle;
 
-            float distance = (car.transform.position - carController.transform.position).magnitude;
-            if(distance <= range)
+            float distance = Vector3.Distance(car.transform.position, carController.transform.position);
+            if (isWithinView && distance < closestDistance && distance < range)
             {
-                if (isWithinView && distance < closestDistance)
+                Physics.Raycast(carController.transform.position, direction, out rh,distance, groundMask);
+                if (!Physics.Raycast(carController.transform.position, direction, distance, groundMask))
                 {
-                    Vector3 direction = (carController.transform.position - car.transform.position).normalized;
-                    if (!Physics.Raycast(gunTip.position, direction, range, groundMask))
-                    {
-                        closestDistance = distance;
-                        closestCar = car.gameObject;
-                    }
-                }
+                    closestDistance = distance;
+                    closestCar = car.gameObject;
+                } 
             }
         }
 
