@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -134,19 +135,34 @@ public class HUD : MonoBehaviour
         targetText.enabled = false;
     }
 
+    public Vector3 WorldToScreenSpace(Vector3 worldPos, RectTransform area)
+    {
+        Vector3 screenPoint = carCamera.WorldToScreenPoint(worldPos);
+        screenPoint.z = 0;
+
+        Vector2 screenPos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(area, screenPoint, carCamera, out screenPos))
+        {
+            return screenPos;
+        }
+
+        return screenPoint;
+    }
+
     /*
+    
     public void TargetingReticle(MeshCollider targetCollider)
     {
         if (carCamera == null) return;
 
         Vector3 boundPoint1 = targetCollider.bounds.min;
         Vector3 boundPoint2 = targetCollider.bounds.max;
-        Vector3 boundPoint3 = new Vector3(boundPoint1.x, boundPoint1.y, boundPoint2.z);
-        Vector3 boundPoint4 = new Vector3(boundPoint1.x, boundPoint2.y, boundPoint1.z);
-        Vector3 boundPoint5 = new Vector3(boundPoint2.x, boundPoint1.y, boundPoint1.z);
-        Vector3 boundPoint6 = new Vector3(boundPoint1.x, boundPoint2.y, boundPoint2.z);
-        Vector3 boundPoint7 = new Vector3(boundPoint2.x, boundPoint1.y, boundPoint2.z);
-        Vector3 boundPoint8 = new Vector3(boundPoint2.x, boundPoint2.y, boundPoint1.z);
+        Vector3 boundPoint3 = new Vector3(boundPoint1.x,boundPoint1.y,boundPoint2.z);
+        Vector3 boundPoint4 = new Vector3(boundPoint1.x,boundPoint2.y,boundPoint1.z);
+        Vector3 boundPoint5 = new Vector3(boundPoint2.x,boundPoint1.y,boundPoint1.z);
+        Vector3 boundPoint6 = new Vector3(boundPoint1.x,boundPoint2.y,boundPoint2.z);
+        Vector3 boundPoint7 = new Vector3(boundPoint2.x,boundPoint1.y,boundPoint2.z);
+        Vector3 boundPoint8 = new Vector3(boundPoint2.x,boundPoint2.y,boundPoint1.z);
 
         Vector2[] screenPoints = new Vector2[8];
         screenPoints[0] = carCamera.WorldToScreenPoint(boundPoint1);
@@ -157,6 +173,7 @@ public class HUD : MonoBehaviour
         screenPoints[5] = carCamera.WorldToScreenPoint(boundPoint6);
         screenPoints[6] = carCamera.WorldToScreenPoint(boundPoint7);
         screenPoints[7] = carCamera.WorldToScreenPoint(boundPoint8);
+        
 
         Vector2 topLeftPosition = Vector2.zero;
         Vector2 topRightPosition = Vector2.zero;
@@ -221,5 +238,7 @@ public class HUD : MonoBehaviour
         bottomLeftBorder.enabled = false;
         bottomRightBorder.enabled = false;
     }
+
     */
+    
 }

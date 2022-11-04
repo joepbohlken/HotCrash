@@ -21,7 +21,7 @@ public class PushAbility : Ability
 
         readytoThrow = true;
         gunTip = abilityController.transform.Find("GunTip");
-        //if (!carController.isBot) indicator.carCamera = abilityController.playerCamera;
+        //if (!carController.isBot) abilityController.hud.carCameraArena = abilityController.playerCamera;
     }
 
     public override void LogicUpdate()
