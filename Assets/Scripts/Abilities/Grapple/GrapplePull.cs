@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class GrapplePull : MonoBehaviour
 {
+    /*
     [SerializeField] public Vector3 hookPoint;
     [SerializeField] public Transform grappleGun;
     private Transform gunTip;
@@ -56,6 +57,7 @@ public class GrapplePull : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(abilityController.ability != null && abilityController.ability.a_Name == "Grapple")
         {
             targetBox();
@@ -78,6 +80,7 @@ public class GrapplePull : MonoBehaviour
                 }
             }
         }
+        
     }
 
     public void Pull()
@@ -193,7 +196,7 @@ public class GrapplePull : MonoBehaviour
                 {
                     if (dstToTarget <= range)
                     {
-                        targetIndicator.targets.Add(cTarget);
+                        //targetIndicator.targets.Add(cTarget);
                     }
                 }
             }
@@ -232,4 +235,5 @@ public class GrapplePull : MonoBehaviour
         }
         return tMin;
     }
+    */
 }

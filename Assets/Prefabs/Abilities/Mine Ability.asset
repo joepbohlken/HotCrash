@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f86679a5806a8a4084a132ae5c40b60, type: 3}
+  m_Name: Mine Ability
+  m_EditorClassIdentifier: 
+  abilityName: Mine
+  abilityIcon: {fileID: 21300000, guid: 380eb1ac4e91dfc4a807e2cb04990fa2, type: 3}
+  minePrefab: {fileID: 728907566336860761, guid: f6e261a34e693414b8c85278a717d581, type: 3}
+  maxPlaceDistance: 3
+  amount: 1
+  ground:
+    serializedVersion: 2
+    m_Bits: 4096

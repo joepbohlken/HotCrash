@@ -18,6 +18,10 @@ public class Vitals
 
 public class CarHealth : MonoBehaviour
 {
+    // Unity events
+    [HideInInspector]
+    public UnityEvent onDestroyed;
+
     [Tooltip("The base health of the car.")]
     [SerializeField] private float health = 1000f;
     public List<GameObject> healthBars = new List<GameObject>();
@@ -28,16 +32,16 @@ public class CarHealth : MonoBehaviour
     [Tooltip("Used to visualize the vitals of the car on the UI.")]
     [SerializeField] public List<Vitals> vitals;
 
-    private ArcadeCar arcadeCar;
     private List<Image[]> bars = new List<Image[]>();
     private float currentHealth;
-    [HideInInspector]
-    public bool isDestroyed = false;
+    public GameObject lastCollider { get; private set; }
+    private bool isDestroyed = false;
+
+    // Invisibility Variable
+    [HideInInspector] public float damageModifier = 1f;
 
     private void Start()
     {
-        arcadeCar = GetComponent<ArcadeCar>();
-
         if (healthBars != null)
         {
             foreach (GameObject bar in healthBars)
@@ -56,9 +60,46 @@ public class CarHealth : MonoBehaviour
         currentHealth = health;
     }
 
-    public void AddCarDamage(GameObject carCollider, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
+    public void AddCarDamage(GameObject attacker, HitLocation hitLocation, float damage)
     {
-        if (hitLocation == HitLocation.NONE) return;
+        // Apply ability effect
+        damage *= damageModifier;
+
+        Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
+        float vitalHealthMultiplier = 1;
+
+        if (vital != null)
+        {
+            vital.currentHealth = Mathf.Clamp(vital.currentHealth - damage, 0, vital.health);
+
+            if (vital.image != null)
+            {
+                vital.image.color = GetVitalColor(vital.health, vital.currentHealth);
+            }
+
+            vitalHealthMultiplier = damageMultiplierCurve.Evaluate(vital.currentHealth / vital.health);
+        }
+
+        damage = Mathf.Clamp(damage, 0f, currentHealth);
+        currentHealth = Mathf.Clamp(currentHealth - (damage * vitalHealthMultiplier), 0, health);
+
+        lastCollider = attacker;
+
+        if (GameManager.main != null)
+        {
+            GameManager.main.OnUpdateScore(gameObject, damage, true);
+            GameManager.main.OnUpdateScore(attacker, damage);
+        }
+
+        UpdateHealth();
+    }
+
+    public void AddCarDamage(CarController carOpponent, HitLocation hitLocation, Vitals opponentVital, float damage, bool isAttacker)
+    {
+        if (hitLocation == HitLocation.NONE || (carOpponent != null && carOpponent.isDestroyed)) return;
+
+        // Apply ability effect
+        damage *= damageModifier;
 
         // Damage the correct side
         Vitals vital = vitals.FirstOrDefault(v => v.vitalType == hitLocation);
@@ -78,10 +119,26 @@ public class CarHealth : MonoBehaviour
 
         float vitalDmgMultiplier = CalculateDamageMultiplier(vital, opponentVital);
 
-        float actualDmg = damage * vitalDmgMultiplier;
+        float actualDmg = Mathf.Clamp(damage * vitalDmgMultiplier, 0f, currentHealth);
         currentHealth = Mathf.Clamp(currentHealth - (actualDmg * vitalHealthMultiplier), 0, health);
 
-        CheckHealth(carCollider);
+        if(carOpponent != null)
+        {
+            lastCollider = carOpponent.gameObject;
+        }
+
+        if (GameManager.main != null)
+        {
+            GameManager.main.OnUpdateScore(transform.gameObject, actualDmg, true);
+            GameManager.main.OnUpdateScore(carOpponent.gameObject, actualDmg);
+        }
+
+        UpdateHealth();
+    }
+
+    private void UpdateHealth()
+    {
+        CheckHealth();
 
         // Update health bar
         if (healthTexts.Count != 0 && bars.Count != 0)
@@ -171,21 +228,12 @@ public class CarHealth : MonoBehaviour
         return Color.Lerp(Color.white, new Color(0.9058824f, 0.2980392f, 0.2352941f, 1), progress);
     }
 
-    private void CheckHealth(GameObject carCollider)
+    private void CheckHealth()
     {
         if (currentHealth <= 0 && !isDestroyed)
         {
             isDestroyed = true;
-            arcadeCar.GetComponent<Rigidbody>().centerOfMass = arcadeCar.originalCenterOfMass;
-            arcadeCar.DestroyCar();
-
-            GameMaster.main.OnCarDied(gameObject, carCollider);
-
-            Transform canvasContainer = gameObject.transform.Find("UI");
-            for (int i = 0; i < canvasContainer.childCount; i++)
-            {
-                Destroy(canvasContainer.GetChild(i).gameObject);
-            }
+            onDestroyed.Invoke();
         }
     }
 }

@@ -4,7 +4,7 @@ public class Idle : Observant
 {
     private float randomOffset;
 
-    public Idle(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Idle(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -13,7 +13,7 @@ public class Idle : Observant
         randomOffset = Random.Range(0f, 999f);
 
         // Set acceleration direction
-        controller.v = 1f;
+        controller.verticalInput = 1f;
     }
 
     public override void LogicUpdate()
@@ -26,11 +26,12 @@ public class Idle : Observant
         float steerValue = Mathf.PerlinNoise(Time.time + randomOffset, 0f) * 2f - 1f;
 
         // Set acceleration & steering direction
-        if (!controller.allWheelIsOnAir)
+        if (controller.isGrounded)
         {
-            controller.v = 1f;
-            controller.h = Mathf.Abs(steerValue) > 0.3f ? Mathf.Sign(steerValue) : 0f;
+            controller.verticalInput = 1f;
+            controller.horizontalInput = Mathf.Abs(steerValue) > 0.3f ? Mathf.Sign(steerValue) : 0f;
         }
+        
 
         carAI.idleTime -= Time.deltaTime;
         if (carAI.idleTime <= 0f) carAI.currentDrivingMode = CarAI.DrivingMode.Pursue;

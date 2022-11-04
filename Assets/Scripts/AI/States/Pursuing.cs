@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Pursuing : Observant
 {
-    private Rigidbody targetRb;
+    private CarController currentTarget;
     private Transform whitelistedTarget;
     private float targetTime = 0f;
 
-    public Pursuing(ArcadeCar controller, CarAI carAI) : base(controller, carAI) { }
+    public Pursuing(CarController controller, CarAI carAI) : base(controller, carAI) { }
 
     public override void Enter()
     {
@@ -17,10 +17,10 @@ public class Pursuing : Observant
 
         // Set acceleration direction
         //float playerSideFB = Vector3.Dot(transform.forward, (target.position - transform.position).normalized);
-        controller.v = 1f;
+        controller.verticalInput = 1f;
 
         // Set steering direction
-        controller.h = 0f;
+        controller.horizontalInput = 0f;
     }
 
     public override void LogicUpdate()
@@ -31,11 +31,12 @@ public class Pursuing : Observant
 
         // Assign target
         float closestCar = 999f;
-        ArcadeCar newTarget = null;
+        CarController newTarget = null;
 
-        foreach (ArcadeCar car in carAI.cars)
+        if (currentTarget != null && (!currentTarget.isTargetable || currentTarget.isDestroyed)) currentTarget = null;
+        foreach (CarController car in carAI.cars)
         {
-            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.carHealth.isDestroyed) continue;
+            if (car.transform == carAI.transform || !car.gameObject.activeSelf || car.transform == whitelistedTarget || car.isDestroyed || !car.isTargetable) continue;
 
             bool isWithinView = Vector3.Angle(carAI.transform.forward, (car.transform.position - carAI.transform.position).normalized) <= 45f;
 
@@ -47,44 +48,44 @@ public class Pursuing : Observant
             }
         }
 
-        if (newTarget != null && newTarget.rb == targetRb)
+        if (newTarget != null && newTarget.rb == currentTarget)
         {
             targetTime += Time.deltaTime;
 
             if (targetTime >= 10f)
             {
-                whitelistedTarget = targetRb.transform;
-                targetRb = null;
+                whitelistedTarget = currentTarget.transform;
+                currentTarget = null;
             }
         }
         else
         {
             if (newTarget == null)
             {
-                targetRb = null;
+                currentTarget = null;
             }
-            else if (targetRb == null || newTarget.transform != targetRb.transform)
+            else if (currentTarget == null || newTarget.transform != currentTarget.transform)
             {
-                targetRb = newTarget.rb;
+                currentTarget = newTarget;
             }
             targetTime = 0f;
         }
 
         // Set acceleration direction
-        if (!controller.allWheelIsOnAir) controller.v = 1f;
+        if (controller.isGrounded) controller.verticalInput = 1f;
 
         // Set steering direction
-        if (targetRb != null && !controller.allWheelIsOnAir)
+        if (currentTarget != null && controller.isGrounded)
         {
-            float predictValue = Mathf.Clamp(targetRb.velocity.magnitude / 3f, 0f, (targetRb.transform.position - carAI.transform.position).magnitude);
-            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (targetRb.transform.position + targetRb.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
+            float predictValue = Mathf.Clamp(currentTarget.rb.velocity.magnitude / 3f, 0f, (currentTarget.transform.position - carAI.transform.position).magnitude);
+            float playerSideLR = Vector3.SignedAngle(carAI.transform.forward, (currentTarget.transform.position + currentTarget.transform.forward * predictValue - carAI.transform.position).normalized, Vector3.up);
             if (Mathf.Abs(playerSideLR) > 5f)
             {
-                controller.h = Mathf.Sign(playerSideLR);
+                controller.horizontalInput = Mathf.Sign(playerSideLR);
             }
             else
             {
-                controller.h = 0f;
+                controller.horizontalInput = 0f;
             }
         }
 
