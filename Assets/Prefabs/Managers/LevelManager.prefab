@@ -54,6 +54,12 @@ MonoBehaviour:
   playerHudPrefab: {fileID: 7905057190688868459, guid: 7cc60f9b337438748b7dbaabee6e200d, type: 3}
   carPrefabs:
   - {fileID: 6776267300940187485, guid: 9542edeac93274047bb8c2bb35be9b28, type: 3}
+  - {fileID: 4586634342405923363, guid: 42b1e7b6533419446ad0fe3ff528dfe8, type: 3}
+  - {fileID: 609774499805474478, guid: 44db5e1c26b6127458c80b033eb06d46, type: 3}
+  - {fileID: 1909957696245513497, guid: 85197fac5ad172c4fab156cc6d3fa922, type: 3}
+  - {fileID: 4714538519709849228, guid: 4b68f92b522976e44855c78b14826731, type: 3}
+  - {fileID: 636123013114572395, guid: 8d70ac68970fe624aab703bb20f476fa, type: 3}
+  - {fileID: 1795332343238623926, guid: 478fc1d0fc2b73042bda52ee262734fd, type: 3}
   carColors:
   - {fileID: 2100000, guid: 7e3c3f2ab3031134f8c873d67e957aef, type: 2}
   - {fileID: 2100000, guid: 890539686d445f740b4358856e216304, type: 2}

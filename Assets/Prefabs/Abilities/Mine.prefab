@@ -66,7 +66,7 @@ MonoBehaviour:
   explosionSoundVolume: 1
   explosionRadius: 10
   explosionStrength: 20000
-  explosionDamage: 30
+  explosionDamage: 80
 --- !u!1 &3658880446489761847
 GameObject:
   m_ObjectHideFlags: 0
